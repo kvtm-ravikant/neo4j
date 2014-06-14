@@ -1,0 +1,31 @@
+<nav class="navbar-default navbar-static-side" role="navigation" ng-controller="SideNavBarCtrl" >
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <!--<li class="sidebar-search">
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="{{iconClassMapping.search}}"></i>
+                                </button>
+                            </span>
+                </div>
+                &lt;!&ndash; /input-group &ndash;&gt;
+            </li>-->
+            <li ng-repeat="menuItem in menu" ng-click="toggleMenu(menuItem.collapse)">
+                <a href="{{menuItem.link}}" title="{{menuItem.title}}"><i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}}<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" ng-if="menuItem.childLinks" >
+                    <li ng-repeat="childMenuItem in menuItem.childLinks" ng-hide="menuItem.collapse">
+                        <a href="{{childMenuItem.link}}" title="{{childMenuItem.title}}"><i class="{{iconClassMapping[childMenuItem.icon]}}"></i> {{childMenuItem.name}}</span></a>
+                    </li>
+
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+
+        </ul>
+        <!-- /#side-menu -->
+    </div>
+    <!-- /.sidebar-collapse -->
+</nav>
+<!-- /.navbar-static-side -->

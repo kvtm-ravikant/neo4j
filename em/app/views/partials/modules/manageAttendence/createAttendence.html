@@ -1,0 +1,147 @@
+<div class="row" ng-controller="manageAttendence_createAttendence">
+
+    <!--<div class="col-md-12">
+        <label> Attendence Module </label>
+    </div>-->
+
+<div class="col-lg-12" ng-show="showTimeTable">
+
+    <br/>
+    <div class="col-lg-12">
+        <div class="col-lg-2">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span ng-if="searchQuery.class.name">{{searchQuery.class.name}}/{{searchQuery.class.section}}</span>
+                    <span ng-if="!searchQuery.class.name">Select Class</span>
+
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="class in classList" ><a ng-click="selectClass(class)">{{class.name}}/{{class.section}}</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-2">
+
+            <input type="text" id="attendanceDate" ng-model="date" class="em-datepicker datepicker">
+        </div>
+        <div class="col-sm-1">
+            <span class="fa fa-calendar cursor-pointer" ng-click="openCalender()"></span>
+        </div>
+
+
+
+
+    </div>
+    <hr>
+    <div class="col-lg-12" ng-show="timeTableData.timing">
+        <table align="center" class="table">
+            <div id="head_nav">
+                <tr>
+                    <th>--</th>
+                    <th ng-repeat="week in timeTableData.weeks">
+                        {{ week.day}}
+                    </th>
+                </tr>
+            </div>
+            <tr ng-repeat="time in timeTableData.timing">
+                <th>{{time.startTime}}-{{time.endTime}}</th>
+                <td ng-repeat="current in timeTableData.timeTable" ng-if="current.startTime==time.startTime && current.endTime==time.endTime">
+                <span ng-repeat="week in timeTableData.weeks">
+                    <!--matching week day = current day -->
+
+                    <span ng-if="week.dayID > 0 && week.dayID <= 6">
+                        <span ng-if="week.dayID==current.dayID && week.dayID == todayId">
+                            <!-- If week day = today-->
+                            <span ng-if="current.attFlag == true && current.isBreak == false">
+                                <p ng-click="searchAttendance(current)" class="selected subname">{{current.subjectName}}</p>
+                                <p class="tchname"><i class="fa fa-user fa-fw"></i>{{current.teacherName}}</p>
+                            </span>
+                            <span ng-if="current.attFlag == false && current.isBreak == false">
+                                <p class="subname">{{current.subjectName}}</p>
+                                <p class="tchname"><i class="fa fa-user fa-fw"></i>{{current.teacherName}}</p>
+                            </span>
+                             <span ng-if="current.isBreak == true">
+                                <p> BREAK </p>
+                            </span>
+                        </span>
+                        <span ng-if="week.dayID==current.dayID && week.dayID != todayId">
+                            <span ng-if="current.isBreak == false">
+                                <p class="subname">{{current.subjectName}}</p>
+                                <p class="tchname"><i class="fa fa-user fa-fw"></i>{{current.teacherName}}</p>
+                            </span>
+                             <span ng-if="current.isBreak == true">
+                                <p> BREAK </p>
+                            </span>
+                        </span>
+                    </span>
+                    <!--<span ng-if="week.dayID == 6">
+                        <span ng-if="week.dayID == current.dayID">
+                            <p> Holiday </p>
+                        </span>
+                    </span>-->
+                </span>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+
+</div>
+<div class="information" ng-hide="showTimeTable">
+    <br>
+    <div class="col-md-12">
+        <div class="pull-left">
+                 <span class="infolabel">Concerned Subject : </span><span>  {{ selectedData.subjectName }} </span></br>
+                 <span class="infolabel">Subject Teacher : </span><span> {{ selectedData.teacherName }}  </span></br>
+                 <span class="infolabel">Time Schedule : </span><span> {{ selectedData.startTime }} - {{ selectedData.endTime }} </span></br>
+                 <span class="infolabel">Date(Present) : </span><span>  {{ date }} </span>
+        </div>
+        <div class="pull-right">
+            <div>
+                <button ng-click="toggletable()" class="btn btn-xs btn-primary pull-right">Back</button><br><br>
+                <button ng-click="saveAttendance()" class="btn btn-sm btn-warning pull-right">Save Attendance</button>
+
+                <br>
+                <br>
+                <input class="searchTxtBox ng-pristine ng-valid" type="text" placeholder="Search" ng-model="searchText.$">
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-12 attendencelist">
+        <label class="listhead"> Attendence Register </label>
+
+        <table class="table">
+            <tr>
+                <th>Roll No.</th>
+                <th>Name</th>
+                <th class="center" ><p>
+                    <button ng-click="markAllPresent()" data="attendance_status_all"  class="btn btn-xs attendance_status_all attendance_present attendance_btn">All Present</button><button class="btn  btn-xs btn-success" id="presentCount">{{attendanceAll.present}}</button>
+
+                    <button ng-click="markAllAbsent()" data="attendance_status_all"  class="btn btn-xs attendance_status_all attendance_absent attendance_btn">All Absent</button><button class="btn  btn-xs btn-danger" id="absentCount">{{attendanceAll.absent}}</button>
+
+                    <button ng-click="markAllLeave()" data="attendance_status_all"   class="btn btn-xs attendance_status_all attendance_leave attendance_btn">All Leave</button><button class="btn  btn-xs btn-warning" id="leaveCount">{{attendanceAll.leave}}</button>
+                </p>
+                </th>
+                <th>Comments</th>
+                <th class="center"><button ng-click="clearAllComment()" data="attendance_status_all" class="btn btn-xs ">Clear all</button></th>
+            </tr>
+            <tr ng-repeat="student in students | filter:searchText">
+                <td> {{ student.rollNo}} </td>
+                <td> {{ student.name}} </td>
+                <td >
+                    <button ng-click="markPresent(student)" data="attendance_status_1" class="btn btn-xs attendance_status_1 attendance_present attendance_btn" ng-class="{'btn-success':student.attendance==1}">Present</button>
+                    <button ng-click="markAbsent(student)" data="attendance_status_1" class="btn btn-xs attendance_status_1 attendance_absent attendance_btn" ng-class="{'btn-danger':student.attendance==0}">Absent</button>
+                    <button ng-click="markLeave(student)" data="attendance_status_1" class="btn btn-xs attendance_status_1 attendance_leave attendance_btn" ng-class="{'btn-warning':student.attendance==2}">Leave</button>
+                </td>
+                <td ><textarea rows=1 data="0" ng-model="student.comment">{{ student.comment}}</textarea></td>
+                <td class="center"><button onclick="resetAttendanceButton('attendance_status_1')" data="attendance_status_1" class="btn btn-xs attendance_status_1 " ng-click="clearComment( student)">Clear</button></td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+</div>
