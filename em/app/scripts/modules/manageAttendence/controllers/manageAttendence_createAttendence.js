@@ -2,6 +2,7 @@
 
 educationMediaApp.controller('manageAttendence_createAttendence', function ($scope, $http,iconClassMapping) {
     $scope.showTimeTable=true;
+
     var d = new Date();
     $('.datepicker').datepicker(
         {format: 'dd/mm/yyyy',
@@ -72,7 +73,7 @@ educationMediaApp.controller('manageAttendence_createAttendence', function ($sco
             $('#errorModal').modal('show');
         }else{
             console.log("$scope.date",$scope.date);
-            $scope.selectDate($scope.date,current.startTime);
+            $scope.selectDate($scope.date,current.sta rtTime);
 
             $scope.searchQuery.timetable=current;
             console.log('$scope.searchQuery',$scope.searchQuery);
@@ -172,6 +173,12 @@ educationMediaApp.controller('manageAttendence_createAttendence', function ($sco
         }
         $scope.attendanceAll={ present : 0,absent :0,leave : loopLen};
     }
+    $scope.enableSMSForAll=function(){
+        for(var i= 0,loopLen=$scope.students.length;i<loopLen;i++){
+            $scope.students[i].isSMSEnabled=$scope.isSMSEnabledForAll;
+
+        }
+    }
     $scope.clearComment=function(model){
         console.log("comment",model);
         model.comment="";
@@ -187,8 +194,8 @@ educationMediaApp.controller('manageAttendence_createAttendence', function ($sco
 
     }
     $scope.saveAttendance=function(){
-
-        var saveObj={"selectedData":$scope.selectedData,"attendanceData":$scope.students,"timestamp":$scope.searchQuery.timestamp};
+        $scope.selectedData.date=$scope.date;
+        var saveObj={"selectedData":$scope.selectedData,"attendanceData":$scope.students,"class":$scope.searchQuery.class,"timestamp":$scope.searchQuery.timestamp};
         console.log("saveObj",saveObj);
         $http({
             method : 'POST',

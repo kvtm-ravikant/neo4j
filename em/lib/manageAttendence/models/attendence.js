@@ -5,10 +5,10 @@
 var attendenceValMap={
     "1":"Present",
     "0":"Absent",
-    "2":"Leave",
+    "2":"on Leave",
     "3":"Holiday"
 };
-
+var requestOBJ = require('request');
 var neo4j=require("node-neo4j");
 var Utils=require("../../common/Utils/Utils.js");
 var db=new neo4j("http://localhost:7474");
@@ -18,19 +18,44 @@ module.exports.saveAttendance=function(req,res,saveObj){
     console.log("Inside saveAttendance");
     var responseObj=new Utils.ResponseObj();
     var timetableId=saveObj.selectedData._id;
+    var classObj=saveObj.class;
     if(saveObj.selectedData.attFlag){
         var successList=[];
         var failedList=[];
         for(var i= 0,loopLen=saveObj.attendanceData.length;i<loopLen;i++){
             var student=saveObj.attendanceData[i];
             (function(count,stud){
+                if(stud.isSMSEnabled){
+                    var smsMsg="";
+                    smsMsg+=stud.name+" is "+attendenceValMap[stud.attendance] +" for "+saveObj.selectedData.date+"|"+classObj.name+"/"+classObj.section+"|"+saveObj.selectedData.subjectName+"|"+saveObj.selectedData.startTime+"-"+saveObj.selectedData.endTime+"\n";
+                    if(stud.comment)
+                        smsMsg+="Note:"+stud.comment;
+
+                    var contactNum=stud.contactNum;
+                    console.log("smsMsg",smsMsg,contactNum);
+                    if(contactNum){
+                        var url='http://msg.ducistech.com/sendhttp.php?user=49917&password=4729105&mobiles='+contactNum+'&message='+smsMsg+'&sender=seerid';
+                        requestOBJ(url,function(error, response, html){
+                            if(!error){
+                                console.log("Success in sending msg :",smsMsg,error);
+                                //console.log('response',response);
+                                //console.log('html',html);
+                            }else{
+                                console.log("error in sending msg :",smsMsg,error);
+                            }
+
+                        });
+                    }
+                }
+
                 var relationType="ATTENDANCE_OF";
                 var relationObj={
                     "timestamp":saveObj.timestamp,
                     "attendance":stud.attendance,
-                    "comment":stud.comment
+                    "comment":stud.comment,
+                    "smsMsg":smsMsg
                 };
-                console.log("before Insert relation",i,"---",timetableId,stud.id,relationType,relationObj);
+                //console.log("before Insert relation",i,"---",timetableId,stud.id,relationType,relationObj);
                 var selectRelation='START n=node('+timetableId+') MATCH (a:Timetable)-[rels:ATTENDANCE_OF]-(b:User)WHERE rels.timestamp='+relationObj.timestamp+' AND b.regID="'+stud.rollNo+'" RETURN rels';
                 db.cypherQuery(selectRelation,function(err,relations){
                     console.log("selectRelation",err,relations);
@@ -53,7 +78,7 @@ module.exports.saveAttendance=function(req,res,saveObj){
                             }
                         });
                     }
-                })
+                });
 
             })(i,student);
         }
@@ -80,11 +105,12 @@ module.exports.searchAttendance=function(req,res,searchObj){
     var timestamp=searchObj.timestamp;
     var timetableId=searchObj.timetable._id;
     var searchQuery='START class=node('+classId+'),timetable=node('+timetableId+') ' +
-                    'MATCH class-[r1:STUDENT_OF]->student ' +
+                    'MATCH class-[r1:STUDENT_OF]-student ' +
                     'WITH class, r1, student ' +
                     'ORDER BY student.regID ' +
                     'MATCH timetable-[r2:ATTENDANCE_OF{timestamp:'+timestamp+'}]->student ' +
-                    'RETURN  student, r2;';
+                    'WITH  student, r2 '+
+                    'MATCH (parent)-[:`PRIMARY_GUARDIAN_OF`]-(student) WITH student,parent,r2 MATCH (parent)-[:CONTACT_OF]-(c:Contact) RETURN student,r2,c;';
     console.log("searchQuery",searchQuery);
     db.cypherQuery(searchQuery,function(err,searchResult){
         //console.log(err,searchResult);
@@ -96,7 +122,9 @@ module.exports.searchAttendance=function(req,res,searchObj){
             for(var i= 0,loopLen=searchResult.data.length;i<loopLen;i++){
                 var student=searchResult.data[i][0];
                 var relation=searchResult.data[i][1];
-                console.log("data",student,relation);
+                var contact=searchResult.data[i][2];
+
+                console.log("data",student,relation,contact);
                 if(relation.attendance==1){present++};
                 if(relation.attendance==0){absent++};
                 if(relation.attendance==2){leave++};
@@ -107,7 +135,8 @@ module.exports.searchAttendance=function(req,res,searchObj){
                     "name":student.firstName+" "+student.middleName+" "+student.lastName,
                     "rollNo":student.regID,
                     "attendance":relation.attendance, //0-absent,1-present,2-leave
-                    "comment":relation.comment
+                    "comment":relation.comment,
+                    "contactNum":contact.phonePrimary
                 }
                 studentList.push(obj);
             }
@@ -117,18 +146,23 @@ module.exports.searchAttendance=function(req,res,searchObj){
             responseObj.data=retObj;
             res.json(responseObj);
         }else{
-            var studentQuery='START class=node('+classId+') MATCH class-[r:`STUDENT_OF`]->(b:User{userType:"student"}) RETURN b ORDER BY b.regID ';
+            var studentQuery='START class=node('+classId+') MATCH class-[r:`STUDENT_OF`]->(b:User{userType:"1"}) WITH b ORDER BY b.regID '+
+                'MATCH (parent)-[:`PRIMARY_GUARDIAN_OF`]-(b) WITH b,parent MATCH (parent)-[r1:CONTACT_OF]-(c:Contact) RETURN b,c;';
+            console.log("studentQuery",studentQuery);
             db.cypherQuery(studentQuery,function(err,result){
+
                 if(result && result.data.length>0){
                     var studentList=[];
                     for(var i= 0,loopLen=result.data.length;i<loopLen;i++){
-                        var data=result.data[i];
+                        var student=result.data[i][0];
+                        var contact=result.data[i][1];
                         var obj= {
-                            "id":data._id,
-                            "name":data.firstName+" "+data.middleName+" "+data.lastName,
-                            "rollNo":data.regID,
+                            "id":student._id,
+                            "name":student.firstName+" "+student.middleName+" "+student.lastName,
+                            "rollNo":student.regID,
                             "attendance":1, //0-absent,1-present,2-leave
-                            "comment":""
+                            "comment":"",
+                            "contactNum":contact.phonePrimary
                         }
                         studentList.push(obj);
                     }

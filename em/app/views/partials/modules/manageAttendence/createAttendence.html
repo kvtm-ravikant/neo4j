@@ -93,6 +93,7 @@
     <br>
     <div class="col-md-12">
         <div class="pull-left">
+                 <span class="infolabel">Class/Section : </span><span>  {{ searchQuery.class.name }}/{{ searchQuery.class.section }} </span></br>
                  <span class="infolabel">Concerned Subject : </span><span>  {{ selectedData.subjectName }} </span></br>
                  <span class="infolabel">Subject Teacher : </span><span> {{ selectedData.teacherName }}  </span></br>
                  <span class="infolabel">Time Schedule : </span><span> {{ selectedData.startTime }} - {{ selectedData.endTime }} </span></br>
@@ -128,6 +129,7 @@
                 </th>
                 <th>Comments</th>
                 <th class="center"><button ng-click="clearAllComment()" data="attendance_status_all" class="btn btn-xs ">Clear all</button></th>
+                <th class="center"><input type="checkbox" ng-change="enableSMSForAll()" ng-model="isSMSEnabledForAll" />Enable SMS</th>
             </tr>
             <tr ng-repeat="student in students | filter:searchText">
                 <td> {{ student.rollNo}} </td>
@@ -139,6 +141,7 @@
                 </td>
                 <td ><textarea rows=1 data="0" ng-model="student.comment">{{ student.comment}}</textarea></td>
                 <td class="center"><button onclick="resetAttendanceButton('attendance_status_1')" data="attendance_status_1" class="btn btn-xs attendance_status_1 " ng-click="clearComment( student)">Clear</button></td>
+                <td class="center"><input type="checkbox" ng-model="student.isSMSEnabled"/></td>
             </tr>
 
         </table>

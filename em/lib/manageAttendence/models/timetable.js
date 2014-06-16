@@ -23,10 +23,7 @@ module.exports.getTimeTable=function(req,res,classId){
                 d['subjectName']=subjectMap[(timeTableData[i].subjectId).toString()];
                 d.startTime=Utils.timestampToTime(d.startTime);
                 d.endTime=Utils.timestampToTime(d.endTime);
-                //console.log("d",d,(timeTableData[i].subjectId).toString());
-                if(d['dayID']=="2"){
-                    timing.push({"startTime":d.startTime,"endTime":d.endTime});
-                }
+
                 timeTableData[i]=d;
                 console.log("--->", d.dayID, d.startTime);
             }

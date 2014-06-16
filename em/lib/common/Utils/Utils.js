@@ -30,17 +30,22 @@ module.exports.csvToArray=function (S,F,R)
     return A;
 }
 module.exports.convertToTimeStamp=function (time){
-    var str="10/10/2013 "+time;
-    var date=new Date(str);
-    return Number(date);
+    var timeArr=time.split(":");
+    var hrs= 0,mins=0;
+    timeArr.length>0?hrs=timeArr[0]:0;
+    timeArr.length>1?mins=timeArr[1]:0;
+    return Date.UTC(2013, 10, 10, hrs, mins, 0);
 }
 module.exports.timestampToTime=function (ts){
     var date=new Date(ts);
-    var time=date.getHours()+":"+date.getMinutes()
+    var time=zeroPad(date.getHours())+":"+zeroPad(date.getMinutes());
     return time;
 }
 module.exports.ResponseObj=function(){
     this.error=false;
     this.msg="";
     this.returnData=null;
+}
+function zeroPad(num){
+    return num<10?"0"+num:num; //appends zero to numbers less than 10 in dates
 }

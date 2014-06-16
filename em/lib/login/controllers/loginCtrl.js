@@ -18,8 +18,8 @@ module.exports=function(app){
             console.log("selectQuery login",err,result,result.data.length);
             if( result && result.data.length>0){
                 var user=result.data[0];
-                console.log("logged In User",user);
-                if(user.hashedPassword==password){
+                console.log("logged In User",user.userName,user.hashPassword);
+                if(user.hashPassword==password){
                     req.session.userData=user;
                     res.redirect("/index");
                 }else{
