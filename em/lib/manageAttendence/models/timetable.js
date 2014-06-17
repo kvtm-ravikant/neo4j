@@ -23,9 +23,11 @@ module.exports.getTimeTable=function(req,res,classId){
                 d['subjectName']=subjectMap[(timeTableData[i].subjectId).toString()];
                 d.startTime=Utils.timestampToTime(d.startTime);
                 d.endTime=Utils.timestampToTime(d.endTime);
-
+                //console.log("d",d,(timeTableData[i].subjectId).toString());
+                if(d['dayID']=="2"){
+                    timing.push({"startTime":d.startTime,"endTime":d.endTime});
+                }
                 timeTableData[i]=d;
-                console.log("--->", d.dayID, d.startTime);
             }
 
         }
@@ -37,6 +39,16 @@ module.exports.getTimeTable=function(req,res,classId){
         console.log("returnObj",timing);
         res.json((returnObj));
     });
+   /* var dateUTC=new Date(date.valueOf() + date.getTimezoneOffset() * 60000);
+    var IST = new Date(date); // Clone UTC Timestamp
+    IST.setHours(dateUTC.getHours() + 5); // set Hours to 5 hours later
+    IST.setMinutes(dateUTC.getMinutes() + 30);
+    var getCountOfPresent='START class=node('+classId+') '+
+                          'MATCH (class)-[r:`TIMETABLE_OF`]->(timeTable:Timetable{dayID:6,attFlag:true}) '+
+                          'WITH timeTable '+
+                          'MATCH (timeTable)-[attendance:`ATTENDANCE_OF`]->(student) '+
+                          'RETURN count(*)';*/
+
 }
 
 

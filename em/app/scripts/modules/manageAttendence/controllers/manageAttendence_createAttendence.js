@@ -73,7 +73,7 @@ educationMediaApp.controller('manageAttendence_createAttendence', function ($sco
             $('#errorModal').modal('show');
         }else{
             console.log("$scope.date",$scope.date);
-            $scope.selectDate($scope.date,current.sta rtTime);
+            $scope.selectDate($scope.date,current.startTime);
 
             $scope.searchQuery.timetable=current;
             console.log('$scope.searchQuery',$scope.searchQuery);
