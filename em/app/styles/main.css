@@ -11,13 +11,13 @@ td {
   margin: 0;
   text-align: center;
   border-collapse: collapse;
-  outline: 1px solid #e3e3e3;
+  outline: 0px solid #e3e3e3;
 }
 th + th{
-    outline: 1px solid #e3e3e3;
+    outline: 0px solid #e3e3e3;
 }
 td + td{
-    outline: 1px solid #e3e3e3;
+    outline: 0px solid #e3e3e3;
 }
 td {
   padding: 5px 10px;
@@ -561,6 +561,16 @@ textarea{
     cursor:pointer;
 }
 
+@media (max-width: 400px){
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 8px;
+        line-height: 1.428571429;
+        vertical-align: top;
+        border-top: 1px solid #dddddd;
+        text-align: right;
+    }
+}
+
 @media
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
@@ -612,10 +622,14 @@ only screen and (max-width: 760px),
         padding-left: 50%;
     }
 
-    .table td:before {
-        /* Now like a table header */
+    .table thead.theadclass tr {
         position: absolute;
-        /* Top/left values mimic padding */
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .table td:before {
+        position: absolute;
         top: 6px;
         left: 6px;
         width: 45%;
@@ -626,14 +640,22 @@ only screen and (max-width: 760px),
     /*
     Label the data
     */
-  /*  td:nth-of-type(1):before { content: "First Name"; }
-    td:nth-of-type(2):before { content: "Last Name"; }
-    td:nth-of-type(3):before { content: "Job Title"; }
-    td:nth-of-type(4):before { content: "Favorite Color"; }
-    td:nth-of-type(5):before { content: "Wars of Trek?"; }
-    td:nth-of-type(6):before { content: "Porn Name"; }
-    td:nth-of-type(7):before { content: "Date of Birth"; }
-    td:nth-of-type(8):before { content: "Dream Vacation City"; }
-    td:nth-of-type(9):before { content: "GPA"; }
-    td:nth-of-type(10):before { content: "Arbitrary Data"; }*/
+    #timeTable td:nth-of-type(1):before { content: "Monday : "; text-align: left; }
+    #timeTable td:nth-of-type(2):before { content: "Tuesday : ";  text-align: left; }
+    #timeTable td:nth-of-type(3):before { content: "Wednesday : ";  text-align: left; }
+    #timeTable td:nth-of-type(4):before { content: "Thursday : ";  text-align: left; }
+    #timeTable td:nth-of-type(5):before { content: "Friday : ";  text-align: left; }
+    #timeTable td:nth-of-type(6):before { content: "Saturday : ";  text-align: left; }
+
+    #takeattendence td:nth-of-type(1):before { content: "Roll No. : "; text-align: left; }
+    #takeattendence td:nth-of-type(2):before { content: "Name : ";  text-align: left; }
+    #takeattendence td:nth-of-type(3):before { content: "Attendence : ";  text-align: left; }
+    #takeattendence td:nth-of-type(4):before { content: "Comments : ";  text-align: left; }
+    #takeattendence td:nth-of-type(5):before { content: "Clear : ";  text-align: left; }
+    #takeattendence td:nth-of-type(6):before { content: "Enable SMS : ";  text-align: left; }
+
+}
+
+.form-horizontal .control-label {
+    text-align: left;
 }

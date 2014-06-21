@@ -35,14 +35,16 @@
     </div>
     <hr>
     <div class="col-lg-12" ng-show="timeTableData.timing">
-        <table align="center" class="table">
+        <table align="center" class="table" id="timeTable">
             <div id="head_nav">
+                <thead class="theadclass">
                 <tr>
                     <th>--</th>
                     <th ng-repeat="week in timeTableData.weeks">
                         {{ week.day}}
                     </th>
                 </tr>
+                </thead>
             </div>
             <tr ng-repeat="time in timeTableData.timing">
                 <th>{{time.startTime}}-{{time.endTime}}</th>
@@ -115,7 +117,8 @@
     <div class="col-md-12 attendencelist">
         <label class="listhead"> Attendence Register </label>
 
-        <table class="table">
+        <table class="table" id="takeattendence">
+            <thead class="theadclass">
             <tr>
                 <th>Roll No.</th>
                 <th>Name</th>
@@ -131,6 +134,8 @@
                 <th class="center"><button ng-click="clearAllComment()" data="attendance_status_all" class="btn btn-xs ">Clear all</button></th>
                 <th class="center"><input type="checkbox" ng-change="enableSMSForAll()" ng-model="isSMSEnabledForAll" />Enable SMS</th>
             </tr>
+            </thead>
+            <tbody>
             <tr ng-repeat="student in students | filter:searchText">
                 <td> {{ student.rollNo}} </td>
                 <td> {{ student.name}} </td>
@@ -143,7 +148,7 @@
                 <td class="center"><button onclick="resetAttendanceButton('attendance_status_1')" data="attendance_status_1" class="btn btn-xs attendance_status_1 " ng-click="clearComment( student)">Clear</button></td>
                 <td class="center"><input type="checkbox" ng-model="student.isSMSEnabled"/></td>
             </tr>
-
+            </tbody>
         </table>
     </div>
 </div>
