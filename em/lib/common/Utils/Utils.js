@@ -15,6 +15,7 @@ module.exports.convertToTimeStamp=function (time){
     timeArr.length>2?secs=timeArr[2]:0;
     return Date.UTC(2013, 10, 10, hrs, mins, secs);
 }
+
 module.exports.timestampToTime=function (ts){
     var date=new Date(ts);
     var time=zeroPad(date.getHours())+":"+zeroPad(date.getMinutes());
@@ -143,14 +144,6 @@ function emTrim(str){
     return str;
 }
 
-function isValidDataSetColumnName(str){
-    if(!str)return false;
-
-    //var columnNameFormatRegex = new RegExp(/^[a-zA-Z]+_[a-zA-Z]+$/);
-    var columnNameFormatRegex = new RegExp(/^[a-zA-Z][a-zA-Z0-9]+_[a-zA-Z]+$/);
-    var match=columnNameFormatRegex.exec(str);
-    return match!=null;
-}
 function isValidScientificNum(str){
     if(!str && str!='0')return false;
     var scientificNum = new RegExp(/^(([-+]?\d+)|([-+]?\d+,\d+)|([-+]?\d+,\d+.\d+)|([-+]?\d*.\d+)|([-+]?\d*.\d+[eE][-+]?\d+)|([-+]?\d*,\d+.\d+[eE][-+]?\d+))$/);
@@ -208,7 +201,7 @@ function defaultErrorResponse(res,msg){
     }
     res.json(responseObj);
 }
-function ddmmyyyyStrToDate(dateValue){
+function ddmmyyyyStrToTimeStamp(dateValue){
     var dateValueArr=dateValue.split(" ");
     var returnDate=null;
     if(dateValueArr && dateValueArr.length>0){
@@ -234,7 +227,7 @@ function ddmmyyyyStrToDate(dateValue){
             }
         }
         if(day!=NaN && month!=NaN && year!=NaN){
-            var returnDate=new Date(Date.UTC(year, month, day, hrs, mins, secs));
+            var returnDate=Date.UTC(year, month, day, hrs, mins, secs);
         }
     }
     return returnDate;
@@ -245,11 +238,10 @@ module.exports.clone = clone;
 module.exports.csvToArray = csvToArray;
 module.exports.convertDateToMMDDYY = convertDateToMMDDYY;
 module.exports.emTrim = emTrim;
-module.exports.isValidDataSetColumnName = isValidDataSetColumnName;
 module.exports.isValidScientificNum = isValidScientificNum;
 module.exports.isValidDDMMYY = isValidDDMMYY;
 module.exports.isValidDDMMYYWithOptionalTime = isValidDDMMYYWithOptionalTime;
 module.exports.Response = createResponse;
 module.exports.defaultErrorMsg = "OOPs... Something went wrong.";
 module.exports.defaultErrorResponse = defaultErrorResponse;
-module.exports.ddmmyyyyStrToDate = ddmmyyyyStrToDate;
+module.exports.ddmmyyyyStrToTimeStamp = ddmmyyyyStrToTimeStamp;

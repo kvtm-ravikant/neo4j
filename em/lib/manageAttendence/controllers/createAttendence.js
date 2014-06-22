@@ -30,5 +30,14 @@ module.exports=function(app,Utils){
        var searchQueryObj=req.body;
         attendence.searchAttendance(req,res,searchQueryObj);
     });
+    app.post("/manageAttendance/getStudentParentReport",Utils.ensureAuthenticated,function(req,res){
+       var requestObj=req.body;
+
+        attendence.getStudentParentReport(req,res,requestObj);
+    });
+    app.post("/manageAttendance/getTeacherReport",Utils.ensureAuthenticated,function(req,res){
+       var requestObj=req.body;
+        attendence.getTeacherReport(req,res,requestObj);
+    });
 
 };

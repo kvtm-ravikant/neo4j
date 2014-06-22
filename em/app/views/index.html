@@ -34,8 +34,8 @@
         <div ng-include="'partials/sideNavBar'"></div>
         <div id="page-wrapper">
             <div ng-include="'partials/breadcrumb'"></div>
-            <!--<div  ng-include="'partials/main'" ng-controller="MainCtrl" ></div>-->
-            <div ng-view></div>
+            <br>
+            <div ui-view></div>
         </div>
 
     </div>
@@ -108,6 +108,7 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-bootstrap-datepicker/dist/angular-bootstrap-datepicker.js"></script>
     <script src="bower_components/angular-bootstrap-datepicker/dist/angular-bootstrap-datepicker.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -122,10 +123,13 @@
         <script src="scripts/controllers/navbar.js"></script>
         <script src="scripts/controllers/sideNavBar.js"></script>
         <script src="scripts/controllers/breadcrumb.js"></script>
+        <script src="scripts/modules/dashboard/controllers/dashboard.js"></script>
         <script src="scripts/modules/manageUsers/controllers/userProfileClient.js"></script>
         <script src="scripts/modules/manageUsers/controllers/manageUserClient.js"></script>
         <script src="scripts/modules/manageOrg/controllers/manageOrg_createOrg.js"></script>
         <script src="scripts/modules/manageAttendence/controllers/manageAttendence_createAttendence.js"></script>
+        <script src="scripts/modules/manageAttendence/controllers/studentReport.js"></script>
+        <script src="scripts/modules/manageAttendence/controllers/teacherReport.js"></script>
         <!-- endbuild -->
 </body>
 </html>

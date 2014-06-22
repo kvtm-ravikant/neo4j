@@ -1,25 +1,23 @@
 <div  class="row" ng-controller="user_profile">
   <div class="col-md-12">
   <div class="row">
-      <div class="col-sm-10"><h1>Ravikant Sinha</h1></div>
+      <div class="col-sm-10"><h1 >{{userDetails.basicDetails.firstName}} {{userDetails.basicDetails.middleName}} {{userDetails.basicDetails.lastName}}</h1></div>
       <div class="col-sm-2"><a href="/users" class="pull-right">
                <i class="fa fa-user fa-fw" style="font-size:80px;"></i>
       </a>
       </div>
   </div>
   <div class="row">
-  <div class="col-sm-3"><!--left col-->
+  <div class="col-sm-3" ng-repeat="(detailType,details) in userDetails"><!--left col-->
 
       <ul class="list-group">
-          <li class="list-group-item text-muted">Profile</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>CLass</strong></span> V1 A</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Phn no</strong></span> 9768861105</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Type</strong></span> Student</li>
-
+          <li class="list-group-item text-muted">{{detailType.camelCaseToWord()}}</li>
+          <li class="list-group-item text-right" ng-repeat="(key,value) in details"><span class="pull-left"><strong>{{key.camelCaseToWord()}}</strong></span> {{value}}</li>
       </ul>
 
   </div><!--/col-3-->
-  <div class="col-sm-9">
+
+ <!-- <div class="col-sm-9">
 
   <ul class="nav nav-tabs" id="myTab">
       <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
@@ -141,9 +139,9 @@
                   <ul class="pagination" id="myPager"></ul>
               </div>
           </div>
-      </div><!--/table-resp-->
+      </div>&lt;!&ndash;/table-resp&ndash;&gt;
 
-  </div><!--/tab-pane-->
+  </div>&lt;!&ndash;/tab-pane&ndash;&gt;
   <div class="tab-pane" id="home">
 
 
@@ -181,7 +179,7 @@
       </form>
 
 
-  </div><!--/tab-pane-->
+  </div>&lt;!&ndash;/tab-pane&ndash;&gt;
   <div class="tab-pane" id="settings">
 
       <form class="form" action="##" method="post" id="registrationForm">
@@ -252,8 +250,8 @@
       </form>
   </div>
 
-  </div><!--/tab-pane-->
-  </div><!--/tab-content-->
+  </div>&lt;!&ndash;/tab-pane&ndash;&gt;
+  </div>&lt;!&ndash;/tab-content&ndash;&gt;-->
 
   </div><!--/col-9-->
   </div><!--/row-->

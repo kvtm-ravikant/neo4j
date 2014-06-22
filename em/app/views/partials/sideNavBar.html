@@ -1,7 +1,7 @@
 <nav class="navbar-default navbar-static-side" role="navigation" ng-controller="SideNavBarCtrl" >
     <div class="sidebar-collapse">
         <ul class="nav" id="side-menu">
-            <!--<li class="sidebar-search">
+            <li class="sidebar-search">
                 <div class="input-group custom-search-form">
                     <input type="text" class="form-control" placeholder="Search...">
                             <span class="input-group-btn">
@@ -10,17 +10,18 @@
                                 </button>
                             </span>
                 </div>
-                &lt;!&ndash; /input-group &ndash;&gt;
-            </li>-->
-            <li ng-repeat="menuItem in menu" ng-click="toggleMenu(menuItem.collapse)">
-                <a href="{{menuItem.link}}" title="{{menuItem.title}}"><i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}}<span class="fa arrow"></span></a>
+                <!-- /input-group -->
+            </li>
+            <li ng-repeat="menuItem in menu" ng-click="toggleMenu(menuItem.collapse)" >
+                <a ui-sref="{{menuItem.state}}" ng-class="{active: $state.includes(menuItem.state)}"><i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}}</a>
+                <!-- /.nav-second-level -->
                 <ul class="nav nav-second-level" ng-if="menuItem.childLinks" >
                     <li ng-repeat="childMenuItem in menuItem.childLinks" ng-hide="menuItem.collapse">
-                        <a href="{{childMenuItem.link}}" title="{{childMenuItem.title}}"><i class="{{iconClassMapping[childMenuItem.icon]}}"></i> {{childMenuItem.name}}</span></a>
+                        <a ui-sref="{{childMenuItem.state}}" ><i class="{{iconClassMapping[childMenuItem.icon]}}"></i> {{childMenuItem.name}}</span></a>
                     </li>
 
                 </ul>
-                <!-- /.nav-second-level -->
+
             </li>
 
         </ul>

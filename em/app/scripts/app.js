@@ -1,9 +1,51 @@
 'use strict';
 angular.module("dashboard",[]);
 angular.module("manageUsers",[]);
-var educationMediaApp=angular.module('educationMediaApp', ['ngResource','ngRoute','ng-bootstrap-datepicker']);
+var educationMediaApp=angular.module('educationMediaApp', ['ngResource','ng-bootstrap-datepicker','ui.router'])
+    .run(
+        [          '$rootScope', '$state', '$stateParams',
+            function ($rootScope,   $state,   $stateParams) {
+
+                // It's very handy to add references to $state and $stateParams to the $rootScope
+                // so that you can access them from any scope within your applications.For example,
+                // <li ui-sref-active="active }"> will set the <li> // to active whenever
+                // 'contacts.list' or one of its decendents is active.
+                $rootScope.$state = $state;
+                $rootScope.$stateParams = $stateParams;
+            }
+        ]
+    );
 
 $(document).ready(function(){
+    //adding some helper methods or overriding with prototype in existing functionalities provided by Javascript
+    /*
+     * @param replaceThis:string
+     * @param withThis: string
+     * @desc:adding replace all method to string
+     */
+    String.prototype.replaceAll = function (replaceThis, withThis) {
+        var re = new RegExp(replaceThis,"g");
+        return this.replace(re, withThis);
+    };
+    /*
+     * @param index:integer number
+     * @param item: object/string
+     * @desc:inserts item to given index in an array
+     */
+    Array.prototype.insert = function (index, item) {
+        this.splice(index, 0, item);
+    };
+    /*
+     * @desc:converts camecase string into string seperated with spaces
+     */
+    String.prototype.camelCaseToWord = function() {
+        // Preceed Uppercase (or sets of) with commas then remove any leading comma
+        var delimited = this.replace(/([A-Z]+)/g, ",$1").replace(/^,/, "");
+        // Split the string on commas and return the array
+        var str=delimited.split(",").join(" ");
+        str=str.charAt(0).toUpperCase()+str.substr(1,str.length);
+        return str;
+    };
     $('#side-menu').metisMenu();
     if ($(this).width() < 768) {
         $('div.sidebar-collapse').addClass('collapse')

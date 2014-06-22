@@ -12,7 +12,7 @@ var requestOBJ = require('request');
 var neo4j=require("node-neo4j");
 var Utils=require("../../common/Utils/Utils.js");
 var db=new neo4j("http://localhost:7474");
-
+var subjectMap=require("../../common/models/Subject.js");
 
 module.exports.saveAttendance=function(req,res,saveObj){
     console.log("Inside saveAttendance");
@@ -183,6 +183,111 @@ module.exports.searchAttendance=function(req,res,searchObj){
 };
 
 
-module.exports.getStudentsData=function (req,res){
+module.exports.getStudentParentReport=function (req,res,requestObj){
+  var responseObj=new Utils.Response();
+
+  var startTimeStamp=Utils.ddmmyyyyStrToTimeStamp(requestObj.startDate);
+  var endTimeStamp=Utils.ddmmyyyyStrToTimeStamp(requestObj.endDate);
+  var userDetails=req.session.userDetails;
+  console.log("userDetails.userType",userDetails,userDetails.basicDetails.userType);
+  var userName=userDetails.basicDetails.userName;
+  var query="";
+  if(userDetails.basicDetails.userType==3){
+      query='MATCH (parent{userName:"'+userName+'"})-[:`PRIMARY_GUARDIAN_OF`]-(student) WITH parent,student MATCH (timetable)-[r:`ATTENDANCE_OF`]->(student) WHERE r.timestamp>='+startTimeStamp+' AND r.timestamp<='+endTimeStamp+' RETURN timetable,r';
+  }else if(userDetails.basicDetails.userType==1){
+      query='MATCH (a)-[r:`ATTENDANCE_OF`]->(b{userName:"'+userName+'"}) WHERE r.timestamp>='+startTimeStamp+' AND r.timestamp<='+endTimeStamp+'  RETURN a,r';
+  }
+  console.log("query",query);
+  if(query!=""){
+      db.cypherQuery(query,function(err,result){
+          console.log(err,result);
+          if(result && result.data.length>0){
+              var attendanceMap={};
+              for(var i= 0,loopLen=result.data.length;i<loopLen;i++){
+                  var timetable=result.data[i][0];
+                  var relationAttendance=result.data[i][1];
+                  var key=relationAttendance.attendance;
+                  var obj= {
+                      "teacherName":timetable.teacherName,
+                      "subject":subjectMap[(timetable.subjectId).toString()],
+                      "startTime":Utils.timestampToTime(timetable.startTime),
+                      "endTime":Utils.timestampToTime(timetable.endtTime),
+                      "comment":relationAttendance.comment,
+                      "timestamp":relationAttendance.timestamp,
+                  }
+                  if(attendanceMap.hasOwnProperty(key)){
+                      attendanceMap[key].push(obj);
+                  }else{
+                      attendanceMap[key]=[obj];
+                  }
+
+              }
+              responseObj.responseData=attendanceMap;
+              res.json(responseObj);
+          }else{
+              responseObj.error=true;
+              responseObj.errorMsg="No Results found."
+              res.json(responseObj);
+          }
+      });
+  }else{
+      responseObj.error=true;
+      responseObj.errorMsg="User is not authorized to view this report."
+      res.json(responseObj);
+  }
+
+}
+
+module.exports.getTeacherReport=function (req,res,requestObj){
+  var responseObj=new Utils.Response();
+
+  var startTimeStamp=Utils.ddmmyyyyStrToTimeStamp(requestObj.startDate);
+  var endTimeStamp=Utils.ddmmyyyyStrToTimeStamp(requestObj.endDate);
+  var classObj=requestObj.class;
+  var userDetails=req.session.userDetails;
+  console.log("userDetails.userType",userDetails,userDetails.basicDetails.userType);
+  var userName=userDetails.basicDetails.userName;
+  var query="";
+  if(userDetails.basicDetails.userType==2){
+      query='MATCH (a{name:"'+classObj.name+'",section:"'+classObj.section+'"})-[:`STUDENT_OF`]->(b) WITH b MATCH (c)-[r:`ATTENDANCE_OF`]->(b) WHERE r.timestamp>=1402906200000  RETURN  c,r';
+  }
+  console.log("query",query);
+  if(query!=""){
+      db.cypherQuery(query,function(err,result){
+          console.log(err,result);
+          if(result && result.data.length>0){
+              var attendanceMap={};
+              for(var i= 0,loopLen=result.data.length;i<loopLen;i++){
+                  var timetable=result.data[i][0];
+                  var relationAttendance=result.data[i][1];
+                  var key=relationAttendance.attendance;
+                  var obj= {
+                      "teacherName":timetable.teacherName,
+                      "subject":subjectMap[(timetable.subjectId).toString()],
+                      "startTime":Utils.timestampToTime(timetable.startTime),
+                      "endTime":Utils.timestampToTime(timetable.endtTime),
+                      "comment":relationAttendance.comment,
+                      "timestamp":relationAttendance.timestamp,
+                  }
+                  if(attendanceMap.hasOwnProperty(key)){
+                      attendanceMap[key].push(obj);
+                  }else{
+                      attendanceMap[key]=[obj];
+                  }
+
+              }
+              responseObj.responseData=attendanceMap;
+              res.json(responseObj);
+          }else{
+              responseObj.error=true;
+              responseObj.errorMsg="No Results found."
+              res.json(responseObj);
+          }
+      });
+  }else{
+      responseObj.error=true;
+      responseObj.errorMsg="User is not authorized to view this report."
+      res.json(responseObj);
+  }
 
 }

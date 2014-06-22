@@ -16,7 +16,7 @@ module.exports=function(app,Utils){
             responseObj.responseData=userDetails;
             res.json(responseObj);
         }catch(e){
-            Utils.defaultErrorResponse(res,"Unable to get user details.")
+            Utils.defaultErrorResponse(res,"Unable to get user details."+e)
         }
 
 

@@ -24,7 +24,7 @@ educationMediaApp.controller('manageAttendence_createAttendence', function ($sco
     }).error(function(data,status,headers,config){
             //error
             console.log("Error",data,status,headers,config);
-        });
+    });
 
 
     $scope.searchQuery={"class":null,"timestamp":null};
