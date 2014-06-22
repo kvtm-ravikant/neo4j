@@ -954,5 +954,5 @@ var country={
 }
 
 function Location(){
-        
+
 }
