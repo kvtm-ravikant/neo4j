@@ -1,7 +1,7 @@
 'use strict';
 angular.module("dashboard",[]);
 angular.module("manageUsers",[]);
-var educationMediaApp=angular.module('educationMediaApp', ['ngResource','ngRoute','ng-bootstrap-datepicker','ngTouch']);
+var educationMediaApp=angular.module('educationMediaApp', ['ngResource','ngRoute','ng-bootstrap-datepicker']);
 
 $(document).ready(function(){
     $('#side-menu').metisMenu();

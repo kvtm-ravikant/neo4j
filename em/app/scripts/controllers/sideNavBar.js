@@ -27,6 +27,24 @@ angular.module('educationMediaApp').controller('SideNavBarCtrl', function ($scop
 
                 }
             ]*/
+        },
+        {
+            'title': 'Mange Users',
+            'name':'Manage Users',
+            'link': '/index#/manage-users/users',
+            'collapse':false,
+            'icon':"users"/*,
+            'childLinks':[
+                {
+                    'title': 'Manage Attendance',
+                    'name':'Manage TimeTable',
+                    'link': '/index#/manage-attendence/create-attendence',
+                    'icon':'plusCircle',
+                    'childLinks':[
+                    ]
+
+                }
+            ]*/
         }
        /* {
             'title': 'Manage Organization',
