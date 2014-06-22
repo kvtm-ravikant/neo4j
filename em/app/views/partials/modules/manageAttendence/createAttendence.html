@@ -92,28 +92,57 @@
 
 </div>
 <div class="information" ng-hide="showTimeTable">
-    <br>
+    <div class="row mainpanel">
     <div class="col-md-12">
-        <div class="pull-left">
+        <div class="col-md-5 toppanel">
+            <div class="row">
                  <span class="infolabel">Class/Section : </span><span>  {{ searchQuery.class.name }}/{{ searchQuery.class.section }} </span></br>
-                 <span class="infolabel">Concerned Subject : </span><span>  {{ selectedData.subjectName }} </span></br>
-                 <span class="infolabel">Subject Teacher : </span><span> {{ selectedData.teacherName }}  </span></br>
-                 <span class="infolabel">Time Schedule : </span><span> {{ selectedData.startTime }} - {{ selectedData.endTime }} </span></br>
-                 <span class="infolabel">Date(Present) : </span><span>  {{ date }} </span>
-        </div>
-        <div class="pull-right">
-            <div>
-                <button ng-click="toggletable()" class="btn btn-xs btn-primary pull-right">Back</button><br><br>
-                <button ng-click="saveAttendance()" class="btn btn-sm btn-warning pull-right">Save Attendance</button>
-
-                <br>
-                <br>
-                <input class="searchTxtBox ng-pristine ng-valid" type="text" placeholder="Search" ng-model="searchText.$">
             </div>
-
+                <div class="row">
+                <span class="infolabel">Concerned Subject : </span><span>  {{ selectedData.subjectName }} </span></br>
+            </div>
+                <div class="row">
+                <span class="infolabel">Subject Teacher : </span><span> {{ selectedData.teacherName }}  </span></br>
+            </div>
+                <div class="row">
+                 <span class="infolabel">Time Schedule : </span><span> {{ selectedData.startTime }} - {{ selectedData.endTime }} </span></br>
+            </div>
+                <div class="row">
+                <span class="infolabel">Date(Present) : </span><span>  {{ date }} </span>
+                </div>
+            <div class="row" style="margin-top:10px;">
+                <button ng-click="toggletable()" class="btn btn-sm btn-primary">Back</button>
+                <button ng-click="saveAttendance()" class="btn btn-sm btn-warning">Save Attendance</button>
+            </div>
+        </div>
+        <div class="col-md-7 bottompanel">
+            <div class="row">
+                <div class="col-md-3 components">
+                <button ng-click="markAllPresent()" data="attendance_status_all"  class="btn btn-xs attendance_status_all attendance_present attendance_btn">All Present</button><button class="btn  btn-xs btn-success" id="presentCount">{{attendanceAll.present}}</button>
+                </div>
+                <div class="col-md-3 components">
+                <button ng-click="markAllAbsent()" data="attendance_status_all"  class="btn btn-xs attendance_status_all attendance_absent attendance_btn">All Absent</button><button class="btn  btn-xs btn-danger" id="absentCount">{{attendanceAll.absent}}</button>
+                    </div>
+                    <div class="col-md-3 components">
+                    <button ng-click="markAllLeave()" data="attendance_status_all"   class="btn btn-xs attendance_status_all attendance_leave attendance_btn">All Leave</button><button class="btn  btn-xs btn-warning" id="leaveCount">{{attendanceAll.leave}}</button>
+                       </div>
+                        <div class="col-md-3 components">
+                <button ng-click="clearAllComment()" data="attendance_status_all" class="btn btn-xs ">Clear Comments</button>
+                </div>
+            </div>
+             <div class="row">
+                 <div class="col-md-9 components">
+                <input class="searchTxtBox ng-pristine ng-valid pull-right" type="text" placeholder="Search" ng-model="searchText.$">
+                 </div>
+                <div class="col-md-3 enablesms components">
+                <input type="checkbox" ng-change="enableSMSForAll()" ng-model="isSMSEnabledForAll" />Enable SMS
+                </div>
+            </div>
         </div>
     </div>
-
+    </div>
+    <hr>
+    <div class="row">
     <div class="col-md-12 attendencelist">
         <label class="listhead"> Attendence Register </label>
 
@@ -122,17 +151,10 @@
             <tr>
                 <th>Roll No.</th>
                 <th>Name</th>
-                <th class="center" ><p>
-                    <button ng-click="markAllPresent()" data="attendance_status_all"  class="btn btn-xs attendance_status_all attendance_present attendance_btn">All Present</button><button class="btn  btn-xs btn-success" id="presentCount">{{attendanceAll.present}}</button>
-
-                    <button ng-click="markAllAbsent()" data="attendance_status_all"  class="btn btn-xs attendance_status_all attendance_absent attendance_btn">All Absent</button><button class="btn  btn-xs btn-danger" id="absentCount">{{attendanceAll.absent}}</button>
-
-                    <button ng-click="markAllLeave()" data="attendance_status_all"   class="btn btn-xs attendance_status_all attendance_leave attendance_btn">All Leave</button><button class="btn  btn-xs btn-warning" id="leaveCount">{{attendanceAll.leave}}</button>
-                </p>
-                </th>
+                <th class="center" > Mark Attendence</th>
                 <th>Comments</th>
-                <th class="center"><button ng-click="clearAllComment()" data="attendance_status_all" class="btn btn-xs ">Clear all</button></th>
-                <th class="center"><input type="checkbox" ng-change="enableSMSForAll()" ng-model="isSMSEnabledForAll" />Enable SMS</th>
+                <th class="center">Clear</th>
+                <th class="center">SMS</th>
             </tr>
             </thead>
             <tbody>
@@ -151,5 +173,6 @@
             </tbody>
         </table>
     </div>
+        </div>
 </div>
 </div>

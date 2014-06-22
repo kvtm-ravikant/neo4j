@@ -7,10 +7,10 @@ var Utils=require("../../common/Utils/Utils.js");
 var selectClass='MATCH (n:Class) RETURN n';
 module.exports.getClassList=function(req,res){
     db.cypherQuery(selectClass,function(err,classList){
-        var responseObj=new Utils.ResponseObj();
+        var responseObj=new Utils.Response();
         console.log("classList",classList);
         if(classList && classList.data.length>0){
-            responseObj.data=classList.data;
+            responseObj.responseData=classList.data;
         }else{
             responseObj.error=true;
         }

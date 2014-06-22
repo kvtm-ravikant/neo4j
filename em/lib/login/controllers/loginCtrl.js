@@ -2,6 +2,8 @@
  * Created by Pinki Boora on 5/23/14.
  */
 var neo4j=require("node-neo4j");
+var UserClass=require("../../manageUsers/models/UserClass.js");
+var user=new UserClass();
 var db=new neo4j("http://localhost:7474");
 console.log("db",db);
 module.exports=function(app){
@@ -13,7 +15,29 @@ module.exports=function(app){
         var password=req.body.password;
         console.log("userName",userName);
         console.log("password",password);
-        var selectQuery='MATCH (s:School {schoolId: "dav:cbse:1990:122001"})-[r:BELONGS_TO]-(u:User {userName:"'+userName+'"})RETURN u';
+        user.getUserDetailsByUserName(userName,req,res,function(req,res,result){
+            console.log("result login",result);
+            var userDet,pAddress,sAddress,sn,school,contact;
+            result.columns.length>0?userDet=result.data[0][0]:null;
+            result.columns.length>1?pAddress=result.data[0][1]:null;
+            result.columns.length>2?sAddress=result.data[0][2]:null;
+            result.columns.length>3?sn=result.data[0][3]:null;
+            result.columns.length>4?school=result.data[0][4]:null;
+            result.columns.length>4?contact=result.data[0][5]:null;
+            console.log(userDet,pAddress,sAddress,sn,school,contact);
+            if(userDet!=null){
+                 if(userDet.hashPassword==password){
+                     user.setUserDetails(userDet,pAddress,sAddress,sn,school,contact);
+                     user.setUserDataInSession(req);
+                     console.log("req.session.userDetails",req.session.userDetails);
+                     res.redirect("/index");
+                 }
+            }else{
+                res.redirect("/login");
+            }
+
+        });
+        /*var selectQuery='MATCH (s:School {schoolId: "dav:cbse:1990:122001"})-[r:BELONGS_TO]-(u:User {userName:"'+userName+'"})RETURN u';
         db.cypherQuery(selectQuery, function(err, result){
             console.log("selectQuery login",err,result,result.data.length);
             if( result && result.data.length>0){
@@ -28,7 +52,7 @@ module.exports=function(app){
             }else{
                 res.redirect("/login");
             }
-        });
+        });*/
     });
     app.get("/logout",function(req,res){
         req.session.userData=null;

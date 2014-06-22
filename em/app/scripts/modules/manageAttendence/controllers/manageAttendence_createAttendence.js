@@ -1,32 +1,30 @@
 'use strict';
 
-educationMediaApp.controller('manageAttendence_createAttendence', function ($scope, $http,iconClassMapping) {
+educationMediaApp.controller('manageAttendence_createAttendence', function ($scope, $http,iconClassMapping,appUtils) {
     $scope.showTimeTable=true;
 
     var d = new Date();
     $('.datepicker').datepicker(
         {format: 'dd/mm/yyyy',
-        language: 'en',
-        autoclose: true,
-        weekStart: 0,
-        todayHighlight:true
-    });
+            language: 'en',
+            autoclose: true,
+            weekStart: 0,
+            todayHighlight:true
+        });
     $scope.openCalender=function(){
         $('#attendanceDate').focus();
     }
     $http.get('/manage-attendence/create-attendence/getClassList').success(function(dataResponse,status,headers,config){
         //success
         console.log("dataResponse",dataResponse);
-        if(dataResponse.error){
-            $('#errorModal').find('.modal-body').html("OOPs ! Somethings went wrong.");
-            $('#errorModal').modal('show');
-        }else{
-            $scope.classList=dataResponse.data;
-        }
+        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+            $scope.classList=dataResponse.responseData;
+        });
+
     }).error(function(data,status,headers,config){
-        //error
-        console.log("Error",data,status,headers,config);
-    });
+            //error
+            console.log("Error",data,status,headers,config);
+        });
 
 
     $scope.searchQuery={"class":null,"timestamp":null};
@@ -38,9 +36,9 @@ educationMediaApp.controller('manageAttendence_createAttendence', function ($sco
 
             console.log("success /manage-attendence/create-attendence/getTimetable",$scope.timeTableData);
         }).error(function(data,status,headers,config){
-            //error
-            console.log("Error",data,status,headers,config);
-        });
+                //error
+                console.log("Error",data,status,headers,config);
+            });
     }
     $scope.$watch('date',function(){
         $scope.selectDate($scope.date,"08:00");
@@ -83,23 +81,20 @@ educationMediaApp.controller('manageAttendence_createAttendence', function ($sco
                 data   : $scope.searchQuery,
                 headers: {'Content-Type': 'application/json'}
             }).success(function(dataResponse,status,headers,config){
-                //success
-                console.log("success",dataResponse);
+                    //success
+                    console.log("success",dataResponse);
+                    appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                        $scope.showTimeTable=false;
+                        $scope.selectedData= current;
+                        $scope.students = dataResponse.responseData.studentList;
+                        $scope.attendanceAll=dataResponse.responseData.attendanceAll;
+                    });
 
-                if(dataResponse.error){
-                    $('#errorModal').find('.modal-body').html("OOPs ! Somethings went wrong.");
-                    $('#errorModal').modal('show');
-                }else{
-                    $scope.showTimeTable=false;
-                    $scope.selectedData= current;
-                    $scope.students = dataResponse.data.studentList;
-                    $scope.attendanceAll=dataResponse.data.attendanceAll;
-                }
-            }).error(function(data,status,headers,config){
-                //error
-                console.log("Error",data,status,headers,config);
+                }).error(function(data,status,headers,config){
+                    //error
+                    console.log("Error",data,status,headers,config);
 
-            });
+                });
 
         }
     }
@@ -203,18 +198,17 @@ educationMediaApp.controller('manageAttendence_createAttendence', function ($sco
             data   : saveObj,
             headers: {'Content-Type': 'application/json'}
         }).success(function(dataResponse,status,headers,config){
-            //success
-            console.log("success",dataResponse);
-            if(dataResponse.error){
-                alert("ERROR :(");
-            }else{
-                alert("Success :)");
-            }
-        }).error(function(data,status,headers,config){
-            //error
-            console.log("Error",data,status,headers,config);
+                //success
+                appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                    $('#successModal').find('.modal-body').html("Attendance taken successfully.");
+                    $('#successModal').modal('show');
+                    return;
+                });
+            }).error(function(data,status,headers,config){
+                //error
+                console.log("Error",data,status,headers,config);
 
-        });
+            });
     }
 
     $scope.toggletable = function(){

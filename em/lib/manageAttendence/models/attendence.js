@@ -16,7 +16,7 @@ var db=new neo4j("http://localhost:7474");
 
 module.exports.saveAttendance=function(req,res,saveObj){
     console.log("Inside saveAttendance");
-    var responseObj=new Utils.ResponseObj();
+    var responseObj=new Utils.Response();
     var timetableId=saveObj.selectedData._id;
     var classObj=saveObj.class;
     if(saveObj.selectedData.attFlag){
@@ -92,11 +92,11 @@ module.exports.saveAttendance=function(req,res,saveObj){
         if(failedList.length>0){
             responseObj.error=true;
         }
-        responseObj.data={"successList":successList,"failedList":failedList};
+        responseObj.responseData={"successList":successList,"failedList":failedList};
         res.json(responseObj);
     }else{
         responseObj.error=true;
-        responseObj.msg="Attendance for this period is not applicable.";
+        responseObj.errorMsg="Attendance for this period is not applicable.";
         res.json(responseObj);
     }
 }
@@ -114,7 +114,7 @@ module.exports.searchAttendance=function(req,res,searchObj){
     console.log("searchQuery",searchQuery);
     db.cypherQuery(searchQuery,function(err,searchResult){
         //console.log(err,searchResult);
-        var responseObj=new Utils.ResponseObj();
+        var responseObj=new Utils.Response();
         if(searchResult && searchResult.data.length>0){
 
             var studentList=[];
@@ -143,7 +143,7 @@ module.exports.searchAttendance=function(req,res,searchObj){
             var retObj={};
             retObj.attendanceAll={ present : present,absent :absent,leave : leave};
             retObj.studentList=studentList;
-            responseObj.data=retObj;
+            responseObj.responseData=retObj;
             res.json(responseObj);
         }else{
             var studentQuery='START class=node('+classId+') MATCH class-[r:`STUDENT_OF`]->(b:User{userType:"1"}) WITH b ORDER BY b.regID '+
@@ -169,11 +169,11 @@ module.exports.searchAttendance=function(req,res,searchObj){
                     var retObj={};
                     retObj.attendanceAll={ present : loopLen,absent :0,leave : 0};
                     retObj.studentList=studentList;
-                    responseObj.data=retObj;
+                    responseObj.responseData=retObj;
                     res.json(responseObj);
                 }else{
                     responseObj.error=true;
-                    responseObj.msg="No Results found."
+                    responseObj.errorMsg="No Results found."
                     res.json(responseObj);
                 }
             });
