@@ -9,7 +9,7 @@ var classList =require('../../common/models/Class.js');
 
 module.exports=function(app,Utils){
     app.get("/manage-attendence/create-attendence/getClassList",Utils.ensureAuthenticated,function(req,res){
-        console.log("/manage-attendence/create-attendence/getClassList.");
+        console.log("/manage-attendence/create-attendence/getClassList");
         classList.getClassList(req,res);
     });
 
@@ -32,4 +32,3 @@ module.exports=function(app,Utils){
     });
 
 };
-
