@@ -32,6 +32,7 @@ educationMediaApp.controller('teacherReportCtrl', function ($scope, $http,iconCl
     }
     $scope.getReport=function(){
         var requestObj={"startDate":$scope.startDate,"endDate":$scope.endDate,"class":$scope.selectedClass};
+
         if($scope.startDate && $scope.endDate && $scope.selectedClass){
             console.log("requestObj",requestObj);
             $http({
@@ -40,19 +41,24 @@ educationMediaApp.controller('teacherReportCtrl', function ($scope, $http,iconCl
                 data   : requestObj,
                 headers: {'Content-Type': 'application/json'}
             }).success(function(dataResponse,status,headers,config){
-                    //success
-                    appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-                        console.log("dataResponse",dataResponse);
-                        $scope.reportData=dataResponse.responseData;
-                    });
-                }).error(function(data,status,headers,config){
-                    //error
-                    console.log("Error",data,status,headers,config);
-
+                //success
+                appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                    console.log("dataResponse",dataResponse);
+                    $scope.reportData=dataResponse.responseData;
                 });
+            }).error(function(data,status,headers,config){
+                //error
+                console.log("Error",data,status,headers,config);
+            });
         }else{
-            alert('error');
+            appUtils.showError("Eithe")
+            //alert('error');
         }
+
+    }
+    function validateReortSubmission(){
+        var error={error:false,errorMsg:[]};
+
 
     }
     $scope.resolveTimestamp=function(timestamp){

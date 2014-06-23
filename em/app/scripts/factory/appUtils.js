@@ -212,6 +212,21 @@ angular.module('educationMediaApp').factory('appUtils', function () {
                 $('#errorModal').modal('show');
                 return;
             }
+        },
+        "showError":function(msg){
+            $('#errorModal').find('.modal-body').html(msg);
+            $('#errorModal').modal('show');
+            return;
+        },
+        "showWarning":function(msg){
+            $('#warningModal').find('.modal-body').html(msg);
+            $('#warningModal').modal('show');
+            return;
+        },
+        "showSuccess":function(msg){
+            $('#successModal').find('.modal-body').html(msg);
+            $('#successModal').modal('show');
+            return;
         }
     };
 

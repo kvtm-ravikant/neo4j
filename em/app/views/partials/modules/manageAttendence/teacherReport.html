@@ -2,13 +2,13 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-2">
-                <input type="text" id="startDateTeacher" ng-model="startDate" class="em-datepicker datepicker">
+                <input type="text" id="startDateTeacher" ng-model="startDate" class="em-datepicker datepicker" placeholder="Start Date">
             </div>
             <div class="col-md-1 calenderclass">
                 <span class="fa fa-calendar cursor-pointer" ng-click="openStartCalender()"></span>
             </div>
             <div class="col-md-2">
-                <input type="text" id="endDateTeacher" ng-model="endDate" class="em-datepicker datepicker">
+                <input type="text" id="endDateTeacher" ng-model="endDate" class="em-datepicker datepicker" placeholder="End Date">
             </div>
             <div class="col-md-1 calenderclass">
                 <span class="fa fa-calendar cursor-pointer" ng-click="openEndCalender()"></span>
@@ -17,8 +17,8 @@
             <div class="col-md-2 classselector">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span ng-if="searchQuery.class.name">{{searchQuery.class.name}}/{{searchQuery.class.section}}</span>
-                        <span ng-if="!searchQuery.class.name">Select Class</span>
+                        <span ng-show="selectedClass">{{selectedClass.name}}/{{selectedClass.section}}</span>
+                        <span ng-show="!selectedClass">Select Class</span>
 
                         <span class="caret"></span>
                     </button>
@@ -28,23 +28,23 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <button class="btn-xs btn-default" ng-click="getReport()">Get Report</button>
+                <button class="btn btn-md btn-default" ng-click="getReport()">Get Report</button>
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
-            <ul ng-show="reportData">
-                <li>Present for {{reportData["1"].length || "0"}} Days</li>
-                <li>Absent for {{reportData["0"].length || "0"}} Days</li>
-                <li>On leave for {{reportData["2"].length || "0"}} Days</li>
-                <li>Holiday for {{reportData["3"].length || "0"}} Days</li>
+            <ul class="list-group" ng-show="reportData" style="display: flex;padding-left:10px;padding-top:20px;">
+                <li class="list-group-item"><span class="presentlabel">Present for </span>{{reportData["1"].length || "0"}} Days </li>
+                <li class="list-group-item"><span class="absentlabel">Absent for </span>{{reportData["0"].length || "0"}} Days </li>
+                <li class="list-group-item"><span class="leavelabel">On leave for </span>{{reportData["2"].length || "0"}} Days </li>
+                <li class="list-group-item"><span class="holidaylabel">Holiday for </span>{{reportData["3"].length || "0"}} Days </li>
             </ul>
-            <ul>
+
+            <ul style="padding-left:10px;">
                 <li ng-repeat="(attendanceVal,data) in reportData">
 
-                    <table>
+                    <table style="width:100%;">
                         <thead>
                         <tr>
                             <th>Date</th>

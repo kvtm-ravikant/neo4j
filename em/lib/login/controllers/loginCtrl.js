@@ -17,24 +17,29 @@ module.exports=function(app){
         console.log("password",password);
         user.getUserDetailsByUserName(userName,req,res,function(req,res,result){
             console.log("result login",result);
-            var userDet,pAddress,sAddress,sn,school,contact;
-            result.columns.length>0?userDet=result.data[0][0]:null;
-            result.columns.length>1?pAddress=result.data[0][1]:null;
-            result.columns.length>2?sAddress=result.data[0][2]:null;
-            result.columns.length>3?sn=result.data[0][3]:null;
-            result.columns.length>4?school=result.data[0][4]:null;
-            result.columns.length>4?contact=result.data[0][5]:null;
-            console.log(userDet,pAddress,sAddress,sn,school,contact);
-            if(userDet!=null){
-                 if(userDet.hashPassword==password){
-                     user.setUserDetails(userDet,pAddress,sAddress,sn,school,contact);
-                     user.setUserDataInSession(req);
-                     console.log("req.session.userDetails",req.session.userDetails);
-                     res.redirect("/index");
-                 }
+            if(result && result.data.length>0){
+                var userDet,pAddress,sAddress,sn,school,contact;
+                result.columns.length>0?userDet=result.data[0][0]:null;
+                result.columns.length>1?pAddress=result.data[0][1]:null;
+                result.columns.length>2?sAddress=result.data[0][2]:null;
+                result.columns.length>3?sn=result.data[0][3]:null;
+                result.columns.length>4?school=result.data[0][4]:null;
+                result.columns.length>4?contact=result.data[0][5]:null;
+                console.log(userDet,pAddress,sAddress,sn,school,contact);
+                if(userDet!=null){
+                    if(userDet.hashPassword==password){
+                        user.setUserDetails(userDet,pAddress,sAddress,sn,school,contact);
+                        user.setUserDataInSession(req);
+                        console.log("req.session.userDetails",req.session.userDetails);
+                        res.redirect("/index");
+                    }
+                }else{
+                    res.redirect("/login");
+                }
             }else{
                 res.redirect("/login");
             }
+
 
         });
         /*var selectQuery='MATCH (s:School {schoolId: "dav:cbse:1990:122001"})-[r:BELONGS_TO]-(u:User {userName:"'+userName+'"})RETURN u';
