@@ -8,11 +8,11 @@
       </div>
   </div>
   <div class="row">
-  <div class="col-sm-3" ng-repeat="(detailType,details) in userDetails"><!--left col-->
+  <div class="col-sm-4" ng-repeat="(detailType,details) in userDetails"><!--left col-->
 
       <ul class="list-group">
           <li class="list-group-item text-muted">{{detailType.camelCaseToWord()}}</li>
-          <li class="list-group-item text-right" ng-repeat="(key,value) in details"><span class="pull-left"><strong>{{key.camelCaseToWord()}}</strong></span> {{value}}</li>
+          <li class="list-group-item text-right" ng-repeat="(key,value) in details" ng-if="key!='_id'"><span class="pull-left">{{key.camelCaseToWord()}}</span> {{value || "N/A"}}</li>
       </ul>
 
   </div><!--/col-3-->
