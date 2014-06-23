@@ -31,9 +31,9 @@ educationMediaApp.controller('teacherReportCtrl', function ($scope, $http,iconCl
         $scope.selectedClass=classObj;
     }
     $scope.getReport=function(){
-        var requestObj={"startDate":$scope.startDate,"endDate":$scope.endDate,"class":$scope.selectedClass};
-
-        if($scope.startDate && $scope.endDate && $scope.selectedClass){
+        var errorobj=validateReortSubmission();
+        if(!errorobj.error){
+            var requestObj={"startDate":$scope.startDate,"endDate":$scope.endDate,"class":$scope.selectedClass};
             console.log("requestObj",requestObj);
             $http({
                 method : 'POST',
@@ -51,14 +51,27 @@ educationMediaApp.controller('teacherReportCtrl', function ($scope, $http,iconCl
                 console.log("Error",data,status,headers,config);
             });
         }else{
-            appUtils.showError("Eithe")
-            //alert('error');
+            var erroMsg=errorobj.errorMsg.join('<br>');
+            appUtils.showError(erroMsg);
         }
+
 
     }
     function validateReortSubmission(){
-        var error={error:false,errorMsg:[]};
-
+        var errorObj={error:false,errorMsg:[]};
+        if(!$scope.startDate){
+            errorObj.error=true
+            errorObj.errorMsg.push("Start cannot be empty.");
+        }
+        if(!$scope.endDate){
+            errorObj.error=true
+            errorObj.errorMsg.push("End cannot be empty.");
+        }
+        if(!$scope.selectedClass){
+            errorObj.error=true
+            errorObj.errorMsg.push("Please select class.");
+        }
+        return errorObj;
 
     }
     $scope.resolveTimestamp=function(timestamp){
