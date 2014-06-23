@@ -953,6 +953,151 @@ var country={
     }
 }
 
-function Location(){
+var states={
+    "1": {
+        "stateName": "Andhra Pradesh",
+        "stateCapital": "Hyderabad"
+    },
+    "2": {
+        "stateName": "Arunachal Pradesh",
+        "stateCapital": "Itanagar"
+    },
+    "3": {
+        "stateName": "Assam",
+        "stateCapital": "Dispur"
+    },
+    "4": {
+        "stateName": "Bihar",
+        "stateCapital": "Patna"
+    },
+    "5": {
+        "stateName": "Chhattisgarh",
+        "stateCapital": "Raipur"
+    },
+    "6": {
+        "stateName": "Goa",
+        "stateCapital": "Panaji"
+    },
+    "7": {
+        "stateName": "Gujarat",
+        "stateCapital": "Gandhinagar"
+    },
+    "8": {
+        "stateName": "Haryana",
+        "stateCapital": "Chandigarh"
+    },
+    "9": {
+        "stateName": "Himachal Pradesh",
+        "stateCapital": "Shimla"
+    },
+    "10": {
+        "stateName": "Jammu and Kashmir",
+        "stateCapital": "Srinagar (summer), Jammu (winter)"
+    },
+    "11": {
+        "stateName": "Jharkhand",
+        "stateCapital": "Ranchi"
+    },
+    "12": {
+        "stateName": "Karnataka",
+        "stateCapital": "Bengaluru"
+    },
+    "13": {
+        "stateName": "Kerala",
+        "stateCapital": "Thiruvananthapuram"
+    },
+    "14": {
+        "stateName": "Madhya Pradesh",
+        "stateCapital": "Bhopal"
+    },
+    "15": {
+        "stateName": "Maharashtra",
+        "stateCapital": "Mumbai"
+    },
+    "16": {
+        "stateName": "Manipur",
+        "stateCapital": "Imphal"
+    },
+    "17": {
+        "stateName": "Meghalaya",
+        "stateCapital": "Shillong"
+    },
+    "18": {
+        "stateName": "Mizoram",
+        "stateCapital": "Aizawl"
+    },
+    "19": {
+        "stateName": "Nagaland",
+        "stateCapital": "Kohima"
+    },
+    "20": {
+        "stateName": "Orissa",
+        "stateCapital": "Bhubaneswar"
+    },
+    "21": {
+        "stateName": "Punjab",
+        "stateCapital": "Chandigarh"
+    },
+    "22": {
+        "stateName": "Rajasthan",
+        "stateCapital": "Jaipur"
+    },
+    "23": {
+        "stateName": "Sikkim",
+        "stateCapital": "Gangtok"
+    },
+    "24": {
+        "stateName": "Tamil Nadu",
+        "stateCapital": "Chennai"
+    },
+    "25": {
+        "stateName": "Tripura",
+        "stateCapital": "Agartala"
+    },
+    "26": {
+        "stateName": "Uttar Pradesh",
+        "stateCapital": "Lucknow"
+    },
+    "27": {
+        "stateName": "Uttarakhand",
+        "stateCapital": "Dehradun"
+    },
+    "28": {
+        "stateName": "West Bengal",
+        "stateCapital": "Kolkata"
+    },
+    "29": {
+        "stateName": "Andaman and Nicobar Islands",
+        "stateCapital": "Port Blair"
+    },
+    "30": {
+        "stateName": "Chandigarh",
+        "stateCapital": "Chandigarh"
+    },
+    "31": {
+        "stateName": "Dadar and Nagar Haveli",
+        "stateCapital": "Silvassa"
+    },
+    "32": {
+        "stateName": "Daman and Diu",
+        "stateCapital": "Daman"
+    },
+    "33": {
+        "stateName": "Delhi",
+        "stateCapital": "Delhi"
+    },
+    "34": {
+        "stateName": "Lakshadweep",
+        "stateCapital": "Kavaratti"
+    },
+    "35": {
+        "stateName": "Pondicherry",
+        "stateCapital": "Pondicherry"
+    }
+}
+
+module.exports={
+    "countries":country,
+    "states":states
 
 }
