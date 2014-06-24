@@ -14,6 +14,33 @@ var Utils=require("../../common/Utils/Utils.js");
 var db=new neo4j("http://localhost:7474");
 var subjectMap=require("../../common/models/Subject.js");
 
+module.exports.getStudentsOfGivenClass=function(req,res,classObj){
+    var responseObj=new Utils.Response();
+    var query='MATCH (class{name:"'+classObj.name+'",section:"'+classObj.section+'"})-[:`STUDENT_OF`]->(student) RETURN student ORDER BY student.firstName';
+    console.log("getStudentsOfGivenClass",query);
+    db.cypherQuery(query,function(err,result){
+
+        if(result && result.data.length>0){
+            var studentList=[];
+            for(var i= 0,loopLen=result.data.length;i<loopLen;i++){
+                var student=result.data[i];
+                var obj= {
+                    "id":student.regID,
+                    "name":student.firstName+" "+student.middleName+" "+student.lastName
+
+                }
+                studentList.push(obj);
+            }
+            responseObj.responseData=studentList;
+            res.json(responseObj);
+        }else{
+            responseObj.error=true;
+            responseObj.errorMsg="No Results found."
+            res.json(responseObj);
+        }
+    });
+
+};
 module.exports.saveAttendance=function(req,res,saveObj){
     console.log("Inside saveAttendance");
     var responseObj=new Utils.Response();
@@ -244,12 +271,25 @@ module.exports.getTeacherReport=function (req,res,requestObj){
   var startTimeStamp=Utils.ddmmyyyyStrToTimeStamp(requestObj.startDate);
   var endTimeStamp=Utils.ddmmyyyyStrToTimeStamp(requestObj.endDate);
   var classObj=requestObj.class;
+  var selectedSubject=requestObj.selectedSubject;
+  var selectedStudent=requestObj.selectedStudent;
   var userDetails=req.session.userDetails;
   console.log("userDetails.userType",userDetails,userDetails.basicDetails.userType);
   var userName=userDetails.basicDetails.userName;
   var query="";
   if(userDetails.basicDetails.userType==2){
-      query='MATCH (a{name:"'+classObj.name+'",section:"'+classObj.section+'"})-[:`STUDENT_OF`]->(b) WITH b MATCH (c)-[r:`ATTENDANCE_OF`]->(b) WHERE r.timestamp>=1402906200000  RETURN  c,r';
+      query='MATCH (a:Class{name:"'+classObj.name+'",section:"'+classObj.section+'"})-[:`STUDENT_OF`]->';
+      if(selectedStudent){
+          query=query+'(b:User{regID:"'+selectedStudent.id+'"}) ';
+      }else{
+          query=query+'(b) ';
+      }
+      if(selectedSubject){
+          query=query+'WITH b MATCH (c:Timetable{subjectId:"'+selectedSubject.key+'"})-[r:`ATTENDANCE_OF`]->(b) ';
+      }else{
+          query=query+'WITH b MATCH (c:Timetable)-[r:`ATTENDANCE_OF`]->(b) ';
+      }
+      query=query+'WHERE r.timestamp>='+startTimeStamp+' AND r.timestamp<='+endTimeStamp+' RETURN  c,r,b';
   }
   console.log("query",query);
   if(query!=""){
@@ -260,6 +300,7 @@ module.exports.getTeacherReport=function (req,res,requestObj){
               for(var i= 0,loopLen=result.data.length;i<loopLen;i++){
                   var timetable=result.data[i][0];
                   var relationAttendance=result.data[i][1];
+                  var student=result.data[i][2];
                   var key=relationAttendance.attendance;
                   var obj= {
                       "teacherName":timetable.teacherName,
@@ -268,6 +309,8 @@ module.exports.getTeacherReport=function (req,res,requestObj){
                       "endTime":Utils.timestampToTime(timetable.endtTime),
                       "comment":relationAttendance.comment,
                       "timestamp":relationAttendance.timestamp,
+                      "studentName":student.firstName+" "+student.middleName+" "+student.lastName,
+                      "studentRegId":student.regID
                   }
                   if(attendanceMap.hasOwnProperty(key)){
                       attendanceMap[key].push(obj);

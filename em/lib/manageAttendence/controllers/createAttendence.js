@@ -5,12 +5,19 @@
 var attendence=require('../models/attendence.js');
 var timetable =require('../models/timetable.js');
 var classList =require('../../common/models/Class.js');
+var sujectList =require('../../common/models/Subject.js');
 
 
 module.exports=function(app,Utils){
     app.get("/manage-attendence/create-attendence/getClassList",Utils.ensureAuthenticated,function(req,res){
         console.log("/manage-attendence/create-attendence/getClassList");
         classList.getClassList(req,res);
+    });
+    app.get("/manage-attendence/create-attendence/getSubjectList",Utils.ensureAuthenticated,function(req,res){
+        console.log("/manage-attendence/create-attendence/getSubjectList");
+        var responseObj=new Utils.Response();
+        responseObj.responseData=sujectList;
+        res.json(responseObj);
     });
 
     app.get("/manage-attendence/create-attendence/getTimetable/:classId",Utils.ensureAuthenticated,function(req,res){
@@ -20,6 +27,11 @@ module.exports=function(app,Utils){
 
     });
 
+
+    app.post("/manageAttendance/getStudentsOfGivenClass",Utils.ensureAuthenticated,function(req,res){
+       var classObj=req.body;
+        attendence.getStudentsOfGivenClass(req,res,classObj);
+    });
 
     app.post("/attendance/saveAttendance",Utils.ensureAuthenticated,function(req,res){
        var saveObj=req.body;

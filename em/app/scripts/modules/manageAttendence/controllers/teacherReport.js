@@ -14,6 +14,18 @@ educationMediaApp.controller('teacherReportCtrl', function ($scope, $http,iconCl
         //error
         console.log("Error",data,status,headers,config);
     });
+
+    $http.get('/manage-attendence/create-attendence/getSubjectList').success(function(dataResponse,status,headers,config){
+        //success
+        console.log("dataResponse subjectMap",dataResponse);
+        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+            $scope.subjectMap=dataResponse.responseData;
+        });
+
+    }).error(function(data,status,headers,config){
+        //error
+        console.log("Error",data,status,headers,config);
+    });
     $('.datepicker').datepicker(
         {format: 'dd/mm/yyyy',
             language: 'en',
@@ -29,11 +41,34 @@ educationMediaApp.controller('teacherReportCtrl', function ($scope, $http,iconCl
     }
     $scope.selectClass=function(classObj){
         $scope.selectedClass=classObj;
+        $http({
+            method : 'POST',
+            url    : '/manageAttendance/getStudentsOfGivenClass',
+            data   : $scope.selectedClass,
+            headers: {'Content-Type': 'application/json'}
+        }).success(function(dataResponse,status,headers,config){
+            //success
+            appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                console.log("dataResponse",dataResponse);
+                $scope.studentList=dataResponse.responseData;
+            });
+        }).error(function(data,status,headers,config){
+            //error
+            console.log("Error",data,status,headers,config);
+        });
+
+    }
+    $scope.selectSubject=function(key,value){
+        $scope.selectedsubject={"key":key,"value":value};
+    }
+    $scope.selectStudent=function(student){
+        $scope.selectedStudent=student;
     }
     $scope.getReport=function(){
         var errorobj=validateReortSubmission();
         if(!errorobj.error){
-            var requestObj={"startDate":$scope.startDate,"endDate":$scope.endDate,"class":$scope.selectedClass};
+            var requestObj={"startDate":$scope.startDate,"endDate":$scope.endDate,"class":$scope.selectedClass,
+                            "selectedSubject":$scope.selectedsubject,"selectedStudent":$scope.selectedStudent};
             console.log("requestObj",requestObj);
             $http({
                 method : 'POST',
@@ -71,6 +106,18 @@ educationMediaApp.controller('teacherReportCtrl', function ($scope, $http,iconCl
             errorObj.error=true
             errorObj.errorMsg.push("Please select class.");
         }
+        /*if($scope.startDate && $scope.endDate){
+            var startTimeStamp=appUtils.dateUtility.ddmmyyyyStrToDate($scope.startDate);
+            var endTimeStamp=appUtils.dateUtility.ddmmyyyyStrToDate($scope.endDate);
+            console.log(startTimeStamp,endTimeStamp,$scope.startDate,$scope.endDate);
+            if(startTimeStamp && startTimeStamp && typeof(startTimeStamp)=='number' && typeof(endTimeStamp)=='number' && startTimeStamp<=endTimeStamp){
+
+            }else{
+                errorObj.error=true
+                errorObj.errorMsg.push("Start date should be less than end date.");
+            }
+
+        }*/
         return errorObj;
 
     }

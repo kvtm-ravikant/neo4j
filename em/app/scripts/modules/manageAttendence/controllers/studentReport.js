@@ -14,9 +14,9 @@ educationMediaApp.controller('studentReportCtrl', function ($scope, $http,iconCl
         $('#endDateStudent').focus();
     }
     $scope.getReport=function(){
-        var requestObj={"startDate":$scope.startDate,"endDate":$scope.endDate};
-        if($scope.startDate && $scope.endDate){
-            console.log("requestObj",requestObj);
+        var errorobj=validateReortSubmission();
+        if(!errorobj.error){
+            var requestObj={"startDate":$scope.startDate,"endDate":$scope.endDate};
             $http({
                 method : 'POST',
                 url    : '/manageAttendance/getStudentParentReport',
@@ -34,8 +34,23 @@ educationMediaApp.controller('studentReportCtrl', function ($scope, $http,iconCl
 
             });
         }else{
-            alert('error');
+            var erroMsg=errorobj.errorMsg.join('<br>');
+            appUtils.showError(erroMsg);
         }
+
+    }
+    function validateReortSubmission(){
+        var errorObj={error:false,errorMsg:[]};
+        if(!$scope.startDate){
+            errorObj.error=true
+            errorObj.errorMsg.push("Start cannot be empty.");
+        }
+        if(!$scope.endDate){
+            errorObj.error=true
+            errorObj.errorMsg.push("End cannot be empty.");
+        }
+
+        return errorObj;
 
     }
     $scope.resolveTimestamp=function(timestamp){

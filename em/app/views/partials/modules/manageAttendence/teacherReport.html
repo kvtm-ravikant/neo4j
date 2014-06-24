@@ -13,12 +13,11 @@
             <div class="col-md-1 calenderclass">
                 <span class="fa fa-calendar cursor-pointer" ng-click="openEndCalender()"></span>
             </div>
-
-            <div class="col-md-2 classselector">
+            <div class="col-md-6 classselector">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                         <span ng-show="selectedClass">{{selectedClass.name}}/{{selectedClass.section}}</span>
-                        <span ng-show="!selectedClass">Select Class</span>
+                        <span ng-show="!selectedClass" class="grey">Class</span>
 
                         <span class="caret"></span>
                     </button>
@@ -26,20 +25,48 @@
                         <li ng-repeat="class in classList" ><a ng-click="selectClass(class)">{{class.name}}/{{class.section}}</a></li>
                     </ul>
                 </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span ng-show="selectedsubject">{{selectedsubject.value}}</span>
+                        <span ng-show="!selectedsubject" class="grey">Subject</span>
+
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="(key,value) in subjectMap" ><a ng-click="selectSubject(key,value)">{{value}}</a></li>
+                    </ul>
+                </div>
+                <div class="btn-group" ng-show="studentList">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span ng-show="selectedStudent">{{selectedStudent.name}}</span>
+                        <span ng-show="!selectedStudent" class="grey">Student</span>
+
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="student in studentList" ><a ng-click="selectStudent(student)">{{student.name}}</a></li>
+                    </ul>
+                </div>
+                <button class="btn btn-md btn-success" ng-click="getReport()">Get Report</button>
             </div>
-            <div class="col-md-2">
-                <button class="btn btn-md btn-default" ng-click="getReport()">Get Report</button>
-            </div>
+
+
+
+
         </div>
     </div>
+    <div class="row ">
+        <hr>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
-            <ul class="list-group" ng-show="reportData" style="display: flex;padding-left:10px;padding-top:20px;">
+            <!--<ul class="list-group" ng-show="reportData" style="display: flex;padding-left:10px;padding-top:20px;">
                 <li class="list-group-item"><span class="presentlabel">Present for </span>{{reportData["1"].length || "0"}} Days </li>
                 <li class="list-group-item"><span class="absentlabel">Absent for </span>{{reportData["0"].length || "0"}} Days </li>
                 <li class="list-group-item"><span class="leavelabel">On leave for </span>{{reportData["2"].length || "0"}} Days </li>
                 <li class="list-group-item"><span class="holidaylabel">Holiday for </span>{{reportData["3"].length || "0"}} Days </li>
-            </ul>
+            </ul>-->
 
             <ul style="padding-left:10px;">
                 <li ng-repeat="(attendanceVal,data) in reportData">
@@ -51,6 +78,8 @@
                             <th>Subject</th>
                             <th>Period Start time</th>
                             <th>Attendance Value</th>
+                            <th>Student RegID  </th>
+                            <th>Student Name</th>
                             <th>Notes</th>
                         </tr>
                         </thead>
@@ -60,6 +89,8 @@
                             <td>{{reportObj.subject}}</td>
                             <td>{{reportObj.startTime}}</td>
                             <td>{{resolveAttendanceValue(attendanceVal)}}</td>
+                            <td>{{reportObj.studentRegId}}</td>
+                            <td>{{reportObj.studentName}}</td>
                             <td>{{reportObj.comment || "--"}}</td>
                         </tr>
                         </tbody>
