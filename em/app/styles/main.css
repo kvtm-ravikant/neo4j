@@ -84,7 +84,7 @@ td:hover {
     font-weight: bold;
 }
 p {
-    margin: 0 0 0px; !important;
+    margin: 0px 0px 0px;
 }
 /* Wrappers */
 
@@ -500,9 +500,9 @@ input[placeholder] {
 }
 .em-datepicker{
     padding-top: 5px;
-    -webkit-border-radius: 0px; !important;
-    -moz-border-radius: 0px;!important;
-    border-radius: 0px; !important;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
 }
 textarea{
     height: 2em;
@@ -557,7 +557,7 @@ textarea{
     height: 20px;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
-    border-radius: 0px; !important
+    border-radius: 0px;
     border: none;
 }
 .form-horizontal .control-label{
