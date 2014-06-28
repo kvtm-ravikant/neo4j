@@ -644,7 +644,7 @@ textarea{
 /*** dashboard ***/
 .card {
     padding:10px;
-    position: absolute;
+   /* position: absolute;*/
     z-index: 0;
     font-family: Georgia;
     font-size: 2em;
@@ -653,6 +653,7 @@ textarea{
     min-width: 200px;
     border-radius:20px;
     border: 1px solid #aaa;
+    margin-bottom:2px;
 }
 .card a:hover{
     text-decoration:none;
@@ -784,4 +785,9 @@ only screen and (max-width: 760px),
     background:#555;
     color:#efefef;
     border:1px solid #333;
+}
+
+.userProfileImage{
+    border-radius:10px;
+    box-shadow: 1px 5px 5px #aaa;
 }
