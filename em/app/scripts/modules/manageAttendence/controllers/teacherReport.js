@@ -20,6 +20,7 @@ educationMediaApp.controller('teacherReportCtrl', function ($scope, $http,iconCl
         console.log("dataResponse subjectMap",dataResponse);
         appUtils.defaultParseResponse(dataResponse,function(dataResponse){
             $scope.subjectMap=dataResponse.responseData;
+            $scope.subjectMap["-1"]="All";
         });
 
     }).error(function(data,status,headers,config){
@@ -51,6 +52,7 @@ educationMediaApp.controller('teacherReportCtrl', function ($scope, $http,iconCl
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
                 console.log("dataResponse",dataResponse);
                 $scope.studentList=dataResponse.responseData;
+                $scope.studentList.insert(0,{"id":"-1","name":"All"});
             });
         }).error(function(data,status,headers,config){
             //error

@@ -279,17 +279,17 @@ module.exports.getTeacherReport=function (req,res,requestObj){
   var query="";
   if(userDetails.basicDetails.userType==2){
       query='MATCH (a:Class{name:"'+classObj.name+'",section:"'+classObj.section+'"})-[:`STUDENT_OF`]->';
-      if(selectedStudent){
+      if(selectedStudent && selectedStudent.id!='-1'){
           query=query+'(b:User{regID:"'+selectedStudent.id+'"}) ';
       }else{
           query=query+'(b) ';
       }
-      if(selectedSubject){
+      if(selectedSubject && selectedSubject.key!='-1'){
           query=query+'WITH b MATCH (c:Timetable{subjectId:"'+selectedSubject.key+'"})-[r:`ATTENDANCE_OF`]->(b) ';
       }else{
           query=query+'WITH b MATCH (c:Timetable)-[r:`ATTENDANCE_OF`]->(b) ';
       }
-      query=query+'WHERE r.timestamp>='+startTimeStamp+' AND r.timestamp<='+endTimeStamp+' RETURN  c,r,b';
+      query=query+'WHERE r.timestamp>='+startTimeStamp+' AND r.timestamp<='+endTimeStamp+' RETURN  c,r,b ORDER BY r.timestamp';
   }
   console.log("query",query);
   if(query!=""){
@@ -297,11 +297,13 @@ module.exports.getTeacherReport=function (req,res,requestObj){
           console.log(err,result);
           if(result && result.data.length>0){
               var attendanceMap={};
+              var dataList=[];
               for(var i= 0,loopLen=result.data.length;i<loopLen;i++){
                   var timetable=result.data[i][0];
                   var relationAttendance=result.data[i][1];
                   var student=result.data[i][2];
                   var key=relationAttendance.attendance;
+
                   var obj= {
                       "teacherName":timetable.teacherName,
                       "subject":subjectMap[(timetable.subjectId).toString()],
@@ -310,16 +312,12 @@ module.exports.getTeacherReport=function (req,res,requestObj){
                       "comment":relationAttendance.comment,
                       "timestamp":relationAttendance.timestamp,
                       "studentName":student.firstName+" "+student.middleName+" "+student.lastName,
-                      "studentRegId":student.regID
+                      "studentRegId":student.regID,
+                      "attendance":relationAttendance.attendance
                   }
-                  if(attendanceMap.hasOwnProperty(key)){
-                      attendanceMap[key].push(obj);
-                  }else{
-                      attendanceMap[key]=[obj];
-                  }
-
+                  dataList.push(obj);
               }
-              responseObj.responseData=attendanceMap;
+              responseObj.responseData=dataList;
               res.json(responseObj);
           }else{
               responseObj.error=true;

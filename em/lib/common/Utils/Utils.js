@@ -232,6 +232,10 @@ function ddmmyyyyStrToTimeStamp(dateValue){
     }
     return returnDate;
 }
+function resolveBoolean(value){
+    return value=='true'?"Yes":"No";
+}
+module.exports.resolveBoolean = resolveBoolean;
 module.exports.isFloat=isFloat;
 module.exports.isInteger=isInteger;
 module.exports.clone = clone;
