@@ -89,7 +89,12 @@ p {
 /* Wrappers */
 
 /* ------------------------------- */
-
+#spinner {
+    position: fixed;
+    z-index: 999999;
+    margin-left:49%;
+    margin-top:5px;
+}
 #wrapper {
   width: 100%;
 }
@@ -644,13 +649,14 @@ textarea{
     font-family: Georgia;
     font-size: 2em;
     text-align: center;
-    background: #43928B;
-    color:#efefef;
+    color:#438EA9;
     min-width: 200px;
+    border-radius:20px;
+    border: 1px solid #aaa;
 }
 .card a:hover{
     text-decoration:none;
-    color:#efefef;
+    color:#438EA9;
 }
 .dashboard-icons{
     color:#000;
@@ -773,4 +779,9 @@ only screen and (max-width: 760px),
 }
 .userProfileListMarginBottom{
     margin-top: 0.06em;
+}
+.userProfileHeader{
+    background:#555;
+    color:#efefef;
+    border:1px solid #333;
 }

@@ -8,10 +8,10 @@
       </div>
   </div>
   <div class="row">
-  <div class="col-sm-4" ng-repeat="(detailType,details) in userDetails"><!--left col-->
+  <div class="col-sm-4" ng-repeat="(detailType,details) in userDetails" ng-if="detailType!= 'fullName'"><!--left col-->
       <ul class="list-group">
           <span>
-              <li class=" userProfileListMarginBottom list-group-item text-muted " ng-if="detailType!= 'fullName'">{{detailType.camelCaseToWord()}}</li>
+              <li class="userProfileHeader list-group-item text-muted" >{{detailType.camelCaseToWord()}}</li>
           </span>
 
           <span ng-repeat="detail in details">
