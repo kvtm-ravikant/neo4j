@@ -229,7 +229,7 @@ module.exports.getStudentParentReport=function (req,res,requestObj){
       db.cypherQuery(query,function(err,result){
           console.log(err,result);
           if(result && result.data.length>0){
-              var attendanceMap={};
+              var dataList=[];
               for(var i= 0,loopLen=result.data.length;i<loopLen;i++){
                   var timetable=result.data[i][0];
                   var relationAttendance=result.data[i][1];
@@ -241,15 +241,13 @@ module.exports.getStudentParentReport=function (req,res,requestObj){
                       "endTime":Utils.timestampToTime(timetable.endtTime),
                       "comment":relationAttendance.comment,
                       "timestamp":relationAttendance.timestamp,
-                  }
-                  if(attendanceMap.hasOwnProperty(key)){
-                      attendanceMap[key].push(obj);
-                  }else{
-                      attendanceMap[key]=[obj];
+                      "attendance":relationAttendance.attendance
                   }
 
+                  dataList.push(obj);
+
               }
-              responseObj.responseData=attendanceMap;
+              responseObj.responseData=dataList;
               res.json(responseObj);
           }else{
               responseObj.error=true;
@@ -296,7 +294,6 @@ module.exports.getTeacherReport=function (req,res,requestObj){
       db.cypherQuery(query,function(err,result){
           console.log(err,result);
           if(result && result.data.length>0){
-              var attendanceMap={};
               var dataList=[];
               for(var i= 0,loopLen=result.data.length;i<loopLen;i++){
                   var timetable=result.data[i][0];
@@ -313,7 +310,7 @@ module.exports.getTeacherReport=function (req,res,requestObj){
                       "timestamp":relationAttendance.timestamp,
                       "studentName":student.firstName+" "+student.middleName+" "+student.lastName,
                       "studentRegId":student.regID,
-                      "attendance":relationAttendance.attendance
+                      "attendance":attendenceValMap[relationAttendance.attendance]
                   }
                   dataList.push(obj);
               }

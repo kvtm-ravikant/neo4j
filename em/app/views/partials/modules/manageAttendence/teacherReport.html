@@ -1,19 +1,23 @@
 <div ng-controller="teacherReportCtrl">
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-2">
-                <input type="text" id="startDateTeacher" ng-model="startDate" class="em-datepicker datepicker" placeholder="Start Date">
+            <div class="col-md-2 classselector">
+                <div class="input-group">
+
+                    <input type="text" id="startDateTeacher" ng-model="startDate" class="form-control em-datepicker datepicker" placeholder="Start Date">
+                    <span class="input-group-addon cursor-pointer" ng-click="openStartCalender()"><i class="fa fa-calendar"></i></span>
+                </div>
+
             </div>
-            <div class="col-md-1 calenderclass">
-                <span class="fa fa-calendar cursor-pointer" ng-click="openStartCalender()"></span>
+
+            <div class="col-md-2 classselector">
+                <div class="input-group">
+                    <input type="text" id="endDateTeacher" ng-model="endDate" class="form-control em-datepicker datepicker" placeholder="End Date">
+                    <span class="input-group-addon cursor-pointer" ng-click="openEndCalender()"><i class="fa fa-calendar"></i></span>
+                </div>
             </div>
-            <div class="col-md-2">
-                <input type="text" id="endDateTeacher" ng-model="endDate" class="em-datepicker datepicker" placeholder="End Date">
-            </div>
-            <div class="col-md-1 calenderclass">
-                <span class="fa fa-calendar cursor-pointer" ng-click="openEndCalender()"></span>
-            </div>
-            <div class="col-md-6 classselector">
+
+            <div class="col-md-3 classselector">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                         <span ng-show="selectedClass">{{selectedClass.name}}/{{selectedClass.section}}</span>
@@ -36,6 +40,10 @@
                         <li ng-repeat="(key,value) in subjectMap" ><a ng-click="selectSubject(key,value)">{{value}}</a></li>
                     </ul>
                 </div>
+
+
+            </div>
+            <div class="col-md-2 classselector ">
                 <div class="btn-group" ng-show="studentList">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                         <span ng-show="selectedStudent">{{selectedStudent.name}}</span>
@@ -47,7 +55,11 @@
                         <li ng-repeat="student in studentList" ><a ng-click="selectStudent(student)">{{student.name}}</a></li>
                     </ul>
                 </div>
-                <button class="btn btn-md btn-success" ng-click="getReport()">Get Report</button>
+            </div>
+            <div class="col-md-2 classselector ">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-md btn-success" ng-click="getReport()">Get Report</button>
+                </div>
             </div>
 
 
@@ -59,10 +71,11 @@
     </div>
     <div class="row " ng-show="reportData">
         <div class="col-md-12">
-            <div class="col-md-3 " >
+            <div class="col-md-3 classselector pull-right" >
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+
                     <input class="form-control" type="text" placeholder="Search" data-ng-model="searchText.$" />
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
                 </div>
 
             </div>
@@ -91,7 +104,7 @@
                     <td>{{resolveTimestamp(reportObj.timestamp)}}</td>
                     <td>{{reportObj.subject}}</td>
                     <td>{{reportObj.startTime}}</td>
-                    <td>{{resolveAttendanceValue(reportObj.attendance)}}</td>
+                    <td>{{reportObj.attendance}}</td>
                     <td>{{reportObj.studentRegId}}</td>
                     <td>{{reportObj.studentName}}</td>
                     <td>{{reportObj.comment || "--"}}</td>

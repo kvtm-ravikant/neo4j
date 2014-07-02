@@ -22,22 +22,32 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
             controller:'dashboard'
 
         })
-        .state('takeAttendance', {
-            url: "/manage-attendance/create-attendence",
-            templateUrl: "partials/modules/manageAttendence/createAttendence.html",
-            controller: 'manageAttendence_createAttendence'
-        })
-        .state('studentReport', {
-            url: "/manage-attendance/studentReport",
-            templateUrl: "partials/modules/manageAttendence/studentParentReport.html",
-            controller: 'studentReportCtrl'
-        })
-        .state('teacherReport', {
-            url: "/manage-attendance/teacherReport/",
-            templateUrl: "partials/modules/manageAttendence/teacherReport.html",
-            controller: 'teacherReportCtrl'
-         })
+        .state('manageAttendance', {
+            abstract: true,
+            url: '/manage-attendance',
 
+            // Note: abstract still needs a ui-view for its children to populate.
+            // You can simply add it inline here.
+            template: '<ui-view/>'
+        })
+            .state('manageAttendance.takeAttendance', {
+                parent:'manageAttendance',
+                url: "/manage-attendance/create-attendence",
+                templateUrl: "partials/modules/manageAttendence/createAttendence.html",
+                controller: 'manageAttendence_createAttendence'
+            })
+            .state('manageAttendance.studentReport', {
+                parent:'manageAttendance',
+                url: "/manage-attendance/studentReport",
+                templateUrl: "partials/modules/manageAttendence/studentParentReport.html",
+                controller: 'studentReportCtrl'
+            })
+            .state('manageAttendance.teacherReport', {
+                parent:'manageAttendance',
+                url: "/manage-attendance/teacherReport/",
+                templateUrl: "partials/modules/manageAttendence/teacherReport.html",
+                controller: 'teacherReportCtrl'
+             })
         .state('userProfile', {
             url: "/manage-users/user-profile",
             templateUrl: "partials/modules/manageUsers/userProfile.html",

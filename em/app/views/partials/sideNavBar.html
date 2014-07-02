@@ -13,11 +13,12 @@
                 <!-- /input-group -->
             </li>
             <li ng-repeat="menuItem in menu" ng-click="toggleMenu(menuItem.collapse)" >
-                <a ui-sref="{{menuItem.state}}" ng-class="{active: $state.includes(menuItem.state)}"><i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}}</a>
+                <a  ui-sref="{{menuItem.state}}" ng-class="{active: $state.includes(menuItem.state)}"><i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}}</a>
+
                 <!-- /.nav-second-level -->
                 <ul class="nav nav-second-level" ng-if="menuItem.childLinks" >
                     <li ng-repeat="childMenuItem in menuItem.childLinks" ng-hide="menuItem.collapse">
-                        <a ui-sref="{{childMenuItem.state}}" ><i class="{{iconClassMapping[childMenuItem.icon]}}"></i> {{childMenuItem.name}}</span></a>
+                        <a ui-sref="{{childMenuItem.state}}" ng-class="{activeSubMenu: $state.includes(childMenuItem.state)}"><i class="{{iconClassMapping[childMenuItem.icon]}}"></i> {{childMenuItem.name}}</span></a>
                     </li>
 
                 </ul>

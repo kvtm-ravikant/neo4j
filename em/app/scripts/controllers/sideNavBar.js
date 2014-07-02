@@ -14,26 +14,36 @@ angular.module('educationMediaApp').controller('SideNavBarCtrl', function ($scop
             'state': 'dashboard',
             'name':'Dashboard',
             'collapse':false,
-            'icon':"dashboard"
+            'icon':"dashboard",
+            'abstract':false
         },
 
         {
-            'state': 'takeAttendance',
-            'name':'Take Attendence',
+            'state': 'manageAttendance',
+            'name':'Manage Attendence',
             'collapse':false,
-            'icon':"sitemap"
-        },
-        {
-            'state': 'studentReport',
-            'name':'Student Attendence Report',
-            'collapse':false,
-            'icon':"sitemap"
-        },
-        {
-            'state': 'teacherReport',
-            'name':'Teacher Attendence Report',
-            'collapse':false,
-            'icon':"sitemap"
+            'icon':"sitemap",
+            'abstract':true,
+            "childLinks":[
+                {
+                    'state': 'manageAttendance.takeAttendance',
+                    'name':'Take Attendence',
+                    'collapse':false,
+                    'icon':"sitemap"
+                },
+                {
+                    'state': 'manageAttendance.studentReport',
+                    'name':'Student Attendence Report',
+                    'collapse':false,
+                    'icon':"sitemap"
+                },
+                {
+                    'state': 'manageAttendance.teacherReport',
+                    'name':'Teacher Attendence Report',
+                    'collapse':false,
+                    'icon':"sitemap"
+                }
+            ]
         },
         {
             'state': 'manageUser',

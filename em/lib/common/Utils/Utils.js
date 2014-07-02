@@ -235,7 +235,11 @@ function ddmmyyyyStrToTimeStamp(dateValue){
 function resolveBoolean(value){
     return value=='true'?"Yes":"No";
 }
+function resolveSex(value){
+    return value=="M"?"Male":"Female";
+}
 module.exports.resolveBoolean = resolveBoolean;
+module.exports.resolveSex = resolveSex;
 module.exports.isFloat=isFloat;
 module.exports.isInteger=isInteger;
 module.exports.clone = clone;
@@ -249,3 +253,7 @@ module.exports.Response = createResponse;
 module.exports.defaultErrorMsg = "OOPs... Something went wrong.";
 module.exports.defaultErrorResponse = defaultErrorResponse;
 module.exports.ddmmyyyyStrToTimeStamp = ddmmyyyyStrToTimeStamp;
+resolveTimestamp=function(timestamp){
+    var date=appUtils.dateUtility.convertDate("timestampToddmmyyyy","/",new Date(timestamp));
+    return date;
+}

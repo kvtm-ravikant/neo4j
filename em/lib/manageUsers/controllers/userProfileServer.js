@@ -49,7 +49,7 @@ module.exports=function(app,Utils){
                 {regID : clonedUserDetails.basicDetails.regID},
                 {userName: clonedUserDetails.basicDetails.userName},
                 {DOB: clonedUserDetails.basicDetails.DOB},
-                {sex : clonedUserDetails.basicDetails.sex},
+                {sex : Utils.resolveSex(clonedUserDetails.basicDetails.sex)},
                 {casteId : clonedUserDetails.basicDetails.casteId},
                 {SMSEnabled:Utils.resolveBoolean(clonedUserDetails.basicDetails.isSMSEnabled)},
                 {EmailEnabled: Utils.resolveBoolean(clonedUserDetails.basicDetails.isEmailEnabled)},

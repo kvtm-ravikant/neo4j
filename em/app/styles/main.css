@@ -3,7 +3,10 @@
 /* ------------------------------- */
 
 body {
-  background-color: #f8f8f8;
+    background-color: #f8f8f8;
+    font-family: "Verdana Georgia";
+    font-size: 14px;
+    line-height: 1.4 em;
 
 }
 ul>li{
@@ -671,7 +674,7 @@ only screen and (max-width: 760px),
 
     .classselector{
         padding-left:15px;
-        margin-top: 20px;
+        margin-top: 5px;
         margin-bottom: 10px;
     }
 
@@ -764,6 +767,12 @@ only screen and (max-width: 760px),
     #teacherReportData td:nth-of-type(6):before { content: "Student Name : ";  text-align: left; }
     #teacherReportData td:nth-of-type(7):before { content: "Notes : ";  text-align: left; }
 
+    #studentReportData td:nth-of-type(1):before { content: "Date : "; text-align: left; }
+    #studentReportData td:nth-of-type(2):before { content: "Subject : ";  text-align: left; }
+    #studentReportData td:nth-of-type(3):before { content: "Period Start time : ";  text-align: left; }
+    #studentReportData td:nth-of-type(4):before { content: "Attendance Value : ";  text-align: left; }
+    #studentReportData td:nth-of-type(5):before { content: "Notes : ";  text-align: left; }
+
 }
 .nav >li > a.active{
     background-color:#438EA9;
@@ -790,4 +799,8 @@ only screen and (max-width: 760px),
 .userProfileImage{
     border-radius:10px;
     box-shadow: 1px 5px 5px #aaa;
+}
+
+.activeSubMenu{
+    border-right:4px solid #666;
 }
