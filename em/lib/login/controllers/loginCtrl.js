@@ -5,10 +5,18 @@ var neo4j=require("node-neo4j");
 var UserClass=require("../../manageUsers/models/UserClass.js");
 var user=new UserClass();
 var db=new neo4j("http://localhost:7474");
+var Utils=require("../../common/Utils/Utils.js");
+var appList=require("../../common/models/modules.js").getAppList();
 console.log("db",db);
+
 module.exports=function(app){
     app.get("/login",function(req,res){
        res.render("login");
+    });
+    app.get("/getSidebarMenuList",function(req,res){
+        var responseObj=new Utils.Response();
+        responseObj.responseData=req.session.menuList
+        res.json(responseObj);
     });
     app.post('/loginSubmit',function(req,res){
         var userName=req.body.username;
@@ -31,6 +39,8 @@ module.exports=function(app){
                         user.setUserDetails(userDet,pAddress,sAddress,sn,school,contact);
                         user.setUserDataInSession(req);
                         console.log("req.session.userDetails",req.session.userDetails);
+                        var menuList=filterMenuItems(new appList(),userDet.userType);
+                        req.session.menuList=menuList;
                         res.redirect("/index");
                     }
                 }else{
@@ -42,28 +52,55 @@ module.exports=function(app){
 
 
         });
-        /*var selectQuery='MATCH (s:School {schoolId: "dav:cbse:1990:122001"})-[r:BELONGS_TO]-(u:User {userName:"'+userName+'"})RETURN u';
-        db.cypherQuery(selectQuery, function(err, result){
-            console.log("selectQuery login",err,result,result.data.length);
-            if( result && result.data.length>0){
-                var user=result.data[0];
-                console.log("logged In User",user.userName,user.hashPassword);
-                if(user.hashPassword==password){
-                    req.session.userData=user;
-                    res.redirect("/index");
-                }else{
-                    res.redirect("/login");
-                }
-            }else{
-                res.redirect("/login");
-            }
-        });*/
+
     });
     app.get("/logout",function(req,res){
         req.session.userData=null;
         res.redirect("/login");
     });
 }
+function filterMenuItems(menuList,userType){
+    console.log("filterMenuItems",menuList,userType);
+    var newMenuList=[];
+    for(var i= 0,loopLen=menuList.length;i<loopLen;i++){
+        var menu=menuList[i];
+        if(menu.hasOwnProperty('accessList')){
+            if(menu.hasOwnProperty('childLinks')){
+                var childlinksArr=[];
+                for(var j= 0,loopLenJ=menu.childLinks.length;j<loopLenJ;j++){
+                    var childMenu=menu.childLinks[j];
+                    if(childMenu.hasOwnProperty('accessList')){
+                        if(childMenu.accessList.length>0 && childMenu.accessList[0]=="*"){
+                            delete childMenu.accessList;
+                            childlinksArr.push(childMenu);
+                        }else if(childMenu.accessList.indexOf(userType)>-1){
+                            console.log("childMenu.accessList.indexOf(userType)>-1",childMenu)
+                            delete childMenu.accessList;
+                            childlinksArr.push(childMenu);
+                        }else{
+                            console.log("childMenu ELSE",childMenu);
+                        }
+                    }
+
+                }
+                delete menu.accessList;
+                menu.childLinks=childlinksArr;
+                newMenuList.push(menu);
+            }else if(menu.accessList.length>0 && menu.accessList[0]=="*"){
+                delete menu.accessList;
+                newMenuList.push(menu);
+            }else if(menu.accessList.indexOf(userType)>-1){
+                delete menu.accessList;
+                newMenuList.push(menu);
+            }else{
+                console.log("---",menu);
+            }
+        }
+    }
+    console.log("newMenuList",newMenuList);
+    return newMenuList;
+}
+
 function createSchool(){
     //school id [school name 3 char]:[board]:[year]:[pin code]
     var schoolIdVal="dav:cbse:1990:122001";

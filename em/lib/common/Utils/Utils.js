@@ -4,7 +4,7 @@
 
 module.exports.ensureAuthenticated=function (req, res, next) {
     if (req.session.userDetails) { return next(); }
-    res.redirect('/login');
+    res.redirect('login');
 }
 
 module.exports.convertToTimeStamp=function (time){

@@ -3,57 +3,26 @@
  */
 'use strict';
 
-angular.module('educationMediaApp').controller('SideNavBarCtrl', function ($scope, $location,iconClassMapping) {
+angular.module('educationMediaApp').controller('SideNavBarCtrl', function ($scope,$http, $location,iconClassMapping,appUtils) {
     $scope.iconClassMapping=iconClassMapping;
-    $scope.toggleMenu=function(obj){
-       console.log("toggleMenu",obj);
-       obj=!obj;
+    $scope.toggleMenu=function(obj,value,$event){
+       console.log("toggleMenu",obj,$event);
+       obj.collapse=!value;
+
+
     }
-    $scope.menu = [
-        {
-            'state': 'dashboard',
-            'name':'Dashboard',
-            'collapse':false,
-            'icon':"dashboard",
-            'abstract':false
-        },
+    $http.get('/getSidebarMenuList').success(function(dataResponse,status,headers,config){
+        //success
+        console.log("dataResponse",dataResponse);
+        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+            $scope.menu=dataResponse.responseData;
+        });
 
-        {
-            'state': 'manageAttendance',
-            'name':'Manage Attendence',
-            'collapse':false,
-            'icon':"sitemap",
-            'abstract':true,
-            "childLinks":[
-                {
-                    'state': 'manageAttendance.takeAttendance',
-                    'name':'Take Attendence',
-                    'collapse':false,
-                    'icon':"sitemap"
-                },
-                {
-                    'state': 'manageAttendance.studentReport',
-                    'name':'Student Attendence Report',
-                    'collapse':false,
-                    'icon':"sitemap"
-                },
-                {
-                    'state': 'manageAttendance.teacherReport',
-                    'name':'Teacher Attendence Report',
-                    'collapse':false,
-                    'icon':"sitemap"
-                }
-            ]
-        },
-        {
-            'state': 'manageUser',
-            'name':'Manage Users',
-            'collapse':false,
-            'icon':"users"
-        }
-        ];
+    }).error(function(data,status,headers,config){
+        //error
+        console.log("Error",data,status,headers,config);
+    });
 
-    $scope.isActive = function(route) {
-        return route === $location.path();
-    };
+
+
 });

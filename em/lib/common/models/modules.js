@@ -1,28 +1,60 @@
 /**
  * Created by ravikant on 22/6/14.
  */
-modules.exports.appliccations={
-    "AM"{//Attendance management
-        "screenName":"Attendance Management",
-        "state":"manageAttendance"
-        "modules":{
-            "TA"{ //take attendance
-                "screenName":"Take Attendance",
-                "state":"manageAttendance.takeAttendance"
-            },
-            "VRSP"{ //view Attendace Report for student parent
-                "screenName":"View Report",
-                "state":"manageAttendance.reports.student"
-            },
-            "VRTP"{ //view Attendace Report for teacher/principle
-                "screenName":"View Report",
-                "state":"manageAttendance.reports.parent"
-            }
+module.exports.getAppList=function(){
+
+    return initAppList;
+};
+
+function initAppList(){
+    var appList=[
+        {
+            'state': 'dashboard',
+            'name':'Dashboard',
+            'collapse':false,
+            'icon':"dashboard",
+            'abstract':false,
+            'accessList':["*"]
+        },
+
+        {
+            'state': 'manageAttendance',
+            'name':'Manage Attendence',
+            'collapse':true,
+            'icon':"sitemap",
+            'abstract':true,
+            'accessList':["*"],
+            "childLinks":[
+                {
+                    'state': 'manageAttendance.takeAttendance',
+                    'name':'Take Attendence',
+                    'collapse':false,
+                    'icon':"sitemap",
+                    'accessList':["2"]
+
+                },
+                {
+                    'state': 'manageAttendance.studentReport',
+                    'name':'Attendence Report',
+                    'collapse':false,
+                    'icon':"sitemap",
+                    'accessList':["1","3"]
+                },
+                {
+                    'state': 'manageAttendance.teacherReport',
+                    'name':'Attendence Report',
+                    'collapse':false,
+                    'icon':"sitemap",
+                    'accessList':["2"]
+                }
+            ]
+        },
+        {
+            'state': 'manageUser',
+            'name':'Manage Users',
+            'collapse':false,
+            'icon':"users"
         }
-    }
-}
-modules.exports.accessList={
-    "AM_TA":"1.1",
-    "AM_VRSP":"1.2",
-    "AM_VRTP":"1.3"
+    ];
+    return appList;
 }

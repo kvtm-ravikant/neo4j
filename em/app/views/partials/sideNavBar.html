@@ -1,6 +1,6 @@
 <nav class="navbar-default navbar-static-side" role="navigation" ng-controller="SideNavBarCtrl" >
     <div class="sidebar-collapse">
-        <ul class="nav" id="side-menu">
+        <ul class="nav " id="side-menu">
             <li class="sidebar-search">
                 <div class="input-group custom-search-form">
                     <input type="text" class="form-control" placeholder="Search...">
@@ -12,12 +12,13 @@
                 </div>
                 <!-- /input-group -->
             </li>
-            <li ng-repeat="menuItem in menu" ng-click="toggleMenu(menuItem.collapse)" >
-                <a  ui-sref="{{menuItem.state}}" ng-class="{active: $state.includes(menuItem.state)}"><i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}}</a>
+            <li ng-repeat="menuItem in menu"  >
+                <a ng-if="menuItem.abstract==true" ng-class="{active: $state.includes(menuItem.state)}" ng-click="toggleMenu(menuItem,menuItem.collapse,$event)"><i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}} <i class="pull-right" ng-class="menuItem.collapse?'fa fa-chevron-down':'fa fa-chevron-up'"></i></a>
+                <a ng-if="menuItem.abstract!=true" ui-sref="{{menuItem.state}}" ng-class="{active: $state.includes(menuItem.state)}"><i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}} </a>
 
                 <!-- /.nav-second-level -->
-                <ul class="nav nav-second-level" ng-if="menuItem.childLinks" >
-                    <li ng-repeat="childMenuItem in menuItem.childLinks" ng-hide="menuItem.collapse">
+                <ul class="nav nav-second-level" ng-if="menuItem.childLinks" class="sideNavbar" ng-show="menuItem.collapse" >
+                    <li ng-repeat="childMenuItem in menuItem.childLinks" >
                         <a ui-sref="{{childMenuItem.state}}" ng-class="{activeSubMenu: $state.includes(childMenuItem.state)}"><i class="{{iconClassMapping[childMenuItem.icon]}}"></i> {{childMenuItem.name}}</span></a>
                     </li>
 
