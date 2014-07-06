@@ -49,19 +49,20 @@ module.exports.saveAttendance=function(req,res,saveObj){
     if(saveObj.selectedData.attFlag){
         var successList=[];
         var failedList=[];
+        var schoolName=req.session.userDetails.schoolDetails.name.split(" ")[0];
         for(var i= 0,loopLen=saveObj.attendanceData.length;i<loopLen;i++){
             var student=saveObj.attendanceData[i];
             (function(count,stud){
                 if(stud.isSMSEnabled){
                     var smsMsg="";
-                    smsMsg+=stud.name+" is "+attendenceValMap[stud.attendance] +" for "+saveObj.selectedData.date+"|"+classObj.name+"/"+classObj.section+"|"+saveObj.selectedData.subjectName+"|"+saveObj.selectedData.startTime+"-"+saveObj.selectedData.endTime+"\n";
+                    smsMsg+=schoolName+":\n"+stud.name+" is "+attendenceValMap[stud.attendance] +" on "+saveObj.selectedData.date+" in "+classObj.name+"/"+classObj.section+":"+saveObj.selectedData.subjectName+"("+saveObj.selectedData.startTime+"-"+saveObj.selectedData.endTime+")\n";
                     if(stud.comment)
-                        smsMsg+="Note:"+stud.comment;
+                        smsMsg+="Note: "+stud.comment;
 
                     var contactNum=stud.contactNum;
                     console.log("smsMsg",smsMsg,contactNum);
                     if(contactNum){
-                        var url='http://msg.ducistech.com/sendhttp.php?user=49917&password=4729105&mobiles='+contactNum+'&message='+smsMsg+'&sender=seerid';
+                        var url='http://msg.ducistech.com/sendhttp.php?user=49917&password=4729105&mobiles='+contactNum+'&message='+smsMsg+'&sender=eMedia';
                         requestOBJ(url,function(error, response, html){
                             if(!error){
                                 console.log("Success in sending msg :",smsMsg,error);
