@@ -12,6 +12,8 @@ var neo4j=require("node-neo4j");
 var db=new neo4j("http://localhost:7474");
 var timeTableData=[];
 module.exports.getTimeTable=function(req,res,classId){
+    var schoolId=req.session.userDetails.schoolDetails.schoolId;
+    var newSubjectMap=subjectMap[schoolId];
     var selectTimetableQuery='START n=node('+classId+') MATCH (n)-[r:`TIMETABLE_OF`]->(b:Timetable) RETURN b ORDER BY b.dayID, b.startTime';
     db.cypherQuery(selectTimetableQuery,function(err,timetable){
         var timing=[];
@@ -20,7 +22,7 @@ module.exports.getTimeTable=function(req,res,classId){
             timeTableData=timetable.data;
             for(var i= 0,loopLen=timeTableData.length;i<loopLen;i++){
                 var d=timeTableData[i];
-                d['subjectName']=subjectMap[(timeTableData[i].subjectId).toString()];
+                d['subjectName']=newSubjectMap[(timeTableData[i].subjectId).toString()];
                 d.startTime=Utils.timestampToTime(d.startTime);
                 d.endTime=Utils.timestampToTime(d.endTime);
                 //console.log("d",d,(timeTableData[i].subjectId).toString());
