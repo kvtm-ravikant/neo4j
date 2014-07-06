@@ -89,6 +89,9 @@ td:hover {
 p {
     margin: 0px 0px 0px;
 }
+.em-top-nav{
+    float:right;
+}
 /* Wrappers */
 
 /* ------------------------------- */
@@ -532,7 +535,7 @@ textarea{
 }.login-header {
     position: relative;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 70px;
     padding: 5px;
     width: 450px;
     background: #777;

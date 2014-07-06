@@ -12,7 +12,7 @@ educationMediaApp.config(['$routeProvider','$locationProvider',function($routePr
 educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
     //
     // For any unmatched url, redirect to /state1
-    $urlRouterProvider.otherwise("/dashboard");
+    $urlRouterProvider.otherwise("/manage-users/user-profile");
     //
     // Now set up the states
     $stateProvider
