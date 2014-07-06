@@ -110,8 +110,8 @@
                 <span class="infolabel">Date(Present) : </span><span>  {{ date }} </span>
                 </div>
             <div class="row" style="margin-top:10px;">
-                <button ng-click="toggletable()" class="btn btn-sm btn-primary">Back</button>
-                <button ng-click="saveAttendance()" class="btn btn-sm btn-warning">Save Attendance</button>
+                <button ng-click="toggletable()" class="btn btn-sm btn-default">Back</button>
+                <button ng-click="saveAttendance()" class="btn btn-sm btn-primary">Save Attendance</button>
             </div>
         </div>
         <div class="col-md-7 bottompanel">
@@ -126,7 +126,7 @@
                     <button ng-click="markAllLeave()" data="attendance_status_all"   class="btn btn-xs attendance_status_all attendance_leave attendance_btn">All Leave</button><button class="btn  btn-xs btn-warning" id="leaveCount">{{attendanceAll.leave}}</button>
                        </div>
                         <div class="col-md-3 components">
-                <button ng-click="clearAllComment()" data="attendance_status_all" class="btn btn-xs ">Clear Comments</button>
+                <button ng-click="clearAll()" data="attendance_status_all" class="btn btn-xs ">Clear all</button>
                 </div>
             </div>
              <div class="row">

@@ -5,7 +5,7 @@
 var attendence=require('../models/attendence.js');
 var timetable =require('../models/timetable.js');
 var classList =require('../../common/models/Class.js');
-var sujectList =require('../../common/models/Subject.js');
+var subjectList =require('../../common/models/Subject.js');
 
 
 module.exports=function(app,Utils){
@@ -16,7 +16,8 @@ module.exports=function(app,Utils){
     app.get("/manage-attendence/create-attendence/getSubjectList",Utils.ensureAuthenticated,function(req,res){
         console.log("/manage-attendence/create-attendence/getSubjectList");
         var responseObj=new Utils.Response();
-        responseObj.responseData=sujectList;
+        var schoolId=req.session.userDetails.schoolDetails.schoolId;
+        responseObj.responseData=subjectList[schoolId];
         res.json(responseObj);
     });
 

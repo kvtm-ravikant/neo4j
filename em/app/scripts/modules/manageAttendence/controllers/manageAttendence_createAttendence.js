@@ -180,7 +180,7 @@ educationMediaApp.controller('manageAttendence_createAttendence', function ($sco
         $scope.markPresent(model);
 
     }
-    $scope.clearAllComment=function(){
+    $scope.clearAll=function(){
         for(var i= 0,loopLen=$scope.students.length;i<loopLen;i++){
             $scope.students[i].comment="";
             $scope.students[i].attendance=1;

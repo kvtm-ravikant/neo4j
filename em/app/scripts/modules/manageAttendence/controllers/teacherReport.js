@@ -20,7 +20,10 @@ educationMediaApp.controller('teacherReportCtrl', function ($scope, $http,iconCl
         console.log("dataResponse subjectMap",dataResponse);
         appUtils.defaultParseResponse(dataResponse,function(dataResponse){
             $scope.subjectMap=dataResponse.responseData;
-            $scope.subjectMap["-1"]="All";
+            if(Object.keys($scope.subjectMap).length>1){
+                $scope.subjectMap["-1"]="All";
+            }
+
         });
 
     }).error(function(data,status,headers,config){

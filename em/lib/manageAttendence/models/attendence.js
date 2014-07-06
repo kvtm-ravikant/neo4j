@@ -213,7 +213,8 @@ module.exports.searchAttendance=function(req,res,searchObj){
 
 module.exports.getStudentParentReport=function (req,res,requestObj){
   var responseObj=new Utils.Response();
-
+  var schoolId=req.session.userDetails.schoolDetails.schoolId;
+  var newSubjectMap=subjectMap[schoolId];
   var startTimeStamp=Utils.ddmmyyyyStrToTimeStamp(requestObj.startDate);
   var endTimeStamp=Utils.ddmmyyyyStrToTimeStamp(requestObj.endDate);
   var userDetails=req.session.userDetails;
@@ -237,7 +238,7 @@ module.exports.getStudentParentReport=function (req,res,requestObj){
                   var key=relationAttendance.attendance;
                   var obj= {
                       "teacherName":timetable.teacherName,
-                      "subject":subjectMap[(timetable.subjectId).toString()],
+                      "subject":newSubjectMap[(timetable.subjectId).toString()],
                       "startTime":Utils.timestampToTime(timetable.startTime),
                       "endTime":Utils.timestampToTime(timetable.endtTime),
                       "comment":relationAttendance.comment,
@@ -275,6 +276,8 @@ module.exports.getTeacherReport=function (req,res,requestObj){
   var userDetails=req.session.userDetails;
   console.log("userDetails.userType",userDetails,userDetails.basicDetails.userType);
   var userName=userDetails.basicDetails.userName;
+  var schoolId=req.session.userDetails.schoolDetails.schoolId;
+  var newSubjectMap=subjectMap[schoolId];
   var query="";
   if(userDetails.basicDetails.userType==2){
       query='MATCH (a:Class{name:"'+classObj.name+'",section:"'+classObj.section+'"})-[:`STUDENT_OF`]->';
@@ -304,7 +307,7 @@ module.exports.getTeacherReport=function (req,res,requestObj){
 
                   var obj= {
                       "teacherName":timetable.teacherName,
-                      "subject":subjectMap[(timetable.subjectId).toString()],
+                      "subject":newSubjectMap[(timetable.subjectId).toString()],
                       "startTime":Utils.timestampToTime(timetable.startTime),
                       "endTime":Utils.timestampToTime(timetable.endtTime),
                       "comment":relationAttendance.comment,
