@@ -522,12 +522,24 @@ textarea{
 .login {
     position: relative;
     margin: 0 auto;
-    margin-top: 100px;
     padding: 30px;
+    margin-top: -2px;
     width: 450px;
     background: #e1e3e6;
     border-radius: 1px;
     border: 1px solid #d1d5e0;
+    border-bottom-right-radius:3em;
+}.login-header {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 5px;
+    width: 450px;
+    background: #777;
+    border-radius: 1px;
+    color:#efefef;
+    border: 2px solid #d1d5e0;
+    border-top-left-radius:3em;
 }
 .btn-lg {
     padding: 10px 40px 10px 40px;
