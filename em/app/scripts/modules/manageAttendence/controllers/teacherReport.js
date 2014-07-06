@@ -112,6 +112,7 @@ educationMediaApp.controller('teacherReportCtrl', function ($scope, $http,iconCl
             errorObj.errorMsg.push("Please select class.");
         }
         /*if($scope.startDate && $scope.endDate){
+            console.log("$scope.startDate",$scope.startDate,"$scope.endDate",$scope.endDate);
             var startTimeStamp=appUtils.dateUtility.ddmmyyyyStrToDate($scope.startDate);
             var endTimeStamp=appUtils.dateUtility.ddmmyyyyStrToDate($scope.endDate);
             console.log(startTimeStamp,endTimeStamp,$scope.startDate,$scope.endDate);
