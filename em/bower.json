@@ -8,8 +8,6 @@
     "jquery": "~1.10.2",
     "bootstrap": "~3.0.3",
     "font-awesome": "4.0.3",
-    "angular-resource": "1.2.18",
-    "angular-route": "1.2.9",
     "angular-bootstrap-datepicker": "0.3.1",
     "angular-ui-router": "0.2.10"
   },
