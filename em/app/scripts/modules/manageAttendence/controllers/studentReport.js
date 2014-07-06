@@ -49,7 +49,10 @@ educationMediaApp.controller('studentReportCtrl', function ($scope, $http,iconCl
             errorObj.error=true
             errorObj.errorMsg.push("End cannot be empty.");
         }
-
+        if($scope.startDate && $scope.endDate && !appUtils.dateUtility.validateDateRange($scope.startDate , $scope.endDate)){
+            errorObj.error=true
+            errorObj.errorMsg.push("Start date should be less than end date.");
+        }
         return errorObj;
 
     }

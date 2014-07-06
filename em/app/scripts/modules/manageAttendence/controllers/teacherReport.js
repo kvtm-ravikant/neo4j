@@ -111,19 +111,10 @@ educationMediaApp.controller('teacherReportCtrl', function ($scope, $http,iconCl
             errorObj.error=true
             errorObj.errorMsg.push("Please select class.");
         }
-        /*if($scope.startDate && $scope.endDate){
-            console.log("$scope.startDate",$scope.startDate,"$scope.endDate",$scope.endDate);
-            var startTimeStamp=appUtils.dateUtility.ddmmyyyyStrToDate($scope.startDate);
-            var endTimeStamp=appUtils.dateUtility.ddmmyyyyStrToDate($scope.endDate);
-            console.log(startTimeStamp,endTimeStamp,$scope.startDate,$scope.endDate);
-            if(startTimeStamp && startTimeStamp && typeof(startTimeStamp)=='number' && typeof(endTimeStamp)=='number' && startTimeStamp<=endTimeStamp){
-
-            }else{
-                errorObj.error=true
-                errorObj.errorMsg.push("Start date should be less than end date.");
-            }
-
-        }*/
+        if($scope.startDate && $scope.endDate && !appUtils.dateUtility.validateDateRange($scope.startDate , $scope.endDate)){
+            errorObj.error=true
+            errorObj.errorMsg.push("Start date should be less than end date.");
+        }
         return errorObj;
 
     }

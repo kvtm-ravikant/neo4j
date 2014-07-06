@@ -61,11 +61,11 @@ angular.module('educationMediaApp').factory('appUtils', function () {
                 var returnDate=null;
                 if(dateValueArr && dateValueArr.length>0){
                     var dateValue1=dateValueArr[0];
-                    var dateValue1Arr=dateValue1.split(delimiter);
+                    var dateValue1Arr1=dateValue1.split(del);
                     var day,month,year;
-                    dateValue1Arr.length>0?day=parseInt(dateValue1Arr[0]):NaN;
-                    dateValue1Arr.length>1?month=parseInt(dateValue1Arr[1]):NaN;
-                    dateValue1Arr.length>2?year=parseInt(dateValue1Arr[2]):NaN;
+                    dateValue1Arr1.length>0?day=parseInt(dateValue1Arr1[0]):NaN;
+                    dateValue1Arr1.length>1?month=parseInt(dateValue1Arr1[1]):NaN;
+                    dateValue1Arr1.length>2?year=parseInt(dateValue1Arr1[2]):NaN;
                     month--;
                     var hrs=0,mins=0,secs=0;
                     if(dateValueArr.length>1 && dateValueArr[1].length>1){
@@ -79,6 +79,15 @@ angular.module('educationMediaApp').factory('appUtils', function () {
                     }
                 }
                 return returnDate;
+            },
+            'validateDateRange':function(startDateStr,endDateStr){
+                var startTimeStamp=Number(utility.dateUtility.ddmmyyyyStrToDate(startDateStr));
+                var endTimeStamp=Number(utility.dateUtility.ddmmyyyyStrToDate(endDateStr));
+                if(startTimeStamp && startTimeStamp && typeof(startTimeStamp)=='number' && typeof(endTimeStamp)=='number' && startTimeStamp<=endTimeStamp){
+                    return true;
+                }else{
+                    return false
+                }
             },
             /*
              * @param dateValue:string

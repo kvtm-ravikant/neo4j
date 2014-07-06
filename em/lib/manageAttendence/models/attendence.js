@@ -135,7 +135,7 @@ module.exports.searchAttendance=function(req,res,searchObj){
     var searchQuery='START class=node('+classId+'),timetable=node('+timetableId+') ' +
                     'MATCH class-[r1:STUDENT_OF]-student ' +
                     'WITH class, r1, student ' +
-                    'ORDER BY student.regID ' +
+                    'ORDER BY student.firstName,student.middleName,student.lastName ' +
                     'MATCH timetable-[r2:ATTENDANCE_OF{timestamp:'+timestamp+'}]-student ' +
                     'WITH  student, r2 '+
                     'MATCH (parent)-[:`PRIMARY_GUARDIAN_OF`]-(student) WITH student,parent,r2 MATCH (parent)-[:CONTACT_OF]-(c:Contact) RETURN student,r2,c;';
@@ -174,7 +174,7 @@ module.exports.searchAttendance=function(req,res,searchObj){
             responseObj.responseData=retObj;
             res.json(responseObj);
         }else{
-            var studentQuery='START class=node('+classId+') MATCH class-[r:`STUDENT_OF`]-(b:User{userType:"1"}) WITH b ORDER BY b.regID '+
+            var studentQuery='START class=node('+classId+') MATCH class-[r:`STUDENT_OF`]-(b:User{userType:"1"}) WITH b ORDER BY b.firstName,b.middleName,b.lastName '+
                 'MATCH (parent)-[:`PRIMARY_GUARDIAN_OF`]-(b) WITH b,parent MATCH (parent)-[r1:CONTACT_OF]-(c:Contact) RETURN b,c;';
             console.log("studentQuery",studentQuery);
             db.cypherQuery(studentQuery,function(err,result){
