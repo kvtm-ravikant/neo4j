@@ -42,6 +42,8 @@ module.exports=function(app){
                         var menuList=filterMenuItems(new appList(),userDet.userType);
                         req.session.menuList=menuList;
                         res.redirect("/index");
+                    }else{
+                        res.redirect("/login");
                     }
                 }else{
                     res.redirect("/login");
@@ -55,8 +57,14 @@ module.exports=function(app){
 
     });
     app.get("/logout",function(req,res){
-        req.session.userData=null;
+        req.session.userDetails=null;
+        req.session.menuList=null;
         res.redirect("/login");
+    });
+    app.get("/getSchoolInfo",function(req,res){
+        var responseObj=new Utils.Response();
+        responseObj.responseData=req.session.userDetails.schoolDetails;
+        res.json(responseObj);
     });
 }
 function filterMenuItems(menuList,userType){

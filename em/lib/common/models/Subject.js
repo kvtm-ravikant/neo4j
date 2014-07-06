@@ -13,5 +13,6 @@ module.exports={
     "18":"civics",
     "19":"Physics",
     "20":"Chemistry",
-    "21":"Physical Education"
+    "21":"Physical Education",
+    "22":"Cloud Computing"
 }

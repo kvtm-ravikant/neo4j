@@ -6,9 +6,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html">
-            <img src="images/em1.png"/>
-            <img src="images/Loyola_Jamshedpur_logo.png" height="33em" />
+        <a class="navbar-brand" href="/">
+
+            <img src="{{getOrgLogoPath()}}" height="33em" />
+            <span style="color:#fff;">{{schoolDetails.name}}</span>
         </a>
     </div>
     <!-- /.navbar-header -->
@@ -227,6 +228,7 @@
         </ul>
         <!-- /.dropdown-user -->
     </li>
+    <li><img src="images/em1.png"/></li>
     <!-- /.dropdown -->
     </ul>
 <!-- /.navbar-top-links -->

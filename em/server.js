@@ -18,8 +18,8 @@ var index = require('./lib/controllers');
 // Angular Routes
 app.get('/partials/*', index.partials);
 app.get('/',Utils.ensureAuthenticated, function(req,res){
-    if( req.session.userData)
-        res.render('index');
+    if( req.session.userDetails)
+        res.redirect('/index');
     else{
         res.render('login');
     }

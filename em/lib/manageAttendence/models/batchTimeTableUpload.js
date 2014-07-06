@@ -5,10 +5,10 @@ var fs=require('fs');
 var Utils=require("../../common/Utils/Utils.js");
 var neo4j=require("node-neo4j");
 var db=new neo4j("http://localhost:7474");
-var dataPath="../../data-files/timtable-updated.csv";
+var dataPath="../../data-files/QuestTimeTable.csv";
 
-var schoolIdVal="dav:cbse:1990:122001";
-var selectquery='MATCH (n:User{userType:"teacher"}) WHERE has(n.regID)  RETURN n';
+var schoolIdVal="quest:coaching:2013:452001";
+var selectquery='MATCH (a{schoolId:"quest:coaching:2013:452001"})-[:`BELONGS_TO`]->(b{userType:"2"})  RETURN b';
 var teacherMap={}
 //update
 /*
@@ -65,7 +65,7 @@ db.cypherQuery(selectquery,function(err,teacher){
                             timetable.teacherName="N/A";
                         }
                         console.log("timetable",i,timetable);
-                        var selectClassquery='MATCH (n:Class{name:"X",section:"A"})  RETURN n';
+                        var selectClassquery='MATCH (n:Class{name:"CL",section:"A"})  RETURN n';
                         db.cypherQuery(selectClassquery,function(err,classData){
                             console.log("classData",classData);
                             var classId=classData.data[0]._id;

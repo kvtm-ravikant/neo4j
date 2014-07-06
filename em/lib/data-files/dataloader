@@ -1,28 +1,10 @@
+
+
+
+
 LOAD CSV WITH HEADERS FROM "file:/home/ravikant/Documents/docs/neo4j/em/lib/data-files/TestData06152014 ContactNode Data1.csv" AS csvLine
 MATCH (u:User{ regID: csvLine.regID })
 
-CREATE (sa:SecondaryAddress {
-                street1:csvLine.secondaryAddress_street1,
-                street2:csvLine.secondaryAddress_street2,
-                city:csvLine.secondaryAddress_city,
-                district:csvLine.secondaryAddress_district,
-                state:csvLine.secondaryAddress_state,
-                country:csvLine.secondaryAddress_country,
-                pincode:csvLine.secondaryAddress_pincode
-               })
-CREATE (sd:SocialNetwork {
-                facebookId:csvLine.socialNetwork_facebook_id,
-                facebookScreenName:csvLine.socialNetwork_facebook_screenName,
-                facebookUrl:csvLine.socialNetwork_facebook_url,
-                skypeId:csvLine.socialNetwork_skype_id,
-                skypeUrl:csvLine.socialNetwork_skype_url,
-                twitterId:csvLine.socialNetwork_twitter_id,
-                twitterUrl:csvLine.socialNetwork_twitter_url
-               })
-
-
-CREATE (u)<-[:SECONDARY_ADDRESS_OF]-(sa)
-CREATE (u)<-[:SOCIAL_NETWORK_OF]-(sd);
 
 LOAD CSV WITH HEADERS FROM "file:/home/ravikant/Documents/docs/neo4j/em/lib/data-files/TestData06152014 ContactNode Data1.csv" AS csvLine
 MATCH (u:User{ regID: csvLine.regID })

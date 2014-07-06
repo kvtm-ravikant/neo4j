@@ -28,4 +28,5 @@ educationMediaApp.controller('user_profile', function ($scope, $http,iconClassMa
 
     }
 
+
 });

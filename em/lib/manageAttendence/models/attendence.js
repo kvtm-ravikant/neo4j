@@ -16,7 +16,7 @@ var subjectMap=require("../../common/models/Subject.js");
 
 module.exports.getStudentsOfGivenClass=function(req,res,classObj){
     var responseObj=new Utils.Response();
-    var query='MATCH (class{name:"'+classObj.name+'",section:"'+classObj.section+'"})-[:`STUDENT_OF`]->(student) RETURN student ORDER BY student.firstName';
+    var query='MATCH (class{name:"'+classObj.name+'",section:"'+classObj.section+'"})-[:`STUDENT_OF`]-(student) RETURN student ORDER BY student.firstName';
     console.log("getStudentsOfGivenClass",query);
     db.cypherQuery(query,function(err,result){
 
@@ -135,7 +135,7 @@ module.exports.searchAttendance=function(req,res,searchObj){
                     'MATCH class-[r1:STUDENT_OF]-student ' +
                     'WITH class, r1, student ' +
                     'ORDER BY student.regID ' +
-                    'MATCH timetable-[r2:ATTENDANCE_OF{timestamp:'+timestamp+'}]->student ' +
+                    'MATCH timetable-[r2:ATTENDANCE_OF{timestamp:'+timestamp+'}]-student ' +
                     'WITH  student, r2 '+
                     'MATCH (parent)-[:`PRIMARY_GUARDIAN_OF`]-(student) WITH student,parent,r2 MATCH (parent)-[:CONTACT_OF]-(c:Contact) RETURN student,r2,c;';
     console.log("searchQuery",searchQuery);
@@ -173,7 +173,7 @@ module.exports.searchAttendance=function(req,res,searchObj){
             responseObj.responseData=retObj;
             res.json(responseObj);
         }else{
-            var studentQuery='START class=node('+classId+') MATCH class-[r:`STUDENT_OF`]->(b:User{userType:"1"}) WITH b ORDER BY b.regID '+
+            var studentQuery='START class=node('+classId+') MATCH class-[r:`STUDENT_OF`]-(b:User{userType:"1"}) WITH b ORDER BY b.regID '+
                 'MATCH (parent)-[:`PRIMARY_GUARDIAN_OF`]-(b) WITH b,parent MATCH (parent)-[r1:CONTACT_OF]-(c:Contact) RETURN b,c;';
             console.log("studentQuery",studentQuery);
             db.cypherQuery(studentQuery,function(err,result){
