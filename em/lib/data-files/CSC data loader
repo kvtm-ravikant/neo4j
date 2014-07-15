@@ -1,0 +1,99 @@
+CREATE (n:Class { name : 'CSC2014', section : 'Freshers'});
+
+MATCH (class:Class { name : 'CSC2014', section : 'Freshers'}),(school:School { schoolId: 'quest:coaching:2013:452001' })
+CREATE (class)-[:CLASS_OF]->(school)
+
+LOAD CSV WITH HEADERS FROM "file:/home/ravikant/Documents/docs/neo4j/em/lib/data-files/QuestUserCSC.csv" AS csvLine
+CREATE (u:User { userName: csvLine.userName,
+                salutation: csvLine.Salutation,
+                firstName: csvLine.firstName,
+                middleName: csvLine.middleName,
+                lastName: csvLine.lastName,
+                sex: csvLine.sex,
+                regID: csvLine.regID,
+                userType: csvLine.userType,
+                DOB: csvLine.DOB,
+                religionId: csvLine.religionId,
+                casteId: csvLine.casteId,
+                isFromReservedCategory: csvLine.isFromReservedCategory,
+                isPhysicallyHandicapped: csvLine.isPhysicallyHandicapped,
+                isEconomicallyBackward: csvLine.isEconomicallyBackward,
+                birthPlace_city: csvLine.birthPlace_city,
+                birthPlace_state: csvLine.birthPlace_state,
+                birthPlace_country: csvLine.birthPlace_country,
+                languages_motherTongue: csvLine.languages_motherTongue,
+                languages_others: csvLine.languages_others,
+                profileImagePath: csvLine.profileImagePath,
+                passportNumber: csvLine.passportNumber,
+                panNum: csvLine.panNum,
+                uid: csvLine.uid,
+                visaDetails: csvLine.visaDetails,
+                softeDelete: csvLine.softeDelete,
+                accessList: csvLine.accessList,
+                hashPassword: csvLine.hashPassword,
+                resetPasswordCode: csvLine.resetPasswordCode,
+                resetPasswordCodeUntil: csvLine.resetPasswordCodeUntil,
+                createdAt: csvLine.createdAt,
+                updatedAt: csvLine.updatedAt,
+                createdBy: csvLine.createdBy,
+                updatedBy: csvLine.updatedBy,
+                updatedBy: csvLine.updatedBy,
+                isSMSEnabled: csvLine.isSMSEnabled,
+                isEmailEnabled: csvLine.isEmailEnabled,
+                contactUserId: csvLine.contactUserId
+               })
+MERGE (s:School { schoolId: 'quest:coaching:2013:452001' })
+MERGE (u)<-[:BELONGS_TO]-(s);
+
+MATCH (s:School { schoolId: 'quest:coaching:2013:452001' })-[:BELONGS_TO]-(student:User{userType:"1"})  where student.regID=~ '.*CSC2014.*'
+WITH student MATCH (class:Class{name:"CSC2014",section:"Freshers"})
+CREATE (class)-[r:`STUDENT_OF`]->(student)
+RETURN r
+
+
+MATCH (s:School { schoolId: 'quest:coaching:2013:452001' })-[:BELONGS_TO]-(student:User{userType:"1"})  where student.regID=~ '.*CSC2014.*'
+WITH student
+Match (parent:User{regID:student.contactUserId})
+CREATE (student)-[r:PRIMARY_GUARDIAN_OF]->(parent)
+RETURN r
+
+LOAD CSV WITH HEADERS FROM "file:/home/ravikant/Documents/docs/neo4j/em/lib/data-files/QuestContactCSC.csv" AS csvLine
+MATCH (u:User{ regID: csvLine.regID })
+CREATE (c:Contact {
+                emailPrimary:csvLine.contact_email_primary,
+                emailSecondary:csvLine.contact_email_secondary,
+                phonePrimary:csvLine.phone_primary,
+                phoneSecondary:csvLine.phone_secondary
+               })
+CREATE (pa:PrimaryAddress {
+                street1:csvLine.primaryAddress_street1,
+                street2:csvLine.primaryAddress_street2,
+                city:csvLine.primaryAddress_city,
+                district:csvLine.primaryAddress_district,
+                state:csvLine.primaryAddress_state,
+                country:csvLine.primaryAddress_country,
+                pincode:csvLine.primaryAddress_pincode
+               })
+CREATE (sa:SecondaryAddress {
+                street1:csvLine.secondaryAddress_street1,
+                street2:csvLine.secondaryAddress_street2,
+                city:csvLine.secondaryAddress_city,
+                district:csvLine.secondaryAddress_district,
+                state:csvLine.secondaryAddress_state,
+                country:csvLine.secondaryAddress_country,
+                pincode:csvLine.secondaryAddress_pincode
+               })
+CREATE (sd:SocialNetwork {
+                facebookId:csvLine.socialNetwork_facebook_id,
+                facebookScreenName:csvLine.socialNetwork_facebook_screenName,
+                facebookUrl:csvLine.socialNetwork_facebook_url,
+                skypeId:csvLine.socialNetwork_skype_id,
+                skypeUrl:csvLine.socialNetwork_skype_url,
+                twitterId:csvLine.socialNetwork_twitter_id,
+                twitterUrl:csvLine.socialNetwork_twitter_url
+               })
+
+CREATE (u)<-[:CONTACT_OF]-(c)
+CREATE (u)<-[:PRIMARY_ADDRESS_OF]-(pa)
+CREATE (u)<-[:SECONDARY_ADDRESS_OF]-(sa)
+CREATE (u)<-[:SOCIAL_NETWORK_OF]-(sd);
