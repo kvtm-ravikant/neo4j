@@ -1,0 +1,6 @@
+dayID,startTime,endTime,teacherRegID,subjectId,isBreak,attFlag
+1,9:00,18:00,1_T,23,,TRUE
+2,9:00,18:00,1_T,23,,TRUE
+3,9:00,18:00,1_T,23,,TRUE
+4,9:00,18:00,1_T,23,,TRUE
+5,9:00,18:00,1_T,23,,TRUE
