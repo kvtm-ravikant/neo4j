@@ -17,7 +17,8 @@ module.exports={
         "21":"Physical Education",
     },
     "quest:coaching:2013:452001":{
-        "22":"Cloud Computing"
+        "22":"Cloud Computing",
+        "23":"Company Training"
     }
 
 
