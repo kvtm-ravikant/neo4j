@@ -3,7 +3,7 @@ CREATE (n:Class { name : 'CSC2014', section : 'Freshers'});
 MATCH (class:Class { name : 'CSC2014', section : 'Freshers'}),(school:School { schoolId: 'quest:coaching:2013:452001' })
 CREATE (class)-[:CLASS_OF]->(school)
 
-LOAD CSV WITH HEADERS FROM "file:/home/ravikant/Documents/docs/neo4j/em/lib/data-files/QuestUserCSC.csv" AS csvLine
+LOAD CSV WITH HEADERS FROM "file:/home/ubuntu/projects/neo4j/em/lib/data-files/QuestUserCSC.csv" AS csvLine
 CREATE (u:User { userName: csvLine.userName,
                 salutation: csvLine.Salutation,
                 firstName: csvLine.firstName,
@@ -57,7 +57,7 @@ Match (parent:User{regID:student.contactUserId})
 CREATE (student)-[r:PRIMARY_GUARDIAN_OF]->(parent)
 RETURN r
 
-LOAD CSV WITH HEADERS FROM "file:/home/ravikant/Documents/docs/neo4j/em/lib/data-files/QuestContactCSC.csv" AS csvLine
+LOAD CSV WITH HEADERS FROM "file:/home/ubuntu/projects/neo4j/em/lib/data-files/QuestContactCSC.csv" AS csvLine
 MATCH (u:User{ regID: csvLine.regID })
 CREATE (c:Contact {
                 emailPrimary:csvLine.contact_email_primary,
