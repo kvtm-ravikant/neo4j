@@ -52,10 +52,21 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
             url: "/manage-users/user-profile",
             templateUrl: "partials/modules/manageUsers/userProfile.html",
             controller:'user_profile'
-        }).state('manageUser', {
+        })
+        .state('manageUser', {
             url: "/manage-users/users",
             templateUrl: "partials/modules/manageUsers/manageUser.html",
             controller:'manage_user'
+        })
+        .state('schoolManagement', {
+            url: "/schoolManagement/admin",
+            templateUrl: "partials/modules/schoolAdmin/schoolManagement.html",
+            controller:'schoolManagement'
+        })
+        .state('libraryManagement', {
+            url: "/libraryManagement/index",
+            templateUrl: "partials/modules/mangeLibrary/mangeLibrary.html",
+            controller:'libraryManagement'
         })
 
 });
