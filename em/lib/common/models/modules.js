@@ -30,7 +30,7 @@ function initAppList(){
                     'name':'Take Attendence',
                     'collapse':false,
                     'icon':"sitemap",
-                    'accessList':["2"]
+                    'accessList':["0","2"]
 
                 },
                 {
@@ -45,7 +45,7 @@ function initAppList(){
                     'name':'Attendence Report',
                     'collapse':false,
                     'icon':"sitemap",
-                    'accessList':["2"]
+                    'accessList':["0","2"]
                 }
             ]
         },
@@ -54,6 +54,20 @@ function initAppList(){
             'name':'Manage Users',
             'collapse':false,
             'icon':"users"
+        },
+        {
+            'state': 'libraryManagement',
+            'name':'Lirbrary  Management',
+            'collapse':false,
+            'icon':"users",
+            'accessList':["*"]
+        },
+        {
+            'state': 'schoolManagement',
+            'name':'Manage School',
+            'collapse':false,
+            'icon':"users",
+            'accessList':["0"]
         }
     ];
     return appList;
