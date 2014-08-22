@@ -16,7 +16,6 @@ angular.module('educationMediaApp')
     $scope.getOrgLogoPath=function(){
         if($scope.schoolDetails){
             var path="images/schoolLogo/"+$scope.schoolDetails.schoolId.replace(/:/g,"_")+".png";
-            console.log("path",path);
             return path;
         }
     }

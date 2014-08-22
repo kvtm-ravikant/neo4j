@@ -238,8 +238,34 @@ function resolveBoolean(value){
 function resolveSex(value){
     return value=="M"?"Male":"Female";
 }
+function resolveDataType(value,dataType){
+    switch(dataType){
+        case 'string': value=value.toString(); break;
+        case 'number':
+               var temp=value=parseInt(value,10);
+               if(!isNaN(temp) && temp!=null)
+                   value=temp;
+                break;
+        case 'date':
+                var temp=ddmmyyyyStrToTimeStamp(value);
+                if(!isNaN(temp))
+                    value=temp;
+                break;
+        case 'boolean':
+                if(value.toLowerCase()=='true'){
+                    value=true;
+                }else if(value.toLowerCase()=='false'){
+                    value=false;
+                }
+                break;
+        default:value=value.toString();
+
+    }
+    return value;
+}
 module.exports.resolveBoolean = resolveBoolean;
 module.exports.resolveSex = resolveSex;
+module.exports.resolveDataType = resolveDataType;
 module.exports.isFloat=isFloat;
 module.exports.isInteger=isInteger;
 module.exports.clone = clone;
@@ -253,7 +279,4 @@ module.exports.Response = createResponse;
 module.exports.defaultErrorMsg = "OOPs... Something went wrong.";
 module.exports.defaultErrorResponse = defaultErrorResponse;
 module.exports.ddmmyyyyStrToTimeStamp = ddmmyyyyStrToTimeStamp;
-resolveTimestamp=function(timestamp){
-    var date=appUtils.dateUtility.convertDate("timestampToddmmyyyy","/",new Date(timestamp));
-    return date;
-}
+

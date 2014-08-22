@@ -16,7 +16,7 @@ educationMediaApp.controller('manageAttendence_createAttendence', function ($sco
     }
     $http.get('/manage-attendence/create-attendence/getClassList').success(function(dataResponse,status,headers,config){
         //success
-        console.log("dataResponse",dataResponse);
+        console.log("dataResponse getClassList",dataResponse);
         appUtils.defaultParseResponse(dataResponse,function(dataResponse){
             $scope.classList=dataResponse.responseData;
         });
@@ -38,7 +38,7 @@ educationMediaApp.controller('manageAttendence_createAttendence', function ($sco
         }).error(function(data,status,headers,config){
                 //error
                 console.log("Error",data,status,headers,config);
-            });
+        });
     }
     $scope.$watch('date',function(){
         $scope.selectDate($scope.date,"08:00");
