@@ -810,7 +810,29 @@ only screen and (max-width: 760px),
     color:#efefef;
     border:1px solid #333;
 }
-
+.searchclassdiv{
+    position: absolute;
+    right: 20px;
+    top: 6px;
+    cursor:pointer;
+}
+.data-form-search {
+    display: block;
+    width: 100%;
+    height: 25px;
+    padding: 5px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+}
+.popover.bottom{
+    min-width:400px;
+    border-radius:0px;
+}
 .userProfileImage{
     border-radius:10px;
     box-shadow: 1px 5px 5px #aaa;
@@ -821,4 +843,43 @@ only screen and (max-width: 760px),
 }
 .sideNavbar{
     padding-top:1em;
+}
+input.ng-valid.ng-dirty,textarea.ng-valid.ng-dirty { border: solid green 1px; }
+input.ng-invalid.ng-dirty,textarea.ng-invalid.ng-dirty { border: solid red 1px; }
+.em-form{
+  margin-top:10px;
+}
+.nodeSearchInputBox{
+    width: 95%;
+    padding: 2px 10px 2px 5px;
+    border-radius: 5px;
+    border: 1px solid #EDF4F7;
+}
+.advSearchBox{
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    margin-left:15px;
+    margin-top:-5px;
+    padding-bottom:10px;
+    padding-top:10px;
+}
+.searchclass{
+    padding:4px;
+}
+#booksdiv1{
+    border-top:1px solid #ccc;
+}
+#booksdiv1,#booksdiv2,#booksdiv3{
+    height: 150px;
+    border-bottom:1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+}
+.modal-header,.modal-content{
+    border-radius:0px;
+}
+.modal-body{
+    background-color: #fff;
+    border:1px solid #fff;
 }
