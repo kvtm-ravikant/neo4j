@@ -38,7 +38,7 @@ module.exports.searchBooks=function(requestObj,res){
     var parentBookObj=requestObj.parentBook;
     var query;
     if(requestObj.searchText!=""){
-        query='Match (n:parentBook) where ';
+        query='Match (n:ParentBook) where ';
         if(parentBookObj.bookTitle){
             query+='n.bookTitle =~ ".*'+parentBookObj.bookTitle+'.*" AND ';
         }else{
