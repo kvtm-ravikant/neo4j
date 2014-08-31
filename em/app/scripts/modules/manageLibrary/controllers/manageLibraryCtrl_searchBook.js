@@ -86,6 +86,8 @@ educationMediaApp.controller('libraryManagement_searchBook', function ($scope, $
     $scope.getBackToMainBookList=function(){
         $scope.currentSelectedBook=null;
         $scope.currentBookDetails=null;
+        $scope.returnThisBook=null;
+        $scope.issueThisBook=null;
     }
     $scope.getShowImage=function(book){
         $scope.imageModalDetails={"path":"images/bookImages/"+book.isbn+".jpeg",desc:book.bookTitle};
