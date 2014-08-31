@@ -1,0 +1,100 @@
+<div class="row" ng-if="books.data" ng-show="currentBookDetails">
+    <div class="col-md-12" >
+        <h4>Selected Book<button class="btn btn-sm btn-primary pull-right" ng-click="getBackToMainBookList()">Back</button></h4>
+        <div class="col-md-4" ng-repeat="(key,value) in parentConfig" >
+            <strong>{{value}}</strong>:{{currentSelectedBook[key]}}
+        </div>
+
+    </div>
+    <div class="col-md-9" >
+        <h4>Book Details</h4>
+        <table class="table">
+            <div id="head_nav">
+                <thead class="theadclass">
+                <tr>
+                    <th ng-repeat="(key,value) in childConfig" >{{value}}</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+            </div>
+            <tbody>
+            <tr ng-repeat="book in currentBookDetails" ng-class="{'active': (issueThisBook && book.id==issueThisBook.id)==true}">
+                <td ng-repeat="(key,value) in childConfig" >{{book[key]}}</td>
+                <td>
+                    <span class="cursor-pointer" ng-if="book.bookStatus=='Available'" ng-click="showIssueBookHtml(book)">Issue</span>
+                    <span class="cursor-pointer" ng-if="book.bookStatus=='Unavailable'" ng-click="showReturnBookHtml(book)">Return</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-3" ng-if="issueThisBook">
+
+        <div class="col-md-12">
+
+            Search User:<br>
+            <div class="input-group">
+                <input ng-model="issueBookObj.userSearchText" class="col-md-12 searchclass" placeholder="Search User" class="nodeSearchInputBox" />
+                    <span class="input-group-addon " id="datamodal" data-toggle="popover">
+                        <i class="fa fa-search cursor-pointer" ng-click="searchUser()" ></i>
+                    </span>
+            </div>
+            <ul ng-if="searchedUserData" style="padding:2px;">
+                <li ng-repeat="user in searchedUserData" ><span class="cursor-pointer" ng-click="selectUserToIssueBook(user)">{{user.firstName}} {{user.middleName}} {{user.LastName}} ({{user.DOB}})</span></li>
+            </ul>
+            <h4>Issue Book</h4>
+        </div>
+
+
+        <div class="col-md-12" ng-if="selectedUser">
+            User: {{selectedUser.firstName}} {{selectedUser.middleName}} {{selectedUser.LastName}} ({{selectedUser.DOB}})
+        </div>
+        <div class="col-md-12">
+            Issue Date: {{issueBookObj.issueDate|date:'dd/MM/yyyy'}}
+        </div>
+        <div class="col-md-12">
+            Return Date: {{issueBookObj.dueDate|date:'dd/MM/yyyy'}}
+        </div>
+        <div class="col-md-12">
+            Issue Comment: <br>
+            <textarea ng-model="issueBookObj.issueComment" placeholder="comments"></textarea>
+        </div>
+        <div class="col-md-12">
+            <br>
+            <button class="btn btn-xs btn-primary" ng-click="issueLibBook()">Issue book</button>
+        </div>
+
+    </div>
+    <div class="col-md-3" ng-if="returnThisBook">
+
+        <div class="col-md-12">
+            <h4>Return Book</h4>
+            User:{{userToReturn.firstName}} {{userToReturn.middleName}} {{userToReturn.LastName}} ({{userToReturn.DOB}})<br>
+
+        </div>
+        <div class="col-md-12">
+            Issue Date: {{returnIsuedDetails.issueDate|date:'dd/MM/yyyy'}}
+        </div>
+        <div class="col-md-12">
+            Due Date: {{returnIsuedDetails.dueDate|date:'dd/MM/yyyy'}}
+        </div>
+        <div class="col-md-12">
+            Issue Comment: <br>
+            <textarea ng-model="returnIsuedDetails.issueComment" placeholder="comments"></textarea>
+        </div>
+        <div class="col-md-12">
+            Return Date: <br>
+            {{returnIsuedDetails.submittedDate|date:'dd/MM/yyyy'}}
+        </div>
+        <div class="col-md-12">
+            Return Comment: <br>
+            <textarea ng-model="returnIsuedDetails.submitComment" placeholder="comments"></textarea>
+        </div>
+
+        <div class="col-md-12">
+            <br>
+            <button class="btn btn-xs btn-primary" ng-click="returnLibBook()">Return book</button>
+        </div>
+
+    </div>
+</div>

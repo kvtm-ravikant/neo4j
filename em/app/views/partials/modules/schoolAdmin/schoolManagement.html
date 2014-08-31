@@ -1,0 +1,45 @@
+<div class="row" ng-controller="schoolManagement">
+    <div class="row">
+        <div  class="col-md-12">
+            <div class="col-md-6">
+                <div class="input-group custom-search-form">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" style="line-height:1.7;">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Search...">
+                </div>
+            </div>
+            <div class="col-md-1 pull-right">
+                <button class="btn btn-default" type="button" style="line-height:1.7;" ng-click="addNode()">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="node">
+
+        <form novalidate ng-submit="" class="em-form" name="emForm">
+            <div class="col-md-12" ng-repeat="config in node" >
+                <div class="col-md-3">{{config.label}}</div>
+                <div class="col-md-5">
+                        <span ng-if="config.inputType=='text'">
+                            <input type="text" name="config.propertyName" ng-model="config.propertyValue" placeholder="{{config.label}}" {{config.required}}/>
+                        </span>
+                        <span ng-if="config.inputType=='textarea'">
+                            <textarea name="config.propertyName"  ng-model="config.propertyValue" {{config.required}}></textarea>
+                        </span>
+                        <span ng-if="config.inputType=='email'">
+                            <input type="email" name="config.propertyName"  ng-model="config.propertyValue" placeholder="{{config.label}}" {{config.required}}/>
+                        </span>
+                </div>
+                <div class="col-md-4">
+                    {{emForm}}
+                    <p ng-show="emForm[config.propertyValue].$invalid && !emForm[config.propertyValue].$pristine " class="help-block">{{config.helpBlock}}</p>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

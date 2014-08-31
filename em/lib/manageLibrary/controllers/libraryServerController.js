@@ -5,7 +5,7 @@ var fs=require("fs");
 var libraryMS=require('../models/library.js');
 var Utils=require("../../common/Utils/Utils.js");
 var neo4j=require("node-neo4j");
-var db=new neo4j("http://localhost:7474");
+var db=new neo4j("http://106.185.38.115:7474");
 var parentBookDD=require("../../common/models/docType.js");
 
 var acceptableDataTypes=["string","number","boolean","date"];
@@ -202,6 +202,7 @@ function getColumnObjMap(columns){
 module.exports=function(app,Utils){
 
     app.get("/manageLibrary/getAllBooks",Utils.ensureAuthenticated,function(req,res){
+        console.log("getAllBooks");
         libraryMS.getAllBooks(res);
     });
     /* Add NEW Book Title Drop Down*/

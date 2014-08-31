@@ -13,7 +13,7 @@
                 <!-- /input-group -->
             </li>
             <li ng-repeat="menuItem in menu"  >
-                <a ng-if="menuItem.abstract==true" ng-class="{active: $state.includes(menuItem.state)}" ng-click="toggleMenu(menuItem,menuItem.collapse,$event)"><i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}} <i class="pull-right" ng-class="menuItem.collapse?'fa fa-chevron-down':'fa fa-chevron-up'"></i></a>
+                <a ng-if="menuItem.abstract==true" ng-class="{active: $state.includes(menuItem.state)}" ng-click="toggleMenu(menuItem,menuItem.collapse,$event)"><i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}} <i class="pull-right" ng-class="menuItem.collapse?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
                 <a ng-if="menuItem.abstract!=true" ui-sref="{{menuItem.state}}" ng-class="{active: $state.includes(menuItem.state)}"><i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}} </a>
 
                 <!-- /.nav-second-level -->

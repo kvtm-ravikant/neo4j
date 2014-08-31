@@ -19,39 +19,57 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
         .state('dashboard', {
             url: "/dashboard",
             templateUrl: "partials/dashboard.html",
-            controller:'dashboard'
+            controller:'dashboard',
+            data: {
+                displayName: 'Dashboard'
+            }
 
         })
         .state('manageAttendance', {
-            abstract: true,
             url: '/manage-attendance',
 
             // Note: abstract still needs a ui-view for its children to populate.
             // You can simply add it inline here.
-            template: '<ui-view/>'
+            template: '<ui-view/>',
+            data: {
+                displayName: 'Attendance Management'
+            }
+
         })
             .state('manageAttendance.takeAttendance', {
                 parent:'manageAttendance',
                 url: "/manage-attendance/create-attendence",
                 templateUrl: "partials/modules/manageAttendence/createAttendence.html",
-                controller: 'manageAttendence_createAttendence'
+                controller: 'manageAttendence_createAttendence',
+                data: {
+                    displayName: 'Take Attendance'
+                }
             })
             .state('manageAttendance.studentReport', {
                 parent:'manageAttendance',
                 url: "/manage-attendance/studentReport",
                 templateUrl: "partials/modules/manageAttendence/studentParentReport.html",
-                controller: 'studentReportCtrl'
+                controller: 'studentReportCtrl',
+                data: {
+                    displayName: 'Student Report'
+                }
             })
             .state('manageAttendance.teacherReport', {
                 parent:'manageAttendance',
                 url: "/manage-attendance/teacherReport/",
                 templateUrl: "partials/modules/manageAttendence/teacherReport.html",
-                controller: 'teacherReportCtrl'
+                controller: 'teacherReportCtrl',
+                data:{
+                    displayName:'Teacher Report'
+                }
              })
         .state('userProfile', {
             url: "/manage-users/user-profile",
             templateUrl: "partials/modules/manageUsers/userProfile.html",
-            controller:'user_profile'
+            controller:'user_profile',
+            data:{
+                displayName:'User Profile'
+            }
         })
         /*  .state('manageUser', {
             url: "/manage-users/users",
@@ -59,74 +77,95 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
             controller:'manage_user'
         })  */
         .state('manageUser', {
-            abstract: true,
             url: '/manage-users/users',
             // Note: abstract still needs a ui-view for its children to populate.
             // You can simply add it inline here.
-            template: '<ui-view/>'
+            template: '<ui-view/>',
+            data: {
+                displayName: 'User Management'
+            }
         })
             .state('manageUser.registerUser', {
                 parent:'manageUser',
                 url: "/manage-users/users/registerNewUser",
                 templateUrl: "partials/modules/manageUsers/manageUser_registerNewUser.html",
-                controller: 'manageUser_registerNewUser'
+                controller: 'manageUser_registerNewUser',
+                data:{
+                    displayName:'Register User'
+                }
             })
              .state('manageUser.updateUser', {
                 parent:'manageUser',
                 url: "/manage-users/users/updateUser",
                 templateUrl: "partials/modules/manageUsers/manageUser_updateUser.html",
-                controller: 'manageUser_updateUser'
+                controller: 'manageUser_updateUser',
+                data:{
+                    displayName:'Update User'
+                }
             })
                .state('manageUser.deleteUser', {
                 parent:'manageUser',
                 url: "/manage-users/users/deleteUser",
                 templateUrl: "partials/modules/manageUsers/manageUser_deleteUser.html",
-                controller: 'manageUser_deleteUser'
+                controller: 'manageUser_deleteUser',
+                data:{
+                    displayName:'Delete User'
+                }
             })
 
         .state('schoolManagement', {
             url: "/schoolManagement/admin",
             templateUrl: "partials/modules/schoolAdmin/schoolManagement.html",
-            controller:'schoolManagement'
+            controller:'schoolManagement',
+            data:{
+                displayName:'School Management'
+            }
         })
-        /* Libaray Management - Start */
-        /*
-        .state('libraryManagement', {
-            url: "/libraryManagement/index",
-            templateUrl: "partials/modules/mangeLibrary/mangeLibrary.html",
-            controller:'libraryManagement'
-        })
-        */
+
 		.state('libraryManagement', {
-             abstract: true,
             url: '/libraryManagement',
             // Note: abstract still needs a ui-view for its children to populate.
             // You can simply add it inline here.
-            template: '<ui-view/>'
+            template: '<ui-view/>',
+            data: {
+                displayName: 'Library Management'
+            }
         })
         	.state('libraryManagement.searchBook', {
                 parent:'libraryManagement',
                 url: "/libraryManagement/searchBooks",
                 templateUrl: "partials/modules/mangeLibrary/searchBook.html",
-                controller: 'libraryManagement_searchBook'
+                controller: 'libraryManagement_searchBook',
+                data:{
+                    displayName:'Search Books'
+                }
             })
             .state('libraryManagement.addNewBook', {
                 parent:'libraryManagement',
                 url: "/libraryManagement/addNewBook",
                 templateUrl: "partials/modules/mangeLibrary/addNewBook.html",
-                controller: 'libraryManagement_addNewBook'
+                controller: 'libraryManagement_addNewBook',
+                data:{
+                    displayName:'Add New Book'
+                }
             })
             .state('libraryManagement.addChildBook', {
                 parent:'libraryManagement',
                 url: "/libraryManagement/addChildBook",
                 templateUrl: "partials/modules/mangeLibrary/addChildBook.html",
-                controller: 'libraryManagement_addChildBook'
+                controller: 'libraryManagement_addChildBook',
+                data:{
+                    displayName:'Add Book copy'
+                }
             })
             .state('libraryManagement.inventoryBooks', {
                 parent:'libraryManagement',
                 url: "/libraryManagement/inventoryBooks",
                 templateUrl: "partials/modules/mangeLibrary/inventoryBooks.html",
-                controller: 'libraryManagement_inventoryBooks'
+                controller: 'libraryManagement_inventoryBooks',
+                data:{
+                    displayName:'Inventory Books'
+                }
             })
               /* Libaray Management - End */
 });

@@ -37,8 +37,7 @@
         <div ng-include="'partials/sideNavBar'"  ></div>
 
         <div id="page-wrapper">
-            <!--<div ng-include="'partials/breadcrumb'"></div>
-            <br>-->
+            <ui-breadcrumbs displayname-property="data.displayName" abstract-proxy-property="data.breadcrumbProxy" ></ui-breadcrumbs>
             <div ui-view></div>
         </div>
 
@@ -112,45 +111,45 @@
     <script src="bower_components/highcharts-release/modules/exporting.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-bootstrap-datepicker/dist/angular-bootstrap-datepicker.js"></script>
-    <script src="bower_components/angular-bootstrap-datepicker/dist/angular-bootstrap-datepicker.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
 
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/jquery.metisMenu.js"></script>
-        <script src="scripts/app.js"></script>
-        <script src="scripts/routes.js"></script>
-        <script src="scripts/factory/iconClassMapping.js"></script>
-        <script src="scripts/factory/appUtils.js"></script>
-        <script src="scripts/factory/spinner.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/navbar.js"></script>
-        <script src="scripts/controllers/sideNavBar.js"></script>
-        <script src="scripts/controllers/breadcrumb.js"></script>
-        <script src="scripts/modules/dashboard/controllers/dashboard.js"></script>
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/jquery.metisMenu.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/routes.js"></script>
+    <script src="scripts/factory/iconClassMapping.js"></script>
+    <script src="scripts/factory/appUtils.js"></script>
+    <script src="scripts/factory/spinner.js"></script>
+    <script src="scripts/directives/uiBreadcrumbs-directive.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/navbar.js"></script>
+    <script src="scripts/controllers/sideNavBar.js"></script>
+    <script src="scripts/controllers/breadcrumb.js"></script>
+    <script src="scripts/modules/dashboard/controllers/dashboard.js"></script>
 
-        <script src="scripts/modules/manageUsers/controllers/userProfileClient.js"></script>
-        <script src="scripts/modules/manageUsers/controllers/manageUser_registerNewUser.js"></script>
-        <script src="scripts/modules/manageUsers/controllers/manageUser_updateUser.js"></script>
-        <script src="scripts/modules/manageUsers/controllers/manageUser_deleteUser.js"></script>
-        <script src="scripts/modules/manageUsers/controllers/manageUsers_createUsers.js"></script>
+    <script src="scripts/modules/manageUsers/controllers/userProfileClient.js"></script>
+    <script src="scripts/modules/manageUsers/controllers/manageUser_registerNewUser.js"></script>
+    <script src="scripts/modules/manageUsers/controllers/manageUser_updateUser.js"></script>
+    <script src="scripts/modules/manageUsers/controllers/manageUser_deleteUser.js"></script>
+    <script src="scripts/modules/manageUsers/controllers/manageUsers_createUsers.js"></script>
 
 
-        <script src="scripts/modules/manageOrg/controllers/manageOrg_createOrg.js"></script>
-        <script src="scripts/modules/manageAttendence/controllers/manageAttendence_createAttendence.js"></script>
-        <script src="scripts/modules/manageAttendence/controllers/studentReport.js"></script>
-        <script src="scripts/modules/manageAttendence/controllers/teacherReport.js"></script>
-        <script src="scripts/modules/schoolManagement/controlllers/schoolManagement.js"></script>
-        <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl.js"></script>
+    <script src="scripts/modules/manageOrg/controllers/manageOrg_createOrg.js"></script>
+    <script src="scripts/modules/manageAttendence/controllers/manageAttendence_createAttendence.js"></script>
+    <script src="scripts/modules/manageAttendence/controllers/studentReport.js"></script>
+    <script src="scripts/modules/manageAttendence/controllers/teacherReport.js"></script>
+    <script src="scripts/modules/schoolManagement/controlllers/schoolManagement.js"></script>
+    <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl.js"></script>
 
-        <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl_searchBook.js"></script>
-        <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl_inventoryBooks.js"></script>
-        <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl_addNewBook.js"></script>
-        <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl_addChildBook.js"></script>
-        <!-- endbuild -->
+    <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl_searchBook.js"></script>
+    <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl_inventoryBooks.js"></script>
+    <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl_addNewBook.js"></script>
+    <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl_addChildBook.js"></script>
+    <!-- endbuild -->
 
 </body>
 </html>
