@@ -3,7 +3,7 @@
  */
 var Utils=require("../../common/Utils/Utils.js");
 var neo4j=require("node-neo4j");
-var db=new neo4j("http://54.205.115.184:7474");
+var db=new neo4j("http://106.185.38.115:7474");
 module.exports.getAllBooks=function (res){
     var queryAllBooks="MATCH (p:ParentBook) RETURN p";
     var responseObj=new Utils.Response();

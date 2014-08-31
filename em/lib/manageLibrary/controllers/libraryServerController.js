@@ -202,7 +202,6 @@ function getColumnObjMap(columns){
 module.exports=function(app,Utils){
 
     app.get("/manageLibrary/getAllBooks",Utils.ensureAuthenticated,function(req,res){
-        console.log("getAllBooks");
         libraryMS.getAllBooks(res);
     });
     /* Add NEW Book Title Drop Down*/
