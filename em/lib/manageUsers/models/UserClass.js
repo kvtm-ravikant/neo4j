@@ -84,7 +84,11 @@ module.exports=function (){
         _id: null
     }
     this.contact={
-
+		 emailPrimary:'',
+    	 emailSecondary:'',
+    	 phonePrimary:'',
+    	 phoneSecondary:'',
+    	_id:null
     }
     this.getFullName=function(){
         var fullNameArr=[];

@@ -3,6 +3,7 @@
  */
 var neo4j=require("node-neo4j");
 var db=new neo4j("http://localhost:7474");
+var Utils=require("../../common/Utils/Utils.js");
 console.log("db",db);
 module.exports=function(config){
    this.me=config;
@@ -63,5 +64,20 @@ module.exports=function(config){
        this.createUser(callcack);
    }
 
-
+}
+/* Get all Users from USER */
+module.exports.getAllUsers=function (res){
+    var queryAllUsers="MATCH (n:User) RETURN n LIMIT 25";
+    var responseObj=new Utils.Response();
+    db.cypherQuery(queryAllUsers,function(err,reply){
+        console.log(err,reply);
+        if(!err){
+            responseObj.responseData=reply;
+            res.json(responseObj);
+        }else{
+            responseObj.error=true;
+            responseObj.errorMsg="No Data found.";
+            res.json(responseObj);
+        }
+    });
 }

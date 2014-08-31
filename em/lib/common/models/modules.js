@@ -56,7 +56,7 @@ function initAppList(){
             "childLinks":[
                 {
                     'state': 'manageUser.registerUser',
-                    'name':'User Registration',
+                    'name':'New User',
                     'collapse':false,
                     'icon':"sitemap",
                     'accessList':["*"]

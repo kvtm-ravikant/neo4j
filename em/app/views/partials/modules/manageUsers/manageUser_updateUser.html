@@ -1,6 +1,71 @@
 <div ng-controller="manageUser_updateUser" class="row" weight="100%">
-<h1>{{text}}</h1>
+<!--  <h1>{{text}}</h1>
+-->
+ <div class="row">
+        <div class="col-md-10 topbar">
 
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input ng-model="searchBookModel.searchText" class="col-md-12 searchclass" placeholder="Enter User Name" class="nodeSearchInputBox" />
+                    <span class="input-group-addon " id="datamodal" data-toggle="popover">
+                        <i class="fa fa-search cursor-pointer" ng-click="searchBooks()" ></i>&nbsp;&nbsp;
+                        <!--  i  ng-show="!isSearchBoxOpened" class="fa fa-chevron-down cursor-pointer" ng-click="openSearchBox()"></i>
+                        <i  ng-show="isSearchBoxOpened" class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i -->
+                    </span>
 
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <br>
+     <div class="row" ng-if="allUserClass.data">
+        <div class="col-md-10" >
+            <table class="table" >
+                <div id="head_nav">
+                    <thead class="theadclass">
+                        <tr>
+                            <th></th>
+                            <th ng-repeat="(key,value) in parentConfig" >{{value}}</th>
+                        </tr>
+                    </thead>
+                </div>
+               <tbody>
+                    <tr ng-repeat="book in allUserClass.data">
+                        <td>
+                            <i class="fa fa-envelope cursor-pointer" ></i>
+                            <i class="fa fa-picture-o cursor-pointer" ></i>
+                        </td>
+                        <td ng-repeat="(key,value) in parentConfig" >{{book[key]}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+    
+    <!--  table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+ 
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+    </table -->
 </div>
 
