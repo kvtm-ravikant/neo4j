@@ -5,7 +5,7 @@
 educationMediaApp.controller('manage_user', function ($scope, $http,iconClassMapping,appUtils) {
 
     $scope.counter=0;
-    $scope.steps = ['one', 'two', 'three', 'four', 'five'];
+		$scope.steps = ['one', 'two', 'three', 'four', 'five'];
     $scope.step = 0;
     $scope.wizard = { tacos: 2 };
 
@@ -114,58 +114,58 @@ educationMediaApp.controller('manage_user', function ($scope, $http,iconClassMap
         "phoneSecondary":""
     }
 
-    $scope.next=function(){
+	$scope.next=function(){
         $scope.counter>=($scope.userDataTest.length-1)?$scope.userDataTest.length:$scope.counter++;
         console.log("Puneet "+$scope.step+" userDataLength "+$scope.userDataTest.length);
         $scope.step=$scope.counter;
 
     }
-    $scope.prev=function(){
+     $scope.prev=function(){
         $scope.counter<=0?0:$scope.counter--;
         $scope.step=$scope.counter;
     }
 
-    $scope.isFirstStep = function() {
-        console.log("isFirstStep ");
-        return $scope.step === 0;
-    };
+  $scope.isFirstStep = function() {
+      console.log("isFirstStep ");
+    return $scope.step === 0;
+  };
 
-    $scope.isLastStep = function() {
-        console.log("isLastStep ");
-        return $scope.step === ($scope.steps.length - 1);
-    };
+  $scope.isLastStep = function() {
+      console.log("isLastStep ");
+    return $scope.step === ($scope.steps.length - 1);
+  };
+  
+  $scope.isCurrentStep = function(step) {
+      console.log("isCurrentStep");
+    return $scope.step === step;
+  };
 
-    $scope.isCurrentStep = function(step) {
-        console.log("isCurrentStep");
-        return $scope.step === step;
-    };
+  $scope.setCurrentStep = function(step) {
+      console.log("setCurrentStep");
+    $scope.step = step;
+  };
 
-    $scope.setCurrentStep = function(step) {
-        console.log("setCurrentStep");
-        $scope.step = step;
-    };
+  $scope.getCurrentStep = function() {
+      console.log("getCurrentStep");
+    return $scope.steps[$scope.step];
+  };
 
-    $scope.getCurrentStep = function() {
-        console.log("getCurrentStep");
-        return $scope.steps[$scope.step];
-    };
+  $scope.getNextLabel = function() {
+      console.log("getNextLabel");
+    return ($scope.isLastStep()) ? 'Submit' : 'Next'; 
+  };
 
-    $scope.getNextLabel = function() {
-        console.log("getNextLabel");
-        return ($scope.isLastStep()) ? 'Submit' : 'Next';
-    };
+  $scope.handlePrevious = function() {
+      console.log("handlePrevious");
+    $scope.step -= ($scope.isFirstStep()) ? 0 : 1;
+  };
 
-    $scope.handlePrevious = function() {
-        console.log("handlePrevious");
-        $scope.step -= ($scope.isFirstStep()) ? 0 : 1;
-    };
-
-    $scope.handleNext = function(dismiss) {
-        console.log("handleNext");
-        if($scope.isLastStep()) {
-            dismiss();
-        } else {
-            $scope.step += 1;
-        }
-    };
+  $scope.handleNext = function(dismiss) {
+      console.log("handleNext");
+    if($scope.isLastStep()) {
+      dismiss();
+    } else {
+      $scope.step += 1;
+    }
+  };
 });

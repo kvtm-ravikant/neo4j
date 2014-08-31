@@ -37,8 +37,8 @@
         <div ng-include="'partials/sideNavBar'"  ></div>
 
         <div id="page-wrapper">
-            <div ng-include="'partials/breadcrumb'"></div>
-            <br>
+            <!--<div ng-include="'partials/breadcrumb'"></div>
+            <br>-->
             <div ui-view></div>
         </div>
 
@@ -118,7 +118,7 @@
 
 
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/jquery.metisMenu.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/routes.js"></script>
@@ -130,8 +130,14 @@
         <script src="scripts/controllers/sideNavBar.js"></script>
         <script src="scripts/controllers/breadcrumb.js"></script>
         <script src="scripts/modules/dashboard/controllers/dashboard.js"></script>
+
         <script src="scripts/modules/manageUsers/controllers/userProfileClient.js"></script>
-        <script src="scripts/modules/manageUsers/controllers/manageUserClient.js"></script>
+        <script src="scripts/modules/manageUsers/controllers/manageUser_registerNewUser.js"></script>
+        <script src="scripts/modules/manageUsers/controllers/manageUser_updateUser.js"></script>
+        <script src="scripts/modules/manageUsers/controllers/manageUser_deleteUser.js"></script>
+        <script src="scripts/modules/manageUsers/controllers/manageUsers_createUsers.js"></script>
+
+
         <script src="scripts/modules/manageOrg/controllers/manageOrg_createOrg.js"></script>
         <script src="scripts/modules/manageAttendence/controllers/manageAttendence_createAttendence.js"></script>
         <script src="scripts/modules/manageAttendence/controllers/studentReport.js"></script>
@@ -139,6 +145,10 @@
         <script src="scripts/modules/schoolManagement/controlllers/schoolManagement.js"></script>
         <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl.js"></script>
 
+        <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl_searchBook.js"></script>
+        <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl_inventoryBooks.js"></script>
+        <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl_addNewBook.js"></script>
+        <script src="scripts/modules/manageLibrary/controllers/manageLibraryCtrl_addChildBook.js"></script>
         <!-- endbuild -->
 
 </body>

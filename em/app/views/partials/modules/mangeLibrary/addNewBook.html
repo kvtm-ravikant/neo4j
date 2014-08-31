@@ -1,0 +1,336 @@
+<div class="row" ng-controller="libraryManagement_addNewBook">
+<!-- h1>{{text}}</h1 -->
+<form id="myWizard" class="form-horizontal" weight="100%">
+<div class="col-sm-10">
+<!-- legend>Parent Information</legend -->
+    <section class="panel panel-primary">
+    <header class="panel-heading">
+        <h3 class="panel-title">Add New Title</h3>
+    </header>
+    <div class="panel-body">
+        <fieldset>
+    <div class="col-md-12">
+        <div class="row">
+            <div>
+                <label class="col-sm-2 control-label" for="bibLvl">Bib Level</label>
+                <div class="col-sm-2">
+                    <select id="bibLvl" name="validation-select" class="btn btn-media dropdown-toggle" data-ng-model="parentBook.bibLevel">
+                        <option value="">Select Bib Level !</option>
+                        <option value="M">M</option>
+                        <option value="S">S</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="col-sm-1 control-label" for="mat">Materials </label>
+                <div class="col-sm-2">
+                    <select id="mat" name="validation-select" class="btn btn-media dropdown-toggle" data-ng-model="parentBook.material">
+                        <option value="">Select Materials</option>
+                        <option value="B">Books			</option>
+                        <option value="E">Patents		</option>
+                        <option value="M">Manuals		</option>
+                        <option value="S">Standards		</option>
+                        <option value="T">Reports		</option>
+                        <option value="A">Annuals		</option>
+                        <option value="P">Periodicals	</option>
+                        <option value="N"> Newspapers	</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="col-sm-2 control-label" for="docType">Doc Type </label>
+                <div class="col-sm-3">
+                    <select id="docType" name="validation-select" class="btn btn-media dropdown-toggle" data-ng-model="parentBook.docType">
+                        <option value="">Select Doc Type</option>
+                        <option ng-repeat="bookDD in parentBookDD" value="{{bookDD.value}}">{{bookDD.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div>
+                <label class="col-sm-2 control-label" for="lang">Language</label>
+                <div class="col-sm-4">
+                    <input type="text" id="lang" placeholder="Need to Change in Drop down" class="form-control" ng-model="parentBook.language"
+                           title="Language is required !" required>
+                </div>
+            </div>
+            <div>
+                <label class="col-sm-2 control-label" for="bindType">Binding Type </label>
+                <div class="col-sm-3">
+                    <select id="bindType" name="validation-select" class="btn btn-media dropdown-toggle" data-ng-model="parentBook.bindingType">
+                        <option value="">Select Binding Type !</option>
+                        <option value="HL">Half Leather</option>
+                        <option value="FL">Full Leather</option>
+                        <option value="HB">Hard Bound</option>
+                    </select>
+                </div>
+            </div>
+            <!-- div>
+                <label class="col-sm-2 control-label" for="bindType">Binding Type </label>
+                <div class="col-sm-4   ">
+                    <input type="text" id="bindType" placeholder="Need to add drop down" class="form-control" ng-model="parentBook.bindingType"
+                           title="Binding Type is required !" required>
+                </div>
+            </div -->
+        </div>
+        <br>
+        <div class="row">
+            <div>
+                <label class="col-sm-2 control-label" for="isbnNum">ISBN </label>
+                <div class="col-sm-4">
+                    <input type="text" id="isbnNum" placeholder="Please enter ISBN Number" class="form-control" ng-model="parentBook.isbn"
+                           title="ISBN is required !" required>
+                </div>
+            </div>
+            <div>
+                <label class="col-sm-2 control-label" for="catName">Category Name</label>
+                <div class="col-sm-4">
+                    <input type="text" id="catName" placeholder="Need to add drop down" class="form-control" ng-model="parentBook.categoryName"
+                           title="Category Name is required !" required/>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div>
+                <label class="col-sm-2 control-label" for="bookTitle">Title</label>
+                <div class="col-sm-10">
+                    <input type="text" id="bookTitle" placeholder="Please enter book title here " class="form-control" ng-model="parentBook.bookTitle"
+                           title="Title is required !" required>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div>
+                <label class="col-sm-2 control-label" for="subTitle">Sub Title</label>
+                <div class="col-sm-10">
+                    <input type="text" id="subTitle" placeholder="Please enter book's sub title here " class="form-control" ng-model="parentBook.bookSubTitle">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row ">
+            <div>
+                <label class="col-sm-2 control-label" for="bookAuthor">Author</label>
+                <div class="col-sm-10">
+                    <input type="text" id="bookAuthor" placeholder="Please Enter author Name " class="form-control" ng-model="parentBook.authorName"
+                           title="Author is required !" required>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row ">
+            <div>
+                <label class="col-sm-2 control-label" for="bookPublisher">Publisher</label>
+                <div class="col-sm-10">
+                    <input type="text" id="bookPublisher" placeholder="Please Enter Publisher Name " class="form-control" ng-model="parentBook.publisher"
+                           title="Publisher is required !" required>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div>
+                <label class="col-sm-2 control-label" for="isMultiVol">Multi Volume</label>
+                <div class="col-sm-4">
+                    <label class="checkbox">Having Multiple Volumes ?
+                        <input type="checkbox" id="isMultiVol" name="isMultiVol" ng-model="multiVolTextList">
+                        <input id="multiVolTextSrc" name="multiVolTextSrc"
+                               class="form-control" ng-disabled="!multiVolTextList" ng-checked="!!otherMultiVol && !multiVolTextList" ng-model="otherMultiVol"
+                               type="text" placeholder="Enter Number of Volumes">
+                    </label>
+                </div>
+            </div>
+            <div>
+                <label class="col-sm-2 control-label" for="volNumber">Volume Number</label>
+                <div class="col-sm-4">
+                    <label class="checkbox">Volumes Number ?
+                        <input type="checkbox" id="volNumber" name="isMultiVol" ng-model="disablelist">
+                        <input id="volNumTextSrc" name="volNumTextSrc" class="form-control" ng-disabled="!disablelist" ng-checked="!!otherOption && !disableList" ng-model="otherOption" type="text" placeholder="Enter Volume Number">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row ">
+            <div>
+                <label class="col-sm-2 control-label" for="bookCount">Number Of Copies</label>
+                <div class="col-sm-2">
+                    <input type="text" id="bookCount" placeholder="Number Of Copies " class="form-control" ng-model="parentBook.bookCopies">
+                </div>
+            </div>
+            <div>
+                <label class="col-sm-2 control-label" for="editionNum">Edition</label>
+                <div class="col-sm-2">
+                    <input type="text" id="editionNum" placeholder="Edition Number" class="form-control" ng-model="parentBook.edition">
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+        <div class="col-md-2 pull-right">
+            <button class="btn btn-md btn-primary" ng-click="addNewBook()">Add New Title </button>
+        </div>
+    </div>
+</section>
+<!-- label data-ng-model="parentBook">{{parentBook.isbn}} </label -->
+    <br>
+<!-- legend></legend -->
+
+<!--   Add New Book - Child Information -- Start -->
+    <!-- section class="panel panel-primary">
+    <header class="panel-heading">
+        <h3 class="panel-title">Add New Book - Other Information</h3>
+    </header>
+    <div class="panel-body">
+        <fieldset>
+    <div class="col-md-12">
+    <div class="row">
+        <div>
+            <label class="col-sm-3 control-label" for="publicationDate">Publication Date</label>
+            <div class="col-md-2 classselector">
+                <div class="input-group">
+                    <input type="text" id="publicationDate" ng-model="publicationDate" class="em-datepicker datepicker" placeholder="Publication Date">
+                    <span class="input-group-addon cursor-pointer" ng-click="openPublicationDate()"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div>
+
+        </div>
+        <div>
+            <label class="col-sm-2 control-label" for="purchaseDate">Purchase Date</label>
+            <div class="col-md-2 classselector">
+                <div class="input-group">
+                    <input type="text" id="purchaseDate" ng-model="purchaseDate" class="em-datepicker datepicker" placeholder="Purchase Date">
+                    <span class="input-group-addon cursor-pointer" ng-click="openPurchaseDate()"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+        <div class="row">
+            <div>
+                <label class="col-sm-2 control-label" for="barCode">Bar Code</label>
+                <div class="col-sm-4">
+                    <input type="text" id="barCode" placeholder="Please Enter Bar Code " class="form-control" ng-model="childBook.barCode">
+                </div>
+            </div>
+            <div>
+                <label class="col-sm-2 control-label" for="acqMode">Acquisition Mode </label>
+                <div class="col-sm-4">
+                    <select id="acqMode" name="validation-select" class="btn btn-media dropdown-toggle" data-ng-model="childBook.acqMode">
+                        <option value="">Select Acquisition</option>
+                        <option value="E">Exchange</option>
+                        <option value="G">Gratis/Gift</option>
+                        <option value="P">Purchased</option>
+                        <option value="S">Subscribed</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div>
+                <label class="col-sm-2 control-label" for="pricePaid">Price Paid </label>
+                <div class="col-sm-4">
+                    <input type="text" id="pricePaid" placeholder="Please enter paid price" class="form-control" ng-model="childBook.pricePaid">
+                </div>
+            </div>
+            <div>
+                <label class="col-sm-2 control-label" for="bookSts">Book Status </label>
+                <div class="col-sm-4">
+                    <select id="bookSts" name="validation-select" class="btn btn-media dropdown-toggle" data-ng-model="childBook.bookStatus">
+                        <option value="">Select Book Status</option>
+                        <option value="A">Available</option>
+                        <option value="B">Bindery</option>
+                        <option value="D">Damaged</option>
+                        <option value="S">Display</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div>
+                <label class="col-sm-2 control-label" for="outletName">Outlet Name</label>
+                <div class="col-sm-10">
+                    <input type="text" id="outletName" placeholder="Please enter the Outlet Name" class="form-control" ng-model="childBook.outletName"/>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div>
+                <label class="col-sm-2 control-label" for="desc">Description</label>
+                <div class="col-sm-10">
+                    <input type="text" id="desc" placeholder="Please enter book's description here " class="form-control" ng-model="childBook.description">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row ">
+            <div>
+                <label class="col-sm-2 control-label" for="loc">Location</label>
+                <div class="col-sm-3">
+                    <input type="text" id="loc" placeholder="What is the book's location ?" class="form-control" ng-model="childBook.location">
+                </div>
+            </div>
+            <div>
+                <label class="col-sm-2 control-label" for="matAcp">Material Accompanied</label>
+                <div class="col-sm-5">
+                    <input type="text" id="matAcp" placeholder="Material Accompanied i.e. CD, MAP etc ? Please enter" class="form-control" ng-model="childBook.materialAccompanied">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row ">
+            <div>
+                <label class="col-sm-2 control-label" for="tag">Tag Type</label>
+                <div class="col-sm-4">
+                    <input type="tag" id="tag" placeholder="What's the Tag ?" class="form-control" ng-model="childBook.tag">
+                </div>
+            </div>
+            <div>
+                <label class="col-sm-2 control-label">Ready For Distribution</label>
+                <div class="col-sm-4">
+                    <label for="button-radio-1" class="col-sm-8 control-label">
+                        <input type="radio" name="button-radio" id="button-radio-1" value="1" checked>
+                        Yes
+                        <input type="radio" name="button-radio" id="button-radio-2" value="2">
+                        No
+                    </label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row ">
+            <div>
+                <label class="col-sm-2 control-label" for="accessList">Access Type</label>
+                <div class="col-sm-4">
+                    <select id="accessList" name="validation-select" class="btn btn-media dropdown-toggle">
+                        <option value="">Who Can Access</option>
+                        <option value="A">All</option>
+                        <option value="T">Teachers</option>
+                        <option value="S">Students</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</fieldset>
+        <div class="col-md-2 pull-right">
+            <button class="btn btn-md btn-primary" ng-click="addchildBook()">Add Child Book</button>
+        </div>
+    </div>
+</section -->
+
+</div>
+
+</form>
+
+</div>

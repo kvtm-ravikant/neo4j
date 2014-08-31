@@ -1,0 +1,31 @@
+<div  class="row" ng-controller="user_profile">
+  <div class="col-md-12">
+  <div class="row">
+      <div class="col-sm-3"><h2 >{{userDetails.hiddenObject.fullName}}</h2></div>
+      <div class="col-sm-3 pull-right">
+          <img alt="Profile photo not available" class="userProfileImage pull-right" src="{{userDetails.hiddenObject.profileImagePath}}" width="125px"/>
+      </div>
+  </div>
+  <div class="row vertical-spacer"></div>
+  <div class="row">
+  <div class="col-sm-4" ng-repeat="(detailType,details) in userDetails.displayObject" ng-if="detailType!= 'fullName'">
+  	
+  	<!--left col-->
+      <ul class="list-group">
+          <span>
+              <li class="userProfileHeader list-group-item text-muted" >{{detailType.camelCaseToWord()}}</li>
+          </span>
+
+          <span ng-repeat="detail in details">
+              <li class="userProfileListMarginBottom list-group-item text-right " ng-repeat="(key,value) in detail" ng-if="key!='_id'">
+                  <span class="pull-left">{{key.camelCaseToWord()}}</span>
+                  {{value || "N/A"}}
+              </li>
+          </span>
+      </ul>
+
+  </div>
+  <!--/col-3-->
+  </div><!--/col-9-->
+  </div><!--/row-->
+</div>

@@ -1,97 +1,97 @@
-<div ng-controller="manage_user" class="row" weight="100%">
+<div ng-controller="manageUser_registerNewUser" class="row" weight="100%">
 	<div ng-switch="getCurrentStep()" ng-animate="'wave'" class="col-sm-10">
-        <div id="wrapper" class="col-sm-8">
-        <header>
+        <div id="wrapper" class="col-sm-10">
+        <!-- header>
             <p class="lead muted">Register Yourself</p>
-        </header>
+        </header -->
 				
 		<form id="myWizard" class="form-horizontal" weight="100%">
         <section class="panel panel-primary">
-            <header class="panel-heading">
-                <h3 class="panel-title">Create User - Account Information</h3>
-            </header>
-            <div ng-switch-when="one" class="panel-body">
+        <header class="panel-heading">
+            <h3 class="panel-title">Create User - Account Information</h3>
+        </header>
+		    <div ng-switch-when="one" class="panel-body">
                 <!-- legend>Account Information</legend -->
                 <fieldset>
                     <div class="form-group">
-                        <script>
-                            $("select[name=validation-select]").change(function() {
-                                if (this.value == "2")
-                                    $("input[name=parentsPhone]").prop("disabled", false);
-                                else
-                                    $("input[name=parentsPhone]").prop("disabled", true);
-                            }).change();
-                        </script>
-                        <label for="validation-select" class="col-sm-4 control-label">Account Type</label>
-                        <div class="col-sm-8">
-                            <select id="validation-select" name="validation-select" class="btn btn-media dropdown-toggle">
-                                <option value="">Select Account Type !</option>
-                                <option value="1">Teacher</option>
-                                <option value="2">Student</option>
-                                <option value="3">Parent</option>
-                                <option value="4">Staff</option>
-                                <option value="5">Other</option>
-                            </select>
-                        </div>
+     			  	    <script>
+		          		    $("select[name=validation-select]").change(function() {
+		 						 if (this.value == "2")
+		      						$("input[name=parentsPhone]").prop("disabled", false);
+		  						else
+		      							$("input[name=parentsPhone]").prop("disabled", true);
+									}).change();
+							</script>
+							<label for="validation-select" class="col-sm-4 control-label">Account Type</label>
+							<div class="col-sm-8">
+                                <select id="validation-select" name="validation-select" class="btn btn-media dropdown-toggle">
+                                    <option value="">Select Account Type !</option>
+                                    <option value="1">Teacher</option>
+                                    <option value="2">Student</option>
+                                    <option value="3">Parent</option>
+                                    <option value="4">Staff</option>
+                                    <option value="5">Other</option>
+                                </select>
+							</div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="parentsPhone">Parent's Phone Number</label>
                         <div class="col-sm-8">
                             <input type="text" id="parentsPhone" name="parentsPhone" placeholder="What's your Parent's Phone Number." class="form-control"  title="Phone Number is required !" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="inputEmail">Email Address</label>
-                        <div class="col-sm-8">
-                            <input type="email" id="inputEmail" placeholder="Enter Your Email Address."
-                                   class="form-control" title="Email id is required !" required ng-model="contact.emailPrimary"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="inputUsername">Username</label>
-                        <div class="col-sm-8">
-                            <input type="text" id="inputUsername" placeholder="What's your user name"
-                                   class="form-control" title="User Name is required !" required ng-model="user.userName"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="inputPassword">Password</label>
-                        <div class="col-sm-8">
-                            <input type="password" id="inputPassword" placeholder="Password - keep it secret."
-                                   class="form-control" title="Password is required !" required ng-model="user.hashPassword"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="rePassword">Re - Enter Password</label>
-                        <div class="col-sm-8">
-                            <input type="password" id="rePassword" placeholder="Re - enter your password"
-                                   class="form-control" title="Password is required !" required ng-model="user.hashPassword"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="primaryPhone">Phone Number</label>
-                        <div class="col-sm-8">
-                            <input type="text" id="primaryPhone" placeholder="What's your Phone Number."
-                                   class="form-control"  title="Phone Number is required !" required ng-model="contact.phonePrimary">
-                        </div>
-                    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="inputEmail">Email Address</label>
+							<div class="col-sm-8">
+								<input type="email" id="inputEmail" placeholder="Enter Your Email Address."
+                                       class="form-control" title="Email id is required !" required ng-model="contact.emailPrimary"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="inputUsername">Username</label>
+								<div class="col-sm-8">
+								<input type="text" id="inputUsername" placeholder="What's your user name"
+                                       class="form-control" title="User Name is required !" required ng-model="user.userName"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="inputPassword">Password</label>
+							<div class="col-sm-8">
+								<input type="password" id="inputPassword" placeholder="Password - keep it secret."
+                                       class="form-control" title="Password is required !" required ng-model="user.hashPassword"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="rePassword">Re - Enter Password</label>
+							<div class="col-sm-8">
+								<input type="password" id="rePassword" placeholder="Re - enter your password"
+                                       class="form-control" title="Password is required !" required ng-model="user.hashPassword"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="primaryPhone">Phone Number</label>
+								<div class="col-sm-8">
+								<input type="text" id="primaryPhone" placeholder="What's your Phone Number."
+                                       class="form-control"  title="Phone Number is required !" required ng-model="contact.phonePrimary">
+							</div>
+						</div>
 
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="regId">Registration ID</label>
-                        <div class="col-sm-8">
-                            <input type="text" id="regId" placeholder="Provide Registraion Number."
-                                   class="form-control" title="Registraion Number is required !" required >
-                        </div>
-                    </div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="regId">Registration ID</label>
+								<div class="col-sm-8">
+								<input type="text" id="regId" placeholder="Provide Registraion Number."
+                                       class="form-control" title="Registraion Number is required !" required >
+							</div>
+						</div>
                 </fieldset>
-            </div>
+			</div>
         </section>
-
-        <section class="panel panel-primary">
+        <!-- section class="panel panel-primary">
             <header class="panel-heading">
                 <h3 class="panel-title">Create User - Personal Information</h3>
             </header>
-            <div ng-switch-when="two" class="panel-body">
+			<div ng-switch-when="two" class="panel-body">
+               <legend>Personal Information</legend>
                 <fieldset>
                     <div class="form-group">
                         <label for="fName" class="col-sm-4 control-label">First Name </label>
@@ -149,13 +149,12 @@
                 </fieldset>
             </div>
         </section>
-
         <section class="panel panel-primary">
-            <header class="panel-heading">
-                <h3 class="panel-title">Create User - Contact Information</h3>
-            </header>
+        <header class="panel-heading">
+            <h3 class="panel-title">Create User - Contact Information</h3>
+        </header>
             <div ng-switch-when="three" class="panel-body">
-                <!-- legend>Contact Information</legend -->
+
                 <fieldset>
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="cntInfoName">Name </label>
@@ -213,14 +212,13 @@
                     </div>
                 </fieldset>
             </div>
-        </section>
-
-        <section class="panel panel-primary">
-            <header class="panel-heading">
-                <h3 class="panel-title">Create User - Other Information</h3>
-            </header>
+</section -->
+        <!-- section class="panel panel-primary">
+        <header class="panel-heading">
+            <h3 class="panel-title">Create User - Other Information</h3>
+        </header>
             <div ng-switch-when="four" class="panel-body">
-                <!-- legend>Other Information</legend -->
+
                 <fieldset>
                     <div class="col-md-12">
                         <div class="row">
@@ -252,7 +250,7 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
+                        <br -->
                         <!-- div class="row">
                             <div>
                                 <label class="col-sm-3 control-label" for="isUid">UID  Number</label>
@@ -260,13 +258,13 @@
                                     <label class="checkbox">Do you have UID ?
                                         <input type="checkbox" id="isUid" name="isUid" ng-model="uidTextSrc">
                                     </label>
-                                    <input id="multiVolTextSrc" name="multiVolTextSrc"
-                                           class="form-control" ng-disabled="!uidTextSrc" ng-checked="!!otherUid && !uidTextSrc" ng-model="otherUid"
-                                           type="text" placeholder="Enter your UID Number" data-ng-model="user.uid">
+                                        <input id="uidTextSrc" name="uidTextSrc"
+                                               class="form-control" ng-disabled="!uidTextSrc" ng-checked="!!otherUid && !uidTextSrc" ng-model="otherUid"
+                                               type="text" placeholder="Enter your UID Number" data-ng-model="user.uid">
                                 </div>
                             </div>
                             <div>
-                                <label class="col-sm-3 control-label" for="smsEnb">PAN  Number</label>
+                                <label class="col-sm-3 control-label" for="isPan">PAN  Number</label>
                                 <div class="col-sm-3">
                                     <label class="checkbox">Do you have PAN ?
                                         <input type="checkbox" id="isPan" name="isPan" ng-model="panTextSrc">
@@ -301,7 +299,7 @@
                                            type="text" placeholder="Enter your VISA Number" data-ng-model="user.visaDetails">
                                 </div>
                             </div>
-                        </div -->
+                        </div>
                         <br>
                         <div class="row ">
                             <div>
@@ -326,63 +324,60 @@
                                            type="text" placeholder="Enter Skype Profile ID " ng-model="socialNetwork.skypeId">
                                 </div>
                             </div>
-                        </div>
-                        <br>
+                        </div -->
+                        <!-- br>
                         <div class="row ">
-                                    <div>
-                                        <script>
-                                            $('#isFbProfileId').change(function(){
-                                                $("#fbProfileIdTextSrc").prop("disabled", !$(this).is(':checked'));
-                                                $("#fbProfileScrnNameTextSrc").prop("disabled", !$(this).is(':checked'));
-                                                $("#fbProfileUrlTextSrc").prop("disabled", !$(this).is(':checked'));
-                                            });
-                                        </script>
-                                        <label class="col-sm-3 control-label" for="isFbProfileId">Facebook Profile</label>
-                                        <div class="col-sm-3">
-                                            <label class="checkbox">Facebook Profile ?
-                                                <input type="checkbox" id="isFbProfileId" name="isFbProfileId">
-                                            </label>
-                                            <input id="fbProfileIdTextSrc" name="fbProfileIdTextSrc" class="form-control" disabled="" type="text" placeholder="Enter Facebook Profile ID " ng-model="socialNetwork.facebookId">
-                                            <input id="fbProfileScrnNameTextSrc" name="fbProfileScrnNameTextSrc" class="form-control" disabled="" type="text" placeholder="Enter Facebook Screen Name " ng-model="socialNetwork.facebookUrl">
-                                            <input id="fbProfileUrlTextSrc" name="fbProfileUrlTextSrc" class="form-control" disabled="" type="text" placeholder="Enter Facebook Profile URL " ng-model="socialNetwork.facebookScreenName">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <script>
-                                            $('#istwtrProfileId').change(function(){
-                                                $("#twtrProfileIdTextSrc").prop("disabled", !$(this).is(':checked'));
-                                                $("#twtrProfileScrnNameTextSrc").prop("disabled", !$(this).is(':checked'));
-                                                $("#twtrProfileUrlTextSrc").prop("disabled", !$(this).is(':checked'));
-                                            });
-                                        </script>
-                                        <label class="col-sm-3 control-label" for="istwtrProfileId">Twitter Profile</label>
-                                        <div class="col-sm-3">
-                                            <label class="checkbox">Twitter Profile ?
-                                                <input type="checkbox" id="istwtrProfileId" name="istwtrProfileId">
-                                            </label>
-                                            <input id="twtrProfileIdTextSrc" name="twtrProfileIdTextSrc" class="form-control" disabled="" type="text" placeholder="Enter Twitter Profile ID " ng-model="socialNetwork.twitterId">
-                                            <input id="twtrProfileScrnNameTextSrc" name="twtrProfileScrnNameTextSrc" class="form-control" disabled="" type="text" placeholder="Enter Twitter Screen Name ">
-                                            <input id="twtrProfileUrlTextSrc" name="twtrProfileUrlTextSrc" class="form-control" disabled="" type="text" placeholder="Enter Twitter Profile URL " ng-model="socialNetwork.twitterUrl">
-                                        </div>
-                                    </div>
+                            <div>
+                                <script>
+                                    $('#isFbProfileId').change(function(){
+                                        $("#fbProfileIdTextSrc").prop("disabled", !$(this).is(':checked'));
+                                        $("#fbProfileScrnNameTextSrc").prop("disabled", !$(this).is(':checked'));
+                                        $("#fbProfileUrlTextSrc").prop("disabled", !$(this).is(':checked'));
+                                    });
+                                </script>
+                                <label class="col-sm-3 control-label" for="isFbProfileId">Facebook Profile</label>
+                                <div class="col-sm-3">
+                                    <label class="checkbox">Facebook Profile ?
+                                        <input type="checkbox" id="isFbProfileId" name="isFbProfileId">
+                                    </label>
+                                    <input id="fbProfileIdTextSrc" name="fbProfileIdTextSrc" class="form-control" disabled="" type="text" placeholder="Enter Facebook Profile ID " ng-model="socialNetwork.facebookId">
+                                    <input id="fbProfileScrnNameTextSrc" name="fbProfileScrnNameTextSrc" class="form-control" disabled="" type="text" placeholder="Enter Facebook Screen Name " ng-model="socialNetwork.facebookUrl">
+                                    <input id="fbProfileUrlTextSrc" name="fbProfileUrlTextSrc" class="form-control" disabled="" type="text" placeholder="Enter Facebook Profile URL " ng-model="socialNetwork.facebookScreenName">
                                 </div>
                             </div>
+                            <div>
+                                <script>
+                                    $('#istwtrProfileId').change(function(){
+                                        $("#twtrProfileIdTextSrc").prop("disabled", !$(this).is(':checked'));
+                                        $("#twtrProfileScrnNameTextSrc").prop("disabled", !$(this).is(':checked'));
+                                        $("#twtrProfileUrlTextSrc").prop("disabled", !$(this).is(':checked'));
+                                    });
+                                </script>
+                                <label class="col-sm-3 control-label" for="istwtrProfileId">Twitter Profile</label>
+                                <div class="col-sm-3">
+                                    <label class="checkbox">Twitter Profile ?
+                                        <input type="checkbox" id="istwtrProfileId" name="istwtrProfileId">
+                                    </label>
+                                    <input id="twtrProfileIdTextSrc" name="twtrProfileIdTextSrc" class="form-control" disabled="" type="text" placeholder="Enter Twitter Profile ID " ng-model="socialNetwork.twitterId">
+                                    <input id="twtrProfileScrnNameTextSrc" name="twtrProfileScrnNameTextSrc" class="form-control" disabled="" type="text" placeholder="Enter Twitter Screen Name ">
+                                    <input id="twtrProfileUrlTextSrc" name="twtrProfileUrlTextSrc" class="form-control" disabled="" type="text" placeholder="Enter Twitter Profile URL " ng-model="socialNetwork.twitterUrl">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </fieldset>
             </div>
-        </section>
-
+</section -->
 			<!-- Create Account - Start -->
-        <section class="panel panel-primary">
+        <!-- section class="panel panel-primary">
             <header class="panel-heading">
                 <h3 class="panel-title">Create User - Finalize Account</h3>
             </header>
-            <div ng-switch-when="five" class="panel-body">
-                <!-- legend>Create Account </legend -->
+			<div ng-switch-when="five" class="panel-body">
                 <fieldset>
                     <div class="col-md-12">
                         <div class="row">
                             <div>
-                                <!-- label class="col-sm-3 control-label" for="motherTng">Mother Tongue </label -->
                                 <label class="col-sm-3 control-label" for="smsEnb">Enable SMS Alerts </label>
                                 <div class="col-sm-3">
                                     <input type="checkbox" id="smsEnb" ng-model="user.isSMSEnabled">
@@ -455,17 +450,26 @@
                                 </div>
                             </div>
                         </div -->
-                    </div>
+                    <!-- /div>
                 </fieldset>
             </div>
-        </section>
-            <div>
+           </section -->
+
+            <div class="col-sm-10">
                 <button class="btn btn-primary" ng-click="prev()">Prev</button>
+
                 <button class="btn btn-primary pull-right" ng-click="next()">Next</button>
+
+
+
             </div>
+
         </form>
+
         </div>
+
     </div>
+    <button class="btn btn-primary pull-right" ng-click="registerNewUser()">Submit</button>
 </div>
 
 

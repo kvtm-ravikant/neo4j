@@ -6,6 +6,7 @@ var libraryMS=require('../models/library.js');
 var Utils=require("../../common/Utils/Utils.js");
 var neo4j=require("node-neo4j");
 var db=new neo4j("http://localhost:7474");
+var parentBookDD=require("../../common/models/docType.js");
 
 var acceptableDataTypes=["string","number","boolean","date"];
 var acceptableLabels=["parentBook","childBook"]
@@ -203,6 +204,11 @@ module.exports=function(app,Utils){
     app.get("/manageLibrary/getAllBooks",Utils.ensureAuthenticated,function(req,res){
         libraryMS.getAllBooks(res);
     });
+    /* Add NEW Book Title Drop Down*/
+    app.get("/manageLibrary/getParentBookDD",Utils.ensureAuthenticated,function(req,res){
+//        libraryMS.getAllBooks(res);
+            res.json(parentBookDD);
+    });
     app.get("/manageLibrary/getChildBooks/:primaryKey/:value",Utils.ensureAuthenticated,function(req,res){
         var primaryKey=req.params.primaryKey
         var value=req.params.value
@@ -213,6 +219,44 @@ module.exports=function(app,Utils){
         console.log("requestobj",requestobj);
         libraryMS.searchBooks(requestobj,res);
     })
+/*  addNewBook - Query for Parent Book Information   */
+    app.post("/manageLibrary/addNewBook",Utils.ensureAuthenticated,function(req,res){
+        var requestobj=req.body;
+        console.log("requestobj - addNewBook",requestobj);
+        libraryMS.addNewBook(requestobj,res);
+    })
+/*  addCHildBook - Query for Parent Book Information   */
+    app.post("/manageLibrary/addChildBook",Utils.ensureAuthenticated,function(req,res){
+        var requestobj=req.body;
+        console.log("requestobj - addChildBook",requestobj);
+        libraryMS.addChildBook(requestobj,res);
+    })
+    app.get("/manageLibrary/getUserSearchText/:primaryKey/:value",Utils.ensureAuthenticated,function(req,res){
+        var primaryKey=req.params.primaryKey
+        var value=req.params.value
+        libraryMS.getChildBooks(primaryKey,value,res);
+    });
+    app.get("/manageLibrary/searchUser/:searchText",Utils.ensureAuthenticated,function(req,res){
+        var searchText=req.params.searchText;
+        libraryMS.searchUser(res,searchText);
+    });
+    app.get("/manageLibrary/getBookIssuedDetails/:bookNodeId",Utils.ensureAuthenticated,function(req,res){
+        var bookNodeId=req.params.bookNodeId;
+        libraryMS.getIssuedBookDetails(res,bookNodeId);
+    });
+
+
+    app.post("/manageLibrary/issueLibBook",Utils.ensureAuthenticated,function(req,res){
+        var requestObj=req.body;
+        console.log("requestObj issueLibBook",requestObj);
+        delete requestObj.issueBookObj.userSearchText;
+        libraryMS.issueBook(res,requestObj.book,requestObj.user._id,requestObj.issueBookObj)
+    });
+    app.post("/manageLibrary/returnLibBook",Utils.ensureAuthenticated,function(req,res){
+        var requestObj=req.body;
+        console.log("requestObj issueLibBook",requestObj);
+        libraryMS.returnBook(res,requestObj)
+    });
     app.post("/manageLibrary/uploadCSV",Utils.ensureAuthenticated,function(req,res){
         console.log("/manageLibrary/uploadCSV");
         //try{

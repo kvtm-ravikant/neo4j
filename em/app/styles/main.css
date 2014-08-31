@@ -401,6 +401,24 @@ a {
     overflow-y: scroll;
 }
 
+.panel-primary {
+  border-color: #d6e9c6;
+}
+
+.panel-primary > .panel-heading {
+  color: #ffffff;
+  background-color: #428bca;
+  border-color: #428bca;
+}
+
+.panel-primary > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #428bca;
+}
+
+.panel-primary > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #428bca;
+}
+
 /* Login Page */
 
 .login-panel {

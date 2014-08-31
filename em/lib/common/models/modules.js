@@ -2,21 +2,19 @@
  * Created by ravikant on 22/6/14.
  */
 module.exports.getAppList=function(){
-
     return initAppList;
 };
 
 function initAppList(){
     var appList=[
-       /* {
+       {
             'state': 'dashboard',
             'name':'Dashboard',
             'collapse':false,
             'icon':"dashboard",
             'abstract':false,
             'accessList':["*"]
-        },*/
-
+        },
         {
             'state': 'manageAttendance',
             'name':'Manage Attendence',
@@ -31,7 +29,6 @@ function initAppList(){
                     'collapse':false,
                     'icon':"sitemap",
                     'accessList':["0","2"]
-
                 },
                 {
                     'state': 'manageAttendance.studentReport',
@@ -52,13 +49,80 @@ function initAppList(){
         {
             'state': 'manageUser',
             'name':'Manage Users',
-            'collapse':false,
-            'icon':"users"
+            'collapse':true,
+            'icon':"sitemap",
+            'abstract':true,
+            'accessList':["*"],
+            "childLinks":[
+                {
+                    'state': 'manageUser.registerUser',
+                    'name':'User Registration',
+                    'collapse':false,
+                    'icon':"sitemap",
+                    'accessList':["*"]
+                },
+                {
+                    'state': 'manageUser.updateUser',
+                    'name':'Update User',
+                    'collapse':false,
+                    'icon':"sitemap",
+                    'accessList':["*"]
+                },
+                {
+                    'state': 'manageUser.deleteUser',
+                    'name':'Delete User',
+                    'collapse':false,
+                    'icon':"sitemap",
+                    'accessList':["*"]
+                }
+            ]
         },
+
+        /* User Management -  End */
+        /* Library Management -  Start */
         {
             'state': 'libraryManagement',
             'name':'Lirbrary  Management',
-            'collapse':false,
+            'collapse':true,
+            'icon':"users",
+            'accessList':["*"],
+            'abstract':true,
+            "childLinks":[
+                {
+                    'state': 'libraryManagement.searchBook',
+                    'name':'Search',
+                    'collapse':false,
+                    'icon':"search",
+                    'accessList':["*"]
+                },
+                 {
+                    'state': 'libraryManagement.inventoryBooks',
+                    'name':'Inventory',
+                    'collapse':false,
+                    'icon':"inventory",
+                    'accessList':["*"]
+                },
+                {
+                    'state': 'libraryManagement.addNewBook',
+                    'name':'Add New Title',
+                    'collapse':false,
+                    'icon':"add",
+                    'accessList':["*"]
+                },
+                {
+                    'state': 'libraryManagement.addChildBook',
+                    'name':'Add Books',
+                    'collapse':false,
+                    'icon':"add",
+                    'accessList':["*"]
+                }
+            ]
+        }
+        /* Library Management -  End */
+       /* {
+            'state': 'libraryManagement',
+            'name':'Lirbrary  Management',
+            'collapse':true,
             'icon':"users",
             'accessList':["*"]
         },
@@ -67,8 +131,9 @@ function initAppList(){
             'name':'Manage School',
             'collapse':false,
             'icon':"users",
-            'accessList':["0"]
+            'accessList':["*"]
         }
+        */
     ];
     return appList;
 }

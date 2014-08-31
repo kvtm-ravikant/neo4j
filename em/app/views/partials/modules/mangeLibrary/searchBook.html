@@ -1,0 +1,374 @@
+<div class="row" ng-controller="libraryManagement_searchBook">
+ <h1>Library Management</h1>
+
+ <div class="row">
+        <div class="col-md-12 topbar">
+
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input ng-model="searchBookModel.searchText" class="col-md-12 searchclass" placeholder="Search" class="nodeSearchInputBox" />
+                    <span class="input-group-addon " id="datamodal" data-toggle="popover">
+                        <i class="fa fa-search cursor-pointer" ng-click="searchBooks()" ></i>&nbsp;|&nbsp;
+                        <i  ng-show="!isSearchBoxOpened" class="fa fa-chevron-down cursor-pointer" ng-click="openSearchBox()"></i>
+                        <i  ng-show="isSearchBoxOpened" class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i>
+                    </span>
+
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-default pull-right">Add Book</button>
+            </div>
+        </div>
+    </div>
+    <div class="row " ng-show="isSearchBoxOpened">
+        <div class="col-md-12 ">
+            <div class="col-md-7 advSearchBox">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="name">Book Title</label>
+                        <input type="text" class="form-control data-form-search " placeholder="Title Of Book" ng-model="searchBookModel.parentBook.bookTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Authors Name </label >
+                        <input type="text" class="form-control data-form-search " placeholder="Author Of Book" ng-model="searchBookModel.parentBook.authorName">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button ng-click="searchBooks()" class="btn btn-primary pull-right">Search&nbsp;<i id="datamodal" class="fa fa-search" data-toggle="popover"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <!--<div class="col-md-12 " id="booksdiv">
+
+        </div>-->
+    </div>
+    <div class="row vertical-spacer"></div>
+    <div class="row" ng-if="books.data" ng-show="!currentBookDetails">
+        <div class="col-md-10" >
+            <table class="table" >
+                <div id="head_nav">
+                    <thead class="theadclass">
+                        <tr>
+                            <th></th>
+                            <th ng-repeat="(key,value) in parentConfig" >{{value}}</th>
+
+                        </tr>
+                    </thead>
+                </div>
+                <tbody>
+                    <tr ng-repeat="book in books.data">
+                        <td>
+                            <i class="fa fa-envelope cursor-pointer" ng-click="getBookDetails(book)"></i>
+                            <i class="fa fa-picture-o cursor-pointer" ng-click="getShowImage(book)"></i>
+                        </td>
+                        <td ng-repeat="(key,value) in parentConfig" >{{book[key]}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-md-2 " >
+                <div class="row" id="booksdiv1"></div>
+                <div class="row" id="booksdiv2"></div>
+                <div class="row" id="booksdiv3"></div>
+        </div>
+
+    </div>
+    <div class="row" ng-if="books.data" ng-show="currentBookDetails">
+        <div class="col-md-12" >
+            <h4>Selected Book<button class="btn btn-sm btn-primary pull-right" ng-click="getBackToMainBookList()">Back</button></h4>
+            <div class="col-md-4" ng-repeat="(key,value) in parentConfig" >
+                <strong>{{value}}</strong>:{{currentSelectedBook[key]}}
+            </div>
+
+        </div>
+        <div class="col-md-9" >
+            <h4>Book Details</h4>
+            <table class="table">
+                <div id="head_nav">
+                    <thead class="theadclass">
+                    <tr>
+                        <th ng-repeat="(key,value) in childConfig" >{{value}}</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                </div>
+                <tbody>
+                <tr ng-repeat="book in currentBookDetails" ng-class="{'active': (issueThisBook && book.id==issueThisBook.id)==true}">
+                    <td ng-repeat="(key,value) in childConfig" >{{book[key]}}</td>
+                    <td>
+                        <span class="cursor-pointer" ng-if="book.bookStatus=='Available'" ng-click="showIssueBookHtml(book)">Issue</span>
+                        <span class="cursor-pointer" ng-if="book.bookStatus=='Unavailable'" ng-click="showReturnBookHtml(book)">Return</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3" ng-if="issueThisBook">
+
+            <div class="col-md-12">
+
+                Search User:<br>
+                <div class="input-group">
+                    <input ng-model="issueBookObj.userSearchText" class="col-md-12 searchclass" placeholder="Search User" class="nodeSearchInputBox" />
+                    <span class="input-group-addon " id="datamodal" data-toggle="popover">
+                        <i class="fa fa-search cursor-pointer" ng-click="searchUser()" ></i>
+                    </span>
+                </div>
+                <ul ng-if="searchedUserData" style="padding:2px;">
+                    <li ng-repeat="user in searchedUserData" ><span class="cursor-pointer" ng-click="selectUserToIssueBook(user)">{{user.firstName}} {{user.middleName}} {{user.LastName}} ({{user.DOB}})</span></li>
+                </ul>
+                <h4>Issue Book</h4>
+            </div>
+
+
+            <div class="col-md-12" ng-if="selectedUser">
+                User: {{selectedUser.firstName}} {{selectedUser.middleName}} {{selectedUser.LastName}} ({{selectedUser.DOB}})
+            </div>
+            <div class="col-md-12">
+                Issue Date: {{issueBookObj.issueDate|date:'dd/MM/yyyy'}}
+            </div>
+            <div class="col-md-12">
+                Return Date: {{issueBookObj.dueDate|date:'dd/MM/yyyy'}}
+            </div>
+            <div class="col-md-12">
+                Issue Comment: <br>
+                <textarea ng-model="issueBookObj.issueComment" placeholder="comments"></textarea>
+            </div>
+            <div class="col-md-12">
+                <br>
+                <button class="btn btn-xs btn-primary" ng-click="issueLibBook()">Issue book</button>
+            </div>
+
+        </div>
+        <div class="col-md-3" ng-if="returnThisBook">
+
+            <div class="col-md-12">
+                <h4>Return Book</h4>
+                 User:{{userToReturn.firstName}} {{userToReturn.middleName}} {{userToReturn.LastName}} ({{userToReturn.DOB}})<br>
+
+            </div>
+            <div class="col-md-12">
+                Issue Date: {{returnIsuedDetails.issueDate|date:'dd/MM/yyyy'}}
+            </div>
+            <div class="col-md-12">
+                Due Date: {{returnIsuedDetails.dueDate|date:'dd/MM/yyyy'}}
+            </div>
+            <div class="col-md-12">
+                Issue Comment: <br>
+                <textarea ng-model="returnIsuedDetails.issueComment" placeholder="comments"></textarea>
+            </div>
+            <div class="col-md-12">
+                Return Date: <br>
+                {{returnIsuedDetails.submittedDate|date:'dd/MM/yyyy'}}
+            </div>
+            <div class="col-md-12">
+                Return Comment: <br>
+                <textarea ng-model="returnIsuedDetails.submitComment" placeholder="comments"></textarea>
+            </div>
+
+            <div class="col-md-12">
+                <br>
+                <button class="btn btn-xs btn-primary" ng-click="returnLibBook()">Return book</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="bookCoverModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="col-lg-12 modal-body">
+                <img src="{{imageModalDetails.path}}" alt="Image not avaiable">
+            </div>
+        </div>
+    </div>
+</div>
+<!--{{books.data[0]}}-->
+<script>
+    $(function() {
+
+        var gaugeOptions = {
+
+            chart: {
+                type: 'solidgauge'
+            },
+
+            title: null,
+
+            pane: {
+                center: ['50%', '85%'],
+                size: '80%',
+                startAngle: -90,
+                endAngle: 90,
+                background: {
+                    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                    innerRadius: '60%',
+                    outerRadius: '100%',
+
+
+                    shape: 'arc'
+                }
+            },
+
+            tooltip: {
+                enabled: false
+            },
+
+            // the value axis
+            yAxis: {
+                stops: [
+                    [0.1, '#55BF3B'], // green
+                    [0.5, '#DDDF0D'], // yellow
+                    [0.9, '#DF5353'] // red
+                ],
+                lineWidth: 0,
+                minorTickInterval: null,
+                tickPixelInterval: 400,
+                tickWidth: 0,
+                title: {
+                    y: -70
+                },
+                labels: {
+                    y: 16
+                }
+            },
+
+            plotOptions: {
+                solidgauge: {
+                    dataLabels: {
+                        y: 5,
+                        borderWidth: 0,
+                        useHTML: true
+                    }
+                }
+            }
+        };
+
+        // The speed gauge
+        $('#booksdiv1').highcharts(Highcharts.merge(gaugeOptions, {
+            yAxis: {
+                min: 0,
+                max: 100,
+                title: {
+                    text: 'Books Overdue'
+                }
+            },
+
+            credits: {
+                enabled: false
+            },
+
+            series: [{
+                name: 'Books',
+                data: [50],
+                dataLabels: {
+                    format: '<div style="text-align:center"><span style="font-size:15px;color:' +
+                            ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{}</span><br/>' +
+                            '</div>'
+                },
+                tooltip: {
+                    valueSuffix: 'Books'
+                }
+            }]
+
+        }));
+        $('#booksdiv2').highcharts(Highcharts.merge(gaugeOptions, {
+            yAxis: {
+                min: 0,
+                max: 30000,
+                title: {
+                    text: ' Library Inventory'
+                }
+            },
+
+            credits: {
+                enabled: false
+            },
+
+            series: [{
+                name: 'Books',
+                data: [29000],
+                dataLabels: {
+                    format: '<div style="text-align:center"><span style="font-size:15px;color:' +
+                            ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{}</span><br/>' +
+                            '</div>'
+                },
+                tooltip: {
+                    valueSuffix: 'Books'
+                }
+            }]
+
+        }));
+        $('#booksdiv3').highcharts(Highcharts.merge(gaugeOptions, {
+            yAxis: {
+                min: 0,
+                max: 100,
+                title: {
+                    text: 'Reserve request'
+                }
+            },
+
+            credits: {
+                enabled: false
+            },
+
+            series: [{
+                name: 'Books',
+                data: [50],
+                dataLabels: {
+                    format: '<div style="text-align:center"><span style="font-size:15px;color:' +
+                            ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{}</span><br/>' +
+                            '</div>'
+                },
+                tooltip: {
+                    valueSuffix: 'Books'
+                }
+            }]
+
+        }));
+
+
+        // Bring life to the dials
+//        setInterval(function () {
+//            // Speed
+//            var chart = $('#booksdiv').highcharts(),
+//                    point,
+//                    newVal,
+//                    inc;
+//
+//            if (chart) {
+//                point = chart.series[0].points[0];
+//                inc = Math.round((Math.random() - 0.5) * 100);
+//                newVal = point.y + inc;
+//
+//                if (newVal < 0 || newVal > 200) {
+//                    newVal = point.y - inc;
+//                }
+//
+//                point.update(newVal);
+//            }
+//        }, 2000);
+
+
+    });
+
+</script>
+
+
+
+</div>
