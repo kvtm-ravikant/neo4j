@@ -101,7 +101,7 @@
                     </thead>
                 </div>
                 <tbody>
-                <tr ng-repeat="book in currentBookDetails" ng-class="{'active': (issueThisBook && book.id==issueThisBook.id)==true}">
+                <tr ng-repeat="book in currentBookDetails" ">
                     <td ng-repeat="(key,value) in childConfig" >{{book[key]}}</td>
                     <td>
                         <span class="cursor-pointer" ng-if="book.bookStatus=='Available'" ng-click="showIssueBookHtml(book)">Issue</span>
@@ -133,6 +133,9 @@
                 User: {{selectedUser.firstName}} {{selectedUser.middleName}} {{selectedUser.LastName}} ({{selectedUser.DOB}})
             </div>
             <div class="col-md-12">
+                Book Id: {{issueThisBook.bookId}}
+            </div>
+            <div class="col-md-12">
                 Issue Date: {{issueBookObj.issueDate|date:'dd/MM/yyyy'}}
             </div>
             <div class="col-md-12">
@@ -154,6 +157,9 @@
                 <h4>Return Book</h4>
                  User:{{userToReturn.firstName}} {{userToReturn.middleName}} {{userToReturn.LastName}} ({{userToReturn.DOB}})<br>
 
+            </div>
+            <div class="col-md-12">
+                Book Id: {{returnThisBook.bookId}}
             </div>
             <div class="col-md-12">
                 Issue Date: {{returnIsuedDetails.issueDate|date:'dd/MM/yyyy'}}
@@ -188,7 +194,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title"></h4>
             </div>
             <div class="col-lg-12 modal-body">
