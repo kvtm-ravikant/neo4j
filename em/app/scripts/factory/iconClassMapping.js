@@ -10,7 +10,9 @@ angular.module('educationMediaApp').factory("iconClassMapping",function(){
         "pencilSquare":"fa fa-pencil-square",
         "timesCircle":"fa fa-times-circle",
         "users":"fa fa-users",
-        "dashboard":"fa fa-dashboard"
+        "dashboard":"fa fa-dashboard",
+        "inventory":"fa fa-check-square-o",
+        "add":"fa  fa-plus-circle"
     }
     return iconClassMapping;
 });
