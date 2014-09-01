@@ -25,11 +25,19 @@ module.exports=function(app,Utils){
     	console.log("/manage-users/getAllUser");
         userMS.getAllUsers(res);
     });
+    /* Check availability of username  */
+    app.post("/manage-users/users/userNameAvailablity",Utils.ensureAuthenticated,function(req,res){
+    	var requestobj=req.body;
+    	console.log("Puneet /manage-users/users/userNameAvailablityr",req.body);
+        userMS.searchUser(requestobj,res);
+    });
 
-    /* */
+    /* New User Registration */
     app.post("/manage-users/users/registerNewUser",Utils.ensureAuthenticated,function(req,res){
-        var requestobj=req.body;
-        console.log("requestobj - registerNewUser",requestobj);
-//        libraryMS.addNewBook(requestobj,res);
+        var requestobj=req.body.userTest;
+//        console.log("requestobj - registerNewUser",requestobj);
+        console.log("requestobj - registerNewUser");
+        userMS.addNewUser(requestobj,res);
+        
     })
 }

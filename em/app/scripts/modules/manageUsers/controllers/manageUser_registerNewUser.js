@@ -22,6 +22,11 @@ educationMediaApp
 						todayHighlight : true
 					});
 					
+					   $scope.openPublicationDate=function(){
+						   console.log("date picker");
+					        $('#publicationDate').focus();
+					    };
+					
 					/* UserClass POJO Data Model */
 					$http.get('/manage-users/userClassData').success(
 							function(dataResponse, status, headers, config) {
@@ -67,7 +72,7 @@ educationMediaApp
 								+ " userDataLength "
 								+ $scope.userDataTest.length);
 						$scope.step = $scope.counter;
-						$scope.formValidationStep();
+//						$scope.formValidationStep();
 
 					}
 					$scope.prev = function() {
@@ -138,13 +143,60 @@ educationMediaApp
 						else if (angular
 								.isUndefined($scope.userClass.user.userName))
 							appUtils.showError("User Name is mandatory");
+						else if (angular
+								.isUndefined($scope.userClass.user.firstName))
+							appUtils.showError("First Name is mandatory");
+						else if (angular
+								.isUndefined($scope.userClass.user.lastName))
+							appUtils.showError("Last Name is mandatory");
+						else if (angular
+								.isUndefined($scope.userClass.user.DOB))
+							appUtils.showError("Date of birth is mandatory");
+//						else if (angular
+//								.isUndefined($scope.userClass.user.userName))
+//							appUtils.showError("User Name is mandatory");
 						
 					}
 					/*
-					 * Submit button Method for "Add Main Book"
+					 * Check availability of username 
+					 */
+					
+					$scope.getUserNameAvailabity = function(){
+						var userText = {userText: $scope.userClass.basicDetails.userName};
+						console.log("getUserNameAvailabity ",userText);
+						if(!angular.isUndefined(userText))
+							$http({
+								method : 'POST',
+								url : '/manage-users/users/userNameAvailablity',
+								data : userText,
+								headers : {
+									'Content-Type' : 'application/json'
+								}
+							}).success(function(dataResponse, status, headers,config) {
+												// success
+												appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+																	console.log("getUserNameAvailabity - dataResponse",dataResponse)
+																	$scope.userAvailable = dataResponse.responseData.data;
+//																	console.log("responce data : ",dataResponse.responseData.data.length);
+																});
+											}).error(function(data, status, headers, config) {
+												// error
+												console.log("Error", data, status,headers, config);
+
+											});
+			
+						else
+							appUtils.showError("Enter correct username");
+						
+						
+					}
+					
+					/*
+					 * Submit button Method for "Add new User"
 					 */
 					$scope.registerNewUser = function() {
-						console.log("registerUser ", $scope.userClass);
+						
+//						console.log("registerUser ", $scope.userClass);
 						$http({
 							method : 'POST',
 							url : '/manage-users/users/registerNewUser',
