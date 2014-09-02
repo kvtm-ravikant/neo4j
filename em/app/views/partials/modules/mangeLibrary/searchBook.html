@@ -1,9 +1,7 @@
 <div class="row" ng-controller="libraryManagement_searchBook">
 
  <div class="row">
-        <div class="col-md-12 topbar">
-
-            <div class="col-md-8">
+        <div class="col-md-10 topbar">
                 <div class="input-group">
                     <input ng-model="searchBookModel.searchText" class="col-md-12 searchclass" placeholder="Search" class="nodeSearchInputBox" />
                     <span class="input-group-addon " id="datamodal" data-toggle="popover">
@@ -11,9 +9,6 @@
                         <i  ng-show="!isSearchBoxOpened" class="fa fa-chevron-down cursor-pointer" ng-click="openSearchBox()"></i>
                         <i  ng-show="isSearchBoxOpened" class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i>
                     </span>
-
-                </div>
-
             </div>
             <div class="col-md-4">
                 <!--<button class="btn btn-default pull-right">Add Book</button>-->
@@ -22,7 +17,7 @@
     </div>
     <div class="row " ng-show="isSearchBoxOpened">
         <div class="col-md-12 ">
-            <div class="col-md-7 advSearchBox">
+            <div class="col-md-9 advSearchBox">
                 <form role="form">
                     <div class="form-group">
                         <label for="name">Book Title</label>
@@ -51,7 +46,7 @@
     <div class="row vertical-spacer"></div>
     <div class="row" ng-if="books.data" ng-show="!currentBookDetails">
         <div class="col-md-10" >
-            <table class="table" >
+            <table class="table" id="booksearchtable">
                 <div id="head_nav">
                     <thead class="theadclass">
                         <tr>
@@ -92,7 +87,7 @@
         <div class="col-md-9" >
             <h4>Book Details</h4>
             <table class="table">
-                <div id="head_nav">
+                <div id="head_nav_1">
                     <thead class="theadclass">
                     <tr>
                         <th ng-repeat="(key,value) in childConfig" >{{value}}</th>
@@ -101,7 +96,7 @@
                     </thead>
                 </div>
                 <tbody>
-                <tr ng-repeat="book in currentBookDetails" ">
+                <tr ng-repeat="book in currentBookDetails">
                     <td ng-repeat="(key,value) in childConfig" >{{book[key]}}</td>
                     <td>
                         <span class="cursor-pointer" ng-if="book.bookStatus=='Available'" ng-click="showIssueBookHtml(book)">Issue</span>
@@ -204,11 +199,5 @@
     </div>
 </div>
 <!--{{books.data[0]}}-->
-<script>
-
-
-</script>
-
-
 
 </div>

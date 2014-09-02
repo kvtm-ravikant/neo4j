@@ -1,10 +1,10 @@
 <div class="row" ng-controller="libraryManagement_addChildBook">
 <!-- h1>{{text}}</h1 -->
 <form id="myWizard" class="form-horizontal" weight="100%">
-<div class="col-sm-10">
-    <section> <div class="row">
+<div class="col-sm-12">
+    <section>
+        <div class="row">
         <div class="col-md-12 topbar">
-            <div class="col-md-8">
                 <div class="input-group">
                     <input ng-model="searchBookModel.searchText" class="col-md-12 searchclass" placeholder="Enter the ISBN or Title " class="nodeSearchInputBox" />
                         <span class="input-group-addon " id="datamodal" data-toggle="popover">
@@ -13,9 +13,10 @@
                             <i  ng-show="isSearchBoxOpened" class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i -->
                         </span>
                 </div>
-            </div>
+        </div>
         </div>
     </section>
+    <br/>
 
 <!--   Add New Book - Child Information -- Start -->
     <section class="panel panel-primary">
@@ -24,32 +25,32 @@
     </header>
     <div class="panel-body">
 <!-- legend>Child Information</legend -->
-        <fieldset>
+    <fieldset>
     <div class="col-md-12">
     <div class="row">
         <div>
-            <label class="col-sm-3 control-label" for="publicationDate">Publication Date</label>
-            <div class="col-md-2 classselector">
+            <label class="col-md-2 control-label" style="padding-left:0px;" for="publicationDate">Publication Date</label>
+            <div class="col-md-3 classselector" style="margin-left: 5px;">
                 <div class="input-group">
-                    <input type="text" id="publicationDate" ng-model="publicationDate" class="em-datepicker datepicker" placeholder="Publication Date">
+                    <input type="text" id="publicationDate" ng-model="publicationDate" class="em-datepicker datepicker searchclass" placeholder="Publication Date">
                     <span class="input-group-addon cursor-pointer" ng-click="openPublicationDate()"><i class="fa fa-calendar"></i></span>
                 </div>
             </div>
-        </div>
-        <div>
+            <div class="col-md-1">
 
-        </div>
-        <div>
-            <label class="col-sm-2 control-label" for="purchaseDate">Purchase Date</label>
-            <div class="col-md-2 classselector">
+            </div>
+            <label class="col-md-2 control-label" style="padding-left:10px;" for="purchaseDate">Purchase Date</label>
+            <div class="col-md-3 classselector">
                 <div class="input-group">
-                    <input type="text" id="purchaseDate" ng-model="purchaseDate" class="em-datepicker datepicker" placeholder="Purchase Date">
+                    <input type="text" id="purchaseDate" ng-model="purchaseDate" class="em-datepicker datepicker searchclass" placeholder="Purchase Date">
                     <span class="input-group-addon cursor-pointer" ng-click="openPurchaseDate()"><i class="fa fa-calendar"></i></span>
                 </div>
             </div>
         </div>
+        </div>
     </div>
-    <br>
+    <br/>
+    <br/>
         <div class="row">
             <div>
                 <label class="col-sm-2 control-label" for="barCode">Bar Code</label>
@@ -159,8 +160,7 @@
             </div>
         </div>
         <br>
-    </div>
-</fieldset>
+    </fieldset>
         <div class="col-md-2 pull-right">
             <button class="btn btn-md btn-primary" ng-click="addchildBook()">Add Books</button>
         </div>

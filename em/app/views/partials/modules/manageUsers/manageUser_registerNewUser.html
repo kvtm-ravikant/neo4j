@@ -21,7 +21,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="regId"
 													placeholder="Provide Registraion Number."
-													class="form-control" ng-model="userClass.basicDetails.regID"
+													class="form-control"
 													title="Registraion Number is required !" required>
 											</div>
 										</div>
@@ -35,7 +35,7 @@
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="fName"
 													placeholder="Enter your first name. "
-													ng-model="userClass.basicDetails.firstName">
+													ng-model="userClass.user.firstName">
 											</div>
 										</div>
 
@@ -48,7 +48,7 @@
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="mName"
 													placeholder="Enter your middle name. "
-													ng-model="userClass.basicDetails.middleName">
+													ng-model="userClass.user.middleName">
 											</div>
 										</div>
 									</div>
@@ -60,7 +60,7 @@
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="lName"
 													placeholder="Enter your last name. "
-													ng-model="userClass.basicDetails.lastName">
+													ng-model="userClass.user.lastName">
 											</div>
 										</div>
 									</div>
@@ -72,16 +72,16 @@
 											<div class="col-sm-4">
 												<input type="text" id="dob" class="em-datepicker datepicker"
 													placeholder="Enter Date of Birth"
-													ng-model="userClass.basicDetails.DOB">
+													ng-model="userClass.user.DOB">
 											</div>
 										</div>
 										<div>
 											<label class="col-sm-2 control-label">Are you </label>
 											<div class="col-sm-4">
 												<label for="button-radio-1" class="col-sm-8 control-label">
-													<input type="radio" name="button-radio" id="button-radio-1" ng-model="userClass.basicDetails.sex" 
-													value="M" checked> Male 
-													<input type="radio"	name="button-radio" id="button-radio-2" value="F" ng-model="userClass.basicDetails.sex">
+													<input type="radio" name="button-radio" id="button-radio-1"
+													value="1" checked> Male <input type="radio"
+													name="button-radio" id="button-radio-2" value="2">
 													Female
 												</label>
 											</div>
@@ -126,7 +126,7 @@
 												<input type="text" id="motherTng"
 													placeholder="What is your Mother Tongue"
 													class="form-control"
-													ng-model="userClass.basicDetails.languages_motherTongue">
+													ng-model="userClass.user.languages_motherTongue">
 											</div>
 										</div>
 										<div>
@@ -135,7 +135,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="othrLang"
 													placeholder="Which other language ?" class="form-control"
-													ng-model="userClass.basicDetails.languages_others">
+													ng-model="userClass.user.languages_others">
 											</div>
 										</div>
 									</div>
@@ -146,7 +146,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="religion"
 													placeholder="Please mention your Religion"
-													class="form-control" ng-model="userClass.basicDetails.religionId">
+													class="form-control" ng-model="userClass.user.religionId">
 											</div>
 										</div>
 										<div>
@@ -154,7 +154,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="caste"
 													placeholder="Please mention Your Catse"
-													class="form-control" ng-model="userClass.basicDetails.casteId">
+													class="form-control" ng-model="userClass.user.casteId">
 											</div>
 										</div>
 									</div>
@@ -415,7 +415,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="birthPlaceCntry"
 													placeholder="Birth Place Country" class="form-control"
-													ng-model="userClass.basicDetails.birthPlace_country">
+													ng-model="userClass.user.birthPlace_country">
 											</div>
 										</div>
 
@@ -425,7 +425,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="birthPlaceState"
 													placeholder="Birth Place State" class="form-control"
-													ng-model="userClass.basicDetails.birthPlace_state">
+													ng-model="userClass.user.birthPlace_state">
 											</div>
 										</div>
 									</div>
@@ -437,7 +437,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="birthPlaceCity"
 													placeholder="Birth Place City" class="form-control"
-													ng-model="userClass.basicDetails.birthPlace_city">
+													ng-model="userClass.user.birthPlace_city">
 											</div>
 										</div>
 									</div>
@@ -460,11 +460,11 @@
 											</script>
 											<label class="col-sm-2 control-label" for="isVisa">VISA
 												Number</label>
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<label class="checkbox">Do you have VISA ? <input
 													type="checkbox" id="isVisa" name="isVisa">
 												</label> <input id="visaTextSrc" name="visaTextSrc"
-													class="form-control " disabled="" type="text" ng-model="userClass.basicDetails.visaDetails"
+													class="form-control " disabled="" type="text"
 													placeholder="Enter your VISA Number">
 											</div>
 										</div>
@@ -485,11 +485,11 @@
 											</script>
 											<label class="col-sm-2 control-label" for="isPassPort">Passport
 												Number</label>
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<label class="checkbox">Do you have Passport ? <input
 													type="checkbox" id="isPassPort" name="isPassPort">
 												</label> <input id="passportTextSrc" name="passportTextSrc"
-													class="form-control" disabled="" type="text" ng-model="userClass.basicDetails.passportNumber"
+													class="form-control" disabled="" type="text"
 													placeholder="Enter your Passport Number">
 											</div>
 										</div>
@@ -511,18 +511,18 @@
 																});
 											</script>
 											<label class="col-sm-2" for="smsEnb">PAN Number</label>
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<label class="checkbox">Do you have PAN Number ? <input
 													type="checkbox" id="isPan" name="isPan">
 												</label> <input id="panTextSrc" name="panTextSrc"
-													class="form-control" disabled="" type="text" ng-model="userClass.basicDetails.panNumber"
+													class="form-control" disabled="" type="text"
 													placeholder="Enter your PAN Number">
 											</div>
 										</div>
 										<div>
 											<label class="col-sm-2 control-label" for="isResvrdCat">Reserved
 												Category</label>
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<label class="checkbox">Reserved Category? <input
 													type="checkbox" id="isResvrdCat" name="isResvrdCat"
 													ng-model="resrvrdCatTextSrc">
@@ -543,7 +543,7 @@
 												for="isPhysicallyHandicapped">Physically Challenged</label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="isPhysicallyHandicapped"
-													ng-model="userClass.basicDetails.isPhysicallyHandicapped">
+													ng-model="userClass.user.isPhysicallyHandicapped" style="margin-top:20px;">
 											</div>
 										</div>
 										<div>
@@ -551,7 +551,7 @@
 												for="isEconomicallyBackward">Economically Challenged</label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="isEconomicallyBackward"
-													ng-model="userClass.basicDetails.isEconomicallyBackward">
+													ng-model="userClass.user.isEconomicallyBackward" style="margin-top:20px;">
 											</div>
 										</div>
 									</div>
@@ -564,7 +564,7 @@
 												SMS Alerts </label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="smsEnb"
-													ng-model="userClass.basicDetails.isSMSEnabled">
+													ng-model="userClass.user.isSMSEnabled" style="margin-top:20px;">
 											</div>
 										</div>
 										<div>
@@ -572,7 +572,7 @@
 												Email Alerts </label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="mailEnb"
-													ng-model="userClass.basicDetails.isEmailEnabled">
+													ng-model="userClass.user.isEmailEnabled" style="margin-top:20px;">
 											</div>
 										</div>
 									</div>
@@ -609,7 +609,7 @@
 										Type</label>
 									<div class="col-sm-8">
 										<select id="validation-select" name="validation-select"
-											class="btn btn-media dropdown-toggle" ng-model="userClass.basicDetails.userType">
+											class="btn btn-media dropdown-toggle">
 											<option value="">Select Account Type !</option>
 											<option value="1">Teacher</option>
 											<option value="2">Student</option>
@@ -633,20 +633,12 @@
  -->
 								<div class="form-group">
 									<label class="col-sm-4 control-label" for="inputUsername">Username</label>
-									<div class="col-sm-4">
+									<div class="col-sm-8">
 										<input type="text" id="inputUsername"
 											placeholder="What's your user name" class="form-control"
 											title="User Name is required !" required
-											ng-model="userClass.basicDetails.userName" />
-											
+											ng-model="userClass.user.userName" />
 									</div>
-									 <div>
-										
-										 <!--  <div ng-if="userAvailable.length ==0">div</div>  -->
-										 <span ng-if="userAvailable == 0">{{userAvailable['userName']}} is Available</span>
-										 <span ng-if="userAvailable != 0"> is not Available !</span>
-										  <button class="btn" ng-click="getUserNameAvailabity()">Available ?</button>
-									 </div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-4 control-label" for="inputPassword">Password</label>
@@ -654,7 +646,7 @@
 										<input type="password" id="inputPassword" name="inputPassword"
 											placeholder="Password - keep it secret." class="form-control"
 											title="Password is required !" required
-											ng-model="userClass.basicDetails.hashPassword"
+											ng-model="userClass.user.hashPassword"
 											data-ng-class="{'ng-invalid':registerUserForm.confirmPassword.$error.match}" />
 									</div>
 								</div>
@@ -665,8 +657,8 @@
 										<input type="password" id="confirmPassword"
 											name="confirmPassword" placeholder="Re - enter your password"
 											class="form-control" title="Password is required !" required
-											ng-model="userClass.basicDetails.hashPasswordConfirm"
-											data-match="userClass.basicDetails.hashPassword" />
+											ng-model="userClass.user.hashPasswordConfirm"
+											data-match="userClass.user.hashPassword" />
 									</div>
 									<div
 										data-ng-show="registerUserForm.confirmPassword.$error.match">Passwords

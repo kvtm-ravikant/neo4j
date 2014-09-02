@@ -806,6 +806,21 @@ only screen and (max-width: 760px),
     #studentReportData td:nth-of-type(4):before { content: "Attendance Value : ";  text-align: left; }
     #studentReportData td:nth-of-type(5):before { content: "Notes : ";  text-align: left; }
 
+    /*** User Search Mobile Responsiveness **/
+    #userdatatable td:nth-of-type(1):before { content: "Actions : "; text-align: left;color: #4682b4; }
+    #userdatatable td:nth-of-type(2):before { content: "Date Of Birth : ";  text-align: left; color: #4682b4;}
+    #userdatatable td:nth-of-type(3):before { content: "First Name : ";  text-align: left; color: #4682b4;}
+    #userdatatable td:nth-of-type(4):before { content: "Last Name : ";  text-align: left;color: #4682b4; }
+    #userdatatable td:nth-of-type(5):before { content: "Reg Id : ";  text-align: left; color: #4682b4;}
+    #userdatatable td:nth-of-type(6):before { content: "User Name : ";  text-align: left;color: #4682b4; }
+
+    #booksearchtable td:nth-of-type(1):before { content: "Actions : "; text-align: left;color: #4682b4; }
+    #booksearchtable td:nth-of-type(2):before { content: "Author : ";  text-align: left; color: #4682b4;}
+    #booksearchtable td:nth-of-type(3):before { content: "Book Title : ";  text-align: left; color: #4682b4;}
+    #booksearchtable td:nth-of-type(4):before { content: "Category : ";  text-align: left;color: #4682b4; }
+    #booksearchtable td:nth-of-type(5):before { content: "ISBN : ";  text-align: left; color: #4682b4;}
+    #booksearchtable td:nth-of-type(6):before { content: "Publisher : ";  text-align: left;color: #4682b4; }
+
 }
 .nav >li > a.active{
     background-color:#438EA9;
@@ -873,17 +888,21 @@ input.ng-invalid.ng-dirty,textarea.ng-invalid.ng-dirty { border: solid red 1px; 
     border-radius: 5px;
     border: 1px solid #EDF4F7;
 }
-.advSearchBox{
-    border-left:1px solid #ccc;
-    border-right:1px solid #ccc;
-    border-bottom:1px solid #ccc;
-    margin-left:15px;
-    margin-top:-5px;
-    padding-bottom:10px;
-    padding-top:10px;
+.advSearchBox {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    /* margin-right: 46px; */
+    margin-top: -1px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    position: absolute;
+    background: white;
+    z-index: 1;
 }
 .searchclass{
     padding:4px;
+    width:100%;
 }
 #booksdiv1{
     border-top:1px solid #ccc;
@@ -901,3 +920,54 @@ input.ng-invalid.ng-dirty,textarea.ng-invalid.ng-dirty { border: solid red 1px; 
     background-color: #fff;
     border:1px solid #fff;
 }
+.checkboxstyleclass{
+    margin-top: 20px;
+}
+#myTab li>a{
+    color : #438EA9;
+}
+
+h2,p{
+    font-size:100%;
+    font-weight:normal;
+}
+.dashlist,li{
+    list-style:none;
+}
+.dashlist{
+    overflow:hidden;
+    padding:1em;
+}
+.dashlist li a{
+    text-decoration:none;
+    color:#000;
+    background:#ffc;
+    display:block;
+    height:10em;
+    width:15em;
+    padding:1em;
+}
+.dashlist li{
+    margin:1em;
+    float:left;
+}
+.dashlist li p{
+    font-size:30px;
+    margin-top: 10px;
+    text-align: center;
+}
+.dashlist li a h3{
+    margin: auto;
+    width: 20%;
+}
+.dashlist li a:hover,.dashlist li a:focus{
+    -moz-box-shadow:10px 10px 7px rgba(0,0,0,.7);
+    -webkit-box-shadow: 10px 10px 7px rgba(0,0,0,.7);
+    box-shadow:10px 10px 7px rgba(0,0,0,.7);
+    -webkit-transform: scale(1.25);
+    -moz-transform: scale(1.25);
+    -o-transform: scale(1.25);
+    position:relative;
+    z-index:5;
+}
+
