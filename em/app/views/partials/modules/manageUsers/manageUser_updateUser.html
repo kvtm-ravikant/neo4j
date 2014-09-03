@@ -1,71 +1,551 @@
 <div ng-controller="manageUser_updateUser" class="row" weight="100%">
-<!--  <h1>{{text}}</h1>
+	<!--  <h1>{{text}}</h1>
 -->
- <div class="row">
-        <div class="col-md-12 topbar">
+	<div class="row">
+		<div class="col-md-10 topbar">
+			<br>
+			<div class="col-md-6">
+				<div class="input-group">
+					<input ng-model="searchUserModel.userName" clear-input
+						class="col-md-12 searchclass" placeholder="Enter User Name"
+						class="nodeSearchInputBox" /> <span class="input-group-addon"
+						id="datamodal" data-toggle="popover"> <i
+						class="fa fa-times"
+						ng-click="clearSearch();searchUser();getBackToMainUsersList()"></i>&nbsp;|&nbsp;
+						<i class="fa fa-search cursor-pointer"
+						ng-click="searchUser(); getBackToMainUsersList()"></i>&nbsp;
 
-<!--            <div class="col-md-12">-->
-                <div class="input-group">
-                    <input ng-model="searchBookModel.searchText" class="col-md-12 searchclass" placeholder="Enter User Name" class="nodeSearchInputBox" />
-                    <span class="input-group-addon " id="datamodal" data-toggle="popover">
-                        <i class="fa fa-search cursor-pointer" ng-click="searchBooks()" ></i>&nbsp;&nbsp;
-                        <!--  i  ng-show="!isSearchBoxOpened" class="fa fa-chevron-down cursor-pointer" ng-click="openSearchBox()"></i>
-                        <i  ng-show="isSearchBoxOpened" class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i -->
-                    </span>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="row" ng-if="allUserClass.data"
+		ng-show="!currentUserDetails">
+		<div class="col-md-10">
+			<table class="table">
+				<div id="head_nav">
+					<thead class="theadclass">
+						<tr>
+							<th></th>
+							<th ng-repeat="(key,value) in parentConfig">{{value}}</th>
+						</tr>
+					</thead>
+				</div>
+				<tbody>
+					<tr ng-repeat="book in allUserClass.data">
+						<td><i class="fa fa-align-justify"
+							ng-click="getUserDetails(book)"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i> -->
+						</td>
+						<td ng-repeat="(key,value) in parentConfig">{{book[key]}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- Start User Details  -->
+	<div class="row" ng-if="allUserClass.data" ng-show="currentUserDetails">
+		<div class="col-md-12">
+			<div class="col-lg-8 rightdiv">
+				<ul class="nav nav-tabs" id="myTab">
+					<li class="active"><a href="#basicInfo" data-toggle="tab">Basic
+							Details Info</a></li>
+					<li><a href="#primaryCntInfo" data-toggle="tab">Primary
+							Contact Info</a></li>
+					<li><a href="#secondaryCntInfo" data-toggle="tab">Secondary
+							Contact Info</a></li>
+					<li><a href="#othrInfo" data-toggle="tab">Other Info</a></li>
+					<li><a href="#accInfo" data-toggle="tab">Account Info</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="basicInfo">
+						<form class="form-horizontal" role="form">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Registraion ID </label>
+								<div class="col-sm-4">
+									<input type="text" id="regId" class="form-control"
+										ng-model="userSelectedClass.regID">
+								</div>
 
-                </div>
+							</div>
+							<div class="form-group">
+								<label for="fName" class="col-sm-4 control-label">First
+									Name </label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="fName"
+										ng-model="userSelectedClass.firstName">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="mName" class="col-sm-4 control-label">Middle
+									Name </label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="mName"
+										ng-model="userSelectedClass.middleName">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lName" class="col-sm-4 control-label">Last
+									Name </label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="lName"
+										ng-model="userSelectedClass.lastName">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="sex-type" class="col-sm-4 control-label">Sex
+								</label>
+								<div class="simple-radio col-sm-8" id="sex-type">
+									<input id="ml" type="radio" name="sex-type" value="Male"
+										parsley-required="true"> <label for="ml">Male</label>
+									<input id="fml" type="radio" name="sex-type" value="Female">
+									<label for="fml">Female</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="dob" class="col-sm-4 control-label">Date of
+									Birth </label>
+								<div class="col-sm-8">
+									<input type="text" id="dob" class="em-datepicker datepicker"
+										placeholder="Enter Date of Birth">
+									<!-- input type="text" class="form-control" id="dob" placeholder="Enter Password " -->
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Update Profile
+									Image</label>
+								<div></div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="motherTng">Mother
+									Tongue </label>
+								<div>
 
-            <!--</div>-->
-        </div>
-    </div>
-    <br>
-     <div class="row" ng-if="allUserClass.data">
-        <div class="col-md-12" >
-            <table class="table" id="userdatatable">
-                <div id="head_nav">
-                    <thead class="theadclass">
-                        <tr>
-                            <th></th>
-                            <th ng-repeat="(key,value) in parentConfig" >{{value}}</th>
-                        </tr>
-                    </thead>
-                </div>
-               <tbody>
-                    <tr ng-repeat="book in allUserClass.data">
-                        <td>
-                            <i class="fa fa-envelope cursor-pointer" ></i>
-                            <i class="fa fa-picture-o cursor-pointer" ></i>
-                        </td>
-                        <td ng-repeat="(key,value) in parentConfig" >{{book[key]}}</td>
+									<div class="col-sm-4">
+										<input type="text" id="motherTng" class="form-control"
+											ng-model="userClass.basicDetails.languages_motherTongue">
+									</div>
 
-                    </tr>
-                </tbody>
-            </table>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="othrLang">Other
+									Language </label>
+								<div class="col-sm-4">
+									<input type="text" id="othrLang"
+										placeholder="Which other language ?" class="form-control"
+										ng-model="userClass.basicDetails.languages_others">
+								</div>
+							</div>
 
-        </div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="religion">Religion</label>
+								<div class="col-sm-4">
+									<input type="text" id="religion"
+										placeholder="Please mention your Religion"
+										class="form-control"
+										ng-model="userClass.basicDetails.religionId">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="caste">Caste</label>
+								<div class="col-sm-4">
+									<input type="text" id="caste"
+										placeholder="Please mention Your Catse" class="form-control"
+										ng-model="userClass.basicDetails.casteId">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="tab-pane" id="primaryCntInfo">
+						<form class="form-horizontal" role="form">
+							<fieldset>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="primaryPhone">Phone
+											Number</label>
+										<div class="col-sm-4">
+											<input type="text" id="primaryPhone"
+												placeholder="Phone Number" class="form-control"
+												ng-model="userClass.contact.phonePrimary">
+										</div>
+									</div>
+									<div>
+										<label class="col-sm-2 control-label" for="inputEmail">Email
+											Address</label>
+										<div class="col-sm-4">
+											<input type="email" id="inputEmail"
+												placeholder="Enter Your Email Address." class="form-control"
+												title="Email id is required !" required
+												ng-model="userClass.contact.emailPrimary" />
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+											Address 1</label>
+										<div class="col-sm-10">
+											<input type="text" id="cntStreetAdrOne"
+												placeholder="Enter Street Address" class="form-control"
+												ng-model="userClass.primaryAddress.street1">
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+											Address 2</label>
+										<div class="col-sm-10">
+											<input type="text" id="cntStreetAdrOne"
+												placeholder="Enter Street Address" class="form-control"
+												ng-model="userClass.primaryAddress.street2">
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
+										<div class="col-sm-10">
+											<input type="text" id="cntStreetAdrTwo"
+												placeholder="Provide Landmark" class="form-control">
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="cntCntry">Country</label>
+										<div class="col-sm-4">
+											<input type="text" id="cntCntry" placeholder="Country"
+												class="form-control"
+												ng-model="userClass.primaryAddress.country">
+										</div>
+									</div>
+									<div>
+										<label class="col-sm-2 control-label" for="cntState">State</label>
+										<div class="col-sm-4">
+											<input type="text" id="cntState" placeholder="State"
+												class="form-control"
+												ng-model="userClass.primaryAddress.state">
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="cntCity">City</label>
+										<div class="col-sm-4">
+											<input type="text" id="cntCity" placeholder="City"
+												class="form-control"
+												ng-model="userClass.primaryAddress.city">
+										</div>
+									</div>
+									<div>
+										<label class="col-sm-2 control-label" for="cntDistct">District</label>
+										<div class="col-sm-4">
+											<input type="text" id="cntDistct" placeholder="District"
+												class="form-control"
+												ng-model="userClass.primaryAddress.district">
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="cntPin">Pincode</label>
+										<div class="col-sm-4">
+											<input type="text" id="cntPin" placeholder="Pincode"
+												class="form-control"
+												ng-model="userClass.primaryAddress.pincode">
+										</div>
+									</div>
+								</div>
+								<br>
+							</fieldset>
+						</form>
+					</div>
+					<div class="tab-pane" id="secondaryCntInfo">
+						<form class="form-horizontal" role="form">
+							<fieldset>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="primaryPhone">Phone
+											Number</label>
+										<div class="col-sm-4">
+											<input type="text" id="primaryPhone"
+												placeholder="Phone Number" class="form-control"
+												ng-model="userClass.contact.phoneSecondary">
+										</div>
+									</div>
+									<div>
+										<label class="col-sm-2 control-label" for="inputEmail">Email
+											Address</label>
+										<div class="col-sm-4">
+											<input type="email" id="inputEmail"
+												placeholder="Enter Your Email Address." class="form-control"
+												title="Email id is required !"
+												ng-model="userClass.contact.emailSecondary" />
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+											Address 1</label>
+										<div class="col-sm-10">
+											<input type="text" id="cntStreetAdrOne"
+												placeholder="Enter Street Address" class="form-control"
+												ng-model="userClass.SecondaryAddress.street1">
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+											Address 2</label>
+										<div class="col-sm-10">
+											<input type="text" id="cntStreetAdrOne"
+												placeholder="Enter Street Address" class="form-control"
+												ng-model="userClass.SecondaryAddress.street2">
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
+										<div class="col-sm-10">
+											<input type="text" id="cntStreetAdrTwo"
+												placeholder="Provide Landmark" class="form-control">
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="cntCntry">Country</label>
+										<div class="col-sm-4">
+											<input type="text" id="cntCntry" placeholder="Country"
+												class="form-control"
+												ng-model="userClass.SecondaryAddress.country">
+										</div>
+									</div>
 
-    </div>
-    
-    <!--  table id="example" class="display" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
- 
-        <tfoot>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Salary</th>
-            </tr>
-        </tfoot>
-    </table -->
+									<div>
+										<label class="col-sm-2 control-label" for="cntState">State</label>
+										<div class="col-sm-4">
+											<input type="text" id="cntState" placeholder="State"
+												class="form-control"
+												ng-model="userClass.SecondaryAddress.state">
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="cntCity">City</label>
+										<div class="col-sm-4">
+											<input type="text" id="cntCity" placeholder="City"
+												class="form-control"
+												ng-model="userClass.SecondaryAddress.city">
+										</div>
+									</div>
+									<div>
+										<label class="col-sm-2 control-label" for="cntDistct">District</label>
+										<div class="col-sm-4">
+											<input type="text" id="cntDistct" placeholder="District"
+												class="form-control"
+												ng-model="userClass.SecondaryAddress.district">
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div>
+										<label class="col-sm-2 control-label" for="cntPin">Pincode</label>
+										<div class="col-sm-4">
+											<input type="text" id="cntPin" placeholder="Pincode"
+												class="form-control"
+												ng-model="userClass.SecondaryAddress.pincode">
+										</div>
+									</div>
+								</div>
+								<br>
+							</fieldset>
+						</form>
+					</div>
+					<div class="tab-pane" id="othrInfo">
+						<form class="form-horizontal" role="form">
+							<fieldset>
+								<div class="col-md-12">
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="birthPlaceCntry">Birth
+												Place Country</label>
+											<div class="col-sm-4">
+												<input type="text" id="birthPlaceCntry"
+													placeholder="Birth Place Country" class="form-control"
+													ng-model="userClass.basicDetails.birthPlace_country">
+											</div>
+										</div>
+										<div>
+											<label class="col-sm-2 control-label" for="birthPlaceState">Birth
+												Place State</label>
+											<div class="col-sm-4">
+												<input type="text" id="birthPlaceState"
+													placeholder="Birth Place State" class="form-control"
+													ng-model="userClass.basicDetails.birthPlace_state">
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="birthPlaceCity">Birth
+												Place City</label>
+											<div class="col-sm-4">
+												<input type="text" id="birthPlaceCity"
+													placeholder="Birth Place City" class="form-control"
+													ng-model="userClass.basicDetails.birthPlace_city">
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="isVisa">VISA
+												Number</label>
+											<div class="col-sm-3">
+												<input id="visaTextSrc" name="visaTextSrc"
+													class="form-control " type="text"
+													ng-model="userClass.basicDetails.visaDetails"
+													placeholder="Enter your VISA Number">
+											</div>
+										</div>
+										<div>
+
+											<label class="col-sm-2 control-label" for="isPassPort">Passport
+												Number</label>
+											<div class="col-sm-3">
+												<input id="passportTextSrc" name="passportTextSrc"
+													class="form-control" type="text"
+													ng-model="userClass.basicDetails.passportNumber"
+													placeholder="Enter your Passport Number">
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2" for="smsEnb">PAN Number</label>
+											<div class="col-sm-3">
+												<input id="panTextSrc" name="panTextSrc"
+													class="form-control" type="text"
+													ng-model="userClass.basicDetails.panNumber"
+													placeholder="Enter your PAN Number">
+											</div>
+										</div>
+										<div>
+											<label class="col-sm-2 control-label" for="isResvrdCat">Reserved
+												Category</label>
+											<div class="col-sm-3">
+												<input id="resrvrdCatTextSrc" name="resrvrdCatTextSrc"
+													class="form-control" ng-model="otherResvrdCat" type="text"
+													placeholder="Please mention Category">
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label"
+												for="isPhysicallyHandicapped">Physically Challenged</label>
+											<div class="col-sm-3">
+												<input type="checkbox" id="isPhysicallyHandicapped"
+													ng-model="userClass.basicDetails.isPhysicallyHandicapped">
+											</div>
+										</div>
+										<div>
+											<label class="col-sm-2 control-label"
+												for="isEconomicallyBackward">Economically Challenged</label>
+											<div class="col-sm-3">
+												<input type="checkbox" id="isEconomicallyBackward"
+													ng-model="userClass.basicDetails.isEconomicallyBackward">
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="smsEnb">Enable
+												SMS Alerts </label>
+											<div class="col-sm-3">
+												<input type="checkbox" id="smsEnb"
+													ng-model="userClass.basicDetails.isSMSEnabled">
+											</div>
+										</div>
+										<div>
+											<label class="col-sm-2 control-label" for="mailEnb">Enable
+												Email Alerts </label>
+											<div class="col-sm-3">
+												<input type="checkbox" id="mailEnb"
+													ng-model="userClass.basicDetails.isEmailEnabled">
+											</div>
+										</div>
+									</div>
+							</fieldset>
+						</form>
+					</div>
+					<div class="tab-pane" id="accInfo">
+						<form class="form-horizontal" role="form">
+							<fieldset>
+								<div class="form-group">
+									<label for="validation-select" class="col-sm-4 control-label">Account
+										Type</label>
+									<div class="col-sm-4	">
+										<input type="text" id="validation-select"
+											name="validation-select" class="form-control"
+											ng-model="userClass.basicDetails.userType">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-4 control-label" for="inputUsername">Username</label>
+									<div class="col-sm-4">
+										<input type="text" id="inputUsername"
+											placeholder="What's your user name" class="form-control"
+											title="User Name is required !" required
+											ng-model="userClass.basicDetails.userName" />
+									</div>
+								</div>
+
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<div col-sm-4>
+					<legend></legend>
+					<button class="btn btn-primary" ng-click="getBackToMainUsersList()">Back</button>
+
+					<button class="btn pull-right">Submit</button>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+
+
+	<!-- End User Details  -->
+</div>
+
+
 </div>
 

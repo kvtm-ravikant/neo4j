@@ -19,7 +19,7 @@ function initAppList(){
             'state': 'manageAttendance',
             'name':'Manage Attendence',
             'collapse':true,
-            'icon':"sitemap",
+            'icon':"edit",
             'abstract':true,
             'accessList':["*"],
             "childLinks":[
@@ -50,7 +50,7 @@ function initAppList(){
             'state': 'manageUser',
             'name':'Manage Users',
             'collapse':true,
-            'icon':"sitemap",
+            'icon':"users",
             'abstract':true,
             'accessList':["*"],
             "childLinks":[
@@ -58,21 +58,21 @@ function initAppList(){
                     'state': 'manageUser.registerUser',
                     'name':'New User',
                     'collapse':false,
-                    'icon':"sitemap",
+                    'icon':"user",
                     'accessList':["*"]
                 },
                 {
                     'state': 'manageUser.updateUser',
                     'name':'Update User',
                     'collapse':false,
-                    'icon':"sitemap",
+                    'icon':"updUser",
                     'accessList':["*"]
                 },
                 {
                     'state': 'manageUser.deleteUser',
                     'name':'Delete User',
                     'collapse':false,
-                    'icon':"sitemap",
+                    'icon':"erase",
                     'accessList':["*"]
                 }
             ]
@@ -84,7 +84,7 @@ function initAppList(){
             'state': 'libraryManagement',
             'name':'Lirbrary  Management',
             'collapse':true,
-            'icon':"users",
+            'icon':"book",
             'accessList':["*"],
             'abstract':true,
             "childLinks":[
@@ -99,7 +99,7 @@ function initAppList(){
                     'state': 'libraryManagement.inventoryBooks',
                     'name':'Inventory',
                     'collapse':false,
-                    'icon':"inventory",
+                    'icon':"exitin",
                     'accessList':["*"]
                 },
                 {

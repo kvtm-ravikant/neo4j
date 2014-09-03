@@ -3,8 +3,12 @@
  */
 var fs=require("fs");
 var userMS=require('../models/User.js');
-var UserClass=require("../models/UserClass.js");
+var Utils=require("../../common/Utils/Utils.js");
+var neo4j=require("node-neo4j");
+var db=new neo4j("http://localhost:7474");
 
+var UserClass=require("../models/UserClass.js");
+var user=new UserClass();
 
 
 module.exports=function(app,Utils){
@@ -33,9 +37,24 @@ module.exports=function(app,Utils){
     /* New User Registration */
     app.post("/manage-users/users/registerNewUser",Utils.ensureAuthenticated,function(req,res){
         var requestobj=req.body.userTest;
-        console.log("requestobj - registerNewUser",requestobj,req.body);
-        console.log("requestobj - registerNewUser");
+        console.log("requestobj - registerNewUser",requestobj);
         userMS.addNewUser(requestobj,res);
         
+    });
+    /* Search the User from textBox*/
+    app.post("/manage-users/searchUser/",Utils.ensureAuthenticated,function(req,res){
+        var requestobj=req.body.userName;
+        console.log("requestobj - search user",requestobj, req.body);
+//        console.log("requestobj - registerNewUser");
+//        userMS.addNewUser(requestobj,res);
+        userMS.getSelectedUser(requestobj,res);
+        
+    });
+    /*get selected User */
+    app.get("/manage-users/getSelectedUserDetails/:primaryKey/:value",Utils.ensureAuthenticated,function(req,res){
+//        console.log("/manage-users/getSelectedUserDetails/:primaryKey/:value ", req.params.primaryKey, req.params.value);
+//    	var primaryKey=req.params.primaryKey
+        var value=req.params.value
+        userMS.getSelectedUser(value,res);
     });
 }

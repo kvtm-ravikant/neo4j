@@ -407,16 +407,20 @@ a {
 
 .panel-primary > .panel-heading {
   color: #ffffff;
-  background-color: #428bca;
-  border-color: #428bca;
+ /* background-color: #428bca;
+  border-color: #428bca; */
+   background-color: #438EA9;
+  border-color: #438EA9;
 }
 
 .panel-primary > .panel-heading + .panel-collapse .panel-body {
-  border-top-color: #428bca;
+ /* border-top-color: #428bca; */
+  border-top-color:#438EA9;
 }
 
 .panel-primary > .panel-footer + .panel-collapse .panel-body {
-  border-bottom-color: #428bca;
+  /*border-bottom-color: #428bca; */
+  border-bottom-color: #438EA9;
 }
 
 /* Login Page */

@@ -12,7 +12,18 @@ angular.module('educationMediaApp').factory("iconClassMapping",function(){
         "users":"fa fa-users",
         "dashboard":"fa fa-dashboard",
         "inventory":"fa fa-check-square-o",
-        "add":"fa  fa-plus-circle"
+        "add":"fa  fa-plus-circle",
+        "male":"fa fa-male",
+        "user":"fa fa-user",
+        "users":"fa fa-users",
+        "updUser":"fa fa-wheelchair",
+        "justify":"fa fa-align-justify",
+        "del":"fa fa-trash",
+        "delO":"fa fa-trash-o",
+        "erase":"fa fa-eraser",
+        "book":"fa fa-book",
+        "exitin":"fa fa-fire-extinguisher",
+        "edit":"fa fa-edit"
     }
     return iconClassMapping;
 });

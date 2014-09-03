@@ -225,7 +225,7 @@ module.exports=function(app,Utils){
         console.log("requestobj - addNewBook",requestobj);
         libraryMS.addNewBook(requestobj,res);
     })
-/*  addCHildBook - Query for Parent Book Information   */
+/*  addChildBook - Query for Parent Book Information   */
     app.post("/manageLibrary/addChildBook",Utils.ensureAuthenticated,function(req,res){
         var requestobj=req.body;
         console.log("requestobj - addChildBook",requestobj);

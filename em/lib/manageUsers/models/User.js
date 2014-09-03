@@ -1,7 +1,8 @@
 /**
  * Created by Pinki Boora on 5/24/14.
  */
-//var db = new neo4j("http://localhost:7474");
+var neo4j = require("node-neo4j");
+var db = new neo4j("http://localhost:7474");
 var Utils = require("../../common/Utils/Utils.js");
 var db=Utils.getDBInstance();
 console.log("db", db);
@@ -137,4 +138,27 @@ module.exports.searchUser = function(requestObj,res) {
 			res.json(responseObj);
 		}
 	});
+}
+/*
+* Get selected User details
+*/
+module.exports.getSelectedUser=function(value,res){
+//    var query='Match (a:User{'+primaryKey+':"'+value+'"})-[:PARENTBOOK_OF]->(c) return c';
+	if(value!='')
+	var query = 'MATCH (n:User{userName:"' + value + '"})  RETURN n';
+	else
+		query = "MATCH (n:User) RETURN n LIMIT 25";
+//	console.log("getSelectedUser query :", query);
+    var responseObj=new Utils.Response();
+    db.cypherQuery(query,function(err,reply){
+        console.log(query,err,reply);
+        if(!err){
+            responseObj.responseData=reply;
+            res.json(responseObj);
+        }else{
+            responseObj.error=true;
+            responseObj.errorMsg="No Data found.";
+            res.json(responseObj);
+        }
+    });
 }
