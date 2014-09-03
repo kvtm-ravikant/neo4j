@@ -1,7 +1,9 @@
 /**
  * Created by Pinki Boora on 5/24/14.
  */
-
+var fs=require('fs');
+var path=require('path');
+var neo4j = require("node-neo4j");
 module.exports.ensureAuthenticated=function (req, res, next) {
     if (req.session.userDetails) { return next(); }
     res.redirect('login');
@@ -263,6 +265,15 @@ function resolveDataType(value,dataType){
     }
     return value;
 }
+function getDBInstance(){
+
+    var configFileName="../../conf";
+    var filePath=path.resolve(configFileName,"serverConfig");
+    console.log("filePath",filePath);
+    var serverConfig=JSON.parse(fs.readFileSync(filePath,'utf8'));
+    console.log("serverConfig",serverConfig);
+    return new neo4j("http://"+serverConfig.host+":"+serverConfig.port);
+}
 module.exports.resolveBoolean = resolveBoolean;
 module.exports.resolveSex = resolveSex;
 module.exports.resolveDataType = resolveDataType;
@@ -279,4 +290,5 @@ module.exports.Response = createResponse;
 module.exports.defaultErrorMsg = "OOPs... Something went wrong.";
 module.exports.defaultErrorResponse = defaultErrorResponse;
 module.exports.ddmmyyyyStrToTimeStamp = ddmmyyyyStrToTimeStamp;
+module.exports.getDBInstance = getDBInstance;
 

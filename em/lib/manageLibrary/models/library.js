@@ -1,9 +1,8 @@
 /**
  * Created by ravikant on 11/8/14.
  */
-var Utils=require("../../common/Utils/Utils.js");
-var neo4j=require("node-neo4j");
-var db=new neo4j("http://106.185.38.115:7474");
+var Utils = require("../../common/Utils/Utils.js");
+var db=Utils.getDBInstance();
 module.exports.getAllBooks=function (res){
     var queryAllBooks="MATCH (p:ParentBook) RETURN p";
     var responseObj=new Utils.Response();

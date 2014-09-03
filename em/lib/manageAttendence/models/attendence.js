@@ -9,9 +9,8 @@ var attendenceValMap={
     "3":"Holiday"
 };
 var requestOBJ = require('request');
-var neo4j=require("node-neo4j");
-var Utils=require("../../common/Utils/Utils.js");
-var db=new neo4j("http://localhost:7474");
+var Utils = require("../../common/Utils/Utils.js");
+var db=Utils.getDBInstance();
 var subjectMap=require("../../common/models/Subject.js");
 
 module.exports.getStudentsOfGivenClass=function(req,res,classObj){

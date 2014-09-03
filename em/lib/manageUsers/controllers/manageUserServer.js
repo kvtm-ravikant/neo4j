@@ -3,12 +3,8 @@
  */
 var fs=require("fs");
 var userMS=require('../models/User.js');
-var Utils=require("../../common/Utils/Utils.js");
-var neo4j=require("node-neo4j");
-var db=new neo4j("http://localhost:7474");
-
 var UserClass=require("../models/UserClass.js");
-var user=new UserClass();
+
 
 
 module.exports=function(app,Utils){
@@ -18,6 +14,8 @@ module.exports=function(app,Utils){
     });
 
     app.get("/manage-users/userClassData",Utils.ensureAuthenticated,function(req,res){
+        var user=new UserClass();
+
         res.json(user);
     });
     /* Get all Users from USER */
@@ -35,9 +33,9 @@ module.exports=function(app,Utils){
     /* New User Registration */
     app.post("/manage-users/users/registerNewUser",Utils.ensureAuthenticated,function(req,res){
         var requestobj=req.body.userTest;
-//        console.log("requestobj - registerNewUser",requestobj);
+        console.log("requestobj - registerNewUser",requestobj,req.body);
         console.log("requestobj - registerNewUser");
         userMS.addNewUser(requestobj,res);
         
-    })
+    });
 }

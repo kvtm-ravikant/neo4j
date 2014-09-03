@@ -1,9 +1,9 @@
 /**
  * Created by Pinki Boora on 5/24/14.
  */
-var neo4j = require("node-neo4j");
-var db = new neo4j("http://localhost:7474");
+//var db = new neo4j("http://localhost:7474");
 var Utils = require("../../common/Utils/Utils.js");
+var db=Utils.getDBInstance();
 console.log("db", db);
 module.exports = function(config) {
 	this.me = config;
@@ -88,8 +88,8 @@ module.exports.addNewUser = function(requestObj, res) {
 	console.log("addNewUser - parsedDate : ", userClass.basicDetails);
 
 	var responseObj = new Utils.Response();
-
-	db.insertNode(userClass.basicDetails, ["user"], function(err, reply) {
+    res.json(responseObj);
+	/*db.insertNode(userClass.basicDetails, ["user"], function(err, reply) {
 		console.log("reply", reply, err);
 		if (!err) {
 			responseObj.responseData = reply;
@@ -99,64 +99,8 @@ module.exports.addNewUser = function(requestObj, res) {
 			responseObj.errorMsg = "User No Data found.";
 			res.json(responseObj);
 		}
-	}
+	});*/
 
-	//    db.insertNode(userClass.PrimaryAddress,["PrimaryAddress"],function(err,reply){
-	//        console.log("reply",reply);
-	//        if(!err){
-	//            responseObj.responseData=reply;
-	//            res.json(responseObj);
-	//        }else{
-	//            responseObj.error=true;
-	//            responseObj.errorMsg="PrimaryAddress No Data found.";
-	//            res.json(responseObj);
-	//        }
-	//    }
-	//    
-	//    db.insertNode(userClass.secondaryAddress,["secondaryAddress"],function(err,reply){
-	//        console.log("reply",reply);
-	//        if(!err){
-	//            responseObj.responseData=reply;
-	//            res.json(responseObj);
-	//        }else{
-	//            responseObj.error=true;
-	//            responseObj.errorMsg="secondaryAddress No Data found.";
-	//            res.json(responseObj);
-	//        }
-	//    }
-	//
-	//    db.insertNode(userClass.socialNetwork,["socialNetwork"],function(err,reply){
-	//        console.log("reply",reply);
-	//        if(!err){
-	//            responseObj.responseData=reply;
-	//            res.json(responseObj);
-	//        }else{
-	//            responseObj.error=true;
-	//            responseObj.errorMsg="socialNetwork No Data found.";
-	//            res.json(responseObj);
-	//        }
-	//    }
-	//
-	//    db.insertNode(userClass.contact,["contact"],function(err,reply){
-	//        console.log("reply",reply);
-	//        if(!err){
-	//            responseObj.responseData=reply;
-	//            res.json(responseObj);
-	//        }else{
-	//            responseObj.error=true;
-	//            responseObj.errorMsg="contact No Data found.";
-	//            res.json(responseObj);
-	//        }
-	//    }
-
-	)
-
-	/*
-	 db.cypherQuery(query,function(err,reply){
-	 console.log("addNewBook",query,err);
-
-	 });
-	 */
 }
 /* Get all Users from USER */
 module.exports.getAllUsers = function(res) {
