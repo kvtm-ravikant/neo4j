@@ -36,9 +36,10 @@ module.exports=function(app,Utils){
 
     /* New User Registration */
     app.post("/manage-users/users/registerNewUser",Utils.ensureAuthenticated,function(req,res){
-        var requestobj=req.body.userTest;
+        var requestobj=req.body;
+        var loggedInUser=req.session.userDetails;
         console.log("requestobj - registerNewUser",requestobj);
-        userMS.addNewUser(requestobj,res);
+        userMS.addNewUser(requestobj,loggedInUser,res);
         
     });
     /* Search the User from textBox*/

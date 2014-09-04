@@ -35,6 +35,10 @@ require('./lib/manageOrg/controllers/createOrg.js')(app);
 require('./lib/manageAttendence/controllers/createAttendence.js')(app,Utils);
 require('./lib/manageLibrary/controllers/libraryServerController.js')(app,Utils);
 
+process.on('uncaughtException', function (err) {
+    console.error('uncaughtException:', err.message)
+    console.error(err.stack)
+    process.exit(1)})
 // Start server
 var port = process.env.PORT || 3000;
 app.listen(port, function () {

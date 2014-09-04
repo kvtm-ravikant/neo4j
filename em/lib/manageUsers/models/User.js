@@ -82,26 +82,142 @@ module.exports = function(config) {
  * Register New User functionality
  */
 
-module.exports.addNewUser = function(requestObj, res) {
-	var userClass = requestObj;
-	var query;
+module.exports.addNewUser = function(userObj,loggedInUser,res) {
 
-	console.log("addNewUser - parsedDate : ", userClass.basicDetails);
+    try{
+        var responseObj = new Utils.Response();
+        var defaultErrorMsg="Failed to add user. Please contact adminitrator.";
 
-	var responseObj = new Utils.Response();
-    res.json(responseObj);
-	/*db.insertNode(userClass.basicDetails, ["user"], function(err, reply) {
-		console.log("reply", reply, err);
-		if (!err) {
-			responseObj.responseData = reply;
-			res.json(responseObj);
-		} else {
-			responseObj.error = true;
-			responseObj.errorMsg = "User No Data found.";
-			res.json(responseObj);
-		}
-	});*/
+        var findUserQuery = 'MATCH (n:User{userName:"' + userObj.basicDetails.userName + '"})  RETURN n';
 
+        db.cypherQuery(findUserQuery, function(err, result) {
+            console.log("findUserQuery",err, result)
+            if(err || !result || (result && result.data && result.data.length==0)){
+                var userBasicDetails=fillUserDefaultValues(userObj.basicDetails);
+                //create user node
+                db.insertNode(userBasicDetails, ["User"], function(err, addUserReply) {
+                    console.log("create user node", err,addUserReply);
+                    if (!err && addUserReply && addUserReply.hasOwnProperty('_id')) {
+                        var insertionStatus={
+                            "School-[BELONGS_TO]-User":false,
+                            "Contact":false,
+                            "Contact-[CONTACT_OF]-User":false,
+                            "PrimaryAddress":false,
+                            "PrimaryAddress-[PRIMARY_ADDRESS_OF]-User":false,
+                            "SecondaryAddress":false,
+                            "SecondaryAddress-[SECONDARY_ADDRESS_OF]-User":false,
+                            "SocialNetwork":false,
+                            "SocialNetwork-[SOCIAL_NETWORK_OF]-User":false,
+                        }
+                        //associate user to School
+                        var userNodeID=addUserReply._id;
+                        var schoolNodeID=loggedInUser.schoolDetails._id;//logged In user's school
+                        console.log("userNodeID",userNodeID,"schoolNodeID",schoolNodeID);
+
+                        db.insertRelationship(schoolNodeID,userNodeID,"BELONGS_TO",{"from":userBasicDetails.createdAt},function(err,resultRel){
+                            console.log("associate user to School",err,resultRel);
+                            if(!err){
+                                insertionStatus["School-[BELONGS_TO]-User"]=true;
+                            }
+                        });
+                        //create contact node
+                        db.insertNode(userObj.contact, ["Contact"], function(err, addContactReply) {
+                            console.log("create contact node", err,addContactReply);
+                            if (!err && addContactReply && addContactReply.hasOwnProperty('_id')) {
+                                if(!err){
+                                    insertionStatus["Contact"]=true;
+                                }
+                                var contactNodeID=addContactReply._id;
+                                //associate contact to user
+                                db.insertRelationship(contactNodeID,userNodeID,"CONTACT_OF",{},function(err,resultRel){
+                                    console.log("associate contact to user",err,resultRel);
+                                    if(!err){
+                                        insertionStatus["Contact-[CONTACT_OF]-User"]=true;
+                                    }
+                                });
+                            }
+
+                        });
+                        //create Primary Address node
+                        db.insertNode(userObj.primaryAddress, ["PrimaryAddress"], function(err, addPrimaryAddressReply) {
+                            console.log("addPrimaryAddressReply node", err,addPrimaryAddressReply);
+                            if (!err && addPrimaryAddressReply && addPrimaryAddressReply.hasOwnProperty('_id')) {
+                                if(!err){
+                                    insertionStatus["PrimaryAddress"]=true;
+                                }
+                                var addressPrimaryNodeID=addPrimaryAddressReply._id;
+                                //associate Primary Address to user
+                                db.insertRelationship(addressPrimaryNodeID,userNodeID,"PRIMARY_ADDRESS_OF",{},function(err,resultRel){
+                                    console.log("associate Primary Address to user",err,resultRel);
+                                    if(!err){
+                                        insertionStatus["PrimaryAddress-[PRIMARY_ADDRESS_OF]-User"]=true;
+                                    }
+                                });
+                            }
+
+                        });
+                        //create Secondary Address node
+                        db.insertNode(userObj.secondaryAddress, ["SecondaryAddress"], function(err, addSecondaryAddressReply) {
+                            console.log("addSecondaryAddressReply node", err,addSecondaryAddressReply);
+                            if (!err && addSecondaryAddressReply && addSecondaryAddressReply.hasOwnProperty('_id')) {
+                                if(!err){
+                                    insertionStatus["SecondaryAddress"]=true;
+                                }
+                                var addressSecondaryNodeID=addSecondaryAddressReply._id;
+                                //associate Secondary Address to user
+                                db.insertRelationship(addressSecondaryNodeID,userNodeID,"SECONDARY_ADDRESS_OF",{},function(err,resultRel){
+                                    console.log("associate Secondary Address to user",err,resultRel);
+                                    if(!err){
+                                        insertionStatus["SecondaryAddress-[SECONDARY_ADDRESS_OF]-User"]=true;
+                                    }
+                                });
+                            }
+
+                        });
+                        //create SocialNetwork node
+                        db.insertNode(userObj.socialNetwork, ["SocialNetwork"], function(err, addsocialNetworkReply) {
+                            console.log("addsocialNetworkReply node", err,addsocialNetworkReply);
+                            if (!err && addsocialNetworkReply && addsocialNetworkReply.hasOwnProperty('_id')) {
+                                if(!err){
+                                    insertionStatus["SocialNetwork"]=true;
+                                }
+                                var socialNetworkNodeID=addsocialNetworkReply._id;
+                                //associate social network to user
+                                db.insertRelationship(socialNetworkNodeID,userNodeID,"SOCIAL_NETWORK_OF",{},function(err,resultRel){
+                                    console.log("associate social network to user",err,resultRel);
+                                    if(!err){
+                                        insertionStatus["SocialNetwork-[SOCIAL_NETWORK_OF]-User"]=true;
+                                    }
+
+                                });
+                            }
+
+                        });
+                        setTimeout(function(){
+                            console.log("insertionStatus",insertionStatus);
+                            responseObj.responseData=insertionStatus;
+                            res.json(responseObj);
+                        },200);
+                    } else {
+                        Utils.defaultErrorResponse(res,defaultErrorMsg);
+                    }
+                });//insertNode end
+
+            }else{
+                Utils.defaultErrorResponse(res,defaultErrorMsg);
+            }
+        });//findUserQuery end
+    }catch(e){
+        console.log("addNewUser",e);
+        Utils.defaultErrorResponse(res,defaultErrorMsg);
+    }
+}
+function fillUserDefaultValues(userBasicDetails){
+    var currentTimestamp=(new Date()).getTime();
+    userBasicDetails.updatedAt=currentTimestamp;
+    userBasicDetails.createdAt=currentTimestamp;
+    userBasicDetails.hashPassword="password";
+    return userBasicDetails;
 }
 /* Get all Users from USER */
 module.exports.getAllUsers = function(res) {
@@ -162,3 +278,10 @@ module.exports.getSelectedUser=function(value,res){
         }
     });
 }
+/*
+insert relationship reply format
+{ _start: 13287,
+    _end: 13283,
+    _id: 37479,
+    _type: 'SOCIAL_NETWORK_OF' }
+*/
