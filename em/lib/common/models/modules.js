@@ -82,7 +82,7 @@ function initAppList(){
         /* Library Management -  Start */
         {
             'state': 'libraryManagement',
-            'name':'Lirbrary  Management',
+            'name':'Library  Management',
             'collapse':true,
             'icon':"book",
             'accessList':["*"],
