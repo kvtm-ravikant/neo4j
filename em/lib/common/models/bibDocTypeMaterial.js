@@ -3,7 +3,7 @@ module.exports=
     "M": {
         "___name___": "Manuscript",
         "B": {
-            " ___name___": "Books",
+            "___name___": "Books",
             "BK": {
                 "___name___": "General Books"
             },
@@ -57,25 +57,25 @@ module.exports=
             }
         },
         "E": {
-            " ___name___": "Patents",
+            "___name___": "Patents",
             "PE": {
                 "___name___": "Patents"
             }
         },
         "M": {
-            " ___name___": "Manuals",
+            "___name___": "Manuals",
             "MN": {
                 "___name___": "Manuals"
             }
         },
         "S": {
-            " ___name___": "Standards",
+            "___name___": "Standards",
             "ST": {
                 "___name___": "Standards"
             }
         },
         "T": {
-            " ___name___": "Reports",
+            "___name___": "Reports",
             "GR": {
                 "___name___": "General Reports"
             },
@@ -99,7 +99,7 @@ module.exports=
     "S": {
         "___name___": "Serial",
         "A": {
-            " ___name___": "Annuals",
+            "___name___": "Annuals",
             "AR": {
                 "___name___": "Annual"
             },
@@ -108,7 +108,7 @@ module.exports=
             }
         },
         "N": {
-            " ___name___": "Newspapers",
+            "___name___": "Newspapers",
             "NL": {
                 "___name___": "Newsletters"
             },
@@ -117,7 +117,7 @@ module.exports=
             }
         },
         "P": {
-            " ___name___": "Periodicals",
+            "___name___": "Periodicals",
             "AI": {
                 "___name___": "Abstracting/Indexing Services"
             },

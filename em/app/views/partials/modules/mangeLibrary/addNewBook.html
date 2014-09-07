@@ -147,23 +147,13 @@
 									<label class="col-sm-2 control-label" for="mat">Materials
 									</label>
 									<div class="col-sm-2">
-									
 										<select id="mat" name="validation-select"
 											class="btn btn-media dropdown-toggle"
 											data-ng-model="parentBook.material" ng-if="parentBook.bibLevel">
 											<option value="">Select Materials</option>
-											 <option ng-repeat="(key, mat) in parentBookDD[parentBook.bibLevel]" ng-if="key!='___name___'"
-												value="{{key}}">{{mat}}||{{key}}</option>
-											<!--  
-											<option value="B">Books</option>
-											<option value="E">Patents</option>
-											<option value="M">Manuals</option>
-											<option value="S">Standards</option>
-											<option value="T">Reports</option>
-											<option value="A">Annuals</option>
-											<option value="P">Periodicals</option>
-											<option value="N">Newspapers</option>
-											-->
+											 <option ng-repeat="(key, material) in parentBookDD[parentBook.bibLevel]" ng-if="key!='___name___'"
+												value="{{key}}">{{material.___name___}}</option>
+
 										</select>
 									</div>
 								</div>
@@ -171,13 +161,13 @@
 									<label class="col-sm-2 control-label" for="docType">Doc
 										Type </label>
 									<div class="col-sm-3">
-										<select id="docType" name="validation-select"
-											class="btn btn-media dropdown-toggle"
-											data-ng-model="parentBook.docType">
+										<select id="docType" name="validation-select" class="btn btn-media dropdown-toggle"
+											data-ng-model="parentBook.docType" ng-if="parentBook.material">
+
 											<option value="">Select Doc Type</option>
-											<option ng-repeat="bookDD in parentBookDD"
-												value="{{bookDD.value}}">{{bookDD.name}}</option>
-										</select>
+											<option ng-repeat="(key,docType) in parentBookDD[parentBook.bibLevel][parentBook.material]" value="{{key}}">{{docType.___name___}}</option>
+
+                                        </select>
 									</div>
 								</div>
 								<div>
