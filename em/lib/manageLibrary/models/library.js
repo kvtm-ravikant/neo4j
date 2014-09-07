@@ -58,7 +58,7 @@ module.exports.searchBooks=function(requestObj,res){
         query+='RETURN n';
     }else if(requestObj.userDetails.regID || requestObj.userDetails.firstName || requestObj.userDetails.lastName || requestObj.userDetails.middleName || requestObj.userDetails.class || requestObj.userDetails.section){
         var tempQuery=[];
-        query='MATCH (c:Class) -[r2:STUDENT_OF]-(u:User)-[r:ISSUED_TO]-(cb:childBook) WHERE  ';
+        query='MATCH (c:Class) -[r2:STUDENT_OF]-(u:User)-[r:ISSUED_TO]-(cb:ChildBook) WHERE  ';
         requestObj.userDetails.regID?tempQuery.push('u.regID="'+requestObj.userDetails.regID+'"'):null;
         requestObj.userDetails.userName?tempQuery.push('u.userName="'+requestObj.userDetails.userName+'"'):null;
         requestObj.userDetails.firstName?tempQuery.push('u.firstName="'+requestObj.userDetails.firstName+'"'):null;
