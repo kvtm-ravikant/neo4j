@@ -68,7 +68,7 @@ module.exports=function(app,Utils){
         console.log("requestobj - search user",requestobj, req.body);
 //        console.log("requestobj - registerNewUser");
 //        userMS.addNewUser(requestobj,res);
-        userMS.getSelectedUser(requestobj,res);
+        userMS.getSelectedUser(requestobj,req,res);
         
     });
     /*get selected User */
