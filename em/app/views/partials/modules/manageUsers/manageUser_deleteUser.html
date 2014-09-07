@@ -64,11 +64,12 @@
 				<div class="tab-content">
 					<div class="tab-pane active" id="basicInfo">
 						<form class="form-horizontal" role="form">
+						<fieldset disabled="disabled">
 							<div class="form-group">
 								<label class="col-sm-4 control-label">Registraion ID </label>
 								<div class="col-sm-4">
 									<input type="text" id="regId" class="form-control"
-										ng-model="userSelectedClass.regID" disabled="disabled">
+										ng-model="userSelectedClass.basicDetails.regID">
 								</div>
 							</div>
 							<div class="form-group">
@@ -76,7 +77,7 @@
 									Name </label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="fName"
-										ng-model="userSelectedClass.firstName" disabled="disabled">
+										ng-model="userSelectedClass.firstName">
 								</div>
 							</div>
 							<div class="form-group">
@@ -84,7 +85,7 @@
 									Name </label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="mName"
-										ng-model="userSelectedClass.middleName" disabled="disabled">
+										ng-model="userSelectedClass.middleName">
 								</div>
 							</div>
 							<div class="form-group">
@@ -92,7 +93,7 @@
 									Name </label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="lName"
-										ng-model="userSelectedClass.lastName" disabled="disabled">
+										ng-model="userSelectedClass.lastName">
 								</div>
 							</div>
 							
@@ -101,7 +102,7 @@
 									Birth </label>
 								<div class="col-sm-8">
 									<input type="text" id="dob" class="em-datepicker datepicker"
-										placeholder="Enter Date of Birth" disabled="disabled" ng-model="userSelectedClass.DOB" />
+										placeholder="Enter Date of Birth"ng-model="userSelectedClass.DOB" />
 									<!-- input type="text" class="form-control" id="dob" placeholder="Enter Password " -->
 								</div>
 							</div>
@@ -115,13 +116,7 @@
 									<label for="fml">Female</label>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="profileImage" class="col-sm-4 control-label">Change Profile Image
-								</label>
-								<div>
-									
-								</div>
-							</div>
+							
 							<div class="form-group">
 								<label></label>
 								<div>
@@ -134,11 +129,12 @@
 									
 								</div>
 							</div>
+							</fieldset>
 						</form>
 					</div>
 					<div class="tab-pane" id="primaryCntInfo">
 						<form class="form-horizontal" role="form">
-							<fieldset>
+							<fieldset disabled="disabled">
 								<div class="row">
 									<div>
 										<label class="col-sm-2 control-label" for="primaryPhone">Phone
@@ -146,7 +142,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="primaryPhone"
 												placeholder="Phone Number" class="form-control"
-												ng-model="userClass.contact.phonePrimary" disabled="disabled">
+												ng-model="userClass.contact.phonePrimary">
 										</div>
 									</div>
 									<div>
@@ -156,7 +152,7 @@
 											<input type="email" id="inputEmail"
 												placeholder="Enter Your Email Address." class="form-control"
 												title="Email id is required !" required
-												ng-model="userClass.contact.emailPrimary" disabled="disabled"/>
+												ng-model="userClass.contact.emailPrimary"/>
 										</div>
 									</div>
 								</div>
@@ -168,7 +164,7 @@
 										<div class="col-sm-10">
 											<input type="text" id="cntStreetAdrOne"
 												placeholder="Enter Street Address" class="form-control"
-												ng-model="userClass.primaryAddress.street1" disabled="disabled">
+												ng-model="userClass.primaryAddress.street1">
 										</div>
 									</div>
 								</div>
@@ -180,7 +176,7 @@
 										<div class="col-sm-10">
 											<input type="text" id="cntStreetAdrOne"
 												placeholder="Enter Street Address" class="form-control"
-												ng-model="userClass.primaryAddress.street2" disabled="disabled">
+												ng-model="userClass.primaryAddress.street2">
 										</div>
 									</div>
 								</div>
@@ -190,7 +186,7 @@
 										<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
 										<div class="col-sm-10">
 											<input type="text" id="cntStreetAdrTwo"
-												placeholder="Provide Landmark" class="form-control" disabled="disabled">
+												placeholder="Provide Landmark" class="form-control">
 										</div>
 									</div>
 								</div>
@@ -201,7 +197,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntCntry" placeholder="Country"
 												class="form-control"
-												ng-model="userClass.primaryAddress.country" disabled="disabled">
+												ng-model="userClass.primaryAddress.country">
 										</div>
 									</div>
 									<div>
@@ -209,7 +205,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntState" placeholder="State"
 												class="form-control"
-												ng-model="userClass.primaryAddress.state" disabled="disabled">
+												ng-model="userClass.primaryAddress.state">
 										</div>
 									</div>
 								</div>
@@ -220,7 +216,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntCity" placeholder="City"
 												class="form-control"
-												ng-model="userClass.primaryAddress.city" disabled="disabled">
+												ng-model="userClass.primaryAddress.city">
 										</div>
 									</div>
 									<div>
@@ -228,7 +224,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntDistct" placeholder="District"
 												class="form-control"
-												ng-model="userClass.primaryAddress.district" disabled="disabled">
+												ng-model="userClass.primaryAddress.district">
 										</div>
 									</div>
 								</div>
@@ -239,7 +235,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntPin" placeholder="Pincode"
 												class="form-control"
-												ng-model="userClass.primaryAddress.pincode" disabled="disabled">
+												ng-model="userClass.primaryAddress.pincode">
 										</div>
 									</div>
 								</div>
@@ -249,7 +245,7 @@
 					</div>
 					<div class="tab-pane" id="secondaryCntInfo">
 						<form class="form-horizontal" role="form">
-							<fieldset>
+							<fieldset  disabled="disabled">
 								<div class="row">
 									<div>
 										<label class="col-sm-2 control-label" for="primaryPhone">Phone
@@ -257,7 +253,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="primaryPhone"
 												placeholder="Phone Number" class="form-control"
-												ng-model="userClass.contact.phoneSecondary" disabled="disabled">
+												ng-model="userClass.contact.phoneSecondary">
 										</div>
 									</div>
 									<div>
@@ -267,7 +263,7 @@
 											<input type="email" id="inputEmail"
 												placeholder="Enter Your Email Address." class="form-control"
 												title="Email id is required !"
-												ng-model="userClass.contact.emailSecondary" disabled="disabled"/>
+												ng-model="userClass.contact.emailSecondary"/>
 										</div>
 									</div>
 								</div>
@@ -279,7 +275,7 @@
 										<div class="col-sm-10">
 											<input type="text" id="cntStreetAdrOne"
 												placeholder="Enter Street Address" class="form-control"
-												ng-model="userClass.SecondaryAddress.street1" disabled="disabled">
+												ng-model="userClass.SecondaryAddress.street1">
 										</div>
 									</div>
 								</div>
@@ -291,7 +287,7 @@
 										<div class="col-sm-10">
 											<input type="text" id="cntStreetAdrOne"
 												placeholder="Enter Street Address" class="form-control"
-												ng-model="userClass.SecondaryAddress.street2" disabled="disabled">
+												ng-model="userClass.SecondaryAddress.street2">
 										</div>
 									</div>
 								</div>
@@ -301,7 +297,7 @@
 										<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
 										<div class="col-sm-10">
 											<input type="text" id="cntStreetAdrTwo"
-												placeholder="Provide Landmark" class="form-control" disabled="disabled">
+												placeholder="Provide Landmark" class="form-control">
 										</div>
 									</div>
 								</div>
@@ -312,7 +308,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntCntry" placeholder="Country"
 												class="form-control"
-												ng-model="userClass.SecondaryAddress.country" disabled="disabled">
+												ng-model="userClass.SecondaryAddress.country">
 										</div>
 									</div>
 
@@ -321,7 +317,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntState" placeholder="State"
 												class="form-control"
-												ng-model="userClass.SecondaryAddress.state" disabled="disabled">
+												ng-model="userClass.SecondaryAddress.state">
 										</div>
 									</div>
 								</div>
@@ -332,7 +328,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntCity" placeholder="City"
 												class="form-control"
-												ng-model="userClass.SecondaryAddress.city" disabled="disabled">
+												ng-model="userClass.SecondaryAddress.city">
 										</div>
 									</div>
 									<div>
@@ -340,7 +336,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntDistct" placeholder="District"
 												class="form-control"
-												ng-model="userClass.SecondaryAddress.district" disabled="disabled">
+												ng-model="userClass.SecondaryAddress.district">
 										</div>
 									</div>
 								</div>
@@ -351,7 +347,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntPin" placeholder="Pincode"
 												class="form-control"
-												ng-model="userClass.SecondaryAddress.pincode" disabled="disabled">
+												ng-model="userClass.SecondaryAddress.pincode">
 										</div>
 									</div>
 								</div>
@@ -361,7 +357,7 @@
 					</div>
 					<div class="tab-pane" id="othrInfo">
 						<form class="form-horizontal" role="form">
-							<fieldset>
+							<fieldset  disabled="disabled">
 								<div class="col-md-12">
 									<div class="row">
 										<div>
@@ -370,7 +366,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="birthPlaceCntry"
 													placeholder="Birth Place Country" class="form-control"
-													ng-model="userClass.basicDetails.birthPlace_country" disabled="disabled">
+													ng-model="userClass.basicDetails.birthPlace_country">
 											</div>
 										</div>
 										<div>
@@ -379,7 +375,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="birthPlaceState"
 													placeholder="Birth Place State" class="form-control"
-													ng-model="userClass.basicDetails.birthPlace_state" disabled="disabled">
+													ng-model="userClass.basicDetails.birthPlace_state">
 											</div>
 										</div>
 									</div>
@@ -391,7 +387,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="birthPlaceCity"
 													placeholder="Birth Place City" class="form-control"
-													ng-model="userClass.basicDetails.birthPlace_city" disabled="disabled">
+													ng-model="userClass.basicDetails.birthPlace_city">
 											</div>
 										</div>
 									</div>
@@ -404,7 +400,7 @@
 												<input id="visaTextSrc" name="visaTextSrc"
 													class="form-control " type="text"
 													ng-model="userClass.basicDetails.visaDetails"
-													placeholder="Enter your VISA Number" disabled="disabled">
+													placeholder="Enter your VISA Number">
 											</div>
 										</div>
 										<div>
@@ -415,7 +411,7 @@
 												<input id="passportTextSrc" name="passportTextSrc"
 													class="form-control" type="text"
 													ng-model="userClass.basicDetails.passportNumber"
-													placeholder="Enter your Passport Number" disabled="disabled">
+													placeholder="Enter your Passport Number">
 											</div>
 										</div>
 									</div>
@@ -427,7 +423,7 @@
 												<input id="panTextSrc" name="panTextSrc"
 													class="form-control" type="text"
 													ng-model="userClass.basicDetails.panNumber"
-													placeholder="Enter your PAN Number" disabled="disabled">
+													placeholder="Enter your PAN Number">
 											</div>
 										</div>
 										<div>
@@ -436,7 +432,7 @@
 											<div class="col-sm-3">
 												<input id="resrvrdCatTextSrc" name="resrvrdCatTextSrc"
 													class="form-control" ng-model="otherResvrdCat" type="text"
-													placeholder="Please mention Category" disabled="disabled">
+													placeholder="Please mention Category">
 											</div>
 										</div>
 									</div>
@@ -447,7 +443,7 @@
 												for="isPhysicallyHandicapped">Physically Challenged</label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="isPhysicallyHandicapped"
-													ng-model="userClass.basicDetails.isPhysicallyHandicapped" disabled="disabled">
+													ng-model="userClass.basicDetails.isPhysicallyHandicapped">
 											</div>
 										</div>
 										<div>
@@ -455,7 +451,7 @@
 												for="isEconomicallyBackward">Economically Challenged</label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="isEconomicallyBackward"
-													ng-model="userClass.basicDetails.isEconomicallyBackward" disabled="disabled">
+													ng-model="userClass.basicDetails.isEconomicallyBackward">
 											</div>
 										</div>
 									</div>
@@ -466,7 +462,7 @@
 												SMS Alerts </label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="smsEnb"
-													ng-model="userClass.basicDetails.isSMSEnabled" disabled="disabled">
+													ng-model="userClass.basicDetails.isSMSEnabled">
 											</div>
 										</div>
 										<div>
@@ -474,7 +470,7 @@
 												Email Alerts </label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="mailEnb"
-													ng-model="userClass.basicDetails.isEmailEnabled" disabled="disabled">
+													ng-model="userClass.basicDetails.isEmailEnabled">
 											</div>
 										</div>
 									</div>
@@ -483,14 +479,14 @@
 					</div>
 					<div class="tab-pane" id="accInfo">
 						<form class="form-horizontal" role="form">
-							<fieldset>
+							<fieldset  disabled="disabled">
 								<div class="form-group">
 									<label for="validation-select" class="col-sm-4 control-label">Account
 										Type</label>
 									<div class="col-sm-4	">
 										<input type="text" id="validation-select"
 											name="validation-select" class="form-control"
-											ng-model="userClass.basicDetails.userType" disabled="disabled">
+											ng-model="userClass.basicDetails.userType">
 									</div>
 								</div>
 								<div class="form-group">
@@ -499,7 +495,7 @@
 										<input type="text" id="inputUsername"
 											placeholder="What's your user name" class="form-control"
 											title="User Name is required !" required
-											ng-model="userClass.basicDetails.userName"  disabled="disabled"/>
+											ng-model="userClass.basicDetails.userName" />
 									</div>
 								</div>
 								<div class="form-group">

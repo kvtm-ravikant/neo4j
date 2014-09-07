@@ -1,6 +1,6 @@
 <div ng-controller="manageUser_registerNewUser" class="row"
 	weight="100%">
-<!-- 	<img id="blah" src="#" alt="your image"> -->
+	<img id="blah" src="#" alt="your image">
 	<div ng-switch="getCurrentStep()" ng-animate="'wave'" class="col-sm-10">
 	
 		<div id="wrapper" class="col-sm-10">
@@ -30,6 +30,11 @@
 													title="Registraion Number is required !" required>
 											</div>
 										</div>
+										<div>
+										 <span ng-if="regIdAvailable == 0" style="color:green">{{regIdAvailable['regIdText']}} is Available</span>
+										 <span ng-if="regIdAvailable != 0" style="color:red"> is not Available !</span>
+										  <button class="btn" ng-click="getregistrationIDAvailabity()">Available ?</button>
+									 </div>
 									</div>
 									<br>
 
@@ -93,33 +98,46 @@
 										</div>
 									</div>
 									<br>
+									<!--  
 									<div class="row">
-
 										<script>
 											function readURL(input) {
-												if (input.files
-														&& input.files[0]) {
+												if (input.files	&& input.files[0]) {
 													var reader = new FileReader();
 													reader.onload = function(e) {
-														$('#blah')
-																.attr(
-																		'src',
-																		e.target.result);
+														$('#blah').attr('src',e.target.result);
 													}
-													reader
-															.readAsDataURL(input.files[0]);
+													reader.readAsDataURL(input.files[0]);
 												}
 											}
 											$("#imgInp").change(function() {
 												readURL(this);
 											});
 										</script>
-										<label class="col-sm-2 control-label" for="imgInp">Upload
-											Image</label>
+										<label class="col-sm-2 control-label" for="imgInp">Upload Image</label>
 										<div class="col-sm-4">
-											<input class="control-label" type='file' id="imgInp" /> 
-											<img id="blah" src="#" alt="your image">
-
+											<input class="control-label" type='file' id="imgInp" accept="image/*" image="image2" resize-max-height="180" resize-max-width="150" resize-quality="0.7"/> 
+										</div>
+									</div>
+									 -->
+									 <div class="row">
+										<script>
+											function readURL(input) {
+												if (input.files	&& input.files[0]) {
+													var reader = new FileReader();
+													reader.onload = function(e) {
+														$('#blah').attr('src',e.target.result);
+													}
+													reader.readAsDataURL(input.files[0]);
+												}
+											}
+											$("#imgInp").change(function() {
+												readURL(this);
+											});
+										</script>
+										<label class="col-sm-2 control-label" for="imgInp">Upload Image</label>
+										<div class="col-sm-4">
+											<input class="control-label" type='file' id="imgInp" accept="image/*" image="image2" resize-max-height="180" resize-max-width="150" resize-quality="0.7"/> 
 										</div>
 									</div>
 									<br>
@@ -128,19 +146,25 @@
 											<label class="col-sm-2 control-label" for="motherTng">Mother
 												Tongue </label>
 											<div class="col-sm-4">
-												<input type="text" id="motherTng"
-													placeholder="What is your Mother Tongue"
-													class="form-control"
-													ng-model="userClass.basicDetails.languages_motherTongue">
+													<select id="motherTng" name="motherTng"
+												class="btn btn-media dropdown-toggle"
+												data-ng-model="userClass.basicDetails.languages_motherTongue">
+													<option value="">Select Mother Tounge</option>
+													 <option ng-repeat="(key, value) in languages" 
+													value="{{key}}">{{value.___name___}}</option>
+											</select>
 											</div>
 										</div>
 										<div>
 											<label class="col-sm-2 control-label" for="othrLang">Other
 												Language </label>
 											<div class="col-sm-4">
-												<input type="text" id="othrLang"
-													placeholder="Which other language ?" class="form-control"
-													ng-model="userClass.basicDetails.languages_others">
+													<select id="othrLang" name="othrLang" class="btn btn-media dropdown-toggle"
+													data-ng-model="userClass.basicDetails.languages_others">
+													<option value="">Select Other Language</option>
+													 <option ng-repeat="(key, value) in languages" 
+													value="{{key}}">{{value.___name___}}</option>
+													</select>
 											</div>
 										</div>
 									</div>
@@ -149,17 +173,28 @@
 										<div>
 											<label class="col-sm-2 control-label" for="religion">Religion</label>
 											<div class="col-sm-4">
-												<input type="text" id="religion"
-													placeholder="Please mention your Religion"
-													class="form-control" ng-model="userClass.basicDetails.religionId">
+											<select id="religion" name="religion"
+												class="btn btn-media dropdown-toggle"
+												data-ng-model="userClass.basicDetails.religionId">
+													<option value="">Select Religion</option>
+													 <option ng-repeat="(key, value) in religionCaste"
+													value="{{key}}">{{value.___name___}}</option>
+											</select>
+<!-- 												<input type="text" id="religion" -->
+<!-- 													placeholder="Please mention your Religion" -->
+<!-- 													class="form-control" ng-model="userClass.basicDetails.religionId"> -->
 											</div>
 										</div>
 										<div>
 											<label class="col-sm-2 control-label" for="caste">Caste</label>
 											<div class="col-sm-4">
-												<input type="text" id="caste"
-													placeholder="Please mention Your Catse"
-													class="form-control" ng-model="userClass.basicDetails.casteId">
+											<select id="caste" name="caste"
+												class="btn btn-media dropdown-toggle"
+												data-ng-model="userClass.primaryAddress.state" ng-if="userClass.basicDetails.religionId">
+													<option value="">Select Caste</option>
+											 		<option ng-repeat="(key, caste) in religionCaste[userClass.basicDetails.religionId]" ng-if="key!='___name___'"
+													value="{{key}}">{{caste.___name___}}</option>
+											</select>
 											</div>
 										</div>
 									</div>
@@ -180,8 +215,9 @@
 										<label class="col-sm-2 control-label" for="primaryPhone">Phone
 											Number</label>
 										<div class="col-sm-4">
-											<input type="text" id="primaryPhone"
-												placeholder="Phone Number" class="form-control"
+											<input type="text" id="primaryPhone" name="primaryPhone"
+												placeholder="Phone Number: 0XXXXXXXXXX" class="form-control" pattern="/^[(]{0,1}[0-9]{3}[)\.\- ]{0,1}[0-9]{3}[\.\- ]{0,1}[0-9]{4}$/"
+												ng-minlength="11"
 												ng-model="userClass.contact.phonePrimary">
 										</div>
 									</div>
@@ -234,31 +270,44 @@
 								<br>
 								<div class="row">
 									<div>
-										<label class="col-sm-2 control-label" for="cntCntry">Country</label>
-										<div class="col-sm-4">
-											<input type="text" id="cntCntry" placeholder="Country"
-												class="form-control"
-												ng-model="userClass.primaryAddress.country">
+										<label class="col-sm-2 control-label" for="cntCountry">Country</label>
+										<div class="col-sm-2">
+											<select id="cntCountry" name="cntCountry"
+												class="btn btn-media dropdown-toggle"
+												data-ng-model="userClass.primaryAddress.country">
+													<option value="">Select Country</option>
+													 <option ng-repeat="(key, value) in countryStateCity"
+													value="{{key}}">{{value.___name___}}</option>
+											</select>
 										</div>
 									</div>
-
 									<div>
-										<label class="col-sm-2 control-label" for="cntState">State</label>
-										<div class="col-sm-4">
-											<input type="text" id="cntState" placeholder="State"
-												class="form-control"
-												ng-model="userClass.primaryAddress.state">
+										<label class="col-sm-2 control-label" for="cntState">State
+										</label>
+										<div class="col-sm-2">
+											<select id="cntState" name="cntState"
+												class="btn btn-media dropdown-toggle"
+												data-ng-model="userClass.primaryAddress.state" ng-if="userClass.primaryAddress.country">
+													<option value="">Select State</option>
+											 		<option ng-repeat="(key, state) in countryStateCity[userClass.primaryAddress.country]" ng-if="key!='___name___'"
+													value="{{key}}">{{state.___name___}}</option>
+											</select>
 										</div>
 									</div>
 								</div>
 								<br>
 								<div class="row">
 									<div>
-										<label class="col-sm-2 control-label" for="cntCity">City</label>
-										<div class="col-sm-4">
-											<input type="text" id="cntCity" placeholder="City"
-												class="form-control"
-												ng-model="userClass.primaryAddress.city">
+										<label class="col-sm-2 control-label" for="cntCity">City
+										</label>
+										<div class="col-sm-2">
+											<select id="cntCity" name="cntCity"
+												class="btn btn-media dropdown-toggle"
+												data-ng-model="userClass.primaryAddress.city" ng-if="userClass.primaryAddress.state">
+													<option value="">Select State</option>
+											 		<option ng-repeat="(key, city) in countryStateCity[userClass.primaryAddress.country][userClass.primaryAddress.state]" ng-if="key!='___name___'"
+													value="{{key}}">{{city.___name___}}</option>
+											</select>
 										</div>
 									</div>
 									<div>
@@ -277,7 +326,8 @@
 										<label class="col-sm-2 control-label" for="cntPin">Pincode</label>
 										<div class="col-sm-4">
 											<input type="text" id="cntPin" placeholder="Pincode"
-												class="form-control"
+												class="form-control" pattern="/^[(]{0,1}[0-9]{3}[)\.\- ]{0,1}[0-9]{3}[\.\- ]{0,1}[0-9]{4}$/"
+												ng-minlength="6"
 												ng-model="userClass.primaryAddress.pincode">
 										</div>
 									</div>
@@ -352,31 +402,44 @@
 								<br>
 								<div class="row">
 									<div>
-										<label class="col-sm-2 control-label" for="cntCntry">Country</label>
-										<div class="col-sm-4">
-											<input type="text" id="cntCntry" placeholder="Country"
-												class="form-control"
-												ng-model="userClass.SecondaryAddress.country">
+										<label class="col-sm-2 control-label" for="secCountry">Country</label>
+										<div class="col-sm-2">
+											<select id="secCountry" name="secCountry"
+												class="btn btn-media dropdown-toggle"
+												data-ng-model="userClass.SecondaryAddress.country">
+													<option value="">Select Country</option>
+													 <option ng-repeat="(key, value) in countryStateCity"
+													value="{{key}}">{{value.___name___}}</option>
+											</select>
 										</div>
 									</div>
-
 									<div>
-										<label class="col-sm-2 control-label" for="cntState">State</label>
-										<div class="col-sm-4">
-											<input type="text" id="cntState" placeholder="State"
-												class="form-control"
-												ng-model="userClass.SecondaryAddress.state">
+										<label class="col-sm-2 control-label" for="secState">State
+										</label>
+										<div class="col-sm-2">
+											<select id="secState" name="secState"
+												class="btn btn-media dropdown-toggle"
+												data-ng-model="userClass.SecondaryAddress.state" ng-if="userClass.SecondaryAddress.country">
+													<option value="">Select State</option>
+											 		<option ng-repeat="(key, state) in countryStateCity[userClass.SecondaryAddress.country]" ng-if="key!='___name___'"
+													value="{{key}}">{{state.___name___}}</option>
+											</select>
 										</div>
 									</div>
 								</div>
 								<br>
 								<div class="row">
 									<div>
-										<label class="col-sm-2 control-label" for="cntCity">City</label>
-										<div class="col-sm-4">
-											<input type="text" id="cntCity" placeholder="City"
-												class="form-control"
-												ng-model="userClass.SecondaryAddress.city">
+										<label class="col-sm-2 control-label" for="secCity">City
+										</label>
+										<div class="col-sm-2">
+											<select id="secCity" name="secCity"
+												class="btn btn-media dropdown-toggle"
+												data-ng-model="userClass.SecondaryAddress.city" ng-if="userClass.SecondaryAddress.state">
+													<option value="">Select State</option>
+											 		<option ng-repeat="(key, city) in countryStateCity[userClass.SecondaryAddress.country][userClass.SecondaryAddress.state]" ng-if="key!='___name___'"
+													value="{{key}}">{{city.___name___}}</option>
+											</select>
 										</div>
 									</div>
 									<div>
@@ -395,7 +458,8 @@
 										<label class="col-sm-2 control-label" for="cntPin">Pincode</label>
 										<div class="col-sm-4">
 											<input type="text" id="cntPin" placeholder="Pincode"
-												class="form-control"
+												class="form-control" pattern="/^[(]{0,1}[0-9]{3}[)\.\- ]{0,1}[0-9]{3}[\.\- ]{0,1}[0-9]{4}$/"
+												ng-minlength="6"
 												ng-model="userClass.SecondaryAddress.pincode">
 										</div>
 									</div>
@@ -418,9 +482,14 @@
 											<label class="col-sm-2 control-label" for="birthPlaceCntry">Birth
 												Place Country</label>
 											<div class="col-sm-4">
-												<input type="text" id="birthPlaceCntry"
-													placeholder="Birth Place Country" class="form-control"
-													ng-model="userClass.basicDetails.birthPlace_country">
+											<select id="birthPlaceCntry" name="birthPlaceCntry"
+												class="btn btn-media dropdown-toggle"
+												data-ng-model="userClass.basicDetails.birthPlace_country">
+													<option value="">Select Country</option>
+													 <option ng-repeat="(key, value) in countryStateCity"
+													value="{{key}}">{{value.___name___}}</option>
+											</select>
+													
 											</div>
 										</div>
 
@@ -428,10 +497,15 @@
 											<label class="col-sm-2 control-label" for="birthPlaceState">Birth
 												Place State</label>
 											<div class="col-sm-4">
-												<input type="text" id="birthPlaceState"
-													placeholder="Birth Place State" class="form-control"
-													ng-model="userClass.basicDetails.birthPlace_state">
-											</div>
+												<select id="birthPlaceState" name="birthPlaceState"
+												class="btn btn-media dropdown-toggle"
+												data-ng-model="userClass.basicDetails.birthPlace_state" ng-if="userClass.basicDetails.birthPlace_country">
+													<option value="">Select State</option>
+											 		<option ng-repeat="(key, state) in countryStateCity[userClass.basicDetails.birthPlace_country]" ng-if="key!='___name___'"
+													value="{{key}}">{{state.___name___}}</option>
+											</select>
+											
+												</div>
 										</div>
 									</div>
 									<br>
@@ -440,9 +514,14 @@
 											<label class="col-sm-2 control-label" for="birthPlaceCity">Birth
 												Place City</label>
 											<div class="col-sm-4">
-												<input type="text" id="birthPlaceCity"
-													placeholder="Birth Place City" class="form-control"
-													ng-model="userClass.basicDetails.birthPlace_city">
+												<select id="birthPlaceCity" name="birthPlaceCity"
+												class="btn btn-media dropdown-toggle"
+												data-ng-model="userClass.basicDetails.birthPlace_city" ng-if="userClass.basicDetails.birthPlace_state">
+													<option value="">Select State</option>
+											 		<option ng-repeat="(key, city) in countryStateCity[userClass.basicDetails.birthPlace_country][userClass.basicDetails.birthPlace_state]" ng-if="key!='___name___'"
+													value="{{key}}">{{city.___name___}}</option>
+											</select>
+
 											</div>
 										</div>
 									</div>
@@ -646,7 +725,6 @@
 											
 									</div>
 									 <div>
-										
 										 <!--  <div ng-if="userAvailable.length ==0">div</div>  -->
 										 <span ng-if="userAvailable == 0">{{userAvailable['userName']}} is Available</span>
 										 <span ng-if="userAvailable != 0"> is not Available !</span>

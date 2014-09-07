@@ -226,11 +226,12 @@ module.exports=function(app,Utils){
         console.log("requestobj - addNewBook",requestobj);
         libraryMS.addNewBook(requestobj,res);
     })
-/*  addChildBook - Query for Parent Book Information   */
+/*  addChildBook - Query for Child Book Information   */
     app.post("/manageLibrary/addChildBook",Utils.ensureAuthenticated,function(req,res){
         var requestobj=req.body;
         console.log("requestobj - addChildBook",requestobj);
-        libraryMS.addChildBook(requestobj,res);
+//        libraryMS.addChildBook(requestobj,res);
+        libraryMS.addChildBook(res, req.body.childBook,req.body.isbn)
     })
     app.get("/manageLibrary/getUserSearchText/:primaryKey/:value",Utils.ensureAuthenticated,function(req,res){
         var primaryKey=req.params.primaryKey
@@ -245,8 +246,6 @@ module.exports=function(app,Utils){
         var bookNodeId=req.params.bookNodeId;
         libraryMS.getIssuedBookDetails(res,bookNodeId);
     });
-
-
     app.post("/manageLibrary/issueLibBook",Utils.ensureAuthenticated,function(req,res){
         var requestObj=req.body;
         console.log("requestObj issueLibBook",requestObj);

@@ -33,6 +33,31 @@ educationMediaApp.controller('libraryManagement_addChildBook', function ($scope,
         "freqReminder":"",
         "softDelete":""
     };
+    
+    $scope.childBookModel={
+            "childBook":{
+            	 "bookId":"",
+                 "barCode":"",
+                 "acqMode":"",
+                 "publicationDate":"",
+                 "purchaseDate":"",
+                 "currencyType":"",
+                 "pricePaid":"",
+                 "outletName":"",
+                 "createdDate":"",
+                 "description":"",
+                 "bookStatus":"",
+                 "location":"",
+                 "materialAccompanied":"",
+                 "starRating":"",
+                 "tag":"",
+                 "updatedDate":"",
+                 "frequency":"",
+                 "freqReminder":"",
+                 "softDelete":""
+            },
+            "isbn":""
+        }
 
     /* want to add book data */
     $scope.newBookAddMode=false;
@@ -46,11 +71,11 @@ educationMediaApp.controller('libraryManagement_addChildBook', function ($scope,
      */
     $scope.addchildBook=function()
     {
-        console.log("Add Child Book ",$scope.childBook);
+        console.log("Add Child Book ",$scope.childBookModel);
         $http({
             method : 'POST',
             url    : '/manageLibrary/addChildBook',
-            data   : $scope.childBook,
+            data   : $scope.childBookModel,
             headers: {'Content-Type': 'application/json'}
         }).success(function(dataResponse,status,headers,config){
             //success
@@ -140,6 +165,7 @@ educationMediaApp.controller('libraryManagement_addChildBook', function ($scope,
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
                 $scope.currentSelectedBook=parentBook;
                 $scope.currentBookDetails=dataResponse.responseData.data;
+                $scope.childBookModel.isbn=value;
             });
 
         }).error(function(data,status,headers,config){

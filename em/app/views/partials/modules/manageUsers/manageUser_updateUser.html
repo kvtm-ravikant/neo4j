@@ -65,7 +65,7 @@
 								<label class="col-sm-4 control-label">Registraion ID </label>
 								<div class="col-sm-4">
 									<input type="text" id="regId" class="form-control"
-										ng-model="userSelectedClass.regID">
+										ng-model="userSelectedClass.basicDetails.regID">
 								</div>
 
 							</div>
@@ -74,7 +74,7 @@
 									Name </label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="fName"
-										ng-model="userSelectedClass.firstName">
+										ng-model="userSelectedClass.basicDetails.firstName">
 								</div>
 							</div>
 							<div class="form-group">
@@ -82,7 +82,7 @@
 									Name </label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="mName"
-										ng-model="userSelectedClass.middleName">
+										ng-model="userSelectedClass.basicDetails.middleName">
 								</div>
 							</div>
 							<div class="form-group">
@@ -90,7 +90,7 @@
 									Name </label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="lName"
-										ng-model="userSelectedClass.lastName">
+										ng-model="userSelectedClass.basicDetails.lastName">
 								</div>
 							</div>
 							<div class="form-group">
@@ -108,7 +108,7 @@
 									Birth </label>
 								<div class="col-sm-8">
 									<input type="text" id="dob" class="em-datepicker datepicker"
-										ng-model="userSelectedClass.DOB">
+										ng-model="userSelectedClass.basicDetails.DOB">
 									<!-- input type="text" class="form-control" id="dob" placeholder="Enter Password " -->
 								</div>
 							</div>
@@ -124,7 +124,7 @@
 
 									<div class="col-sm-4">
 										<input type="text" id="motherTng" class="form-control"
-											ng-model="userSelectedClass.languages_motherTongue">
+											ng-model="userSelectedClass.basicDetails.languages_motherTongue">
 									</div>
 
 								</div>
@@ -135,7 +135,7 @@
 								<div class="col-sm-4">
 									<input type="text" id="othrLang"
 										placeholder="Which other language ?" class="form-control"
-										ng-model="userSelectedClass.languages_others">
+										ng-model="userSelectedClass.basicDetails.languages_others">
 								</div>
 							</div>
 
@@ -145,7 +145,7 @@
 									<input type="text" id="religion"
 										placeholder="Please mention your Religion"
 										class="form-control"
-										ng-model="userSelectedClass.religionId">
+										ng-model="userSelectedClass.basicDetails.religionId">
 								</div>
 							</div>
 							<div class="form-group">
@@ -153,7 +153,7 @@
 								<div class="col-sm-4">
 									<input type="text" id="caste"
 										placeholder="Please mention Your Catse" class="form-control"
-										ng-model="userSelectedClass.casteId">
+										ng-model="userSelectedClass.basicDetails.casteId">
 								</div>
 							</div>
 						</form>
@@ -168,7 +168,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="primaryPhone"
 												placeholder="Phone Number" class="form-control"
-												ng-model="userClass.contact.phonePrimary">
+												ng-model="userSelectedClass.contact.phonePrimary">
 										</div>
 									</div>
 									<div>
@@ -178,7 +178,7 @@
 											<input type="email" id="inputEmail"
 												placeholder="Enter Your Email Address." class="form-control"
 												title="Email id is required !" required
-												ng-model="userClass.contact.emailPrimary" />
+												ng-model="userSelectedClass.contact.emailPrimary" />
 										</div>
 									</div>
 								</div>
@@ -190,7 +190,7 @@
 										<div class="col-sm-10">
 											<input type="text" id="cntStreetAdrOne"
 												placeholder="Enter Street Address" class="form-control"
-												ng-model="userClass.primaryAddress.street1">
+												ng-model="userSelectedClass.primaryAddress.street1">
 										</div>
 									</div>
 								</div>
@@ -202,7 +202,7 @@
 										<div class="col-sm-10">
 											<input type="text" id="cntStreetAdrOne"
 												placeholder="Enter Street Address" class="form-control"
-												ng-model="userClass.primaryAddress.street2">
+												ng-model="userSelectedClass.primaryAddress.street2">
 										</div>
 									</div>
 								</div>
@@ -223,7 +223,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntCntry" placeholder="Country"
 												class="form-control"
-												ng-model="userClass.primaryAddress.country">
+												ng-model="userSelectedClass.primaryAddress.country">
 										</div>
 									</div>
 									<div>
@@ -231,7 +231,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntState" placeholder="State"
 												class="form-control"
-												ng-model="userClass.primaryAddress.state">
+												ng-model="userSelectedClass.primaryAddress.state">
 										</div>
 									</div>
 								</div>
@@ -242,7 +242,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntCity" placeholder="City"
 												class="form-control"
-												ng-model="userClass.primaryAddress.city">
+												ng-model="userSelectedClass.primaryAddress.city">
 										</div>
 									</div>
 									<div>
@@ -250,7 +250,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntDistct" placeholder="District"
 												class="form-control"
-												ng-model="userClass.primaryAddress.district">
+												ng-model="userSelectedClass.primaryAddress.district">
 										</div>
 									</div>
 								</div>
@@ -261,7 +261,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntPin" placeholder="Pincode"
 												class="form-control"
-												ng-model="userClass.primaryAddress.pincode">
+												ng-model="userSelectedClass.primaryAddress.pincode">
 										</div>
 									</div>
 								</div>
@@ -279,7 +279,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="primaryPhone"
 												placeholder="Phone Number" class="form-control"
-												ng-model="userClass.contact.phoneSecondary">
+												ng-model="userSelectedClass.contact.phoneSecondary">
 										</div>
 									</div>
 									<div>
@@ -289,7 +289,7 @@
 											<input type="email" id="inputEmail"
 												placeholder="Enter Your Email Address." class="form-control"
 												title="Email id is required !"
-												ng-model="userClass.contact.emailSecondary" />
+												ng-model="userSelectedClass.contact.emailSecondary" />
 										</div>
 									</div>
 								</div>
@@ -301,7 +301,7 @@
 										<div class="col-sm-10">
 											<input type="text" id="cntStreetAdrOne"
 												placeholder="Enter Street Address" class="form-control"
-												ng-model="userClass.SecondaryAddress.street1">
+												ng-model="userSelectedClass.SecondaryAddress.street1">
 										</div>
 									</div>
 								</div>
@@ -313,7 +313,7 @@
 										<div class="col-sm-10">
 											<input type="text" id="cntStreetAdrOne"
 												placeholder="Enter Street Address" class="form-control"
-												ng-model="userClass.SecondaryAddress.street2">
+												ng-model="userSelectedClass.SecondaryAddress.street2">
 										</div>
 									</div>
 								</div>
@@ -334,7 +334,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntCntry" placeholder="Country"
 												class="form-control"
-												ng-model="userClass.SecondaryAddress.country">
+												ng-model="userSelectedClass.SecondaryAddress.country">
 										</div>
 									</div>
 
@@ -343,7 +343,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntState" placeholder="State"
 												class="form-control"
-												ng-model="userClass.SecondaryAddress.state">
+												ng-model="userSelectedClass.SecondaryAddress.state">
 										</div>
 									</div>
 								</div>
@@ -354,7 +354,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntCity" placeholder="City"
 												class="form-control"
-												ng-model="userClass.SecondaryAddress.city">
+												ng-model="userSelectedClass.SecondaryAddress.city">
 										</div>
 									</div>
 									<div>
@@ -362,7 +362,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntDistct" placeholder="District"
 												class="form-control"
-												ng-model="userClass.SecondaryAddress.district">
+												ng-model="userSelectedClass.SecondaryAddress.district">
 										</div>
 									</div>
 								</div>
@@ -373,7 +373,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="cntPin" placeholder="Pincode"
 												class="form-control"
-												ng-model="userClass.SecondaryAddress.pincode">
+												ng-model="userSelectedClass.SecondaryAddress.pincode">
 										</div>
 									</div>
 								</div>
@@ -392,7 +392,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="birthPlaceCntry"
 													placeholder="Birth Place Country" class="form-control"
-													ng-model="userSelectedClass.birthPlace_country">
+													ng-model="userSelectedClass.basicDetails.birthPlace_country">
 											</div>
 										</div>
 										<div>
@@ -401,7 +401,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="birthPlaceState"
 													placeholder="Birth Place State" class="form-control"
-													ng-model="userSelectedClass.birthPlace_state">
+													ng-model="userSelectedClass.basicDetails.birthPlace_state">
 											</div>
 										</div>
 									</div>
@@ -413,7 +413,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="birthPlaceCity"
 													placeholder="Birth Place City" class="form-control"
-													ng-model="userSelectedClass.birthPlace_city">
+													ng-model="userSelectedClass.basicDetails.birthPlace_city">
 											</div>
 										</div>
 									</div>
@@ -425,7 +425,7 @@
 											<div class="col-sm-3">
 												<input id="visaTextSrc" name="visaTextSrc"
 													class="form-control " type="text"
-													ng-model="userSelectedClass.visaDetails"
+													ng-model="userSelectedClass.basicDetails.visaDetails"
 													placeholder="Enter your VISA Number">
 											</div>
 										</div>
@@ -436,7 +436,7 @@
 											<div class="col-sm-3">
 												<input id="passportTextSrc" name="passportTextSrc"
 													class="form-control" type="text"
-													ng-model="userSelectedClass.passportNumber"
+													ng-model="userSelectedClass.basicDetails.passportNumber"
 													placeholder="Enter your Passport Number">
 											</div>
 										</div>
@@ -448,7 +448,7 @@
 											<div class="col-sm-3">
 												<input id="panTextSrc" name="panTextSrc"
 													class="form-control" type="text"
-													ng-model="userSelectedClass.panNumber"
+													ng-model="userSelectedClass.basicDetails.panNumber"
 													placeholder="Enter your PAN Number">
 											</div>
 										</div>
@@ -457,7 +457,7 @@
 												Category</label>
 											<div class="col-sm-3">
 												<input id="resrvrdCatTextSrc" name="resrvrdCatTextSrc"
-													class="form-control" ng-model="otherResvrdCat" type="text"
+													class="form-control" ng-model="userSelectedClass.basicDetails.isFromReservedCategory" type="text"
 													placeholder="Please mention Category">
 											</div>
 										</div>
@@ -469,7 +469,7 @@
 												for="isPhysicallyHandicapped">Physically Challenged</label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="isPhysicallyHandicapped"
-													ng-model="userSelectedClass.isPhysicallyHandicapped">
+													ng-model="userSelectedClass.basicDetails.isPhysicallyHandicapped">
 											</div>
 										</div>
 										<div>
@@ -477,7 +477,7 @@
 												for="isEconomicallyBackward">Economically Challenged</label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="isEconomicallyBackward"
-													ng-model="userSelectedClass.isEconomicallyBackward">
+													ng-model="userSelectedClass.basicDetails.isEconomicallyBackward">
 											</div>
 										</div>
 									</div>
@@ -488,7 +488,7 @@
 												SMS Alerts </label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="smsEnb"
-													ng-model="userSelectedClass.isSMSEnabled">
+													ng-model="userSelectedClass.basicDetails.isSMSEnabled">
 											</div>
 										</div>
 										<div>
@@ -496,7 +496,7 @@
 												Email Alerts </label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="mailEnb"
-													ng-model="userSelectedClass.isEmailEnabled">
+													ng-model="userSelectedClass.basicDetails.isEmailEnabled">
 											</div>
 										</div>
 									</div>
@@ -512,7 +512,7 @@
 									<div class="col-sm-4	">
 										<input type="text" id="validation-select"
 											name="validation-select" class="form-control"
-											ng-model="userSelectedClass.userType">
+											ng-model="userSelectedClass.basicDetails.userType">
 									</div>
 								</div>
 								<div class="form-group">
@@ -521,7 +521,7 @@
 										<input type="text" id="inputUsername"
 											placeholder="What's your user name" class="form-control"
 											title="User Name is required !" required
-											ng-model="userSelectedClass.userName" />
+											ng-model="userSelectedClass.basicDetails.userName" />
 									</div>
 								</div>
 

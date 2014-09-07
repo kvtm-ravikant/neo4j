@@ -257,6 +257,25 @@ module.exports.searchUser = function(requestObj,res) {
 		}
 	});
 }
+/* find the available registration ID for the given registration ID to create new user */
+module.exports.searchRegId = function(requestObj,res) {
+//	console.log("is User Name exist ?", requestObj);
+	var responseObj = new Utils.Response();
+	var query = 'MATCH (n:User{regID:"' + requestObj.regIdText + '"})  RETURN n';
+
+	console.log("registration ID availability query :", query);
+	db.cypherQuery(query, function(err, reply) {
+		console.log("searchRegId :", query, err, reply);
+		if (!err) {
+			responseObj.responseData = reply;
+			res.json(responseObj);
+		} else {
+			responseObj.error = true;
+			responseObj.errorMsg = "No Data found.";
+			res.json(responseObj);
+		}
+	});
+}
 /*
 * Get selected User details
 */

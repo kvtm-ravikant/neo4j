@@ -123,13 +123,13 @@ module.exports.addNewBook=function(requestObj,res){
     })
 }
     /* addChildBook - DB Insert */
-    module.exports.addChildBook=function(requestObj,res){
-        var childBookObj=requestObj;
+    module.exports.addChildBook=function(res, childBook,isbn){
+        var childBookObj=childBook;
+        var isbn=isbn;
         var query;
 
-    console.log("addChildBook  : ", childBookObj);
-
-        var responseObj=new Utils.Response();
+    console.log("addChildBook Server : ", childBookObj);
+    var responseObj=new Utils.Response();
 
         db.insertNode(childBookObj,["ChildBook"],function(err,reply){
             console.log("reply",reply);

@@ -93,7 +93,6 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         var primaryKey=userText.__primaryColumn__||"userName";
         var value=user.userName;
     	
-    	
         console.log("$scope.getUserDetails",user );
         $http({
             method : 'POST',

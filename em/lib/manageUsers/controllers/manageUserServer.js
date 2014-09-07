@@ -9,14 +9,30 @@ var db=new neo4j("http://localhost:7474");
 
 var UserClass=require("../models/UserClass.js");
 var user=new UserClass();
-
+var countryStateCity=require("../../common/models/countryStateCity.js");
+var religionCaste=require("../../common/models/religion.js");
+var languages=require("../../common/models/language.js");
 
 module.exports=function(app,Utils){
     app.get("/manage-users/users",function(req,res){
         console.log("Inside /manage-users/create-user");
         res.redirect("/index");
     });
-
+    /* Get countryStateCity Drop Down Data*/
+    app.get("/manageLibrary/getcountryStateCity",Utils.ensureAuthenticated,function(req,res){
+    	console.log("/manageLibrary/getcountryStateCity")
+            res.json(countryStateCity);
+    });
+    /* Get ReligionCaste Drop Down Data*/
+    app.get("/manageLibrary/getReligionCaste",Utils.ensureAuthenticated,function(req,res){
+    	console.log("/manageLibrary/getReligionCaste")
+            res.json(religionCaste);
+    });
+    /* Get Languages Drop Down Data*/
+    app.get("/manageLibrary/getLanguages",Utils.ensureAuthenticated,function(req,res){
+    	console.log("/manageLibrary/getLanguages")
+            res.json(languages);
+    });    
     app.get("/manage-users/userClassData",Utils.ensureAuthenticated,function(req,res){
         var user=new UserClass();
         res.json(user);
@@ -29,10 +45,15 @@ module.exports=function(app,Utils){
     /* Check availability of username  */
     app.post("/manage-users/users/userNameAvailablity",Utils.ensureAuthenticated,function(req,res){
     	var requestobj=req.body;
-    	console.log("Puneet /manage-users/users/userNameAvailablityr",req.body);
+    	console.log("Puneet /manage-users/users/userNameAvailablity",req.body);
         userMS.searchUser(requestobj,res);
     });
-
+    /* Check availability of registration ID  */
+    app.post("/manage-users/users/registrationIDAvailabity",Utils.ensureAuthenticated,function(req,res){
+    	var requestobj=req.body;
+    	console.log("Puneet /manage-users/users/registrationIDAvailabity",req.body);
+        userMS.searchRegId(requestobj,res);
+    });
     /* New User Registration */
     app.post("/manage-users/users/registerNewUser",Utils.ensureAuthenticated,function(req,res){
         var requestobj=req.body;

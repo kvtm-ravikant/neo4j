@@ -54,31 +54,9 @@ educationMediaApp.controller('libraryManagement_addNewBook', function ($scope, $
         });
     };
 
-    /*
-     Submit button  Method for "Add Child Book"
-
-    $scope.addchildBook=function()
-    {
-        console.log("Add Child Book ",$scope.childBook);
-        $http({
-            method : 'POST',
-            url    : '/manageLibrary/getParentBookDD',
-            data   : $scope.childBook,
-            headers: {'Content-Type': 'application/json'}
-        }).success(function(dataResponse,status,headers,config){
-            //success
-            appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-                console.log("addChildBook - dataResponse",dataResponse)
-                $scope.chil=dataResponse.responseData;
-            });
-        }).error(function(data,status,headers,config){
-            //error
-            console.log("Error",data,status,headers,config);
-
-        });
-    };
-     */
-
+   /*
+    * Dropdown JSON data of bibDocTypeMaterial
+    */ 
     $http.get('/manageLibrary/getParentBookDD').success(function(dataResponse,status,headers,config){
         //success
 //        console.log("getParentBookDD",dataResponse);
