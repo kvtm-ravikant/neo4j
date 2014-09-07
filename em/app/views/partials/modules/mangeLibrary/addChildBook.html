@@ -1,174 +1,297 @@
 <div class="row" ng-controller="libraryManagement_addChildBook">
-<!-- h1>{{text}}</h1 -->
-<form id="myWizard" class="form-horizontal" weight="100%">
-<div class="col-sm-12">
-    <section>
-        <div class="row">
-        <div class="col-md-12 topbar">
-                <div class="input-group">
-                    <input ng-model="searchBookModel.searchText" class="col-md-12 searchclass" placeholder="Enter the ISBN or Title " class="nodeSearchInputBox" />
-                        <span class="input-group-addon " id="datamodal" data-toggle="popover">
-                            <i class="fa fa-search cursor-pointer" ng-click="searchBooks()" ></i>&nbsp;&nbsp;
-                            <!-- i  ng-show="!isSearchBoxOpened" class="fa fa-chevron-down cursor-pointer" ng-click="openSearchBox()"></i>
-                            <i  ng-show="isSearchBoxOpened" class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i -->
-                        </span>
-                </div>
-        </div>
-        </div>
-    </section>
-    <br/>
+	<div class="row">
+		<div class="col-md-10 topbar">
+			<div class="input-group">
+				<input ng-model="searchBookModel.searchText"
+					class="col-md-12 searchclass" placeholder="Search"
+					class="nodeSearchInputBox" /> <span class="input-group-addon "
+					id="datamodal" data-toggle="popover"> <i class="fa fa-times"
+					ng-click="clearSearch();searchBooks()"></i>&nbsp;|&nbsp; <i
+					class="fa fa-search cursor-pointer" ng-click="searchBooks()"></i>&nbsp;|&nbsp;
+					<i ng-show="!isSearchBoxOpened"
+					class="fa fa-chevron-down cursor-pointer"
+					ng-click="openSearchBox()"></i> <i ng-show="isSearchBoxOpened"
+					class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i>
+				</span>
+			</div>
+			<div class="col-md-4">
+				<!--<button class="btn btn-default pull-right">Add Book</button>-->
+			</div>
+		</div>
+	</div>
+	<div class="row " ng-show="isSearchBoxOpened">
+		<div class="col-md-12 ">
+			<div class="col-md-9 advSearchBox">
+				<form role="form">
+					<div class="form-group">
+						<label for="name">Book Title</label> <input type="text"
+							class="form-control data-form-search "
+							placeholder="Title Of Book"
+							ng-model="searchBookModel.parentBook.bookTitle">
+					</div>
+					<div class="form-group">
+						<label for="name">Authors Name </label> <input type="text"
+							class="form-control data-form-search "
+							placeholder="Author Of Book"
+							ng-model="searchBookModel.parentBook.authorName">
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<button ng-click="searchBooks()"
+								class="btn btn-primary pull-right">
+								Search&nbsp;<i id="datamodal" class="fa fa-search"
+									data-toggle="popover"></i>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row"></div>
+	<div class="row vertical-spacer"></div>
+	<div class="row" ng-if="books.data" ng-show="!currentBookDetails">
+		<div class="col-md-10">
+			<table class="table" id="booksearchtable">
+				<div id="head_nav">
+					<thead class="theadclass">
+						<tr>
+							<th></th>
+							<th ng-repeat="(key,value) in parentConfig">{{value}}</th>
+						</tr>
+					</thead>
+				</div>
+				<tbody>
+					<tr ng-repeat="book in books.data">
+						<td><i class="fa fa-align-justify"
+							ng-click="getBookDetails(book)"></i></td>
+						<td ng-repeat="(key,value) in parentConfig">{{book[key]}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row" ng-if="books.data">
+		<div class="col-md-12">
+			<h4>Selected Title</h4>
+			<div class="col-md-4" ng-repeat="(key,value) in parentConfig">
+				<strong>{{value}}</strong>:{{currentSelectedBook[key]}}
+			</div>
+			<br>
+		</div>
+		<br>
+		<legend></legend>
+		<div class="col-md-10">
+			<button class="btn btn-sm btn-primary" ng-click="newBookData()">Add
+				New Book</button>
+			<button class="btn btn-sm btn-primary pull-right"
+				ng-click="getBackToMainBookList()">Back</button>
+		</div>
 
-<!--   Add New Book - Child Information -- Start -->
-    <section class="panel panel-primary">
-    <header class="panel-heading">
-        <h3 class="panel-title">Add Books in Library </h3>
-    </header>
-    <div class="panel-body">
-<!-- legend>Child Information</legend -->
-    <fieldset>
-    <div class="col-md-12">
-    <div class="row">
-        <div>
-            <label class="col-md-2 control-label" style="padding-left:0px;" for="publicationDate">Publication Date</label>
-            <div class="col-md-3 classselector" style="margin-left: 5px;">
-                <div class="input-group">
-                    <input type="text" id="publicationDate" ng-model="publicationDate" class="em-datepicker datepicker searchclass" placeholder="Publication Date">
-                    <span class="input-group-addon cursor-pointer" ng-click="openPublicationDate()"><i class="fa fa-calendar"></i></span>
-                </div>
-            </div>
-            <div class="col-md-1">
+		<div class="col-md-12" ng-if="!newBookAddMode">
+			<!-- 			<h4>Book Details</h4> -->
+			<br>
+			<table class="table">
+				<div id="head_nav_1">
+					<thead class="theadclass">
+						<tr>
+							<th ng-repeat="(key,value) in childConfig">{{value}}</th>
+						</tr>
+					</thead>
+				</div>
+				<tbody>
+					<tr ng-repeat="book in currentBookDetails">
+						<td ng-repeat="(key,value) in childConfig">{{book[key]}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
-            </div>
-            <label class="col-md-2 control-label" style="padding-left:10px;" for="purchaseDate">Purchase Date</label>
-            <div class="col-md-3 classselector">
-                <div class="input-group">
-                    <input type="text" id="purchaseDate" ng-model="purchaseDate" class="em-datepicker datepicker searchclass" placeholder="Purchase Date">
-                    <span class="input-group-addon cursor-pointer" ng-click="openPurchaseDate()"><i class="fa fa-calendar"></i></span>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    <br/>
-    <br/>
-        <div class="row">
-            <div>
-                <label class="col-sm-2 control-label" for="barCode">Bar Code</label>
-                <div class="col-sm-4">
-                    <input type="text" id="barCode" placeholder="Please Enter Bar Code " class="form-control" ng-model="childBook.barCode">
-                </div>
-            </div>
-            <div>
-                <label class="col-sm-2 control-label" for="acqMode">Acquisition Mode </label>
-                <div class="col-sm-4">
-                    <select id="acqMode" name="validation-select" class="btn btn-media dropdown-toggle" data-ng-model="childBook.acqMode">
-                        <option value="">Select Acquisition</option>
-                        <option value="E">Exchange</option>
-                        <option value="G">Gratis/Gift</option>
-                        <option value="P">Purchased</option>
-                        <option value="S">Subscribed</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div>
-                <label class="col-sm-2 control-label" for="pricePaid">Price Paid </label>
-                <div class="col-sm-4">
-                    <input type="text" id="pricePaid" placeholder="Please enter paid price" class="form-control" ng-model="childBook.pricePaid">
-                </div>
-            </div>
-            <div>
-                <label class="col-sm-2 control-label" for="bookSts">Book Status </label>
-                <div class="col-sm-4">
-                    <select id="bookSts" name="validation-select" class="btn btn-media dropdown-toggle" data-ng-model="childBook.bookStatus">
-                        <option value="">Select Book Status</option>
-                        <option value="A">Available</option>
-                        <option value="B">Bindery</option>
-                        <option value="D">Damaged</option>
-                        <option value="S">Display</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div>
-                <label class="col-sm-2 control-label" for="outletName">Outlet Name</label>
-                <div class="col-sm-10">
-                    <input type="text" id="outletName" placeholder="Please enter the Outlet Name" class="form-control" ng-model="childBook.outletName"/>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div>
-                <label class="col-sm-2 control-label" for="desc">Description</label>
-                <div class="col-sm-10">
-                    <input type="text" id="desc" placeholder="Please enter book's description here " class="form-control" ng-model="childBook.description">
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="row ">
-            <div>
-                <label class="col-sm-2 control-label" for="loc">Location</label>
-                <div class="col-sm-3">
-                    <input type="text" id="loc" placeholder="What is the book's location ?" class="form-control" ng-model="childBook.location">
-                </div>
-            </div>
-            <div>
-                <label class="col-sm-2 control-label" for="matAcp">Material Accompanied</label>
-                <div class="col-sm-5">
-                    <input type="text" id="matAcp" placeholder="Material Accompanied i.e. CD, MAP etc ? Please enter" class="form-control" ng-model="childBook.materialAccompanied">
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="row ">
-            <div>
-                <label class="col-sm-2 control-label" for="tag">Tag Type</label>
-                <div class="col-sm-4">
-                    <input type="tag" id="tag" placeholder="What's the Tag ?" class="form-control" ng-model="childBook.tag">
-                </div>
-            </div>
-            <div>
-                <label class="col-sm-2 control-label">Ready For Distribution</label>
-                <div class="col-sm-4">
-                    <label for="button-radio-1" class="col-sm-8 control-label">
-                        <input type="radio" name="button-radio" id="button-radio-1" value="1" checked>
-                        Yes
-                        <input type="radio" name="button-radio" id="button-radio-2" value="2">
-                        No
-                    </label>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="row ">
-            <div>
-                <label class="col-sm-2 control-label" for="accessList">Access Type</label>
-                <div class="col-sm-4">
-                    <select id="accessList" name="validation-select" class="btn btn-media dropdown-toggle">
-                        <option value="">Who Can Access</option>
-                        <option value="A">All</option>
-                        <option value="T">Teachers</option>
-                        <option value="S">Students</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <br>
-    </fieldset>
-        <div class="col-md-2 pull-right">
-            <button class="btn btn-md btn-primary" ng-click="addchildBook()">Add Books</button>
-        </div>
-    </div>
-</section>
 
+	</div>
+	<!--   Add New Book - Child Information -- Start -->
+	<br>
+	<section class="panel panel-primary" ng-if="newBookAddMode">
+		<header class="panel-heading">
+			<h3 class="panel-title">Add Books in Library</h3>
+		</header>
+		<div class="panel-body">
+			<fieldset>
+				<div class="col-md-12">
+					<div class="row">
+						<div>
+							<label class="col-md-2 control-label" style="padding-left: 0px;"
+								for="publicationDate">Publication Date</label>
+							<div class="col-md-3 classselector" style="margin-left: 5px;">
+								<div class="input-group">
+									<input type="text" id="publicationDate"
+										ng-model="publicationDate"
+										class="em-datepicker datepicker searchclass"
+										placeholder="Publication Date"> <span
+										class="input-group-addon cursor-pointer"
+										ng-click="openPublicationDate()"><i
+										class="fa fa-calendar"></i></span>
+								</div>
+							</div>
+							<div class="col-md-1"></div>
+							<label class="col-md-2 control-label" style="padding-left: 10px;"
+								for="purchaseDate">Purchase Date</label>
+							<div class="col-md-3 classselector">
+								<div class="input-group">
+									<input type="text" id="purchaseDate" ng-model="purchaseDate"
+										class="em-datepicker datepicker searchclass"
+										placeholder="Purchase Date"> <span
+										class="input-group-addon cursor-pointer"
+										ng-click="openPurchaseDate()"><i class="fa fa-calendar"></i></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br /> <br />
+				<div class="row">
+					<div>
+						<label class="col-sm-2 control-label" for="barCode">Bar
+							Code</label>
+						<div class="col-sm-4">
+							<input type="text" id="barCode"
+								placeholder="Please Enter Bar Code " class="form-control"
+								ng-model="childBook.barCode">
+						</div>
+					</div>
+					<div>
+						<label class="col-sm-2 control-label" for="acqMode">Acquisition
+							Mode </label>
+						<div class="col-sm-4">
+							<select id="acqMode" name="validation-select"
+								class="btn btn-media dropdown-toggle"
+								data-ng-model="childBook.acqMode">
+								<option value="">Select Acquisition</option>
+								<option value="E">Exchange</option>
+								<option value="G">Gratis/Gift</option>
+								<option value="P">Purchased</option>
+								<option value="S">Subscribed</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div>
+						<label class="col-sm-2 control-label" for="pricePaid">Price
+							Paid </label>
+						<div class="col-sm-4">
+							<input type="text" id="pricePaid"
+								placeholder="Please enter paid price" class="form-control"
+								ng-model="childBook.pricePaid">
+						</div>
+					</div>
+					<div>
+						<label class="col-sm-2 control-label" for="bookSts">Book
+							Status </label>
+						<div class="col-sm-4">
+							<select id="bookSts" name="validation-select"
+								class="btn btn-media dropdown-toggle"
+								data-ng-model="childBook.bookStatus">
+								<option value="">Select Book Status</option>
+								<option value="A">Available</option>
+								<option value="B">Bindery</option>
+								<option value="D">Damaged</option>
+								<option value="S">Display</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div>
+						<label class="col-sm-2 control-label" for="outletName">Outlet
+							Name</label>
+						<div class="col-sm-10">
+							<input type="text" id="outletName"
+								placeholder="Please enter the Outlet Name" class="form-control"
+								ng-model="childBook.outletName" />
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div>
+						<label class="col-sm-2 control-label" for="desc">Description</label>
+						<div class="col-sm-10">
+							<input type="text" id="desc"
+								placeholder="Please enter book's description here "
+								class="form-control" ng-model="childBook.description">
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row ">
+					<div>
+						<label class="col-sm-2 control-label" for="loc">Location</label>
+						<div class="col-sm-3">
+							<input type="text" id="loc"
+								placeholder="What is the book's location ?" class="form-control"
+								ng-model="childBook.location">
+						</div>
+					</div>
+					<div>
+						<label class="col-sm-2 control-label" for="matAcp">Material
+							Accompanied</label>
+						<div class="col-sm-5">
+							<input type="text" id="matAcp"
+								placeholder="Material Accompanied i.e. CD, MAP etc ? Please enter"
+								class="form-control" ng-model="childBook.materialAccompanied">
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row ">
+					<div>
+						<label class="col-sm-2 control-label" for="tag">Tag Type</label>
+						<div class="col-sm-4">
+							<input type="tag" id="tag" placeholder="What's the Tag ?"
+								class="form-control" ng-model="childBook.tag">
+						</div>
+					</div>
+					<div>
+						<label class="col-sm-2 control-label">Ready For
+							Distribution</label>
+						<div class="col-sm-4">
+							<label for="button-radio-1" class="col-sm-8 control-label">
+								<input type="radio" name="button-radio" id="button-radio-1"
+								value="1" checked> Yes <input type="radio"
+								name="button-radio" id="button-radio-2" value="2"> No
+							</label>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row ">
+					<div>
+						<label class="col-sm-2 control-label" for="accessList">Access
+							Type</label>
+						<div class="col-sm-4">
+							<select id="accessList" name="validation-select"
+								class="btn btn-media dropdown-toggle">
+								<option value="">Who Can Access</option>
+								<option value="A">All</option>
+								<option value="T">Teachers</option>
+								<option value="S">Students</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<br>
+			</fieldset>
+			<div class="col-md-2 pull-right">
+				<button class="btn btn-md btn-primary" ng-click="addchildBook()">Add
+					Books</button>
+			</div>
+		</div>
+	</section>
 </div>
 
-</form>
+
 
 </div>

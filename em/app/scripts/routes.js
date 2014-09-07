@@ -96,7 +96,7 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
             })
              .state('manageUser.updateUser', {
                 parent:'manageUser',
-                url: "/manage-users/users/updateUser",
+                url: "/updateUser",
                 templateUrl: "partials/modules/manageUsers/manageUser_updateUser.html",
                 controller: 'manageUser_updateUser',
                 data:{
@@ -105,7 +105,7 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
             })
                .state('manageUser.deleteUser', {
                 parent:'manageUser',
-                url: "/manage-users/users/deleteUser",
+                url: "/deleteUser",
                 templateUrl: "partials/modules/manageUsers/manageUser_deleteUser.html",
                 controller: 'manageUser_deleteUser',
                 data:{

@@ -2,9 +2,9 @@
 	<!--  <h1>{{text}}</h1>
 -->
 	<div class="row">
-		<div class="col-md-10 topbar">
+		<div class="col-md-12 topbar">
 			<br>
-			<div class="col-md-6">
+			<div class="col-md-12">
 				<div class="input-group">
 					<input ng-model="searchUserModel.userName" clear-input
 						class="col-md-12 searchclass" placeholder="Enter User Name"
@@ -23,7 +23,7 @@
 	<br>
 	<div class="row" ng-if="allUserClass.data"
 		ng-show="!currentUserDetails">
-		<div class="col-md-10">
+		<div class="col-md-12">
 			<table class="table">
 				<div id="head_nav">
 					<thead class="theadclass">
@@ -108,7 +108,7 @@
 									Birth </label>
 								<div class="col-sm-8">
 									<input type="text" id="dob" class="em-datepicker datepicker"
-										placeholder="Enter Date of Birth">
+										ng-model="userSelectedClass.DOB">
 									<!-- input type="text" class="form-control" id="dob" placeholder="Enter Password " -->
 								</div>
 							</div>
@@ -124,7 +124,7 @@
 
 									<div class="col-sm-4">
 										<input type="text" id="motherTng" class="form-control"
-											ng-model="userClass.basicDetails.languages_motherTongue">
+											ng-model="userSelectedClass.languages_motherTongue">
 									</div>
 
 								</div>
@@ -135,7 +135,7 @@
 								<div class="col-sm-4">
 									<input type="text" id="othrLang"
 										placeholder="Which other language ?" class="form-control"
-										ng-model="userClass.basicDetails.languages_others">
+										ng-model="userSelectedClass.languages_others">
 								</div>
 							</div>
 
@@ -145,7 +145,7 @@
 									<input type="text" id="religion"
 										placeholder="Please mention your Religion"
 										class="form-control"
-										ng-model="userClass.basicDetails.religionId">
+										ng-model="userSelectedClass.religionId">
 								</div>
 							</div>
 							<div class="form-group">
@@ -153,7 +153,7 @@
 								<div class="col-sm-4">
 									<input type="text" id="caste"
 										placeholder="Please mention Your Catse" class="form-control"
-										ng-model="userClass.basicDetails.casteId">
+										ng-model="userSelectedClass.casteId">
 								</div>
 							</div>
 						</form>
@@ -392,7 +392,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="birthPlaceCntry"
 													placeholder="Birth Place Country" class="form-control"
-													ng-model="userClass.basicDetails.birthPlace_country">
+													ng-model="userSelectedClass.birthPlace_country">
 											</div>
 										</div>
 										<div>
@@ -401,7 +401,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="birthPlaceState"
 													placeholder="Birth Place State" class="form-control"
-													ng-model="userClass.basicDetails.birthPlace_state">
+													ng-model="userSelectedClass.birthPlace_state">
 											</div>
 										</div>
 									</div>
@@ -413,7 +413,7 @@
 											<div class="col-sm-4">
 												<input type="text" id="birthPlaceCity"
 													placeholder="Birth Place City" class="form-control"
-													ng-model="userClass.basicDetails.birthPlace_city">
+													ng-model="userSelectedClass.birthPlace_city">
 											</div>
 										</div>
 									</div>
@@ -425,7 +425,7 @@
 											<div class="col-sm-3">
 												<input id="visaTextSrc" name="visaTextSrc"
 													class="form-control " type="text"
-													ng-model="userClass.basicDetails.visaDetails"
+													ng-model="userSelectedClass.visaDetails"
 													placeholder="Enter your VISA Number">
 											</div>
 										</div>
@@ -436,7 +436,7 @@
 											<div class="col-sm-3">
 												<input id="passportTextSrc" name="passportTextSrc"
 													class="form-control" type="text"
-													ng-model="userClass.basicDetails.passportNumber"
+													ng-model="userSelectedClass.passportNumber"
 													placeholder="Enter your Passport Number">
 											</div>
 										</div>
@@ -448,7 +448,7 @@
 											<div class="col-sm-3">
 												<input id="panTextSrc" name="panTextSrc"
 													class="form-control" type="text"
-													ng-model="userClass.basicDetails.panNumber"
+													ng-model="userSelectedClass.panNumber"
 													placeholder="Enter your PAN Number">
 											</div>
 										</div>
@@ -469,7 +469,7 @@
 												for="isPhysicallyHandicapped">Physically Challenged</label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="isPhysicallyHandicapped"
-													ng-model="userClass.basicDetails.isPhysicallyHandicapped">
+													ng-model="userSelectedClass.isPhysicallyHandicapped">
 											</div>
 										</div>
 										<div>
@@ -477,7 +477,7 @@
 												for="isEconomicallyBackward">Economically Challenged</label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="isEconomicallyBackward"
-													ng-model="userClass.basicDetails.isEconomicallyBackward">
+													ng-model="userSelectedClass.isEconomicallyBackward">
 											</div>
 										</div>
 									</div>
@@ -488,7 +488,7 @@
 												SMS Alerts </label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="smsEnb"
-													ng-model="userClass.basicDetails.isSMSEnabled">
+													ng-model="userSelectedClass.isSMSEnabled">
 											</div>
 										</div>
 										<div>
@@ -496,7 +496,7 @@
 												Email Alerts </label>
 											<div class="col-sm-3">
 												<input type="checkbox" id="mailEnb"
-													ng-model="userClass.basicDetails.isEmailEnabled">
+													ng-model="userSelectedClass.isEmailEnabled">
 											</div>
 										</div>
 									</div>
@@ -512,7 +512,7 @@
 									<div class="col-sm-4	">
 										<input type="text" id="validation-select"
 											name="validation-select" class="form-control"
-											ng-model="userClass.basicDetails.userType">
+											ng-model="userSelectedClass.userType">
 									</div>
 								</div>
 								<div class="form-group">
@@ -521,7 +521,7 @@
 										<input type="text" id="inputUsername"
 											placeholder="What's your user name" class="form-control"
 											title="User Name is required !" required
-											ng-model="userClass.basicDetails.userName" />
+											ng-model="userSelectedClass.userName" />
 									</div>
 								</div>
 

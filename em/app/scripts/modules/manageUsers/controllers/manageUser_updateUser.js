@@ -87,31 +87,37 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
      * Get user details for selected user
      */
     $scope.getUserDetails=function(user){
+    console.log("getUserDetails : ",user.userName)
+      $scope.currentUserDetails='1';
+        var userText = {userText: user.userName};
+        var primaryKey=userText.__primaryColumn__||"userName";
+        var value=user.userName;
     	
-//    console.log("getUserDetails : ",user.userName)
-    $scope.currentUserDetails='1';
-    
-      var userText = {userText: user.userName};
-      var primaryKey=userText.__primaryColumn__||"userName";
-      var value=user.userName;
-//      console.log("getUserDetails : ",user.userName," primaryKey : ", primaryKey," value : ",value);
-      $http.get('/manage-users/getSelectedUserDetails/'+primaryKey+"/"+value).success(function(dataResponse,status,headers,config){
-          //success
-//          console.log("dataResponse /manage-users/getSelectedUserDetails/ :",dataResponse);
-          appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-        	  $scope.userSelectedClass =  dataResponse.responseData.data[0];
-//        	  $scope.userDetails=dataResponse.responseData;
-        	  console.log("dataResponse /manage-users/getSelectedUserDetails/ :",$scope.userSelectedClass, $scope.userSelectedClass.data,$scope.userDetails);
+    	
+        console.log("$scope.getUserDetails",user );
+        $http({
+            method : 'POST',
+            url    : '/manage-users/SelectedUserDetails/',
+            data   : user,
+            headers: {'Content-Type': 'application/json'}
+        }).success(function(dataResponse,status,headers,config){
+            //success
+            appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+//            	  $scope.userSelectedClass =  dataResponse.responseData.data[0];
+            	  $scope.userSelectedClass=dataResponse.responseData;
+            	  console.log("dataResponse /manage-users/getSelectedUserDetails/ :",user.userName);
+             
+                console.log("searchUser dataResponse",dataResponse);
+//                $scope.allUserClass=dataResponse.responseData;
+            });
+        }).error(function(data,status,headers,config){
+            //error
+            console.log("Error",data,status,headers,config);
 
-          });
-
-      }).error(function(data,status,headers,config){
-          //error
-          console.log("Error",data,status,headers,config);
-      });
-
+        });
     }
-     
+
+    
     /*
      * Back button functionality
      */

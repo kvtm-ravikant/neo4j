@@ -102,15 +102,8 @@ module.exports.addNewBook=function(requestObj,res){
     module.exports.addChildBook=function(requestObj,res){
         var childBookObj=requestObj;
         var query;
-//    childBookObj.edition=parseInt(childBookObj.edition,10);
-//    childBookObj.bookCopies=parseInt(parentBookObj.bookCopies,10);
-//    if(isNaN(parentBookObj.bookCopies))
-//        parentBookObj.bookCopies=0;
-//
-//    if(isNaN(parentBookObj.edition))
-//        parentBookObj.edition=0;
 
-        console.log("addChildBook - parsedDate : ", childBookObj);
+    console.log("addChildBook  : ", childBookObj);
 
         var responseObj=new Utils.Response();
 

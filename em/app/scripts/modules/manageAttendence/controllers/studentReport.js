@@ -9,10 +9,10 @@ educationMediaApp.controller('studentReportCtrl', function ($scope, $http,iconCl
         });
     $scope.openStartCalender=function(){
         $('#startDateStudent').focus();
-    }
+    };
     $scope.openEndCalender=function(){
         $('#endDateStudent').focus();
-    }
+    };
     $scope.getReport=function(){
         var errorobj=validateReortSubmission();
         if(!errorobj.error){

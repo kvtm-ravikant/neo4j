@@ -19,7 +19,6 @@ module.exports=function(app,Utils){
 
     app.get("/manage-users/userClassData",Utils.ensureAuthenticated,function(req,res){
         var user=new UserClass();
-
         res.json(user);
     });
     /* Get all Users from USER */
@@ -52,10 +51,11 @@ module.exports=function(app,Utils){
         
     });
     /*get selected User */
-    app.get("/manage-users/getSelectedUserDetails/:primaryKey/:value",Utils.ensureAuthenticated,function(req,res){
-//        console.log("/manage-users/getSelectedUserDetails/:primaryKey/:value ", req.params.primaryKey, req.params.value);
-//    	var primaryKey=req.params.primaryKey
-        var value=req.params.value
-        userMS.getSelectedUser(value,res);
+    app.post("/manage-users/SelectedUserDetails/",Utils.ensureAuthenticated,function(req,res){
+        var requestobj=req.body.userName;
+//        console.log("requestobj - manage-users/getSelectedUserDetails",requestobj, req.body.userName);
+//        console.log("requestobj - registerNewUser");
+//        userMS.addNewUser(requestobj,res);
+        userMS.getSelectedUser(requestobj,req,res);
     });
 }

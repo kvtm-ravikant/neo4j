@@ -1,107 +1,85 @@
 <div class="row" ng-controller="libraryManagement_addNewBook">
-<!-- h1>{{text}}</h1 -->
-<form id="myWizard" class="form-horizontal" weight="100%">
-<div class="col-sm-12">
-<!-- legend>Parent Information</legend -->
-    <section class="panel panel-primary">
-    <header class="panel-heading">
-        <h3 class="panel-title">Add New Title</h3>
-    </header>
-    <div class="panel-body">
-        <fieldset>
-    <div class="col-md-12">
-    
-      <!--  
-        <div class="row">
-      
-            <div>
-                <label class="col-sm-2 control-label" for="bibLvl">Bib Level</label>
-                <div class="col-sm-2">
-                    <select id="bibLvl" name="validation-select" class="btn btn-media dropdown-toggle" data-ng-model="parentBook.bibLevel">
-                        <option value="">Select Bib Level !</option>
-                        <option value="M">M</option>
-                        <option value="S">S</option>
-                    </select>
-                </div>
-            </div>
-            <div>
-                <label class="col-sm-1 control-label" for="mat">Materials </label>
-                <div class="col-sm-2">
-                    <select id="mat" name="validation-select" class="btn btn-media dropdown-toggle" data-ng-model="parentBook.material">
-                        <option value="">Select Materials</option>
-                        <option value="B">Books			</option>
-                        <option value="E">Patents		</option>
-                        <option value="M">Manuals		</option>
-                        <option value="S">Standards		</option>
-                        <option value="T">Reports		</option>
-                        <option value="A">Annuals		</option>
-                        <option value="P">Periodicals	</option>
-                        <option value="N"> Newspapers	</option>
-                    </select>
-                </div>
-            </div>
-            <div>
-                <label class="col-sm-2 control-label" for="docType">Doc Type </label>
-                <div class="col-sm-3">
-                    <select id="docType" name="validation-select" class="btn btn-media dropdown-toggle" data-ng-model="parentBook.docType">
-                        <option value="">Select Doc Type</option>
-                        <option ng-repeat="bookDD in parentBookDD" value="{{bookDD.value}}">{{bookDD.name}}</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <br>
-         -->
-           <div class="row">
-            <div>
-                <label class="col-sm-2 control-label" for="isbnNum">ISBN </label>
-                <div class="col-sm-4">
-                    <input type="text" id="isbnNum" placeholder="Please enter ISBN Number" class="form-control" ng-model="parentBook.isbn"
-                           title="ISBN is required !" required>
-                </div>
-            </div>
-           
-          
-        </div>
-        <br>
-        <div class="row">
-            <div>
-                <label class="col-sm-2 control-label" for="bookTitle">Title</label>
-                <div class="col-sm-10">
-                    <input type="text" id="bookTitle" placeholder="Please enter book title here " class="form-control" ng-model="parentBook.bookTitle"
-                           title="Title is required !" required>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div>
-                <label class="col-sm-2 control-label" for="subTitle">Sub Title</label>
-                <div class="col-sm-10">
-                    <input type="text" id="subTitle" placeholder="Please enter book's sub title here " class="form-control" ng-model="parentBook.bookSubTitle">
-                </div>
-            </div>
-        </div>
-        <br>
-           <div class="row ">
-            <div>
-                <label class="col-sm-2 control-label" for="bookAuthor">Author</label>
-                <div class="col-sm-10">
-                    <input type="text" id="bookAuthor" placeholder="Please Enter author Name " class="form-control" ng-model="parentBook.authorName"
-                           title="Author is required !" required>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-         <div>
-                <label class="col-sm-2 control-label" for="editionNum">Edition</label>
-                <div class="col-sm-2">
-                    <input type="text" id="editionNum" placeholder="Edition Number" class="form-control" ng-model="parentBook.edition">
-                </div>
-            </div>
-             
-            <!-- 
+	<!-- h1>{{text}}</h1 -->
+	<form id="myWizard" class="form-horizontal" weight="100%">
+		<div class="col-sm-12">
+			<!-- legend>Parent Information</legend -->
+			<section class="panel panel-primary">
+				<header class="panel-heading">
+					<h3 class="panel-title">Add New Title</h3>
+				</header>
+				<div class="panel-body">
+					<fieldset>
+						<div class="col-md-12">
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="isbnNum">ISBN
+									</label>
+									<div class="col-sm-4">
+										<input type="text" id="isbnNum"
+											placeholder="Please enter ISBN Number" class="form-control"
+											ng-model="parentBook.isbn" title="ISBN is required !"
+											required>
+									</div>
+								</div>
+
+
+							</div>
+							<br>
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="bookTitle">Title</label>
+									<div class="col-sm-10">
+										<input type="text" id="bookTitle"
+											placeholder="Please enter book title here "
+											class="form-control" ng-model="parentBook.bookTitle"
+											title="Title is required !" required>
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="subTitle">Sub
+										Title</label>
+									<div class="col-sm-10">
+										<input type="text" id="subTitle"
+											placeholder="Please enter book's sub title here "
+											class="form-control" ng-model="parentBook.bookSubTitle">
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row ">
+								<div>
+									<label class="col-sm-2 control-label" for="bookAuthor">Author</label>
+									<div class="col-sm-10">
+										<input type="text" id="bookAuthor"
+											placeholder="Please Enter author Name " class="form-control"
+											ng-model="parentBook.authorName" title="Author is required !"
+											required>
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="editionNum">Edition</label>
+									<div class="col-sm-2">
+										<input type="text" id="editionNum"
+											placeholder="Edition Number" class="form-control"
+											ng-model="parentBook.edition">
+									</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label" for="lang">Language</label>
+									<div class="col-sm-4">
+										<input type="text" id="lang"
+											placeholder="Need to Change in Drop down"
+											class="form-control" ng-model="parentBook.language"
+											title="Language is required !" required>
+									</div>
+								</div>
+								<!-- 
             <div>
                 <label class="col-sm-2 control-label" for="bindType">Binding Type </label>
                 <div class="col-sm-3">
@@ -114,91 +92,124 @@
                 </div>
             </div>
              -->
-            <!-- div>
+								<!-- div>
                 <label class="col-sm-2 control-label" for="bindType">Binding Type </label>
                 <div class="col-sm-4   ">
                     <input type="text" id="bindType" placeholder="Need to add drop down" class="form-control" ng-model="parentBook.bindingType"
                            title="Binding Type is required !" required>
                 </div>
             </div -->
-        </div>
-        <br>
-      
-     
-        <div class="row ">
-            <div>
-                <label class="col-sm-2 control-label" for="bookPublisher">Publisher</label>
-                <div class="col-sm-10">
-                    <input type="text" id="bookPublisher" placeholder="Please Enter Publisher Name " class="form-control" ng-model="parentBook.publisher"
-                           title="Publisher is required !" required>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-      
-            <div>
-                <label class="col-sm-2 control-label" for="catName">Category Name</label>
-                <div class="col-sm-4">
-                    <input type="text" id="catName" placeholder="Need to add drop down" class="form-control" ng-model="parentBook.categoryName"
-                           title="Category Name is required !" required/>
-                </div>
-            </div>
-            
-            <div>
-                <label class="col-sm-2 control-label" for="lang">Language</label>
-                <div class="col-sm-4">
-                    <input type="text" id="lang" placeholder="Need to Change in Drop down" class="form-control" ng-model="parentBook.language"
-                           title="Language is required !" required>
-                </div>
-            </div>
-           
-                <!--  
-            <div>
-                <label class="col-sm-2 control-label" for="isMultiVol">Multi Volume</label>
-                <div class="col-sm-4">
-                    <label class="checkbox">Having Multiple Volumes ?
-                        <input type="checkbox" id="isMultiVol" name="isMultiVol" ng-model="multiVolTextList">
-                        <input id="multiVolTextSrc" name="multiVolTextSrc"
-                               class="form-control" ng-disabled="!multiVolTextList" ng-checked="!!otherMultiVol && !multiVolTextList" ng-model="otherMultiVol"
-                               type="text" placeholder="Enter Number of Volumes">
-                    </label>
-                </div>
-            </div>
-            <div>
-                <label class="col-sm-2 control-label" for="volNumber">Volume Number</label>
-                <div class="col-sm-4">
-                    <label class="checkbox">Volumes Number ?
-                        <input type="checkbox" id="volNumber" name="isMultiVol" ng-model="disablelist">
-                        <input id="volNumTextSrc" name="volNumTextSrc" class="form-control" ng-disabled="!disablelist" ng-checked="!!otherOption && !disableList" ng-model="otherOption" type="text" placeholder="Enter Volume Number">
-                    </label>
-                </div>
-            </div>
-              -->
-        </div>
-        <br>
-        <div class="row ">
-            <div>
-                <label class="col-sm-2 control-label" for="bookCount">Number Of Copies</label>
-                <div class="col-sm-1">
-                    <input type="text" id="bookCount" placeholder="Number Of Copies " class="form-control" ng-model="parentBook.bookCopies">
-                </div>
-            </div>
-            
-        </div>
-    </div>
-</fieldset>
-        <div class="col-md-2 pull-right">
-            <button class="btn btn-md btn-primary" ng-click="addNewBook()">Add New Title </button>
-        </div>
-    </div>
-</section>
-<!-- label data-ng-model="parentBook">{{parentBook.isbn}} </label -->
-    <br>
-<!-- legend></legend -->
+							</div>
+							<br>
 
-<!--   Add New Book - Child Information -- Start -->
-    <!-- section class="panel panel-primary">
+
+							<div class="row ">
+								<div>
+									<label class="col-sm-2 control-label" for="bookPublisher">Publisher</label>
+									<div class="col-sm-10">
+										<input type="text" id="bookPublisher"
+											placeholder="Please Enter Publisher Name "
+											class="form-control" ng-model="parentBook.publisher"
+											title="Publisher is required !" required>
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+
+								<div>
+									<label class="col-sm-2 control-label" for="catName">Category
+										Name</label>
+									<div class="col-sm-4">
+										<input type="text" id="catName"
+											placeholder="Need to add drop down" class="form-control"
+											ng-model="parentBook.categoryName"
+											title="Category Name is required !" required />
+									</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label" for="bibLvl">Bib
+										Level</label>
+									<div class="col-sm-2">
+									<select id="bibLvl" name=""bibLvl""
+											class="btn btn-media dropdown-toggle"
+											data-ng-model="parentBook.bibLevel">
+											<option value="">Select Bib Level</option>
+												 <option ng-repeat="(key, value) in parentBookDD"
+												value="{{key}}">{{value.___name___}}</option>
+										</select>
+								</div>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="mat">Materials
+									</label>
+									<div class="col-sm-2">
+									
+										<select id="mat" name="validation-select"
+											class="btn btn-media dropdown-toggle"
+											data-ng-model="parentBook.material" ng-if="parentBook.bibLevel">
+											<option value="">Select Materials</option>
+											 <option ng-repeat="(key, mat) in parentBookDD[parentBook.bibLevel]" ng-if="key!='___name___'"
+												value="{{key}}">{{mat}}||{{key}}</option>
+											<!--  
+											<option value="B">Books</option>
+											<option value="E">Patents</option>
+											<option value="M">Manuals</option>
+											<option value="S">Standards</option>
+											<option value="T">Reports</option>
+											<option value="A">Annuals</option>
+											<option value="P">Periodicals</option>
+											<option value="N">Newspapers</option>
+											-->
+										</select>
+									</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label" for="docType">Doc
+										Type </label>
+									<div class="col-sm-3">
+										<select id="docType" name="validation-select"
+											class="btn btn-media dropdown-toggle"
+											data-ng-model="parentBook.docType">
+											<option value="">Select Doc Type</option>
+											<option ng-repeat="bookDD in parentBookDD"
+												value="{{bookDD.value}}">{{bookDD.name}}</option>
+										</select>
+									</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label" for="bookCount">Number
+										Of Copies</label>
+									<div class="col-sm-1">
+										<input type="text" id="bookCount"
+											placeholder="Number Of Copies " class="form-control"
+											ng-model="parentBook.bookCopies">
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row "></div>
+
+						</div>
+					</fieldset>
+
+				</div>
+				<br>
+				<div class="col-md-2 pull-right">
+					<br>
+					<button class="btn btn-md btn-primary" ng-click="addNewBook()">Add
+						New Title</button>
+				</div>
+			</section>
+			<!-- label data-ng-model="parentBook">{{parentBook.isbn}} </label -->
+			<br>
+			<!-- legend></legend -->
+
+			<!--   Add New Book - Child Information -- Start -->
+			<!-- section class="panel panel-primary">
     <header class="panel-heading">
         <h3 class="panel-title">Add New Book - Other Information</h3>
     </header>
@@ -346,8 +357,8 @@
     </div>
 </section -->
 
-</div>
+		</div>
 
-</form>
+	</form>
 
 </div>

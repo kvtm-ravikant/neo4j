@@ -83,6 +83,16 @@ educationMediaApp.controller('libraryManagement_searchBook', function ($scope, $
         });
 
     }
+    /*
+     * Clear function for search clear text
+     */
+    $scope.clearSearch = function () {
+        $scope.searchBookModel.searchText = "";
+        $scope.searchBookModel.parentBook.bookTitle="";
+        $scope.searchBookModel.parentBook.authorName="";
+        
+    };
+    
     $scope.getBackToMainBookList=function(){
         $scope.currentSelectedBook=null;
         $scope.currentBookDetails=null;
