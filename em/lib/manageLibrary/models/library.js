@@ -48,10 +48,34 @@ module.exports.searchBooks=function(requestObj,res){
         }else{
             query+='n.authorName =~ ".*'+requestObj.searchText+'.*" OR ';
         }
-        query+='n.isbn =~ ".*'+requestObj.searchText+'.*" OR ';
+        if(parentBookObj.isbn){
+            query+='n.isbn =~ ".*'+parentBookObj.isbn+'.*" AND ';
+        }else{
+            query+='n.isbn =~ ".*'+requestObj.searchText+'.*" OR ';
+        }
         query+='n.publisher =~ ".*'+requestObj.searchText+'.*" OR ';
         query+='n.categoryName =~ ".*'+requestObj.searchText+'.*" ';
         query+='RETURN n';
+    }else if(requestObj.userDetails.regID || requestObj.userDetails.firstName || requestObj.userDetails.lastName || requestObj.userDetails.middleName || requestObj.userDetails.class || requestObj.userDetails.section){
+        var tempQuery=[];
+        query='MATCH (c:Class) -[r2:STUDENT_OF]-(u:User)-[r:ISSUED_TO]-(cb:childBook) WHERE  ';
+        requestObj.userDetails.regID?tempQuery.push('u.regID="'+requestObj.userDetails.regID+'"'):null;
+        requestObj.userDetails.userName?tempQuery.push('u.userName="'+requestObj.userDetails.userName+'"'):null;
+        requestObj.userDetails.firstName?tempQuery.push('u.firstName="'+requestObj.userDetails.firstName+'"'):null;
+        requestObj.userDetails.lastName?tempQuery.push('u.lastName="'+requestObj.userDetails.lastName+'"'):null;
+        requestObj.userDetails.middleName?tempQuery.push('u.middleName="'+requestObj.userDetails.middleName+'"'):null;
+
+        var classCondition=[];
+        requestObj.userDetails.class?classCondition.push('c.class="'+requestObj.userDetails.class+'"'):null;
+        requestObj.userDetails.section?classCondition.push('c.section="'+requestObj.userDetails.section+'"'):null;
+        if(classCondition.length>0){
+            tempQuery.push(' ('+classCondition.join(' AND ')+') ');
+        }
+        if(tempQuery.length>0){
+            query+=' ('+tempQuery.join(" OR ")+' )';
+        }
+        query+=' AND cb.bookStatus="Unavailable" RETURN u,r,cb';
+
     }else{
         query='Match (n:ParentBook) where n.bookTitle =~ ".*'+parentBookObj.bookTitle+'.*" AND n.authorName =~ ".*'+parentBookObj.authorName+'.*" RETURN n';
     }

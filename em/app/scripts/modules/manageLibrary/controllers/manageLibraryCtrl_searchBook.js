@@ -40,7 +40,20 @@ educationMediaApp.controller('libraryManagement_searchBook', function ($scope, $
     $scope.searchBookModel={
         "parentBook":{
             "bookTitle":"",
-            "authorName":""
+            "authorName":"",
+            "isbn":""
+
+        },
+        "userDetails":{
+            "regID":"",
+            "firstName":"",
+            "middleName":"",
+            "lastName":"",
+            "class":"",
+            "section":""
+        },
+        "childBook":{
+            "bookId":""
         },
         "searchText":""
     }
@@ -55,7 +68,11 @@ educationMediaApp.controller('libraryManagement_searchBook', function ($scope, $
             //success
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
                 console.log("searchBooks dataResponse",dataResponse)
-                $scope.books=dataResponse.responseData;
+                if(dataResponse.responseData.columns.length<2){
+                    $scope.books=dataResponse.responseData;
+                }else{
+
+                }
                 $scope.isSearchBoxOpened=false;
             });
         }).error(function(data,status,headers,config){
