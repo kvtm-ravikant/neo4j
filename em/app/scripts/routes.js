@@ -112,6 +112,15 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
                     displayName:'Delete User'
                 }
             })
+            .state('manageUser.testUser', {
+                parent:'manageUser',
+                url: "/testUser",
+                templateUrl: "partials/modules/manageUsers/manageUser_testUser.html",
+                controller: 'manageUser_testUser',
+                data:{
+                    displayName:'test User'
+                }
+            })
 
         .state('schoolManagement', {
             url: "/schoolManagement/admin",

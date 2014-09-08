@@ -58,15 +58,21 @@ module.exports.searchBooks=function(requestObj,res){
         query+='RETURN n';
     }else if(requestObj.userDetails.regID || requestObj.userDetails.firstName || requestObj.userDetails.lastName || requestObj.userDetails.middleName || requestObj.userDetails.class || requestObj.userDetails.section){
         var tempQuery=[];
-        query='MATCH (c:Class) -[r2:STUDENT_OF]-(u:User)-[r:ISSUED_TO]-(cb:ChildBook) WHERE  ';
+        query='MATCH ';
+        var classCondition=[];
+        if(requestObj.userDetails.class && requestObj.userDetails.section){
+            classCondition.push('c.class="'+requestObj.userDetails.class+'"');
+            classCondition.push('c.section="'+requestObj.userDetails.section+'"')
+            query+=' (c:Class) -[r2:STUDENT_OF]-';
+        }
+        query+='(u:User)-[r:ISSUED_TO]-(cb:ChildBook) WHERE ';
         requestObj.userDetails.regID?tempQuery.push('u.regID="'+requestObj.userDetails.regID+'"'):null;
         requestObj.userDetails.userName?tempQuery.push('u.userName="'+requestObj.userDetails.userName+'"'):null;
         requestObj.userDetails.firstName?tempQuery.push('u.firstName="'+requestObj.userDetails.firstName+'"'):null;
         requestObj.userDetails.lastName?tempQuery.push('u.lastName="'+requestObj.userDetails.lastName+'"'):null;
         requestObj.userDetails.middleName?tempQuery.push('u.middleName="'+requestObj.userDetails.middleName+'"'):null;
 
-        var classCondition=[];
-        requestObj.userDetails.class?classCondition.push('c.class="'+requestObj.userDetails.class+'"'):null;
+
         requestObj.userDetails.section?classCondition.push('c.section="'+requestObj.userDetails.section+'"'):null;
         if(classCondition.length>0){
             tempQuery.push(' ('+classCondition.join(' AND ')+') ');

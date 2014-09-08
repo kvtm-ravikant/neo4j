@@ -255,8 +255,9 @@ module.exports.updateUser = function(userObj,loggedInUser,res) {
                     db.updateNode(userObj.socialNetwork._id, userObj.socialNetwork, function(err, node){
                         if(err) throw err;
                         node === true?console.log("socialNetwork details updated"):console.log("Failed to update socialNetwork details");
+                        res.json(responseObj);
                     });
-                    res.json(responseObj)
+
 	            }else{
 	                Utils.defaultErrorResponse(res,defaultErrorMsg);
 	            }

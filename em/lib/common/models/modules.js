@@ -74,6 +74,13 @@ function initAppList(){
                     'collapse':false,
                     'icon':"erase",
                     'accessList':["*"]
+                },
+                {
+                    'state': 'manageUser.testUser',
+                    'name':'Test User',
+                    'collapse':false,
+                    'icon':"erase",
+                    'accessList':["*"]
                 }
             ]
         },
