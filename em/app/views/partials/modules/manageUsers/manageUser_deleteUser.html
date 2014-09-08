@@ -50,7 +50,7 @@
 	
 	<div class="row" ng-if="allUserClass.data" ng-show="currentUserDetails">
 		<div class="col-md-12">
-			<div class="col-lg-8 rightdiv">
+			<div class="col-lg-10 rightdiv">
 				<ul class="nav nav-tabs" id="myTab">
 					<li class="active"><a href="#basicInfo" data-toggle="tab">Basic
 							Details Info</a></li>
@@ -66,14 +66,14 @@
 						<form class="form-horizontal" role="form">
 						<fieldset disabled="disabled">
 							<div class="form-group">
-								<label class="col-sm-4 control-label">Registraion ID </label>
-								<div class="col-sm-4">
+								<label class="col-sm-3 control-label">Registraion ID </label>
+								<div class="col-sm-8">
 									<input type="text" id="regId" class="form-control"
 										ng-model="userSelectedClass.basicDetails.regID">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="fName" class="col-sm-4 control-label">First
+								<label for="fName" class="col-sm-3 control-label">First
 									Name </label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="fName"
@@ -81,7 +81,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="mName" class="col-sm-4 control-label">Middle
+								<label for="mName" class="col-sm-3 control-label">Middle
 									Name </label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="mName"
@@ -89,7 +89,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="lName" class="col-sm-4 control-label">Last
+								<label for="lName" class="col-sm-3 control-label">Last
 									Name </label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="lName"
@@ -98,16 +98,16 @@
 							</div>
 							
 							<div class="form-group">
-								<label for="dob" class="col-sm-4 control-label">Date of
+								<label for="dob" class="col-sm-3 control-label">Date of
 									Birth </label>
 								<div class="col-sm-8">
-									<input type="text" id="dob" class="em-datepicker datepicker"
+									<input type="text" id="dob" class="em-datepicker datepicker form-control"
 										placeholder="Enter Date of Birth"ng-model="userSelectedClass.basicDetails.DOB" />
 									<!-- input type="text" class="form-control" id="dob" placeholder="Enter Password " -->
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="sex-type" class="col-sm-4 control-label">Sex
+								<label for="sex-type" class="col-sm-3 control-label">Sex
 								</label>
 								<div class="simple-radio col-sm-8" id="sex-type">
 									<input id="ml" type="radio" name="sex-type" value="Male"
@@ -442,7 +442,7 @@
 											<label class="col-sm-2 control-label"
 												for="isPhysicallyHandicapped">Physically Challenged</label>
 											<div class="col-sm-3">
-												<input type="checkbox" id="isPhysicallyHandicapped"
+												<input type="checkbox" id="isPhysicallyHandicapped" style="margin-top: 20px;"
 													ng-model="userSelectedClass.basicDetails.isPhysicallyHandicapped">
 											</div>
 										</div>
@@ -450,7 +450,7 @@
 											<label class="col-sm-2 control-label"
 												for="isEconomicallyBackward">Economically Challenged</label>
 											<div class="col-sm-3">
-												<input type="checkbox" id="isEconomicallyBackward"
+												<input type="checkbox" id="isEconomicallyBackward" style="margin-top: 20px;"
 													ng-model="userSelectedClass.basicDetails.isEconomicallyBackward">
 											</div>
 										</div>
@@ -461,7 +461,7 @@
 											<label class="col-sm-2 control-label" for="smsEnb">Enable
 												SMS Alerts </label>
 											<div class="col-sm-3">
-												<input type="checkbox" id="smsEnb"
+												<input type="checkbox" id="smsEnb" style="margin-top: 20px;"
 													ng-model="userSelectedClass.basicDetails.isSMSEnabled">
 											</div>
 										</div>
@@ -469,7 +469,7 @@
 											<label class="col-sm-2 control-label" for="mailEnb">Enable
 												Email Alerts </label>
 											<div class="col-sm-3">
-												<input type="checkbox" id="mailEnb"
+												<input type="checkbox" id="mailEnb" style="margin-top: 20px;"
 													ng-model="userSelectedClass.basicDetails.isEmailEnabled">
 											</div>
 										</div>
@@ -481,17 +481,17 @@
 						<form class="form-horizontal" role="form">
 							<fieldset  disabled="disabled">
 								<div class="form-group">
-									<label for="validation-select" class="col-sm-4 control-label">Account
+									<label for="validation-select" class="col-sm-3 control-label">Account
 										Type</label>
-									<div class="col-sm-4	">
+									<div class="col-sm-8	">
 										<input type="text" id="validation-select"
 											name="validation-select" class="form-control"
 											ng-model="userSelectedClass.basicDetails.userType">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-4 control-label" for="inputUsername">Username</label>
-									<div class="col-sm-4">
+									<label class="col-sm-3 control-label" for="inputUsername">Username</label>
+									<div class="col-sm-8">
 										<input type="text" id="inputUsername"
 											placeholder="What's your user name" class="form-control"
 											title="User Name is required !" required

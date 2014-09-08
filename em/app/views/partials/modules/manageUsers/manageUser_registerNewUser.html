@@ -21,7 +21,7 @@
 								<div class="col-md-12">
 									<div class="row">
 										<div>
-											<label class="col-sm-2 control-label" for="regId">Registration
+											<label class="col-sm-2 control-label" style="padding-right:10px;" for="regId">Registration
 												ID</label>
 											<div class="col-sm-4">
 												<input type="text" id="regId"
@@ -80,7 +80,7 @@
 											<label for="dob" class="col-sm-2 control-label">Date
 												of Birth </label>
 											<div class="col-sm-4">
-												<input type="text" id="dob" class="em-datepicker datepicker"
+												<input type="text" id="dob" class="em-datepicker datepicker form-control"
 													placeholder="Enter Date of Birth"
 													ng-model="userClass.basicDetails.DOB">
 											</div>
@@ -236,7 +236,7 @@
 								<br>
 								<div class="row">
 									<div>
-										<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+										<label class="col-sm-2 control-label" style="padding-right: 10px;"  for="cntStreetAdrOne">Street
 											Address 1</label>
 										<div class="col-sm-8">
 											<input type="text" id="cntStreetAdrOne"
@@ -248,7 +248,7 @@
 								<br>
 								<div class="row">
 									<div>
-										<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+										<label class="col-sm-2 control-label" style="padding-right: 10px;"  for="cntStreetAdrOne">Street
 											Address 2</label>
 										<div class="col-sm-8">
 											<input type="text" id="cntStreetAdrOne"
@@ -271,7 +271,7 @@
 								<div class="row">
 									<div>
 										<label class="col-sm-2 control-label" for="cntCountry">Country</label>
-										<div class="col-sm-2">
+										<div class="col-sm-4">
 											<select id="cntCountry" name="cntCountry"
 												class="btn btn-media dropdown-toggle"
 												data-ng-model="userClass.primaryAddress.country">
@@ -284,7 +284,7 @@
 									<div>
 										<label class="col-sm-2 control-label" for="cntState">State
 										</label>
-										<div class="col-sm-2">
+										<div class="col-sm-4">
 											<select id="cntState" name="cntState"
 												class="btn btn-media dropdown-toggle"
 												data-ng-model="userClass.primaryAddress.state" ng-if="userClass.primaryAddress.country">
@@ -300,7 +300,7 @@
 									<div>
 										<label class="col-sm-2 control-label" for="cntCity">City
 										</label>
-										<div class="col-sm-2">
+										<div class="col-sm-4">
 											<select id="cntCity" name="cntCity"
 												class="btn btn-media dropdown-toggle"
 												data-ng-model="userClass.primaryAddress.city" ng-if="userClass.primaryAddress.state">
@@ -368,7 +368,7 @@
 								<br>
 								<div class="row">
 									<div>
-										<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+										<label class="col-sm-2 control-label"  style="padding-right: 10px;" for="cntStreetAdrOne">Street
 											Address 1</label>
 										<div class="col-sm-8">
 											<input type="text" id="cntStreetAdrOne"
@@ -380,7 +380,7 @@
 								<br>
 								<div class="row">
 									<div>
-										<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+										<label class="col-sm-2 control-label" style="padding-right: 10px;"  for="cntStreetAdrOne">Street
 											Address 2</label>
 										<div class="col-sm-8">
 											<input type="text" id="cntStreetAdrOne"
@@ -403,7 +403,7 @@
 								<div class="row">
 									<div>
 										<label class="col-sm-2 control-label" for="secCountry">Country</label>
-										<div class="col-sm-2">
+										<div class="col-sm-4">
 											<select id="secCountry" name="secCountry"
 												class="btn btn-media dropdown-toggle"
 												data-ng-model="userClass.SecondaryAddress.country">
@@ -416,7 +416,7 @@
 									<div>
 										<label class="col-sm-2 control-label" for="secState">State
 										</label>
-										<div class="col-sm-2">
+										<div class="col-sm-4">
 											<select id="secState" name="secState"
 												class="btn btn-media dropdown-toggle"
 												data-ng-model="userClass.SecondaryAddress.state" ng-if="userClass.SecondaryAddress.country">
@@ -432,7 +432,7 @@
 									<div>
 										<label class="col-sm-2 control-label" for="secCity">City
 										</label>
-										<div class="col-sm-2">
+										<div class="col-sm-4">
 											<select id="secCity" name="secCity"
 												class="btn btn-media dropdown-toggle"
 												data-ng-model="userClass.SecondaryAddress.city" ng-if="userClass.SecondaryAddress.state">
@@ -544,7 +544,7 @@
 											</script>
 											<label class="col-sm-2 control-label" for="isVisa">VISA
 												Number</label>
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<label class="checkbox">Do you have VISA ? <input
 													type="checkbox" id="isVisa" name="isVisa">
 												</label> <input id="visaTextSrc" name="visaTextSrc"
@@ -569,7 +569,7 @@
 											</script>
 											<label class="col-sm-2 control-label" for="isPassPort">Passport
 												Number</label>
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<label class="checkbox">Do you have Passport ? <input
 													type="checkbox" id="isPassPort" name="isPassPort">
 												</label> <input id="passportTextSrc" name="passportTextSrc"
@@ -595,7 +595,7 @@
 																});
 											</script>
 											<label class="col-sm-2" for="smsEnb">PAN Number</label>
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<label class="checkbox">Do you have PAN Number ? <input
 													type="checkbox" id="isPan" name="isPan">
 												</label> <input id="panTextSrc" name="panTextSrc"
@@ -606,7 +606,7 @@
 										<div>
 											<label class="col-sm-2 control-label" for="isResvrdCat">Reserved
 												Category</label>
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<label class="checkbox">Reserved Category? <input
 													type="checkbox" id="isResvrdCat" name="isResvrdCat"
 													ng-model="resrvrdCatTextSrc">
@@ -626,7 +626,7 @@
 											<label class="col-sm-2 control-label"
 												for="isPhysicallyHandicapped">Physically Challenged</label>
 											<div class="col-sm-3">
-												<input type="checkbox" id="isPhysicallyHandicapped"
+												<input type="checkbox" id="isPhysicallyHandicapped" style="margin-top:20px;"
 													ng-model="userClass.basicDetails.isPhysicallyHandicapped">
 											</div>
 										</div>
@@ -634,7 +634,7 @@
 											<label class="col-sm-2 control-label"
 												for="isEconomicallyBackward">Economically Challenged</label>
 											<div class="col-sm-3">
-												<input type="checkbox" id="isEconomicallyBackward"
+												<input type="checkbox" id="isEconomicallyBackward"  style="margin-top:20px;"
 													ng-model="userClass.basicDetails.isEconomicallyBackward">
 											</div>
 										</div>
@@ -647,7 +647,7 @@
 											<label class="col-sm-2 control-label" for="smsEnb">Enable
 												SMS Alerts </label>
 											<div class="col-sm-3">
-												<input type="checkbox" id="smsEnb"
+												<input type="checkbox" id="smsEnb"  style="margin-top:20px;"
 													ng-model="userClass.basicDetails.isSMSEnabled">
 											</div>
 										</div>
@@ -655,7 +655,7 @@
 											<label class="col-sm-2 control-label" for="mailEnb">Enable
 												Email Alerts </label>
 											<div class="col-sm-3">
-												<input type="checkbox" id="mailEnb"
+												<input type="checkbox" id="mailEnb"  style="margin-top:20px;"
 													ng-model="userClass.basicDetails.isEmailEnabled">
 											</div>
 										</div>

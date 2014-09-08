@@ -88,7 +88,7 @@ module.exports.addNewUser = function(userObj,loggedInUser,res) {
 
     try{
         var responseObj = new Utils.Response();
-        var defaultErrorMsg="Failed to add user. Please contact adminitrator.";
+        var defaultErrorMsg="Failed to add user. Please contact administrator.";
 
         var findUserQuery = 'MATCH (n:User{userName:"' + userObj.basicDetails.userName + '"})  RETURN n';
 
@@ -228,16 +228,35 @@ function fillUserDefaultValues(userBasicDetails){
 module.exports.updateUser = function(userObj,loggedInUser,res) {
 	  try{
 	        var responseObj = new Utils.Response();
-	        var defaultErrorMsg="Failed to add user. Please contact adminitrator.";
+	        var defaultErrorMsg="Failed to add user. Please contact administrator.";
 
 	        var findUserQuery = 'MATCH (n:User{userName:"' + userObj.basicDetails.userName + '"})  RETURN n';
 	        db.cypherQuery("findUserQuery",findUserQuery, function(err, result) {
 	            console.log("findUserQuery",err, result)
 	            if(err || !result || (result && result.data && result.data.length==0)){
-	                var userBasicDetails=fillUserDefaultValues(userObj.basicDetails);
-	               
-	               
-
+                    var currentTimestamp=(new Date()).getTime();
+                    userObj.basicDetails.updatedAt=currentTimestamp;
+                    db.updateNode(userObj.basicDetails._id, userObj.basicDetails, function(err, node){
+                        if(err) throw err;
+                        node === true?console.log("basic details updated");:console.log("Failed to update basic details");
+                    });
+                    db.updateNode(userObj.contact._id, userObj.contact, function(err, node){
+                        if(err) throw err;
+                        node === true?console.log("contact details updated");:console.log("Failed to update contact details");
+                    });
+                    db.updateNode(userObj.primaryAddress._id, userObj.primaryAddress, function(err, node){
+                        if(err) throw err;
+                        node === true?console.log("primaryAddress details updated");:console.log("Failed to update primaryAddress details");
+                    });
+                    db.updateNode(userObj.secondaryAddress._id, userObj.secondaryAddress, function(err, node){
+                        if(err) throw err;
+                        node === true?console.log("secondaryAddress details updated");:console.log("Failed to update secondaryAddress details");
+                    });
+                    db.updateNode(userObj.socialNetwork._id, userObj.socialNetwork, function(err, node){
+                        if(err) throw err;
+                        node === true?console.log("socialNetwork details updated");:console.log("Failed to update socialNetwork details");
+                    });
+                    res.json(responseObj)
 	            }else{
 	                Utils.defaultErrorResponse(res,defaultErrorMsg);
 	            }

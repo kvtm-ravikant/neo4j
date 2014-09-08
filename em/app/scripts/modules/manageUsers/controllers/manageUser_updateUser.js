@@ -121,8 +121,8 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     */
     $scope.updateUserClass=function()
     {
-    	console.log("$scope.updateUserClass :",$scope.userSelectedClass, angular.equals($scope.userSelectedClass.userDetails,$scope.userSelectedClone.userDetails));
-//		console.log("registerUser ", $scope.userClass);
+    	//console.log("$scope.updateUserClass :",$scope.userSelectedClass, angular.equals($scope.userSelectedClass.userDetails,$scope.userSelectedClone.userDetails));
+		console.log("registerUser ", $scope.userSelectedClass);
 		$http({
 			method : 'POST',
 			url : '/manage-users/users/updateUser',
@@ -131,17 +131,17 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 				'Content-Type' : 'application/json'
 			}
 		}).success(function(dataResponse, status, headers,config) {
-							// success
-							appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
-												console.log("updateUserClass - dataResponse",dataResponse)
-												$scope.userSelectedClass = dataResponse.responseData;
-												appUtils.showError("User "+$scope.userSelectedClass.basicDetails.userName+" updated successfully");
-											});
-						}).error(function(data, status, headers, config) {
-							// error
-							console.log("Error", data, status,headers, config);
+            // success
+            appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+                                console.log("updateUserClass - dataResponse",dataResponse)
+                                $scope.userSelectedClass = dataResponse.responseData;
+                                appUtils.showError("User "+$scope.userSelectedClass.basicDetails.userName+" updated successfully");
+                            });
+        }).error(function(data, status, headers, config) {
+            // error
+            console.log("Error", data, status,headers, config);
 
-						});
+        });
     }
     /*
      * Back button functionality
