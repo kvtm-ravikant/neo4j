@@ -232,6 +232,7 @@ educationMediaApp.controller('manageUser_registerNewUser',function($scope, $http
 							appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
 												console.log("registerUser - dataResponse",dataResponse)
 												$scope.userClass = dataResponse.responseData;
+												appUtils.showError("User "+$scope.userClass.basicDetails.userName+" created successfully");
 											});
 						}).error(function(data, status, headers, config) {
 							// error

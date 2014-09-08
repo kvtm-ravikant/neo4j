@@ -221,6 +221,33 @@ function fillUserDefaultValues(userBasicDetails){
     userBasicDetails.hashPassword="password";
     return userBasicDetails;
 }
+
+/*
+ * Update User details
+ */
+module.exports.updateUser = function(userObj,loggedInUser,res) {
+	  try{
+	        var responseObj = new Utils.Response();
+	        var defaultErrorMsg="Failed to add user. Please contact adminitrator.";
+
+	        var findUserQuery = 'MATCH (n:User{userName:"' + userObj.basicDetails.userName + '"})  RETURN n';
+	        db.cypherQuery("findUserQuery",findUserQuery, function(err, result) {
+	            console.log("findUserQuery",err, result)
+	            if(err || !result || (result && result.data && result.data.length==0)){
+	                var userBasicDetails=fillUserDefaultValues(userObj.basicDetails);
+	               
+	               
+
+	            }else{
+	                Utils.defaultErrorResponse(res,defaultErrorMsg);
+	            }
+	        });//findUserQuery end
+	    }catch(e){
+	        console.log("addNewUser",e);
+	        Utils.defaultErrorResponse(res,defaultErrorMsg);
+	    }
+}
+
 /* Get all Users from USER */
 module.exports.getAllUsers = function(res) {
 	var queryAllUsers = "MATCH (n:User) RETURN n LIMIT 25";
@@ -238,15 +265,15 @@ module.exports.getAllUsers = function(res) {
 	});
 }
 
-/* find the available username for the given username to create new user */
-module.exports.searchUser = function(requestObj,res) {
+/* find the available registration ID for the given registration ID to create new user */
+module.exports.searchRegId = function(requestObj,res) {
 //	console.log("is User Name exist ?", requestObj);
 	var responseObj = new Utils.Response();
-	var query = 'MATCH (n:User{userName:"' + requestObj.userText + '"})  RETURN n';
+	var query = 'MATCH (n:User{regID:"' + requestObj.regIdText + '"})  RETURN n';
 
-	console.log("username availability query :", query);
+	console.log("registration ID availability query :", query);
 	db.cypherQuery(query, function(err, reply) {
-		console.log("searchUser :", query, err, reply);
+		console.log("searchRegId :", query, err, reply);
 		if (!err) {
 			responseObj.responseData = reply;
 			res.json(responseObj);
@@ -257,15 +284,16 @@ module.exports.searchUser = function(requestObj,res) {
 		}
 	});
 }
-/* find the available registration ID for the given registration ID to create new user */
-module.exports.searchRegId = function(requestObj,res) {
+
+/* Search  user for user summary & userName availability*/
+module.exports.searchUser = function(requestObj,res) {
 //	console.log("is User Name exist ?", requestObj);
 	var responseObj = new Utils.Response();
-	var query = 'MATCH (n:User{regID:"' + requestObj.regIdText + '"})  RETURN n';
+	var query = 'MATCH (n:User{userName:"' + requestObj + '"})  RETURN n';
 
-	console.log("registration ID availability query :", query);
+	console.log("username availability query :", query);
 	db.cypherQuery(query, function(err, reply) {
-		console.log("searchRegId :", query, err, reply);
+		console.log("searchUser :", query, err, reply);
 		if (!err) {
 			responseObj.responseData = reply;
 			res.json(responseObj);

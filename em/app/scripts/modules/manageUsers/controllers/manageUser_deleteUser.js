@@ -117,11 +117,39 @@ educationMediaApp.controller('manageUser_deleteUser', function ($scope, $http,ic
         });
     }
     /*
+     * Update User function call to update User
+     */
+     $scope.deleteUserClass=function()
+     {
+     	console.log("$scope.updateUserClass :",$scope.userSelectedClass, angular.equals($scope.userSelectedClass.userDetails,$scope.userSelectedClone.userDetails));
+// 		console.log("deleteUser ", $scope.userClass);
+ 		$http({
+ 			method : 'POST',
+ 			url : '/manage-users/users/deleteUser',
+ 			data : $scope.userSelectedClass,
+ 			headers : {
+ 				'Content-Type' : 'application/json'
+ 			}
+ 		}).success(function(dataResponse, status, headers,config) {
+ 							// success
+ 							appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+ 												console.log("deleteUserClass - dataResponse",dataResponse)
+ 												$scope.userSelectedClass = dataResponse.responseData;
+ 												appUtils.showError("User "+$scope.userSelectedClass.basicDetails.userName+" deleted successfully");
+ 											});
+ 						}).error(function(data, status, headers, config) {
+ 							// error
+ 							console.log("Error", data, status,headers, config);
+
+ 						});
+     }
+
+    /*
      * Back button functionality
      */
     $scope.getBackToMainUsersList=function(){
         
-        $scope.currentUserDetails=null;
+        $scope.currentUserDetails=!$scope.currentUserDetails;
         
     }
     

@@ -115,8 +115,34 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 
         });
     }
+  
+    /*
+    * Update User function call to update User
+    */
+    $scope.updateUserClass=function()
+    {
+    	console.log("$scope.updateUserClass :",$scope.userSelectedClass, angular.equals($scope.userSelectedClass.userDetails,$scope.userSelectedClone.userDetails));
+//		console.log("registerUser ", $scope.userClass);
+		$http({
+			method : 'POST',
+			url : '/manage-users/users/updateUser',
+			data : $scope.userSelectedClass,
+			headers : {
+				'Content-Type' : 'application/json'
+			}
+		}).success(function(dataResponse, status, headers,config) {
+							// success
+							appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+												console.log("updateUserClass - dataResponse",dataResponse)
+												$scope.userSelectedClass = dataResponse.responseData;
+												appUtils.showError("User "+$scope.userSelectedClass.basicDetails.userName+" updated successfully");
+											});
+						}).error(function(data, status, headers, config) {
+							// error
+							console.log("Error", data, status,headers, config);
 
-    
+						});
+    }
     /*
      * Back button functionality
      */

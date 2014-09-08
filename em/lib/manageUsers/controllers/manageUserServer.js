@@ -44,7 +44,7 @@ module.exports=function(app,Utils){
     });
     /* Check availability of username  */
     app.post("/manage-users/users/userNameAvailablity",Utils.ensureAuthenticated,function(req,res){
-    	var requestobj=req.body;
+    	var requestobj=req.body.userText;
     	console.log("Puneet /manage-users/users/userNameAvailablity",req.body);
         userMS.searchUser(requestobj,res);
     });
@@ -60,15 +60,20 @@ module.exports=function(app,Utils){
         var loggedInUser=req.session.userDetails;
         console.log("requestobj - registerNewUser",requestobj);
         userMS.addNewUser(requestobj,loggedInUser,res);
-        
+    });
+    /* Update User */
+    app.post("/manage-users/users/updateUser",Utils.ensureAuthenticated,function(req,res){
+        var requestobj=req.body;
+        var loggedInUser=req.session.userDetails;
+        console.log("requestobj - /manage-users/users/updateUser",requestobj);
+        userMS.updateUser(requestobj,loggedInUser,res);
     });
     /* Search the User from textBox*/
     app.post("/manage-users/searchUser/",Utils.ensureAuthenticated,function(req,res){
         var requestobj=req.body.userName;
         console.log("requestobj - search user",requestobj, req.body);
 //        console.log("requestobj - registerNewUser");
-//        userMS.addNewUser(requestobj,res);
-        userMS.getSelectedUser(requestobj,req,res);
+        userMS.searchUser(requestobj,res);
         
     });
     /*get selected User */
