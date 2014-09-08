@@ -133,10 +133,10 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 		}).success(function(dataResponse, status, headers,config) {
             // success
             appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
-                                console.log("updateUserClass - dataResponse",dataResponse)
-                                $scope.userSelectedClass = dataResponse.responseData;
-                                appUtils.showError("User "+$scope.userSelectedClass.basicDetails.userName+" updated successfully");
-                            });
+                console.log("updateUserClass - dataResponse",dataResponse)
+                $scope.userSelectedClass = dataResponse.responseData;
+                appUtils.showError("User "+$scope.userSelectedClass.basicDetails.userName+" updated successfully");
+            });
         }).error(function(data, status, headers, config) {
             // error
             console.log("Error", data, status,headers, config);

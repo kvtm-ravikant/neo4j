@@ -238,23 +238,23 @@ module.exports.updateUser = function(userObj,loggedInUser,res) {
                     userObj.basicDetails.updatedAt=currentTimestamp;
                     db.updateNode(userObj.basicDetails._id, userObj.basicDetails, function(err, node){
                         if(err) throw err;
-                        node === true?console.log("basic details updated");:console.log("Failed to update basic details");
+                        node === true?console.log("basic details updated"):console.log("Failed to update basic details");
                     });
                     db.updateNode(userObj.contact._id, userObj.contact, function(err, node){
                         if(err) throw err;
-                        node === true?console.log("contact details updated");:console.log("Failed to update contact details");
+                        node === true?console.log("contact details updated"):console.log("Failed to update contact details");
                     });
                     db.updateNode(userObj.primaryAddress._id, userObj.primaryAddress, function(err, node){
                         if(err) throw err;
-                        node === true?console.log("primaryAddress details updated");:console.log("Failed to update primaryAddress details");
+                        node === true?console.log("primaryAddress details updated"):console.log("Failed to update primaryAddress details");
                     });
                     db.updateNode(userObj.secondaryAddress._id, userObj.secondaryAddress, function(err, node){
                         if(err) throw err;
-                        node === true?console.log("secondaryAddress details updated");:console.log("Failed to update secondaryAddress details");
+                        node === true?console.log("secondaryAddress details updated"):console.log("Failed to update secondaryAddress details");
                     });
                     db.updateNode(userObj.socialNetwork._id, userObj.socialNetwork, function(err, node){
                         if(err) throw err;
-                        node === true?console.log("socialNetwork details updated");:console.log("Failed to update socialNetwork details");
+                        node === true?console.log("socialNetwork details updated"):console.log("Failed to update socialNetwork details");
                     });
                     res.json(responseObj)
 	            }else{
