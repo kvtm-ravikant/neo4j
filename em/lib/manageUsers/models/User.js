@@ -243,7 +243,7 @@ module.exports.updateUser = function(userObj,loggedInUser,res) {
 	            }
 	        });//findUserQuery end
 	    }catch(e){
-	        console.log("addNewUser",e);
+	        console.log("updateUser",e);
 	        Utils.defaultErrorResponse(res,defaultErrorMsg);
 	    }
 }

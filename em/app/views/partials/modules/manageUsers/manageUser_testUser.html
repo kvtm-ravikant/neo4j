@@ -1,0 +1,814 @@
+<div ng-controller="manageUser_testUser" class="row" weight="100%">
+	<!--  <h1>{{counter}} || {{step}}</h1>  -->
+	<div class="container">
+		<div class="row form-group">
+			<div class="col-xs-12">
+				<ul class="nav nav-pills nav-justified thumbnail setup-panel">
+					<li class="active"><a href="#step-1">
+							<h4 class="list-group-item-heading">Basic Information</h4>
+					</a></li>
+					<li class="disabled"><a href="#step-2">
+							<h4 class="list-group-item-heading">Primary Contact</h4>
+					</a></li>
+					<li class="disabled"><a href="#step-3">
+							<h4 class="list-group-item-heading">Secondary Contact</h4>
+					</a></li>
+					<li class="disabled"><a href="#step-4">
+							<h4 class="list-group-item-heading">Other Information</h4>
+					</a></li>
+					<li class="disabled"><a href="#step-5">
+							<h4 class="list-group-item-heading">Account Information</h4>
+					</a></li>
+					<!-- 					<li class="disabled"><a href="#step-6"> -->
+					<!-- 							<h4 class="list-group-item-heading">Step 6</h4> -->
+					<!-- 					</a></li> -->
+				</ul>
+			</div>
+		</div>
+
+		<div class="row setup-content" id="step-1">
+			<div class="col-xs-12">
+				<div class="col-md-12 well text-center">
+					<fieldset>
+						<div class="col-md-12">
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="regId">Registration
+										ID</label>
+									<div class="col-sm-4">
+										<input type="text" id="regId"
+											placeholder="Provide Registraion Number."
+											class="form-control" ng-model="userClass.basicDetails.regID"
+											title="Registraion Number is required !" required>
+									</div>
+								</div>
+								<div>
+									<span ng-if="regIdAvailable == 0" style="color: green">{{regIdAvailable['regIdText']}}
+										is Available</span> <span ng-if="regIdAvailable != 0"
+										style="color: red"> is not Available !</span>
+									<button class="btn" ng-click="getregistrationIDAvailabity()">Available
+										?</button>
+								</div>
+							</div>
+							<br>
+							<div class="row ">
+								<div>
+									<label for="fName" class="col-sm-2 control-label">First
+										Name </label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="fName"
+											placeholder="Enter your first name. "
+											ng-model="userClass.basicDetails.firstName">
+									</div>
+								</div>
+
+							</div>
+							<br>
+							<div class="row ">
+								<div>
+									<label for="mName" class="col-sm-2 control-label">Middle
+										Name </label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="mName"
+											placeholder="Enter your middle name. "
+											ng-model="userClass.basicDetails.middleName">
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row ">
+								<div>
+									<label for="lName" class="col-sm-2 control-label">Last
+										Name </label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="lName"
+											placeholder="Enter your last name. "
+											ng-model="userClass.basicDetails.lastName">
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row ">
+								<div>
+									<label for="dob" class="col-sm-2 control-label">Date of
+										Birth </label>
+									<div class="col-sm-4">
+										<input type="text" id="dob" class="em-datepicker datepicker"
+											placeholder="Enter Date of Birth"
+											ng-model="userClass.basicDetails.DOB">
+									</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label">Are you </label>
+									<div class="col-sm-4">
+										<label for="button-radio-1" class="col-sm-8 control-label">
+											<input type="radio" name="button-radio" id="button-radio-1"
+											ng-model="userClass.basicDetails.sex" value="M" checked>
+											Male <input type="radio" name="button-radio"
+											id="button-radio-2" value="F"
+											ng-model="userClass.basicDetails.sex"> Female
+										</label>
+									</div>
+								</div>
+							</div>
+							<br>
+							<!--  
+									<div class="row">
+										<script>
+											function readURL(input) {
+												if (input.files	&& input.files[0]) {
+													var reader = new FileReader();
+													reader.onload = function(e) {
+														$('#blah').attr('src',e.target.result);
+													}
+													reader.readAsDataURL(input.files[0]);
+												}
+											}
+											$("#imgInp").change(function() {
+												readURL(this);
+											});
+										</script>
+										<label class="col-sm-2 control-label" for="imgInp">Upload Image</label>
+										<div class="col-sm-4">
+											<input class="control-label" type='file' id="imgInp" accept="image/*" image="image2" resize-max-height="180" resize-max-width="150" resize-quality="0.7"/> 
+										</div>
+									</div>
+									
+									 <div class="row">
+										<script>
+											function readURL(input) {
+												if (input.files	&& input.files[0]) {
+													var reader = new FileReader();
+													reader.onload = function(e) {
+														$('#blah').attr('src',e.target.result);
+													}
+													reader.readAsDataURL(input.files[0]);
+												}
+											}
+											$("#imgInp").change(function() {
+												readURL(this);
+											});
+										</script>
+										<label class="col-sm-2 control-label" for="imgInp">Upload Image</label>
+										<div class="col-sm-4">
+											<input class="control-label" type='file' id="imgInp" accept="image/*" image="image2" resize-max-height="180" resize-max-width="150" resize-quality="0.7"/> 
+										</div>
+									</div>
+										<br>
+									 -->
+
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="motherTng">Mother
+										Tongue </label>
+									<div class="col-sm-4">
+										<select id="motherTng" name="motherTng"
+											class="btn btn-media dropdown-toggle"
+											data-ng-model="userClass.basicDetails.languages_motherTongue">
+											<option value="">Select Mother Tounge</option>
+											<option ng-repeat="(key, value) in languages" value="{{key}}">{{value.___name___}}</option>
+										</select>
+									</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label" for="othrLang">Other
+										Language </label>
+									<div class="col-sm-4">
+										<select id="othrLang" name="othrLang"
+											class="btn btn-media dropdown-toggle"
+											data-ng-model="userClass.basicDetails.languages_others">
+											<option value="">Select Other Language</option>
+											<option ng-repeat="(key, value) in languages" value="{{key}}">{{value.___name___}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="religion">Religion</label>
+									<div class="col-sm-4">
+										<select id="religion" name="religion"
+											class="btn btn-media dropdown-toggle"
+											data-ng-model="userClass.basicDetails.religionId">
+											<option value="">Select Religion</option>
+											<option ng-repeat="(key, value) in religionCaste"
+												value="{{key}}">{{value.___name___}}</option>
+										</select>
+										<!-- 												<input type="text" id="religion" -->
+										<!-- 													placeholder="Please mention your Religion" -->
+										<!-- 													class="form-control" ng-model="userClass.basicDetails.religionId"> -->
+									</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label" for="caste">Caste</label>
+									<div class="col-sm-4">
+										<select id="caste" name="caste"
+											class="btn btn-media dropdown-toggle"
+											data-ng-model="userClass.primaryAddress.state"
+											ng-if="userClass.basicDetails.religionId">
+											<option value="">Select Caste</option>
+											<option
+												ng-repeat="(key, caste) in religionCaste[userClass.basicDetails.religionId]"
+												ng-if="key!='___name___'" value="{{key}}">{{caste.___name___}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<br>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+		<div class="row setup-content" id="step-2">
+			<div class="col-xs-12">
+				<div class="col-md-12 well">
+					<fieldset>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="primaryPhone">Phone
+									Number</label>
+								<div class="col-sm-4">
+									<input type="text" id="primaryPhone" name="primaryPhone"
+										placeholder="Phone Number: 0XXXXXXXXXX" class="form-control"
+										pattern="/^[(]{0,1}[0-9]{3}[)\.\- ]{0,1}[0-9]{3}[\.\- ]{0,1}[0-9]{4}$/"
+										ng-minlength="11" ng-model="userClass.contact.phonePrimary">
+								</div>
+							</div>
+
+							<div>
+								<label class="col-sm-2 control-label" for="inputEmail">Email
+									Address</label>
+								<div class="col-sm-4">
+									<input type="email" id="inputEmail"
+										placeholder="Enter Your Email Address." class="form-control"
+										title="Email id is required !" required
+										ng-model="userClass.contact.emailPrimary" />
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+									Address 1</label>
+								<div class="col-sm-8">
+									<input type="text" id="cntStreetAdrOne"
+										placeholder="Enter Street Address" class="form-control"
+										ng-model="userClass.primaryAddress.street1">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+									Address 2</label>
+								<div class="col-sm-8">
+									<input type="text" id="cntStreetAdrOne"
+										placeholder="Enter Street Address" class="form-control"
+										ng-model="userClass.primaryAddress.street2">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
+								<div class="col-sm-8">
+									<input type="text" id="cntStreetAdrTwo"
+										placeholder="Provide Landmark" class="form-control">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="cntCountry">Country</label>
+								<div class="col-sm-2">
+									<select id="cntCountry" name="cntCountry"
+										class="btn btn-media dropdown-toggle"
+										data-ng-model="userClass.primaryAddress.country">
+										<option value="">Select Country</option>
+										<option ng-repeat="(key, value) in countryStateCity"
+											value="{{key}}">{{value.___name___}}</option>
+									</select>
+								</div>
+							</div>
+							<div>
+								<label class="col-sm-2 control-label" for="cntState">State
+								</label>
+								<div class="col-sm-2">
+									<select id="cntState" name="cntState"
+										class="btn btn-media dropdown-toggle"
+										data-ng-model="userClass.primaryAddress.state"
+										ng-if="userClass.primaryAddress.country">
+										<option value="">Select State</option>
+										<option
+											ng-repeat="(key, state) in countryStateCity[userClass.primaryAddress.country]"
+											ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="cntCity">City
+								</label>
+								<div class="col-sm-2">
+									<select id="cntCity" name="cntCity"
+										class="btn btn-media dropdown-toggle"
+										data-ng-model="userClass.primaryAddress.city"
+										ng-if="userClass.primaryAddress.state">
+										<option value="">Select State</option>
+										<option
+											ng-repeat="(key, city) in countryStateCity[userClass.primaryAddress.country][userClass.primaryAddress.state]"
+											ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
+									</select>
+								</div>
+							</div>
+							<div>
+								<label class="col-sm-2 control-label" for="cntDistct">District</label>
+								<div class="col-sm-4">
+									<input type="text" id="cntDistct" placeholder="District"
+										class="form-control"
+										ng-model="userClass.primaryAddress.district">
+								</div>
+							</div>
+						</div>
+						<br>
+
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="cntPin">Pincode</label>
+								<div class="col-sm-4">
+									<input type="text" id="cntPin" placeholder="Pincode"
+										class="form-control"
+										pattern="/^[(]{0,1}[0-9]{3}[)\.\- ]{0,1}[0-9]{3}[\.\- ]{0,1}[0-9]{4}$/"
+										ng-minlength="6" ng-model="userClass.primaryAddress.pincode">
+								</div>
+							</div>
+						</div>
+						<br>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+		<div class="row setup-content" id="step-3">
+			<div class="col-xs-12">
+				<div class="col-md-12 well">
+					<fieldset>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="primaryPhone">Phone
+									Number</label>
+								<div class="col-sm-4">
+									<input type="text" id="primaryPhone" placeholder="Phone Number"
+										class="form-control"
+										ng-model="userClass.contact.phoneSecondary">
+								</div>
+							</div>
+
+							<div>
+								<label class="col-sm-2 control-label" for="inputEmail">Email
+									Address</label>
+								<div class="col-sm-4">
+									<input type="email" id="inputEmail"
+										placeholder="Enter Your Email Address." class="form-control"
+										title="Email id is required !"
+										ng-model="userClass.contact.emailSecondary" />
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+									Address 1</label>
+								<div class="col-sm-8">
+									<input type="text" id="cntStreetAdrOne"
+										placeholder="Enter Street Address" class="form-control"
+										ng-model="userClass.SecondaryAddress.street1">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+									Address 2</label>
+								<div class="col-sm-8">
+									<input type="text" id="cntStreetAdrOne"
+										placeholder="Enter Street Address" class="form-control"
+										ng-model="userClass.SecondaryAddress.street2">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
+								<div class="col-sm-8">
+									<input type="text" id="cntStreetAdrTwo"
+										placeholder="Provide Landmark" class="form-control">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="secCountry">Country</label>
+								<div class="col-sm-2">
+									<select id="secCountry" name="secCountry"
+										class="btn btn-media dropdown-toggle"
+										data-ng-model="userClass.SecondaryAddress.country">
+										<option value="">Select Country</option>
+										<option ng-repeat="(key, value) in countryStateCity"
+											value="{{key}}">{{value.___name___}}</option>
+									</select>
+								</div>
+							</div>
+							<div>
+								<label class="col-sm-2 control-label" for="secState">State
+								</label>
+								<div class="col-sm-2">
+									<select id="secState" name="secState"
+										class="btn btn-media dropdown-toggle"
+										data-ng-model="userClass.SecondaryAddress.state"
+										ng-if="userClass.SecondaryAddress.country">
+										<option value="">Select State</option>
+										<option
+											ng-repeat="(key, state) in countryStateCity[userClass.SecondaryAddress.country]"
+											ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="secCity">City
+								</label>
+								<div class="col-sm-2">
+									<select id="secCity" name="secCity"
+										class="btn btn-media dropdown-toggle"
+										data-ng-model="userClass.SecondaryAddress.city"
+										ng-if="userClass.SecondaryAddress.state">
+										<option value="">Select State</option>
+										<option
+											ng-repeat="(key, city) in countryStateCity[userClass.SecondaryAddress.country][userClass.SecondaryAddress.state]"
+											ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
+									</select>
+								</div>
+							</div>
+							<div>
+								<label class="col-sm-2 control-label" for="cntDistct">District</label>
+								<div class="col-sm-4">
+									<input type="text" id="cntDistct" placeholder="District"
+										class="form-control"
+										ng-model="userClass.SecondaryAddress.district">
+								</div>
+							</div>
+						</div>
+						<br>
+
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="cntPin">Pincode</label>
+								<div class="col-sm-4">
+									<input type="text" id="cntPin" placeholder="Pincode"
+										class="form-control"
+										pattern="/^[(]{0,1}[0-9]{3}[)\.\- ]{0,1}[0-9]{3}[\.\- ]{0,1}[0-9]{4}$/"
+										ng-minlength="6" ng-model="userClass.SecondaryAddress.pincode">
+								</div>
+							</div>
+						</div>
+						<br>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+		<div class="row setup-content" id="step-4">
+			<div class="col-xs-12">
+				<div class="col-md-12 well">
+					<fieldset>
+						<div class="col-md-12">
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="birthPlaceCntry">Birth
+										Place Country</label>
+									<div class="col-sm-4">
+										<select id="birthPlaceCntry" name="birthPlaceCntry"
+											class="btn btn-media dropdown-toggle"
+											data-ng-model="userClass.basicDetails.birthPlace_country">
+											<option value="">Select Country</option>
+											<option ng-repeat="(key, value) in countryStateCity"
+												value="{{key}}">{{value.___name___}}</option>
+										</select>
+
+									</div>
+								</div>
+
+								<div>
+									<label class="col-sm-2 control-label" for="birthPlaceState">Birth
+										Place State</label>
+									<div class="col-sm-4">
+										<select id="birthPlaceState" name="birthPlaceState"
+											class="btn btn-media dropdown-toggle"
+											data-ng-model="userClass.basicDetails.birthPlace_state"
+											ng-if="userClass.basicDetails.birthPlace_country">
+											<option value="">Select State</option>
+											<option
+												ng-repeat="(key, state) in countryStateCity[userClass.basicDetails.birthPlace_country]"
+												ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
+										</select>
+
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="birthPlaceCity">Birth
+										Place City</label>
+									<div class="col-sm-4">
+										<select id="birthPlaceCity" name="birthPlaceCity"
+											class="btn btn-media dropdown-toggle"
+											data-ng-model="userClass.basicDetails.birthPlace_city"
+											ng-if="userClass.basicDetails.birthPlace_state">
+											<option value="">Select State</option>
+											<option
+												ng-repeat="(key, city) in countryStateCity[userClass.basicDetails.birthPlace_country][userClass.basicDetails.birthPlace_state]"
+												ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
+										</select>
+
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div>
+									<script>
+												$('#isVisa')
+														.change(
+																function() {
+																	$(
+																			"#visaTextSrc")
+																			.prop(
+																					"disabled",
+																					!$(
+																							this)
+																							.is(
+																									':checked'));
+																});
+											</script>
+									<label class="col-sm-2 control-label" for="isVisa">VISA
+										Number</label>
+									<div class="col-sm-3">
+										<label class="checkbox">Do you have VISA ? <input
+											type="checkbox" id="isVisa" name="isVisa">
+										</label> <input id="visaTextSrc" name="visaTextSrc"
+											class="form-control " disabled="" type="text"
+											ng-model="userClass.basicDetails.visaDetails"
+											placeholder="Enter your VISA Number">
+									</div>
+								</div>
+								<div>
+									<script>
+												$('#isPassPort')
+														.change(
+																function() {
+																	$(
+																			"#passportTextSrc")
+																			.prop(
+																					"disabled",
+																					!$(
+																							this)
+																							.is(
+																									':checked'));
+																});
+											</script>
+									<label class="col-sm-2 control-label" for="isPassPort">Passport
+										Number</label>
+									<div class="col-sm-3">
+										<label class="checkbox">Do you have Passport ? <input
+											type="checkbox" id="isPassPort" name="isPassPort">
+										</label> <input id="passportTextSrc" name="passportTextSrc"
+											class="form-control" disabled="" type="text"
+											ng-model="userClass.basicDetails.passportNumber"
+											placeholder="Enter your Passport Number">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div>
+									<script>
+												$('#isPan')
+														.change(
+																function() {
+																	$(
+																			"#panTextSrc")
+																			.prop(
+																					"disabled",
+																					!$(
+																							this)
+																							.is(
+																									':checked'));
+																});
+											</script>
+									<label class="col-sm-2" for="smsEnb">PAN Number</label>
+									<div class="col-sm-3">
+										<label class="checkbox">Do you have PAN Number ? <input
+											type="checkbox" id="isPan" name="isPan">
+										</label> <input id="panTextSrc" name="panTextSrc" class="form-control"
+											disabled="" type="text"
+											ng-model="userClass.basicDetails.panNumber"
+											placeholder="Enter your PAN Number">
+									</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label" for="isResvrdCat">Reserved
+										Category</label>
+									<div class="col-sm-3">
+										<label class="checkbox">Reserved Category? <input
+											type="checkbox" id="isResvrdCat" name="isResvrdCat"
+											ng-model="resrvrdCatTextSrc">
+										</label> <input id="resrvrdCatTextSrc" name="resrvrdCatTextSrc"
+											class="form-control" ng-disabled="!resrvrdCatTextSrc"
+											ng-checked="!!otherResvrdCat && !resrvrdCatTextSrc"
+											ng-model="otherResvrdCat" type="text"
+											placeholder="Please mention Category">
+									</div>
+
+								</div>
+
+							</div>
+							<br>
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label"
+										for="isPhysicallyHandicapped">Physically Challenged</label>
+									<div class="col-sm-3">
+										<input type="checkbox" id="isPhysicallyHandicapped"
+											ng-model="userClass.basicDetails.isPhysicallyHandicapped">
+									</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label"
+										for="isEconomicallyBackward">Economically Challenged</label>
+									<div class="col-sm-3">
+										<input type="checkbox" id="isEconomicallyBackward"
+											ng-model="userClass.basicDetails.isEconomicallyBackward">
+									</div>
+								</div>
+							</div>
+
+
+							<br>
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="smsEnb">Enable
+										SMS Alerts </label>
+									<div class="col-sm-3">
+										<input type="checkbox" id="smsEnb"
+											ng-model="userClass.basicDetails.isSMSEnabled">
+									</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label" for="mailEnb">Enable
+										Email Alerts </label>
+									<div class="col-sm-3">
+										<input type="checkbox" id="mailEnb"
+											ng-model="userClass.basicDetails.isEmailEnabled">
+									</div>
+								</div>
+							</div>
+							<br>
+						<div class="row"><br></div>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+		<div class="row setup-content" id="step-5">
+			<div class="col-xs-12">
+				<div class="col-md-12 well">
+					<fieldset>
+						<div class="row">
+							<script>
+										$("select[name=validation-select]")
+												.change(
+														function() {
+															if (this.value == "2")
+																$(
+																		"input[name=parentsPhone]")
+																		.prop(
+																				"disabled",
+																				false);
+															else
+																$(
+																		"input[name=parentsPhone]")
+																		.prop(
+																				"disabled",
+																				true);
+														}).change();
+									</script>
+							<label for="validation-select" class="col-sm-4 control-label">Account
+								Type</label>
+							<div class="col-sm-8">
+								<select id="validation-select" name="validation-select"
+									class="btn btn-media dropdown-toggle"
+									ng-model="userClass.basicDetails.userType">
+									<option value="">Select Account Type !</option>
+									<option value="1">Teacher</option>
+									<option value="2">Student</option>
+									<option value="3">Parent</option>
+									<option value="4">Staff</option>
+									<option value="5">Other</option>
+								</select>
+							</div>
+						</div>
+						<br>
+						<!--  
+								<div class="form-group">
+									<label class="col-sm-4 control-label" for="parentsPhone">Parent's
+										Phone Number</label>
+									<div class="col-sm-8">
+										<input type="text" id="parentsPhone" name="parentsPhone"
+											placeholder="What's your Parent's Phone Number."
+											class="form-control" title="Phone Number is required !"
+											required>
+									</div>
+								</div>
+ -->
+						<div class="row">
+							<label class="col-sm-4 control-label" for="inputUsername">Username</label>
+							<div class="col-sm-4">
+								<input type="text" id="inputUsername"
+									placeholder="What's your user name" class="form-control"
+									title="User Name is required !" required
+									ng-model="userClass.basicDetails.userName" />
+
+							</div>
+							<div>
+								<!--  <div ng-if="userAvailable.length ==0">div</div>  -->
+								<span ng-if="userAvailable == 0">{{userAvailable['userName']}}
+									is Available</span> <span ng-if="userAvailable != 0"> is not
+									Available !</span>
+								<button class="btn" ng-click="getUserNameAvailabity()">Available
+									?</button>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<label class="col-sm-4 control-label" for="inputPassword">Password</label>
+							<div class="col-sm-8">
+								<input type="password" id="inputPassword" name="inputPassword"
+									placeholder="Password - keep it secret." class="form-control"
+									title="Password is required !" required
+									ng-model="userClass.basicDetails.hashPassword"
+									data-ng-class="{'ng-invalid':registerUserForm.confirmPassword.$error.match}" />
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<label class="col-sm-4 control-label" for="confirmPassword">Re
+								- Enter Password</label>
+							<div class="col-sm-8">
+								<input type="password" id="confirmPassword"
+									name="confirmPassword" placeholder="Re - enter your password"
+									class="form-control" title="Password is required !" required
+									ng-model="userClass.basicDetails.hashPasswordConfirm"
+									data-match="userClass.basicDetails.hashPassword" />
+							</div>
+							<div data-ng-show="registerUserForm.confirmPassword.$error.match">Passwords
+								do not match!</div>
+						</div>
+						<br>
+						<div class="row"><br></div>
+						<br>
+						<div class="row"><br></div>
+						<br>
+						<div class="row"><br></div>
+						<br>
+						<div class="row"><br></div>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12">
+			<button class="btn btn-primary" ng-click="prev()" ng-if="step!=0">Prev</button>
+			<button class="btn btn-primary pull-right" ng-click="next()"
+				ng-show="counter!=(steps.length-1)">Next</button>
+			<button class="btn btn-primary pull-right" ng-click="next()"
+				ng-show="counter==(steps.length-1)">Add User</button>
+
+		</div>
+	</div>
+
+
+
+
+</div>
+
