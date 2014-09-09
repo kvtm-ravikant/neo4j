@@ -33,7 +33,7 @@ module.exports=function (){
         isFromReservedCategory:false,
         isPhysicallyHandicapped:false,
         sex:"",
-        softeDelete:false,
+        softDelete:false,
         languages_others:[],
         profileImagePath:"",
         isEconomicallyBackward:false,

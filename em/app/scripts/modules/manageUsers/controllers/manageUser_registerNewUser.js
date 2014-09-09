@@ -45,7 +45,58 @@ educationMediaApp.controller('manageUser_registerNewUser',function($scope, $http
 	$scope.openDateofBirth = function() {
 		$('#dob').focus();
 		};
+    $scope.readURL=function (input) {
 
+
+        if (input.files	&& input.files[0]) {
+            var file = input.files[0];
+            if(!file){
+                appUtils.showError("Please choose a .png  or .jpg or .jpeg file.");
+                $(input).val("");
+                return;
+            }
+            var fileName = file.name;
+            if (file.name.indexOf("png") < 0  && file.name.indexOf("jpg") < 0 && file.name.indexOf("jepg") < 0) {
+                $(input).val("");
+                appUtils.showError("Please choose a .png  or .jpg or .jpeg file.");
+                return;
+            }
+            if (file.size>10000) {
+                $(input).val("");
+                appUtils.showError("Please choose file of size less than 5KB.");
+                return;
+            }
+            try{
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $scope.userClass.basicDetails.profileImagePath=e.target.result;
+                    console.log("$scope.userClass.basicDetails.profileImagePath",$scope.userClass.basicDetails.profileImagePath);
+                    $scope.$apply();
+                }
+                reader.readAsDataURL(file);
+            }catch(e){
+                var uploadCSV = new FormData();
+                uploadCSV.append("imageFile", file);
+                $http.post("/application/readImage", uploadCSV, {
+                    withCredentials: true,
+                    headers: {'Content-Type': undefined },
+                    transformRequest: angular.identity
+                }).success(function(dataResponse, status, headers,config) {
+                    // success
+                    appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+                        console.log("registerUser - dataResponse",dataResponse)
+                        $scope.userClass.basicDetails.profileImagePath = dataResponse.responseData;
+                        $scope.$apply();
+                    });
+                }).error(function(data, status, headers, config) {
+                    // error
+                    console.log("Error", data, status,headers, config);
+
+                });
+            }
+
+        }
+    }
 	$scope.userDataTest = [ {
 		"accountInfo" : "put account info fields here"
 	}, {
