@@ -78,9 +78,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         }).error(function(data,status,headers,config){
             //error
             console.log("Error",data,status,headers,config);
-
         });
-       
     }
     
     /*

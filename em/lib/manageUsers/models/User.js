@@ -228,7 +228,7 @@ function fillUserDefaultValues(userBasicDetails){
 module.exports.updateUser = function(userObj,loggedInUser,res) {
 	  try{
 	        var responseObj = new Utils.Response();
-	        var defaultErrorMsg="Failed to add user. Please contact administrator.";
+	        var defaultErrorMsg="Failed to update user. Please contact administrator.";
 
 	        var findUserQuery = 'MATCH (n:User{userName:"' + userObj.basicDetails.userName + '"})  RETURN n';
 	        db.cypherQuery("findUserQuery",findUserQuery, function(err, result) {
@@ -255,7 +255,7 @@ module.exports.updateUser = function(userObj,loggedInUser,res) {
                     db.updateNode(userObj.socialNetwork._id, userObj.socialNetwork, function(err, node){
                         if(err) throw err;
                         node === true?console.log("socialNetwork details updated"):console.log("Failed to update socialNetwork details");
-                        res.json(responseObj);
+                        res.json(responseObj)
                     });
 
 	            }else{
@@ -268,6 +268,44 @@ module.exports.updateUser = function(userObj,loggedInUser,res) {
 	    }
 }
 
+/*
+ * Delete User details
+ */
+module.exports.deleteUser = function(userObj,loggedInUser,res) {
+	  try{
+	        var responseObj = new Utils.Response();
+	        var defaultErrorMsg="Failed to update user. Please contact administrator.";
+	        
+	        var findUserQuery = 'MATCH (n:User{userName:"' + userObj.basicDetails.userName + '"})  RETURN n';
+	        var deleteQuery='MATCH (n:User{userName:"' + userObj.basicDetails.userName + '"}) set n.softDelete = FALSE return n';
+	        
+	        console.log("deleteUser : ", userObj.basicDetails.userName, loggedInUser);
+	        
+	        db.cypherQuery("findUserQuery",findUserQuery, function(err, result) {
+	            console.log("findUserQuery",err, result)
+	            if(err || !result || (result && result.data && result.data.length==0)){
+                    var currentTimestamp=(new Date()).getTime();
+                    userObj.basicDetails.updatedAt=currentTimestamp;
+
+                    db.cypherQuery(deleteQuery, function(err, reply) {
+                    	if (!err) {
+                			responseObj.responseData = reply;
+                			res.json(responseObj);
+                		} else {
+                			responseObj.error = true;
+                			responseObj.errorMsg = "No Data found.";
+                			res.json(responseObj);
+                		}	
+                    });
+	            }else{
+	                Utils.defaultErrorResponse(res,defaultErrorMsg);
+	            }
+	        });//findUserQuery end
+	    }catch(e){
+	        console.log("updateUser",e);
+	        Utils.defaultErrorResponse(res,defaultErrorMsg);
+	    }
+}
 /* Get all Users from USER */
 module.exports.getAllUsers = function(res) {
 	var queryAllUsers = "MATCH (n:User) RETURN n LIMIT 25";

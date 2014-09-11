@@ -68,6 +68,13 @@ module.exports=function(app,Utils){
         console.log("requestobj - /manage-users/users/updateUser",requestobj);
         userMS.updateUser(requestobj,loggedInUser,res);
     });
+    /* Delete User */
+    app.post("/manage-users/users/deleteUser",Utils.ensureAuthenticated,function(req,res){
+        var requestobj=req.body;
+        var loggedInUser=req.session.userDetails;
+        console.log("requestobj - /manage-users/users/deleteUser",requestobj);
+        userMS.deleteUser(requestobj,loggedInUser,res);
+    });
     /* Search the User from textBox*/
     app.post("/manage-users/searchUser/",Utils.ensureAuthenticated,function(req,res){
         var requestobj=req.body.userName;
