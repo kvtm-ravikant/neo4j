@@ -976,4 +976,15 @@ h2,p{
     position:relative;
     z-index:5;
 }
+.control-label{
+    text-align: left;
+}
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    color: #ffffff;
+    background-color: #428bca;
+    border-radius:0px;
+}
+.thumbnail{
+    border-radius:0px;
+}
 

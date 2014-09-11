@@ -93,7 +93,7 @@
 									<label for="dob" class="col-sm-2 control-label">Date of
 										Birth </label>
 									<div class="col-sm-4">
-										<input type="text" id="dob" class="em-datepicker datepicker"
+										<input type="text" id="dob" class="em-datepicker datepicker form-control"
 											placeholder="Enter Date of Birth"
 											ng-model="userClass.basicDetails.DOB">
 									</div>
@@ -163,7 +163,7 @@
 										Tongue </label>
 									<div class="col-sm-4">
 										<select id="motherTng" name="motherTng"
-											class="btn btn-media dropdown-toggle"
+											class="btn btn-media dropdown-toggle form-control"
 											data-ng-model="userClass.basicDetails.languages_motherTongue">
 											<option value="">Select Mother Tounge</option>
 											<option ng-repeat="(key, value) in languages" value="{{key}}">{{value.___name___}}</option>
@@ -175,7 +175,7 @@
 										Language </label>
 									<div class="col-sm-4">
 										<select id="othrLang" name="othrLang"
-											class="btn btn-media dropdown-toggle"
+											class="btn btn-media dropdown-toggle form-control"
 											data-ng-model="userClass.basicDetails.languages_others">
 											<option value="">Select Other Language</option>
 											<option ng-repeat="(key, value) in languages" value="{{key}}">{{value.___name___}}</option>
@@ -189,7 +189,7 @@
 									<label class="col-sm-2 control-label" for="religion">Religion</label>
 									<div class="col-sm-4">
 										<select id="religion" name="religion"
-											class="btn btn-media dropdown-toggle"
+											class="btn btn-media dropdown-toggle form-control"
 											data-ng-model="userClass.basicDetails.religionId">
 											<option value="">Select Religion</option>
 											<option ng-repeat="(key, value) in religionCaste"
@@ -204,7 +204,7 @@
 									<label class="col-sm-2 control-label" for="caste">Caste</label>
 									<div class="col-sm-4">
 										<select id="caste" name="caste"
-											class="btn btn-media dropdown-toggle"
+											class="btn btn-media dropdown-toggle form-control"
 											data-ng-model="userClass.primaryAddress.state"
 											ng-if="userClass.basicDetails.religionId">
 											<option value="">Select Caste</option>
@@ -299,9 +299,9 @@
 							<div>
 								<label class="col-sm-2 control-label" for="cntState">State
 								</label>
-								<div class="col-sm-2">
+								<div class="col-sm-4">
 									<select id="cntState" name="cntState"
-										class="btn btn-media dropdown-toggle"
+										class="btn btn-media dropdown-toggle form-control"
 										data-ng-model="userClass.primaryAddress.state"
 										ng-if="userClass.primaryAddress.country">
 										<option value="">Select State</option>
@@ -317,9 +317,9 @@
 							<div>
 								<label class="col-sm-2 control-label" for="cntCity">City
 								</label>
-								<div class="col-sm-2">
+								<div class="col-sm-4">
 									<select id="cntCity" name="cntCity"
-										class="btn btn-media dropdown-toggle"
+										class="btn btn-media dropdown-toggle form-control"
 										data-ng-model="userClass.primaryAddress.city"
 										ng-if="userClass.primaryAddress.state">
 										<option value="">Select State</option>
@@ -420,9 +420,9 @@
 						<div class="row">
 							<div>
 								<label class="col-sm-2 control-label" for="secCountry">Country</label>
-								<div class="col-sm-2">
+								<div class="col-sm-4">
 									<select id="secCountry" name="secCountry"
-										class="btn btn-media dropdown-toggle"
+										class="btn btn-media dropdown-toggle form-control"
 										data-ng-model="userClass.SecondaryAddress.country">
 										<option value="">Select Country</option>
 										<option ng-repeat="(key, value) in countryStateCity"
@@ -433,9 +433,9 @@
 							<div>
 								<label class="col-sm-2 control-label" for="secState">State
 								</label>
-								<div class="col-sm-2">
+								<div class="col-sm-4">
 									<select id="secState" name="secState"
-										class="btn btn-media dropdown-toggle"
+										class="btn btn-media dropdown-toggle form-control"
 										data-ng-model="userClass.SecondaryAddress.state"
 										ng-if="userClass.SecondaryAddress.country">
 										<option value="">Select State</option>
@@ -535,7 +535,7 @@
 										Place City</label>
 									<div class="col-sm-4">
 										<select id="birthPlaceCity" name="birthPlaceCity"
-											class="btn btn-media dropdown-toggle"
+											class="btn btn-media dropdown-toggle form-control"
 											data-ng-model="userClass.basicDetails.birthPlace_city"
 											ng-if="userClass.basicDetails.birthPlace_state">
 											<option value="">Select State</option>
@@ -564,7 +564,7 @@
 																									':checked'));
 																});
 											</script>
-									<label class="col-sm-2 control-label" for="isVisa">VISA
+									<label class="col-sm-2 control-label" style="margin-top:20px" for="isVisa">VISA
 										Number</label>
 									<div class="col-sm-3">
 										<label class="checkbox">Do you have VISA ? <input
@@ -590,7 +590,7 @@
 																									':checked'));
 																});
 											</script>
-									<label class="col-sm-2 control-label" for="isPassPort">Passport
+									<label class="col-sm-2 control-label" style="margin-top:20px" for="isPassPort">Passport
 										Number</label>
 									<div class="col-sm-3">
 										<label class="checkbox">Do you have Passport ? <input
@@ -618,18 +618,18 @@
 																									':checked'));
 																});
 											</script>
-									<label class="col-sm-2" for="smsEnb">PAN Number</label>
+									<label class="col-sm-2" style="margin-top:20px" for="smsEnb">PAN Number</label>
 									<div class="col-sm-3">
-										<label class="checkbox">Do you have PAN Number ? <input
+										<label class="checkbox">Doyou have PAN Number? <input
 											type="checkbox" id="isPan" name="isPan">
 										</label> <input id="panTextSrc" name="panTextSrc" class="form-control"
-											disabled="" type="text"
+											disabled="" type="text" style="margin-top:-20px"
 											ng-model="userClass.basicDetails.panNumber"
 											placeholder="Enter your PAN Number">
 									</div>
 								</div>
 								<div>
-									<label class="col-sm-2 control-label" for="isResvrdCat">Reserved
+									<label class="col-sm-2 control-label" style="margin-top:20px" for="isResvrdCat">Reserved
 										Category</label>
 									<div class="col-sm-3">
 										<label class="checkbox">Reserved Category? <input
@@ -651,7 +651,7 @@
 									<label class="col-sm-2 control-label"
 										for="isPhysicallyHandicapped">Physically Challenged</label>
 									<div class="col-sm-3">
-										<input type="checkbox" id="isPhysicallyHandicapped"
+										<input type="checkbox" clas="form-control" id="isPhysicallyHandicapped" style="margin-top:10px"
 											ng-model="userClass.basicDetails.isPhysicallyHandicapped">
 									</div>
 								</div>
@@ -659,7 +659,7 @@
 									<label class="col-sm-2 control-label"
 										for="isEconomicallyBackward">Economically Challenged</label>
 									<div class="col-sm-3">
-										<input type="checkbox" id="isEconomicallyBackward"
+										<input type="checkbox" clas="form-control" id="isEconomicallyBackward" style="margin-top:10px"
 											ng-model="userClass.basicDetails.isEconomicallyBackward">
 									</div>
 								</div>
@@ -672,7 +672,7 @@
 									<label class="col-sm-2 control-label" for="smsEnb">Enable
 										SMS Alerts </label>
 									<div class="col-sm-3">
-										<input type="checkbox" id="smsEnb"
+										<input type="checkbox" id="smsEnb" clas="form-control"
 											ng-model="userClass.basicDetails.isSMSEnabled">
 									</div>
 								</div>
@@ -680,7 +680,7 @@
 									<label class="col-sm-2 control-label" for="mailEnb">Enable
 										Email Alerts </label>
 									<div class="col-sm-3">
-										<input type="checkbox" id="mailEnb"
+										<input type="checkbox" id="mailEnb" style="margin-top:10px" clas="form-control"
 											ng-model="userClass.basicDetails.isEmailEnabled">
 									</div>
 								</div>
@@ -714,11 +714,11 @@
 																				true);
 														}).change();
 									</script>
-							<label for="validation-select" class="col-sm-4 control-label">Account
+							<label for="validation-select" class="col-sm-2 control-label">Account
 								Type</label>
 							<div class="col-sm-8">
 								<select id="validation-select" name="validation-select"
-									class="btn btn-media dropdown-toggle"
+									class="btn btn-media dropdown-toggle form-control"
 									ng-model="userClass.basicDetails.userType">
 									<option value="">Select Account Type !</option>
 									<option value="1">Teacher</option>
@@ -743,8 +743,8 @@
 								</div>
  -->
 						<div class="row">
-							<label class="col-sm-4 control-label" for="inputUsername">Username</label>
-							<div class="col-sm-4">
+							<label class="col-sm-2 control-label" for="inputUsername">Username</label>
+							<div class="col-sm-8">
 								<input type="text" id="inputUsername"
 									placeholder="What's your user name" class="form-control"
 									title="User Name is required !" required
@@ -762,7 +762,7 @@
 						</div>
 						<br>
 						<div class="row">
-							<label class="col-sm-4 control-label" for="inputPassword">Password</label>
+							<label class="col-sm-2 control-label" for="inputPassword">Password</label>
 							<div class="col-sm-8">
 								<input type="password" id="inputPassword" name="inputPassword"
 									placeholder="Password - keep it secret." class="form-control"
@@ -773,7 +773,7 @@
 						</div>
 						<br>
 						<div class="row">
-							<label class="col-sm-4 control-label" for="confirmPassword">Re
+							<label class="col-sm-2 control-label" for="confirmPassword">Re
 								- Enter Password</label>
 							<div class="col-sm-8">
 								<input type="password" id="confirmPassword"
