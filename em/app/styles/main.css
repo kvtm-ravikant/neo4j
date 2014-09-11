@@ -997,4 +997,14 @@ h2,p{
     background-color: white;
     margin-top:0px;
 }
+.profile-image{
+    cursor:pointer;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+
+}
+.profile-image:hover{
+    opacity: .7;
+}
 

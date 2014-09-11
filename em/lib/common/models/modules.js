@@ -54,20 +54,20 @@ function initAppList(){
             'abstract':true,
             'accessList':["*"],
             "childLinks":[
-                {
+               /* {
                     'state': 'manageUser.registerUser',
                     'name':'New User',
                     'collapse':false,
                     'icon':"user",
                     'accessList':["*"]
-                },
+                },*/
                 {
                     'state': 'manageUser.updateUser',
                     'name':'Update User',
                     'collapse':false,
                     'icon':"updUser",
                     'accessList':["*"]
-                },
+                }/*,
                 {
                     'state': 'manageUser.deleteUser',
                     'name':'Delete User',
@@ -81,7 +81,7 @@ function initAppList(){
                     'collapse':false,
                     'icon':"erase",
                     'accessList':["*"]
-                }
+                }*/
             ]
         },
 

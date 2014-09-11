@@ -52,7 +52,7 @@
 
     <div class="row" > <!-- ng-if="allUserClass.data" ng-show="currentUserDetails" -->
     <div class="col-md-12">
-    <div class="col-lg-10 rightdiv">
+    <div class="col-md-10">
     <ul class="nav nav-tabs" id="myTab">
         <li class="active"><a href="#basicInfo" data-toggle="tab">Basic
             Details Info</a></li>
@@ -112,10 +112,17 @@
                 <label for="dob" class="col-sm-3 control-label">Date of
                     Birth </label>
                 <div class="col-sm-8">
+                    <div class="input-group">
+                        <input type="text" id="userDOB" ng-model="userClass.basicDetails.DOB" class="em-datepicker datepicker form-control" placeholder="Date of Birth">
+                        <span class="input-group-addon cursor-pointer" ng-click="openUserDOB()"><i class="fa fa-calendar"></i></span>
+
+                    </div>
+                </div>
+                <!--<div class="col-sm-8">
                     <input type="text" id="dob" class="em-datepicker datepicker form-control"
                            ng-model="userSelectedClass.basicDetails.DOB">
-                    <!-- input type="text" class="form-control" id="dob" placeholder="Enter Password " -->
-                </div>
+                    &lt;!&ndash; input type="text" class="form-control" id="dob" placeholder="Enter Password " &ndash;&gt;
+                </div>-->
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Update Profile
@@ -535,8 +542,14 @@
     </div>
     </div>
     </div>
+    <div class="col-md-2">
+        <img ng-if="userSelectedClass.basicDetails.profileImagePath" class="profile-image" src="{{userSelectedClass.basicDetails.profileImagePath}}" ng-click="openFileBrowser()" width="100%">
+        <img ng-if="!userSelectedClass.basicDetails.profileImagePath" class="cursor-ponter" src="images/userProfile/male.png" ng-click="openFileBrowser()" width="100%">
+        <input class="control-label hide" height="0" width="0" type='file' id="imageUploader" accept="image/*" image="image2" onchange="angular.element(this).scope().readURL(this)"  resize-max-width="150" resize-quality="0.7"/>
+    </div>
 
     </div>
+
 
 
     </div>

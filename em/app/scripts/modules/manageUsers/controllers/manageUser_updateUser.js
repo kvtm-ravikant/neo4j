@@ -5,7 +5,18 @@
 educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,iconClassMapping,appUtils) {
 
     $scope.text="manageUser_updateUser";
-    
+    $('.datepicker').datepicker(
+        {format: 'dd/mm/yyyy',
+            language: 'en',
+            autoclose: true,
+            weekStart: 0,
+            todayHighlight:true
+        });
+
+    $scope.openUserDOB=function(){
+        console.log("date picker");
+        $('#userDOB').focus();
+    };
 	/* UserClass POJO Data Model */
 	$http.get('/manage-users/userClassData').success(
 			function(dataResponse, status, headers, config) {
@@ -148,5 +159,62 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         
         $scope.currentUserDetails=null;
         
+    }
+    $scope.openFileBrowser=function(){
+        $('#imageUploader').click();
+    }
+    //image upload functionality
+    $scope.readURL=function (input) {
+
+
+        if (input.files	&& input.files[0]) {
+            var file = input.files[0];
+            if(!file){
+                appUtils.showError("Please choose a .png  or .jpg or .jpeg file.");
+                $(input).val("");
+                return;
+            }
+            var fileName = file.name;
+            if (file.name.indexOf("png") < 0  && file.name.indexOf("jpg") < 0 && file.name.indexOf("jepg") < 0) {
+                $(input).val("");
+                appUtils.showError("Please choose a .png  or .jpg or .jpeg file.");
+                return;
+            }
+            if (file.size>30000) {
+                $(input).val("");
+                appUtils.showError("Please choose file of size less than 30KB.");
+                return;
+            }
+            try{
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $scope.userSelectedClass.basicDetails.profileImagePath=e.target.result;
+                    console.log("$scope.userClass.basicDetails.profileImagePath",$scope.userSelectedClass.basicDetails.profileImagePath);
+                    $scope.$apply();
+                }
+                reader.readAsDataURL(file);
+            }catch(e){
+                var uploadCSV = new FormData();
+                uploadCSV.append("imageFile", file);
+                $http.post("/application/readImage", uploadCSV, {
+                    withCredentials: true,
+                    headers: {'Content-Type': undefined },
+                    transformRequest: angular.identity
+                }).success(function(dataResponse, status, headers,config) {
+                    // success
+                    appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+                        console.log("registerUser - dataResponse",dataResponse)
+                        $scope.userSelectedClass.basicDetails.profileImagePath = dataResponse.responseData;
+                        $scope.$apply();
+                    });
+                }).error(function(data, status, headers, config) {
+                    // error
+                    console.log("Error", data, status,headers, config);
+
+                });
+            }
+
+        }
+
     }
 });
