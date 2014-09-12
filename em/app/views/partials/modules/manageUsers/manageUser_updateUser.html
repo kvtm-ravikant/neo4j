@@ -274,7 +274,7 @@
 														data-ng-model="userSelectedClass.primaryAddress.country">
 														<option value="">Select Country</option>
 														<option ng-repeat="(key, value) in countryStateCity"
-															value="{{key}}">{{value.___name___}}</option>
+															value="{{key}}" ng-selected="key == userSelectedClass.primaryAddress.country">{{value.___name___}}</option>
 													</select>
 												</div>
 											</div>
@@ -289,7 +289,8 @@
 														<option value="">Select State</option>
 														<option
 															ng-repeat="(key, state) in countryStateCity[userSelectedClass.primaryAddress.country]"
-															ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
+															ng-if="key!='___name___'" value="{{key}}"
+                                                            ng-selected="key == userSelectedClass.primaryAddress.state">{{state.___name___}}</option>
 													</select>
 												</div>
 											</div>
@@ -306,7 +307,8 @@
 														<option value="">Select State</option>
 														<option
 															ng-repeat="(key, city) in countryStateCity[userSelectedClass.primaryAddress.country][userSelectedClass.primaryAddress.state]"
-															ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
+															ng-if="key!='___name___'" value="{{key}}"
+                                                            ng-selected="key == userSelectedClass.primaryAddress.city">{{city.___name___}}</option>
 													</select>
 												</div>
 											</div>

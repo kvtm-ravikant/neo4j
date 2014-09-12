@@ -267,8 +267,8 @@ function resolveDataType(value,dataType){
 }
 function getDBInstance(){
 
-    //var configFileName="../../conf";
-    var configFileName="../../../../../conf";
+    var configFileName="../../conf";
+    //var configFileName="../../../../../conf";
     var filePath=path.resolve(configFileName,"serverConfig");
     console.log("filePath",filePath);
     var serverConfig=JSON.parse(fs.readFileSync(filePath,'utf8'));

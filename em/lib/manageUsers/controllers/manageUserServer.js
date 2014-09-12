@@ -95,10 +95,14 @@ module.exports=function(app,Utils){
     });
     app.post("/manage-users/uploadUserCSV",Utils.ensureAuthenticated,function(req,res){
         console.log("/manage-users/uploadUserCSV");
+
         try{
+            var loggedInUser=req.session.userDetails;
             Utils.readUploadedCsv(req,res,function(responseObj){
                 console.log("responseObj");
-                res.send(responseObj);
+                if(!responseObj.error){
+                    userMS.batchInsertUser(responseObj.responseData,loggedInUser,res);
+                }else res.send(responseObj);
             });
         }catch(e){
             console.log("/manage-users/uploadUserCSV",e);
