@@ -1007,4 +1007,30 @@ h2,p{
 .profile-image:hover{
     opacity: .7;
 }
+#myTab li.active>a {
+    color: #438EA9;
+    border-radius: 0px;
+    background-color:whitesmoke;
+}
+#myTab li>a:hover {
+    background-color:#dddddd;
+    color:#555;
+    border:1px solid #999;
+}
+.breadcrumb {
+    padding: 8px 15px 0px 0px;
+    font-size: 15px;
+}
+.breadcrumb > li + li:before {
+    padding: 0 5px;
+    color: #cccccc;
+    content: ">";
+    font-weight:600;
+}
+.tab-content{
+    background-color:whitesmoke;
+    border-bottom: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+}
 

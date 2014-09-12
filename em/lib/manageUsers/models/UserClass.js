@@ -1,6 +1,6 @@
-var neo4j=require("node-neo4j");
+
 var Utils=require("../../common/Utils/Utils.js");
-var db=new neo4j("http://localhost:7474");
+var db=Utils.getDBInstance();
 
 /**
  * Created by ravikant on 21/6/14.

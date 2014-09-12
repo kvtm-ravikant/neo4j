@@ -6,10 +6,7 @@
 angular.module('educationMediaApp').controller('SideNavBarCtrl', function ($scope,$http, $location,iconClassMapping,appUtils) {
     $scope.iconClassMapping=iconClassMapping;
     $scope.toggleMenu=function(obj,value,$event){
-       console.log("toggleMenu",obj,$event);
        obj.collapse=!value;
-
-
     }
     $http.get('/getSidebarMenuList').success(function(dataResponse,status,headers,config){
         //success

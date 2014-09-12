@@ -1,13 +1,10 @@
 /**
  * Created by Pinki Boora on 5/23/14.
  */
-var neo4j=require("node-neo4j");
 var UserClass=require("../../manageUsers/models/UserClass.js");
 var user=new UserClass();
-var db=new neo4j("http://localhost:7474");
 var Utils=require("../../common/Utils/Utils.js");
 var appList=require("../../common/models/modules.js").getAppList();
-console.log("db",db);
 
 module.exports=function(app){
     app.get("/login",function(req,res){
@@ -109,7 +106,7 @@ function filterMenuItems(menuList,userType){
     return newMenuList;
 }
 
-function createSchool(){
+/*function createSchool(){
     //school id [school name 3 char]:[board]:[year]:[pin code]
     var schoolIdVal="dav:cbse:1990:122001";
     var selectquery='MATCH (n:School{schoolId:"'+schoolIdVal+'"})  RETURN n';
@@ -129,7 +126,7 @@ function createSchool(){
 
     })
 
-}
+}*/
 //select and delete
 /*var selectquery='MATCH (n:School{schoolId:"dav:cbse:1990:122001"})  RETURN n';
 db.cypherQuery(selectquery, function(err, result){

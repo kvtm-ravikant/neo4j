@@ -10,7 +10,7 @@ function initAppList(){
        {
             'state': 'dashboard',
             'name':'Dashboard',
-            'collapse':false,
+            'collapse':true,
             'icon':"dashboard",
             'abstract':false,
             'accessList':["*"]
@@ -26,21 +26,21 @@ function initAppList(){
                 {
                     'state': 'manageAttendance.takeAttendance',
                     'name':'Take Attendence',
-                    'collapse':false,
+                    'collapse':true,
                     'icon':"sitemap",
                     'accessList':["0","2"]
                 },
                 {
                     'state': 'manageAttendance.studentReport',
                     'name':'Attendence Report',
-                    'collapse':false,
+                    'collapse':true,
                     'icon':"sitemap",
                     'accessList':["1","3"]
                 },
                 {
                     'state': 'manageAttendance.teacherReport',
                     'name':'Attendence Report',
-                    'collapse':false,
+                    'collapse':true,
                     'icon':"sitemap",
                     'accessList':["0","2"]
                 }
@@ -57,28 +57,28 @@ function initAppList(){
                /* {
                     'state': 'manageUser.registerUser',
                     'name':'New User',
-                    'collapse':false,
+                    'collapse':true,
                     'icon':"user",
                     'accessList':["*"]
                 },*/
                 {
                     'state': 'manageUser.updateUser',
                     'name':'Update User',
-                    'collapse':false,
+                    'collapse':true,
                     'icon':"updUser",
                     'accessList':["*"]
                 }/*,
                 {
                     'state': 'manageUser.deleteUser',
                     'name':'Delete User',
-                    'collapse':false,
+                    'collapse':true,
                     'icon':"erase",
                     'accessList':["*"]
                 },
                 {
                     'state': 'manageUser.testUser',
                     'name':'Test User',
-                    'collapse':false,
+                    'collapse':true,
                     'icon':"erase",
                     'accessList':["*"]
                 }*/
@@ -98,28 +98,28 @@ function initAppList(){
                 {
                     'state': 'libraryManagement.searchBook',
                     'name':'Search',
-                    'collapse':false,
+                    'collapse':true,
                     'icon':"search",
                     'accessList':["*"]
                 },
                  {
                     'state': 'libraryManagement.inventoryBooks',
                     'name':'Inventory',
-                    'collapse':false,
+                    'collapse':true,
                     'icon':"exitin",
                     'accessList':["*"]
                 },
                 {
                     'state': 'libraryManagement.addNewBook',
                     'name':'Add New Title',
-                    'collapse':false,
+                    'collapse':true,
                     'icon':"add",
                     'accessList':["*"]
                 },
                 {
                     'state': 'libraryManagement.addChildBook',
                     'name':'Add Books',
-                    'collapse':false,
+                    'collapse':true,
                     'icon':"add",
                     'accessList':["*"]
                 }
@@ -136,7 +136,7 @@ function initAppList(){
         {
             'state': 'schoolManagement',
             'name':'Manage School',
-            'collapse':false,
+            'collapse':true,
             'icon':"users",
             'accessList':["*"]
         }
