@@ -1034,3 +1034,6 @@ h2,p{
     border-right: 1px solid #dddddd;
 }
 
+.nav > li > a {
+    cursor: pointer;
+}

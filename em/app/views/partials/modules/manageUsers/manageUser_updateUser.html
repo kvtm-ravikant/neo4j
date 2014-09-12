@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-12 topbar">
         <br>
-        <div class="col-md-12">
+        <div class="col-md-9">
             <div class="input-group">
                 <input ng-model="searchUserModel.userName" clear-input
                        class="col-md-12 searchclass" placeholder="Enter User Name"
@@ -17,6 +17,13 @@
 
 					</span>
             </div>
+        </div>
+        <div class="col-md-3">
+
+            <input class="control-label hide" height="0" width="0" type='file' id="csvUploader" onchange="angular.element(this).scope().uploadCsv(this)" />
+            <button class="btn btn-sm btn-inverse pull-right" ng-click="batchAddUser()">Batch Upload</button>
+            <button class="btn btn-sm btn-default pull-right" ng-click="addUserOpenForm()">Add User</button>
+
         </div>
     </div>
 </div>
@@ -33,11 +40,11 @@
                 </thead>
             </div>
             <tbody>
-            <tr ng-repeat="book in allUserClass.data">
-                <td><i class="fa fa-align-justify" href="#modalUpdate" role="button" data-toggle="modal"
-                       ng-click="getUserDetails(book)" ></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+            <tr ng-repeat="user in allUserClass.data">
+                <td><i class="fa fa-align-justify"  role="button" data-toggle="modal"
+                       ng-click="getUserDetails(user)" ></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
                 </td>
-                <td ng-repeat="(key,value) in parentConfig">{{book[key]}}</td>
+                <td ng-repeat="(key,value) in parentConfig">{{user[key]}}</td>
             </tr>
             </tbody>
         </table>
@@ -46,7 +53,7 @@
 <div id="modalUpdate" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3>Update User Details</h3>
+        <h3>{{modalTitle}}</h3>
     </div>
     <div class="modal-body">
 

@@ -35,7 +35,9 @@ module.exports=function(app,Utils){
     });    
     app.get("/manage-users/userClassData",Utils.ensureAuthenticated,function(req,res){
         var user=new UserClass();
-        res.json(user);
+        var responseObj = new Utils.Response();
+        responseObj.responseData=user;
+        res.json(responseObj);
     });
     /* Get all Users from USER */
     app.get("/manage-users/getAllUser",Utils.ensureAuthenticated,function(req,res){

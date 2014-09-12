@@ -114,6 +114,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 //            	  $scope.userSelectedClass =  dataResponse.responseData.data[0];
             	  $scope.userSelectedClass=dataResponse.responseData;
             	  console.log("dataResponse /manage-users/getSelectedUserDetails/ :",user.userName);
+                  $scope.openModal('update');
              
                 console.log("searchUser dataResponse",dataResponse);
 //                $scope.allUserClass=dataResponse.responseData;
@@ -194,9 +195,9 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
                 }
                 reader.readAsDataURL(file);
             }catch(e){
-                var uploadCSV = new FormData();
-                uploadCSV.append("imageFile", file);
-                $http.post("/application/readImage", uploadCSV, {
+                var uploadImg = new FormData();
+                uploadImg.append("imageFile", file);
+                $http.post("/application/readImage", uploadImg, {
                     withCredentials: true,
                     headers: {'Content-Type': undefined },
                     transformRequest: angular.identity
@@ -215,6 +216,34 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             }
 
         }
+
+    }
+    $scope.openModal=function(code){
+        $scope.modalTitle="";
+        code && code=='add'?$scope.modalTitle="Add User":"";
+        code && code=='update'?$scope.modalTitle="Update User":"";
+        code && code=='delete'?$scope.modalTitle="Delete User":"";
+
+        $('#modalUpdate').modal({"backdrop": "static","show":true});
+    }
+    $scope.addUserOpenForm=function(){
+        /* UserClass POJO Data Model */
+        $http.get('/manage-users/userClassData').success(function(dataResponse, status, headers, config) {
+            // success
+            console.log("userClassData", dataResponse);
+            appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+                    $scope.userSelectedClass = dataResponse.responseData;   //User Class userClass.basicDetails.userName //way to access property
+                    console.log("$scope.userClass",
+                        $scope.userSelectedClass);
+                    $scope.openModal("add");
+            });
+
+        }).error(function(data, status, headers, config) {
+            //error
+            console.log("Error", data, status, headers, config);
+        });
+    }
+    $scope.batchAddUser=function(){
 
     }
 });
