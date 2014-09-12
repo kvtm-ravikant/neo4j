@@ -301,7 +301,7 @@ module.exports.deleteUser = function(userObj,loggedInUser,res) {
 	            }
 	        });//findUserQuery end
 	    }catch(e){
-	        console.log("updateUser",e);
+	        console.log("deleteUser",e);
 	        Utils.defaultErrorResponse(res,defaultErrorMsg);
 	    }
 }
