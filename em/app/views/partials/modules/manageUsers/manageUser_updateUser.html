@@ -1,575 +1,664 @@
 <div ng-controller="manageUser_updateUser" class="row" weight="100%">
-<!--  <h1>{{text}}</h1>
+	<!--  <h1>{{text}}</h1>
 -->
-<div class="row">
-    <div class="col-md-12 topbar">
-        <br>
-        <div class="col-md-9">
-            <div class="input-group">
-                <input ng-model="searchUserModel.userName" clear-input
-                       class="col-md-12 searchclass" placeholder="Enter User Name"
-                       class="nodeSearchInputBox" /> <span class="input-group-addon"
-                                                           id="datamodal" data-toggle="popover"> <i
-                    class="fa fa-times"
-                    ng-click="clearSearch();searchUser();getBackToMainUsersList()"></i>&nbsp;|&nbsp;
+	<div class="row">
+		<div class="col-md-12 topbar">
+			<br>
+			<div class="col-md-9">
+				<div class="input-group">
+					<input ng-model="searchUserModel.userName" clear-input
+						class="col-md-12 searchclass" placeholder="Enter User Name"
+						class="nodeSearchInputBox" /> <span class="input-group-addon"
+						id="datamodal" data-toggle="popover"> <i
+						class="fa fa-times"
+						ng-click="clearSearch();searchUser();getBackToMainUsersList()"></i>&nbsp;|&nbsp;
 						<i class="fa fa-search cursor-pointer"
-                           ng-click="searchUser(); getBackToMainUsersList()"></i>&nbsp;
+						ng-click="searchUser(); getBackToMainUsersList()"></i>&nbsp;
 
 					</span>
-            </div>
-        </div>
-        <div class="col-md-3">
+				</div>
+			</div>
+			<div class="col-md-3">
 
-            <input class="control-label hide" height="0" width="0" type='file' id="csvUploader" onchange="angular.element(this).scope().uploadCsv(this)" />
-            <button class="btn btn-sm btn-inverse pull-right" ng-click="batchAddUser()">Batch Upload</button>
-            <button class="btn btn-sm btn-default pull-right" ng-click="addUserOpenForm()">Add User</button>
+				<input class="control-label hide" height="0" width="0" type='file'
+					id="csvUploader"
+					onchange="angular.element(this).scope().uploadCsv(this)" />
+				<button class="btn btn-sm btn-inverse pull-right"
+					ng-click="batchAddUser()">
+					<i class="fa fa-users"> Batch Upload</i>
+				</button>
+				<button class="btn btn-sm btn-default pull-right"
+					ng-click="addUserOpenForm()">
+					<i class="fa fa-user"> Add User</i>
+				</button>
 
-        </div>
-    </div>
-</div>
-<br>
-<div class="row" > <!-- ng-if="allUserClass.data" ng-show="!currentUserDetails" -->
-    <div class="col-md-12">
-        <table class="table">
-            <div id="head_nav">
-                <thead class="theadclass">
-                <tr>
-                    <th></th>
-                    <th ng-repeat="(key,value) in parentConfig">{{value}}</th>
-                </tr>
-                </thead>
-            </div>
-            <tbody>
-            <tr ng-repeat="user in allUserClass.data">
-                <td><i class="fa fa-align-justify"  role="button" data-toggle="modal"
-                       ng-click="getUserDetails(user)" ></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
-                </td>
-                <td ng-repeat="(key,value) in parentConfig">{{user[key]}}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div id="modalUpdate" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3>{{modalTitle}}</h3>
-    </div>
-    <div class="modal-body">
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<!-- ng-if="allUserClass.data" ng-show="!currentUserDetails" -->
+		<div class="col-md-12">
+			<table class="table">
+				<div id="head_nav">
+					<thead class="theadclass">
+						<tr>
+							<th></th>
+							<th ng-repeat="(key,value) in parentConfig">{{value}}</th>
+						</tr>
+					</thead>
+				</div>
+				<tbody>
+					<tr ng-repeat="user in allUserClass.data">
+						<td><i class="fa fa-align-justify" role="button"
+							data-toggle="modal" ng-click="getUserDetails(user)"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+						</td>
+						<td ng-repeat="(key,value) in parentConfig">{{user[key]}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div id="modalUpdate" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">
+				<i class="fa fa-times"></i>
+			</button>
+			<h3>{{modalTitle}}</h3>
+		</div>
+		<div class="modal-body">
 
-    <div class="row" > <!-- ng-if="allUserClass.data" ng-show="currentUserDetails" -->
-    <div class="col-md-12">
-    <div class="col-md-10">
-    <ul class="nav nav-tabs" id="myTab">
-        <li class="active"><a href="#basicInfo" data-toggle="tab">Basic
-            Details Info</a></li>
-        <li><a href="#primaryCntInfo" data-toggle="tab">Primary
-            Contact Info</a></li>
-        <li><a href="#secondaryCntInfo" data-toggle="tab">Secondary
-            Contact Info</a></li>
-        <li><a href="#othrInfo" data-toggle="tab">Other Info</a></li>
-        <li><a href="#accInfo" data-toggle="tab">Account Info</a></li>
-    </ul>
-    <div class="tab-content">
-    <div class="tab-pane active" id="basicInfo">
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <label class="col-sm-3 control-label">Registraion ID </label>
-                <div class="col-sm-8">
-                    <input type="text" id="regId" class="form-control"
-                           ng-model="userSelectedClass.basicDetails.regID">
-                </div>
+			<div class="row">
+				<!-- ng-if="allUserClass.data" ng-show="currentUserDetails" -->
+				<div class="col-md-12">
+					<div class="col-md-10">
+						<ul class="nav nav-tabs" id="myTab">
+							<li class="active"><a href="#basicInfo" data-toggle="tab">Basic
+									Details Info</a></li>
+							<li><a href="#primaryCntInfo" data-toggle="tab">Primary
+									Contact Info</a></li>
+							<li><a href="#secondaryCntInfo" data-toggle="tab">Secondary
+									Contact Info</a></li>
+							<li><a href="#othrInfo" data-toggle="tab">Other Info</a></li>
+							<li><a href="#accInfo" data-toggle="tab">Account Info</a></li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="basicInfo">
+								<form class="form-horizontal" role="form">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Registraion ID </label>
+										<div class="col-sm-8">
+											<input type="text" id="regId" class="form-control"
+												ng-model="userSelectedClass.basicDetails.regID">
+										</div>
 
-            </div>
-            <div class="form-group">
-                <label for="fName" class="col-sm-3 control-label">First
-                    Name </label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="fName"
-                           ng-model="userSelectedClass.basicDetails.firstName">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="mName" class="col-sm-3 control-label">Middle
-                    Name </label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="mName"
-                           ng-model="userSelectedClass.basicDetails.middleName">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="lName" class="col-sm-3 control-label">Last
-                    Name </label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="lName"
-                           ng-model="userSelectedClass.basicDetails.lastName">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="sex-type" class="col-sm-3 control-label">Sex
-                </label>
-                <div class="simple-radio col-sm-8" id="sex-type">
-                    <input id="ml" type="radio" name="sex-type" value="Male"
-                           parsley-required="true"> <label for="ml">Male</label>
-                    <input id="fml" type="radio" name="sex-type" value="Female">
-                    <label for="fml">Female</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="dob" class="col-sm-3 control-label">Date of
-                    Birth </label>
-                <div class="col-sm-8">
-                    <div class="input-group">
-                        <input type="text" id="userDOB" ng-model="userClass.basicDetails.DOB" class="em-datepicker datepicker form-control" placeholder="Date of Birth">
-                        <span class="input-group-addon cursor-pointer" ng-click="openUserDOB()"><i class="fa fa-calendar"></i></span>
+									</div>
+									<div class="form-group">
+										<label for="fName" class="col-sm-3 control-label">First
+											Name </label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="fName"
+												ng-model="userSelectedClass.basicDetails.firstName">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="mName" class="col-sm-3 control-label">Middle
+											Name </label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="mName"
+												ng-model="userSelectedClass.basicDetails.middleName">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="lName" class="col-sm-3 control-label">Last
+											Name </label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="lName"
+												ng-model="userSelectedClass.basicDetails.lastName">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="sex-type" class="col-sm-3 control-label">Sex
+										</label>
+										<div class="simple-radio col-sm-8" id="sex-type">
+											<input id="ml" type="radio" name="sex-type" value="M"
+												ng-model="userSelectedClass.basicDetails.DOB"
+												parsley-required="true"> <label for="ml">Male</label>
+											<input id="fml" type="radio" name="sex-type" value="F"
+												ng-model="userSelectedClass.basicDetails.DOB"> <label
+												for="fml">Female</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="dob" class="col-sm-3 control-label">Date
+											of Birth </label>
+										<div class="col-sm-8">
+											<div class="input-group">
+												<input type="text" id="userDOB"
+													ng-model="userClass.basicDetails.DOB"
+													class="em-datepicker datepicker form-control"
+													placeholder="Date of Birth"> <span
+													class="input-group-addon cursor-pointer"
+													ng-click="openUserDOB()"><i class="fa fa-calendar"></i></span>
 
-                    </div>
-                </div>
-                <!--<div class="col-sm-8">
+											</div>
+										</div>
+										<!--<div class="col-sm-8">
                     <input type="text" id="dob" class="em-datepicker datepicker form-control"
                            ng-model="userSelectedClass.basicDetails.DOB">
                     &lt;!&ndash; input type="text" class="form-control" id="dob" placeholder="Enter Password " &ndash;&gt;
                 </div>-->
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">Update Profile
-                    Image</label>
-                <div></div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label" for="motherTng">Mother
-                    Tongue </label>
-                <div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Update Profile
+											Image</label>
+										<div></div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="motherTng">Mother
+											Tongue </label>
+										<div>
+											<div class="col-sm-8">
 
-                    <div class="col-sm-8">
-                        <input type="text" id="motherTng" class="form-control"
-                               ng-model="userSelectedClass.basicDetails.languages_motherTongue">
-                    </div>
+												<select id="motherTng" name="motherTng"
+													class="btn btn-media dropdown-toggle form-control"
+													data-ng-model="userSelectedClass.basicDetails.languages_motherTongue">
+													<option value="">Select Mother Tounge</option>
+													<option ng-repeat="(key, value) in languages"
+														value="{{key}}">{{value.___name___}}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="othrLang">Other
+											Language </label>
+										<div class="col-sm-8">
+											<select id="othrLang" name="othrLang"
+												class="btn btn-media dropdown-toggle form-control"
+												data-ng-model="userSelectedClass.basicDetails.languages_others">
+												<option value="">Select Other Language</option>
+												<option ng-repeat="(key, value) in languages"
+													value="{{key}}">{{value.___name___}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="religion">Religion</label>
+										<div class="col-sm-8">
+											<select id="religion" name="religion"
+												class="btn btn-media dropdown-toggle form-control"
+												data-ng-model="userSelectedClass.basicDetails.religionId">
+												<option value="">Select Religion</option>
+												<option ng-repeat="(key, value) in religionCaste"
+													value="{{key}}">{{value.___name___}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="caste">Caste</label>
+										<div class="col-sm-8">
+											<input type="text" id="caste"
+												placeholder="Please mention Your Catse" class="form-control"
+												ng-model="userSelectedClass.basicDetails.casteId">
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="tab-pane" id="primaryCntInfo">
+								<form class="form-horizontal" role="form">
+									<fieldset>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="primaryPhone">Phone
+													Number</label>
+												<div class="col-sm-4">
+													<input type="text" id="primaryPhone"
+														placeholder="Phone Number" class="form-control"
+														ng-model="userSelectedClass.contact.phonePrimary">
+												</div>
+											</div>
+											<div>
+												<label class="col-sm-2 control-label" for="inputEmail">Email
+													Address</label>
+												<div class="col-sm-4">
+													<input type="email" id="inputEmail"
+														placeholder="Enter Your Email Address."
+														class="form-control" title="Email id is required !"
+														required ng-model="userSelectedClass.contact.emailPrimary" />
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+													Address 1</label>
+												<div class="col-sm-10">
+													<input type="text" id="cntStreetAdrOne"
+														placeholder="Enter Street Address" class="form-control"
+														ng-model="userSelectedClass.primaryAddress.street1">
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+													Address 2</label>
+												<div class="col-sm-10">
+													<input type="text" id="cntStreetAdrOne"
+														placeholder="Enter Street Address" class="form-control"
+														ng-model="userSelectedClass.primaryAddress.street2">
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
+												<div class="col-sm-10">
+													<input type="text" id="cntStreetAdrTwo"
+														placeholder="Provide Landmark" class="form-control">
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="cntCntry">Country</label>
+												<div class="col-sm-4">
+													<select id="cntCountry" name="cntCountry"
+														class="btn btn-media dropdown-toggle form-control"
+														data-ng-model="userSelectedClass.primaryAddress.country">
+														<option value="">Select Country</option>
+														<option ng-repeat="(key, value) in countryStateCity"
+															value="{{key}}">{{value.___name___}}</option>
+													</select>
+												</div>
+											</div>
+											<div>
+												<label class="col-sm-2 control-label" for="cntState">State</label>
+												<div class="col-sm-4">
 
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label" for="othrLang">Other
-                    Language </label>
-                <div class="col-sm-8">
-                    <input type="text" id="othrLang"
-                           placeholder="Which other language ?" class="form-control"
-                           ng-model="userSelectedClass.basicDetails.languages_others">
-                </div>
-            </div>
+													<select id="cntState" name="cntState"
+														class="btn btn-media dropdown-toggle form-control"
+														data-ng-model="userSelectedClass.primaryAddress.state"
+														ng-if="userSelectedClass.primaryAddress.country">
+														<option value="">Select State</option>
+														<option
+															ng-repeat="(key, state) in countryStateCity[userSelectedClass.primaryAddress.country]"
+															ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="cntCity">City</label>
+												<div class="col-sm-3">
+													<select id="cntCity" name="cntCity"
+														class="btn btn-media dropdown-toggle form-control"
+														data-ng-model="userSelectedClass.primaryAddress.city"
+														ng-if="userSelectedClass.primaryAddress.state">
+														<option value="">Select State</option>
+														<option
+															ng-repeat="(key, city) in countryStateCity[userSelectedClass.primaryAddress.country][userSelectedClass.primaryAddress.state]"
+															ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
+													</select>
+												</div>
+											</div>
+											<div>
+												<label class="col-sm-2 control-label" for="cntDistct">District</label>
+												<div class="col-sm-4">
+													<input type="text" id="cntDistct" placeholder="District"
+														class="form-control"
+														ng-model="userSelectedClass.primaryAddress.district">
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="cntPin">Pincode</label>
+												<div class="col-sm-4">
+													<input type="text" id="cntPin" placeholder="Pincode"
+														class="form-control"
+														ng-model="userSelectedClass.primaryAddress.pincode">
+												</div>
+											</div>
+										</div>
+										<br>
+									</fieldset>
+								</form>
+							</div>
+							<div class="tab-pane" id="secondaryCntInfo">
+								<form class="form-horizontal" role="form">
+									<fieldset>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="primaryPhone">Phone
+													Number</label>
+												<div class="col-sm-4">
+													<input type="text" id="primaryPhone"
+														placeholder="Phone Number" class="form-control"
+														ng-model="userSelectedClass.contact.phoneSecondary">
+												</div>
+											</div>
+											<div>
+												<label class="col-sm-2 control-label" for="inputEmail">Email
+													Address</label>
+												<div class="col-sm-4">
+													<input type="email" id="inputEmail"
+														placeholder="Enter Your Email Address."
+														class="form-control" title="Email id is required !"
+														ng-model="userSelectedClass.contact.emailSecondary" />
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+													Address 1</label>
+												<div class="col-sm-10">
+													<input type="text" id="cntStreetAdrOne"
+														placeholder="Enter Street Address" class="form-control"
+														ng-model="userSelectedClass.SecondaryAddress.street1">
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+													Address 2</label>
+												<div class="col-sm-10">
+													<input type="text" id="cntStreetAdrOne"
+														placeholder="Enter Street Address" class="form-control"
+														ng-model="userSelectedClass.SecondaryAddress.street2">
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
+												<div class="col-sm-10">
+													<input type="text" id="cntStreetAdrTwo"
+														placeholder="Provide Landmark" class="form-control">
+												</div>
+											</div>
+										</div>
+										<br>
 
-            <div class="form-group">
-                <label class="col-sm-3 control-label" for="religion">Religion</label>
-                <div class="col-sm-8">
-                    <input type="text" id="religion"
-                           placeholder="Please mention your Religion"
-                           class="form-control"
-                           ng-model="userSelectedClass.basicDetails.religionId">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label" for="caste">Caste</label>
-                <div class="col-sm-8">
-                    <input type="text" id="caste"
-                           placeholder="Please mention Your Catse" class="form-control"
-                           ng-model="userSelectedClass.basicDetails.casteId">
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="tab-pane" id="primaryCntInfo">
-        <form class="form-horizontal" role="form">
-            <fieldset>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="primaryPhone">Phone
-                            Number</label>
-                        <div class="col-sm-4">
-                            <input type="text" id="primaryPhone"
-                                   placeholder="Phone Number" class="form-control"
-                                   ng-model="userSelectedClass.contact.phonePrimary">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="col-sm-2 control-label" for="inputEmail">Email
-                            Address</label>
-                        <div class="col-sm-4">
-                            <input type="email" id="inputEmail"
-                                   placeholder="Enter Your Email Address." class="form-control"
-                                   title="Email id is required !" required
-                                   ng-model="userSelectedClass.contact.emailPrimary" />
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
-                            Address 1</label>
-                        <div class="col-sm-10">
-                            <input type="text" id="cntStreetAdrOne"
-                                   placeholder="Enter Street Address" class="form-control"
-                                   ng-model="userSelectedClass.primaryAddress.street1">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
-                            Address 2</label>
-                        <div class="col-sm-10">
-                            <input type="text" id="cntStreetAdrOne"
-                                   placeholder="Enter Street Address" class="form-control"
-                                   ng-model="userSelectedClass.primaryAddress.street2">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
-                        <div class="col-sm-10">
-                            <input type="text" id="cntStreetAdrTwo"
-                                   placeholder="Provide Landmark" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntCntry">Country</label>
-                        <div class="col-sm-4">
-                            <input type="text" id="cntCntry" placeholder="Country"
-                                   class="form-control"
-                                   ng-model="userSelectedClass.primaryAddress.country">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntState">State</label>
-                        <div class="col-sm-4">
-                            <input type="text" id="cntState" placeholder="State"
-                                   class="form-control"
-                                   ng-model="userSelectedClass.primaryAddress.state">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntCity">City</label>
-                        <div class="col-sm-3">
-                            <input type="text" id="cntCity" placeholder="City"
-                                   class="form-control"
-                                   ng-model="userSelectedClass.primaryAddress.city">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntDistct">District</label>
-                        <div class="col-sm-4">
-                            <input type="text" id="cntDistct" placeholder="District"
-                                   class="form-control"
-                                   ng-model="userSelectedClass.primaryAddress.district">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntPin">Pincode</label>
-                        <div class="col-sm-4">
-                            <input type="text" id="cntPin" placeholder="Pincode"
-                                   class="form-control"
-                                   ng-model="userSelectedClass.primaryAddress.pincode">
-                        </div>
-                    </div>
-                </div>
-                <br>
-            </fieldset>
-        </form>
-    </div>
-    <div class="tab-pane" id="secondaryCntInfo">
-        <form class="form-horizontal" role="form">
-            <fieldset>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="primaryPhone">Phone
-                            Number</label>
-                        <div class="col-sm-4">
-                            <input type="text" id="primaryPhone"
-                                   placeholder="Phone Number" class="form-control"
-                                   ng-model="userSelectedClass.contact.phoneSecondary">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="col-sm-2 control-label" for="inputEmail">Email
-                            Address</label>
-                        <div class="col-sm-4">
-                            <input type="email" id="inputEmail"
-                                   placeholder="Enter Your Email Address." class="form-control"
-                                   title="Email id is required !"
-                                   ng-model="userSelectedClass.contact.emailSecondary" />
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
-                            Address 1</label>
-                        <div class="col-sm-10">
-                            <input type="text" id="cntStreetAdrOne"
-                                   placeholder="Enter Street Address" class="form-control"
-                                   ng-model="userSelectedClass.SecondaryAddress.street1">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
-                            Address 2</label>
-                        <div class="col-sm-10">
-                            <input type="text" id="cntStreetAdrOne"
-                                   placeholder="Enter Street Address" class="form-control"
-                                   ng-model="userSelectedClass.SecondaryAddress.street2">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
-                        <div class="col-sm-10">
-                            <input type="text" id="cntStreetAdrTwo"
-                                   placeholder="Provide Landmark" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntCntry">Country</label>
-                        <div class="col-sm-4">
-                            <input type="text" id="cntCntry" placeholder="Country"
-                                   class="form-control"
-                                   ng-model="userSelectedClass.SecondaryAddress.country">
-                        </div>
-                    </div>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="cntSecCntry">Country</label>
+												<div class="col-sm-4">
+													<select id="secSecCountry" name="secSecCountry"
+														class="btn btn-media dropdown-toggle form-control"
+														data-ng-model="userSelectedClass.SecondaryAddress.country">
+														<option value="">Select Country</option>
+														<option ng-repeat="(key, value) in countryStateCity"
+															value="{{key}}">{{value.___name___}}</option>
+													</select>
+												</div>
+											</div>
 
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntState">State</label>
-                        <div class="col-sm-4">
-                            <input type="text" id="cntState" placeholder="State"
-                                   class="form-control"
-                                   ng-model="userSelectedClass.SecondaryAddress.state">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntCity">City</label>
-                        <div class="col-sm-4">
-                            <input type="text" id="cntCity" placeholder="City"
-                                   class="form-control"
-                                   ng-model="userSelectedClass.SecondaryAddress.city">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntDistct">District</label>
-                        <div class="col-sm-4">
-                            <input type="text" id="cntDistct" placeholder="District"
-                                   class="form-control"
-                                   ng-model="userSelectedClass.SecondaryAddress.district">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div>
-                        <label class="col-sm-2 control-label" for="cntPin">Pincode</label>
-                        <div class="col-sm-4">
-                            <input type="text" id="cntPin" placeholder="Pincode"
-                                   class="form-control"
-                                   ng-model="userSelectedClass.SecondaryAddress.pincode">
-                        </div>
-                    </div>
-                </div>
-                <br>
-            </fieldset>
-        </form>
-    </div>
-    <div class="tab-pane" id="othrInfo">
-        <form class="form-horizontal" role="form">
-            <fieldset>
-                <div class="col-md-12">
-                    <div class="row">
-                        <div>
-                            <label class="col-sm-2 control-label" for="birthPlaceCntry">Birth
-                                Place Country</label>
-                            <div class="col-sm-4">
-                                <input type="text" id="birthPlaceCntry"
-                                       placeholder="Birth Place Country" class="form-control"
-                                       ng-model="userSelectedClass.basicDetails.birthPlace_country">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="col-sm-2 control-label" for="birthPlaceState">Birth
-                                Place State</label>
-                            <div class="col-sm-4">
-                                <input type="text" id="birthPlaceState"
-                                       placeholder="Birth Place State" class="form-control"
-                                       ng-model="userSelectedClass.basicDetails.birthPlace_state">
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div>
-                            <label class="col-sm-2 control-label" for="birthPlaceCity">Birth
-                                Place City</label>
-                            <div class="col-sm-4">
-                                <input type="text" id="birthPlaceCity"
-                                       placeholder="Birth Place City" class="form-control"
-                                       ng-model="userSelectedClass.basicDetails.birthPlace_city">
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div>
-                            <label class="col-sm-2 control-label" for="isVisa">VISA
-                                Number</label>
-                            <div class="col-sm-3">
-                                <input id="visaTextSrc" name="visaTextSrc"
-                                       class="form-control " type="text"
-                                       ng-model="userSelectedClass.basicDetails.visaDetails"
-                                       placeholder="Enter your VISA Number">
-                            </div>
-                        </div>
-                        <div>
+											<div>
+												<label class="col-sm-2 control-label" for="cntSecState">State</label>
+												<div class="col-sm-4">
+													<select id="secSecState" name="secSecState"
+														class="btn btn-media dropdown-toggle form-control"
+														data-ng-model="userSelectedClass.SecondaryAddress.state"
+														ng-if="userSelectedClass.SecondaryAddress.country">
+														<option value="">Select State</option>
+														<option
+															ng-repeat="(key, state) in countryStateCity[userSelectedClass.SecondaryAddress.country]"
+															ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="cntSecCity">City</label>
+												<div class="col-sm-4">
+													<select id="secSecCity" name="secSecCity"
+														class="btn btn-media dropdown-toggle form-control"
+														data-ng-model="userSelectedClass.SecondaryAddress.city"
+														ng-if="userSelectedClass.SecondaryAddress.state">
+														<option value="">Select State</option>
+														<option
+															ng-repeat="(key, city) in countryStateCity[userSelectedClass.SecondaryAddress.country][userSelectedClass.SecondaryAddress.state]"
+															ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
+													</select>
+												</div>
+											</div>
+											<div>
+												<label class="col-sm-2 control-label" for="cntDistct">District</label>
+												<div class="col-sm-4">
+													<input type="text" id="cntDistct" placeholder="District"
+														class="form-control"
+														ng-model="userSelectedClass.SecondaryAddress.district">
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div>
+												<label class="col-sm-2 control-label" for="cntPin">Pincode</label>
+												<div class="col-sm-4">
+													<input type="text" id="cntPin" placeholder="Pincode"
+														class="form-control"
+														ng-model="userSelectedClass.SecondaryAddress.pincode">
+												</div>
+											</div>
+										</div>
+										<br>
+									</fieldset>
+								</form>
+							</div>
+							<div class="tab-pane" id="othrInfo">
+								<form class="form-horizontal" role="form">
+									<fieldset>
+										<div class="col-md-12">
+											<div class="row">
+												<div>
+													<label class="col-sm-2 control-label" for="birthPlaceCntry">Birth
+														Place Country</label>
+													<div class="col-sm-4">
+														<input type="text" id="birthPlaceCntry"
+															placeholder="Birth Place Country" class="form-control"
+															ng-model="userSelectedClass.basicDetails.birthPlace_country">
+													</div>
+												</div>
+												<div>
+													<label class="col-sm-2 control-label" for="birthPlaceState">Birth
+														Place State</label>
+													<div class="col-sm-4">
+														<input type="text" id="birthPlaceState"
+															placeholder="Birth Place State" class="form-control"
+															ng-model="userSelectedClass.basicDetails.birthPlace_state">
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div>
+													<label class="col-sm-2 control-label" for="birthPlaceCity">Birth
+														Place City</label>
+													<div class="col-sm-4">
+														<input type="text" id="birthPlaceCity"
+															placeholder="Birth Place City" class="form-control"
+															ng-model="userSelectedClass.basicDetails.birthPlace_city">
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div>
+													<label class="col-sm-2 control-label" for="isVisa">VISA
+														Number</label>
+													<div class="col-sm-3">
+														<input id="visaTextSrc" name="visaTextSrc"
+															class="form-control " type="text"
+															ng-model="userSelectedClass.basicDetails.visaDetails"
+															placeholder="Enter your VISA Number">
+													</div>
+												</div>
+												<div>
 
-                            <label class="col-sm-2 control-label" for="isPassPort">Passport
-                                Number</label>
-                            <div class="col-sm-3">
-                                <input id="passportTextSrc" name="passportTextSrc"
-                                       class="form-control" type="text"
-                                       ng-model="userSelectedClass.basicDetails.passportNumber"
-                                       placeholder="Enter your Passport Number">
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div>
-                            <label class="col-sm-2" for="smsEnb">PAN Number</label>
-                            <div class="col-sm-3">
-                                <input id="panTextSrc" name="panTextSrc"
-                                       class="form-control" type="text"
-                                       ng-model="userSelectedClass.basicDetails.panNumber"
-                                       placeholder="Enter your PAN Number">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="col-sm-2 control-label" for="isResvrdCat">Reserved
-                                Category</label>
-                            <div class="col-sm-3">
-                                <input id="resrvrdCatTextSrc" name="resrvrdCatTextSrc"
-                                       class="form-control" ng-model="userSelectedClass.basicDetails.isFromReservedCategory" type="text"
-                                       placeholder="Please mention Category">
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div>
-                            <label class="col-sm-2 control-label"
-                                   for="isPhysicallyHandicapped">Physically Challenged</label>
-                            <div class="col-sm-3">
-                                <input type="checkbox" id="isPhysicallyHandicapped" style="margin-top: 20px;"
-                                       ng-model="userSelectedClass.basicDetails.isPhysicallyHandicapped">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="col-sm-2 control-label"
-                                   for="isEconomicallyBackward">Economically Challenged</label>
-                            <div class="col-sm-3">
-                                <input type="checkbox" id="isEconomicallyBackward" style="margin-top: 20px;"
-                                       ng-model="userSelectedClass.basicDetails.isEconomicallyBackward">
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div>
-                            <label class="col-sm-2 control-label" for="smsEnb">Enable
-                                SMS Alerts </label>
-                            <div class="col-sm-3">
-                                <input type="checkbox" id="smsEnb" style="margin-top: 20px;"
-                                       ng-model="userSelectedClass.basicDetails.isSMSEnabled">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="col-sm-2 control-label" for="mailEnb">Enable
-                                Email Alerts </label>
-                            <div class="col-sm-3">
-                                <input type="checkbox" id="mailEnb" style="margin-top: 20px;"
-                                       ng-model="userSelectedClass.basicDetails.isEmailEnabled">
-                            </div>
-                        </div>
-                    </div>
-            </fieldset>
-        </form>
-    </div>
-    <div class="tab-pane" id="accInfo">
-        <form class="form-horizontal" role="form">
-            <fieldset>
-                <div class="form-group">
-                    <label for="validation-select" class="col-sm-3 control-label">Account
-                        Type</label>
-                    <div class="col-sm-8	">
-                        <input type="text" id="validation-select"
-                               name="validation-select" class="form-control"
-                               ng-model="userSelectedClass.basicDetails.userType">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label" for="inputUsername">Username</label>
-                    <div class="col-sm-8">
-                        <input type="text" id="inputUsername"
-                               placeholder="What's your user name" class="form-control"
-                               title="User Name is required !" required
-                               ng-model="userSelectedClass.basicDetails.userName" />
-                    </div>
-                </div>
+													<label class="col-sm-2 control-label" for="isPassPort">Passport
+														Number</label>
+													<div class="col-sm-3">
+														<input id="passportTextSrc" name="passportTextSrc"
+															class="form-control" type="text"
+															ng-model="userSelectedClass.basicDetails.passportNumber"
+															placeholder="Enter your Passport Number">
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div>
+													<label class="col-sm-2" for="smsEnb">PAN Number</label>
+													<div class="col-sm-3">
+														<input id="panTextSrc" name="panTextSrc"
+															class="form-control" type="text"
+															ng-model="userSelectedClass.basicDetails.panNumber"
+															placeholder="Enter your PAN Number">
+													</div>
+												</div>
+												<div>
+													<label class="col-sm-2 control-label" for="isResvrdCat">Reserved
+														Category</label>
+													<div class="col-sm-3">
+														<input id="resrvrdCatTextSrc" name="resrvrdCatTextSrc"
+															class="form-control"
+															ng-model="userSelectedClass.basicDetails.isFromReservedCategory"
+															type="text" placeholder="Please mention Category">
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div>
+													<label class="col-sm-2 control-label"
+														for="isPhysicallyHandicapped">Physically
+														Challenged</label>
+													<div class="col-sm-3">
+														<input type="checkbox" id="isPhysicallyHandicapped"
+															style="margin-top: 20px;"
+															ng-model="userSelectedClass.basicDetails.isPhysicallyHandicapped">
+													</div>
+												</div>
+												<div>
+													<label class="col-sm-2 control-label"
+														for="isEconomicallyBackward">Economically
+														Challenged</label>
+													<div class="col-sm-3">
+														<input type="checkbox" id="isEconomicallyBackward"
+															style="margin-top: 20px;"
+															ng-model="userSelectedClass.basicDetails.isEconomicallyBackward">
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div>
+													<label class="col-sm-2 control-label" for="smsEnb">Enable
+														SMS Alerts </label>
+													<div class="col-sm-3">
+														<input type="checkbox" id="smsEnb"
+															style="margin-top: 20px;"
+															ng-model="userSelectedClass.basicDetails.isSMSEnabled">
+													</div>
+												</div>
+												<div>
+													<label class="col-sm-2 control-label" for="mailEnb">Enable
+														Email Alerts </label>
+													<div class="col-sm-3">
+														<input type="checkbox" id="mailEnb"
+															style="margin-top: 20px;"
+															ng-model="userSelectedClass.basicDetails.isEmailEnabled">
+													</div>
+												</div>
+											</div>
+									</fieldset>
+								</form>
+							</div>
+							<div class="tab-pane" id="accInfo">
+								<form class="form-horizontal" role="form">
+									<fieldset>
+										<div class="form-group">
+											<label for="validation-select" class="col-sm-3 control-label">Account
+												Type</label>
+											<div class="col-sm-8	">
+												<input type="text" id="validation-select"
+													name="validation-select" class="form-control"
+													ng-model="userSelectedClass.basicDetails.userType">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label" for="inputUsername">Username</label>
+											<div class="col-sm-8">
+												<input type="text" id="inputUsername"
+													placeholder="What's your user name" class="form-control"
+													title="User Name is required !" required
+													ng-model="userSelectedClass.basicDetails.userName" />
+											</div>
+										</div>
 
-            </fieldset>
-        </form>
-    </div>
-    </div>
-    </div>
-    <div class="col-md-2">
-        <img ng-if="userSelectedClass.basicDetails.profileImagePath" class="profile-image" src="{{userSelectedClass.basicDetails.profileImagePath}}" ng-click="openFileBrowser()" width="100%">
-        <img ng-if="!userSelectedClass.basicDetails.profileImagePath" class="cursor-ponter" src="images/userProfile/male.png" ng-click="openFileBrowser()" width="100%">
-        <input class="control-label hide" height="0" width="0" type='file' id="imageUploader" accept="image/*" image="image2" onchange="angular.element(this).scope().readURL(this)"  resize-max-width="150" resize-quality="0.7"/>
-    </div>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<img ng-if="userSelectedClass.basicDetails.profileImagePath"
+							class="profile-image"
+							src="{{userSelectedClass.basicDetails.profileImagePath}}"
+							ng-click="openFileBrowser()" width="100%"> <img
+							ng-if="!userSelectedClass.basicDetails.profileImagePath"
+							class="cursor-ponter" src="images/userProfile/male.png"
+							ng-click="openFileBrowser()" width="100%"> <input
+							class="control-label hide" height="0" width="0" type='file'
+							id="imageUploader" accept="image/*" image="image2"
+							onchange="angular.element(this).scope().readURL(this)"
+							resize-max-width="150" resize-quality="0.7" />
 
-    </div>
+
+					</div>
+					<div class="col-md-1">{{userSelectedClass.basicDetails.userName}}</div>
+				</div>
 
 
 
-    </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary pull-left" data-dismiss="modal" aria-hidden="true" ng-click="getBackToMainUsersList()">Back</button>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary pull-left" data-dismiss="modal"
+				aria-hidden="true" ng-click="getBackToMainUsersList()">
+				<i class="fa fa-arrow-circle-left"> Back</i>
+			</button>
+			<button class="btn btn-primary pull-right"
+				ng-click="resetUserClass()">
+				<i class="fa fa-rotate-left"> Reset</i>
+			</button>
+			<button class="btn btn-primary pull-right"
+				ng-click="updateUserClass()">
+				<i class="fa fa-edit"> Update</i>
+			</button>
+		</div>
+	</div>
 
-        <button class="btn btn-primary pull-right" ng-click="updateUserClass()">Update</button>
-    </div>
-</div>
 
-
-<!-- End User Details  -->
+	<!-- End User Details  -->
 </div>
 
 </div>

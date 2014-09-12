@@ -113,6 +113,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
 //            	  $scope.userSelectedClass =  dataResponse.responseData.data[0];
             	  $scope.userSelectedClass=dataResponse.responseData;
+            	  $scope.userSelectedClone=dataResponse.responseData;
             	  console.log("dataResponse /manage-users/getSelectedUserDetails/ :",user.userName);
                   $scope.openModal('update');
              
@@ -133,6 +134,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     {
     	//console.log("$scope.updateUserClass :",$scope.userSelectedClass, angular.equals($scope.userSelectedClass.userDetails,$scope.userSelectedClone.userDetails));
 		console.log("registerUser ", $scope.userSelectedClass);
+		var selectedUser = $scope.userSelectedClass.basicDetails.userName;
 		$http({
 			method : 'POST',
 			url : '/manage-users/users/updateUser',
@@ -145,7 +147,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
                 console.log("updateUserClass - dataResponse",dataResponse)
                 $scope.userSelectedClass = dataResponse.responseData;
-                appUtils.showError("User "+$scope.userSelectedClass.basicDetails.userName+" updated successfully");
+                appUtils.showSuccess("User "+selectedUser+" updated successfully");
             });
         }).error(function(data, status, headers, config) {
             // error
@@ -153,6 +155,20 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 
         });
     }
+    
+    $scope.resetUserClass=function(){
+    	$scope.userSelectedClass=angular.copy($scope.userSelectedClone);
+    	$scope.userForm.$setPristine();
+//    	console.log("reset changes", $scope.isUserChanged());
+    };
+    
+    
+    $scope.isUserChanged = function ()
+    {
+//    	console.log(angular.equals($scope.userSelectedClass, $scope.userSelectedClone));
+    	return angular.equals($scope.userSelectedClass, $scope.userSelectedClone);
+    };
+    
     /*
      * Back button functionality
      */
@@ -164,6 +180,55 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     $scope.openFileBrowser=function(){
         $('#imageUploader').click();
     }
+    
+    /*
+	    * Dropdown JSON data of bibDocTypeMaterial
+	    */ 
+	    $http.get('/manageLibrary/getCountryStateCity').success(function(dataResponse,status,headers,config){
+	        //success
+	        console.log("getCountryStateCity",dataResponse);
+	        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+	            $scope.countryStateCity=dataResponse;
+	         console.log("$scope.getCountryStateCity",$scope.getCountryStateCity);
+	        });
+
+	    }).error(function(data,status,headers,config){
+	        //error
+	        console.log("Error",data,status,headers,config);
+	    });
+
+ 	/*
+	    * Dropdown JSON data of ReligionCaste
+	    */ 
+	    $http.get('/manageLibrary/getReligionCaste').success(function(dataResponse,status,headers,config){
+	        //success
+	        console.log("ReligionCaste",dataResponse);
+	        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+	            $scope.religionCaste=dataResponse;
+	         console.log("$scope.ReligionCaste",$scope.ReligionCaste);
+	        });
+
+	    }).error(function(data,status,headers,config){
+	        //error
+	        console.log("Error",data,status,headers,config);
+	    });
+
+	    /*
+		    * Dropdown JSON data of Language
+		    */ 
+		    $http.get('/manageLibrary/getLanguages').success(function(dataResponse,status,headers,config){
+		        //success
+		        console.log("getLanguages",dataResponse);
+		        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+		            $scope.languages=dataResponse;
+		         console.log("$scope.languages",$scope.languages);
+		        });
+
+		    }).error(function(data,status,headers,config){
+		        //error
+		        console.log("Error",data,status,headers,config);
+		    });
+    
     //image upload functionality
     $scope.readURL=function (input) {
 
