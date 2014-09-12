@@ -93,4 +93,17 @@ module.exports=function(app,Utils){
 //        userMS.addNewUser(requestobj,res);
         userMS.getSelectedUser(requestobj,req,res);
     });
+    app.post("/manage-users/uploadUserCSV",Utils.ensureAuthenticated,function(req,res){
+        console.log("/manage-users/uploadUserCSV");
+        try{
+            Utils.readUploadedCsv(req,res,function(responseObj){
+                console.log("responseObj");
+                res.send(responseObj);
+            });
+        }catch(e){
+            console.log("/manage-users/uploadUserCSV",e);
+            Utils.defaultErrorResponse(res,"Failed to upload csv file.");
+        }
+
+    });
 }

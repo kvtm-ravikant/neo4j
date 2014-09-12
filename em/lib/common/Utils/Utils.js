@@ -267,8 +267,8 @@ function resolveDataType(value,dataType){
 }
 function getDBInstance(){
 
-    var configFileName="../../conf";
-    //var configFileName="../../../../../conf";
+    //var configFileName="../../conf";
+    var configFileName="../../../../../conf";
     var filePath=path.resolve(configFileName,"serverConfig");
     console.log("filePath",filePath);
     var serverConfig=JSON.parse(fs.readFileSync(filePath,'utf8'));
@@ -291,6 +291,47 @@ function base64_decode(base64str, file) {
     fs.writeFileSync(file, bitmap);
     console.log('******** File created from base64 encoded string ********');
 }
+//read uploaded csv
+function readUploadedCsv(req,res,callback){
+    var dataPath=req.files.hasOwnProperty("upload")?req.files["upload"].path:undefined;
+    var responseObj = new createResponse();
+    try{
+        if(!dataPath){
+            responseObj.error=true;
+            responseObj.errorMsg="Could not find the uploaded file.";
+            callback(responseObj);
+        }else{
+            fs.readFile(dataPath,function(err,csvData){
+                if(!err && csvData){
+                    var strData=csvData.toString();
+                    var jsonData=csvToArray(strData);
+                    if(jsonData && jsonData.length>0){
+                        console.log("jsonData",JSON.stringify(jsonData));
+                        fs.writeFileSync("temp.js",JSON.stringify(jsonData));
+                        responseObj.responseData=jsonData;
+                        callback(responseObj);
+                    }else{
+                        responseObj.error=true;
+                        responseObj.errorMsg="Uploaded file is blank.";
+                        callback(responseObj);
+                    }
+
+                }else{
+                    responseObj.error=true;
+                    responseObj.errorMsg="Could not find the uploaded file.";
+                    callback(responseObj);
+                }
+            })
+        }
+    }catch(e){
+        console.log("e util",e);
+        responseObj.error=true;
+        responseObj.errorMsg="Error while processing file.";
+        callback(responseObj);
+    }
+
+
+}
 module.exports.resolveBoolean = resolveBoolean;
 module.exports.resolveSex = resolveSex;
 module.exports.resolveDataType = resolveDataType;
@@ -310,4 +351,5 @@ module.exports.ddmmyyyyStrToTimeStamp = ddmmyyyyStrToTimeStamp;
 module.exports.getDBInstance = getDBInstance;
 module.exports.base64_encode = base64_encode;
 module.exports.base64_decode = base64_decode;
+module.exports.readUploadedCsv = readUploadedCsv;
 

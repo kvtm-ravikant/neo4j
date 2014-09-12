@@ -2,7 +2,7 @@
 /**
  * description: It contains utility functions which is used through out the client side app.
  */
-angular.module('educationMediaApp').factory('appUtils', function () {
+angular.module('educationMediaApp').factory('appUtils',["$http",function ($http) {
     var utility={
         "dateUtility":{
             "defaultDateFormatTo":"ddmmyyyy",
@@ -236,8 +236,42 @@ angular.module('educationMediaApp').factory('appUtils', function () {
             $('#successModal').find('.modal-body').html(msg);
             $('#successModal').modal('show');
             return;
+        },
+        "uploadCSV":function(element,url,callback){
+            console.log("app Util uploadCSV",element,url);
+            var file = element.files[0];
+            if(!file){
+                $(element).val("");
+                appUtils.showError("Please choose a .csv file.");
+                return;
+            }
+            var fileName = file.name;
+            var check = file.name.indexOf("csv");
+            if (check < 0) {
+                $(thisObj).val("");
+                utility.showError("Please choose a .csv file.");
+                return;
+            }else{
+                //Take the first selected file
+                var uploadCSV = new FormData();
+                uploadCSV.append("upload", file);
+                $http.post(url, uploadCSV, {
+                    withCredentials: true,
+                    headers: {'Content-Type': undefined },
+                    transformRequest: angular.identity
+                }).success(function(dataResponse,status,headers,config){
+                    //success
+                    utility.defaultParseResponse(dataResponse,callback);
+                }).error(function(data,status,headers,config){
+                    //error
+                    console.log("Error",data,status,headers,config);
+
+                });
+
+            }
+
         }
     };
 
     return utility;
-});
+}]);

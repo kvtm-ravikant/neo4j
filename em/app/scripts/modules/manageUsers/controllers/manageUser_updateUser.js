@@ -225,6 +225,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         code && code=='delete'?$scope.modalTitle="Delete User":"";
 
         $('#modalUpdate').modal({"backdrop": "static","show":true});
+        $('#modalUpdate').modal({"show":false});
     }
     $scope.addUserOpenForm=function(){
         /* UserClass POJO Data Model */
@@ -244,6 +245,12 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         });
     }
     $scope.batchAddUser=function(){
-
+        $('#csvUploader').click();
     }
+    $scope.uploadCsv = function(thisObj) {
+        appUtils.uploadCSV(thisObj,"/manage-users/uploadUserCSV",function(response){
+            console.log("/manage-users/uploadUserCSV response",response)
+        });
+
+    };
 });
