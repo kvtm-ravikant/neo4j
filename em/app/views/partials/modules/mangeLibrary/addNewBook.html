@@ -21,8 +21,6 @@
 											required>
 									</div>
 								</div>
-
-
 							</div>
 							<br>
 							<div class="row">
@@ -153,7 +151,6 @@
 											<option value="">Select Materials</option>
 											 <option ng-repeat="(key, material) in parentBookDD[parentBook.bibLevel]" ng-if="key!='___name___'"
 												value="{{key}}">{{material.___name___}}</option>
-
 										</select>
 									</div>
 								</div>
@@ -163,10 +160,8 @@
 									<div class="col-sm-3">
 										<select id="docType" name="validation-select" class="btn btn-media dropdown-toggle"
 											data-ng-model="parentBook.docType" ng-if="parentBook.material">
-
 											<option value="">Select Doc Type</option>
 											<option ng-repeat="(key,docType) in parentBookDD[parentBook.bibLevel][parentBook.material]" value="{{key}}">{{docType.___name___}}</option>
-
                                         </select>
 									</div>
 								</div>

@@ -24,7 +24,24 @@ educationMediaApp.controller('manageUser_testUser', function ($scope, $http,icon
 	    $('ul.setup-panel li a[href="#step-'+($scope.counter+1)+'"]').trigger('click');
 	    $(this).remove();
 	     
+//	    var result = $('div#regDiv:input').valid();
+	    
+//	    console.log("result : ",result);
 	}
+    
+    $scope.isInvalid = function(field){
+        return $scope.userForm[field].$invalid && $scope.userForm[field].$dirty;
+      };
+      
+      $scope.isValid = function(field){
+        return $scope.userForm[field].$valid && $scope.userForm[field].$dirty;
+      };
+      
+      
+      $scope.$watch('userForm', function(){
+        console.log('$scope.userForm', $scope.userForm);
+      });
+      
     
     $(document).ready(function() {
         
@@ -217,6 +234,39 @@ educationMediaApp.controller('manageUser_testUser', function ($scope, $http,icon
 							});
 
 	    }
+	    
+	    $scope.getImageData=function(thisObj) {
+	        var file = thisObj.files[0];
+	        if(!file){
+	            $('#errorModal').find('.modal-body').html("Please choose an image file.");
+	            $('#errorModal').modal('show');
+	            $(thisObj).val("");
+	            return;
+	        }
+	        console.log("file",file);
+	        
+	        var uploadCSV = new FormData();
+	        uploadCSV.append("imageFile", file);
+	        console.log("uploadCSV : ",uploadCSV);
+	        
+	      //server
+//	        var dataPath=req.files["imageFile"].path;
+	    }
+	    
+	    $scope.isInvalid = function(field){
+//	        console.log("isInvalid ",$scope.myForm[field].$invalid," ", $scope.myForm[field]," ",$scope.myForm[field].$dirty," ",$scope.myForm[field].$viewValue);
+	    	console.log("isInvalid : ", ($scope.myForm[field].$viewValue==''), 'dirty :', $scope.myForm[field].$dirty, 'form : ', $scope.myForm[field]);
+//	        return $scope.myForm[field].$invalid && $scope.myForm[field].$dirty;
+	      };
+	      
+	      $scope.isValid = function(field){
+//	    	  console.log("isvalid ",$scope.myForm[field].$invalid," ", $scope.myForm[field]," ",$scope.myForm[field].$dirty);
+	    	  return $scope.myForm[field].$valid && $scope.myForm[field].$dirty;
+	      };
 
+	      $scope.$watch('myForm', function(){
+	        console.log('$scope.myForm', $scope.myForm);
+	      });
     
 });
+

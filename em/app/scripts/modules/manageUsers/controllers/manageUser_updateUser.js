@@ -14,14 +14,14 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         });
 
     $scope.openUserDOB=function(){
-        console.log("date picker");
+//        console.log("date picker");
         $('#userDOB').focus();
     };
 	/* UserClass POJO Data Model */
 	$http.get('/manage-users/userClassData').success(
 			function(dataResponse, status, headers, config) {
 				// success
-//				console.log("userClassData", dataResponse);
+				console.log("/manage-users/userClassData", dataResponse);
 				appUtils.defaultParseResponse(dataResponse,
 						function(dataResponse) {
 							$scope.userClass = dataResponse;   //User Class userClass.basicDetails.userName //way to access property
@@ -38,7 +38,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 	 */
     $http.get('/manage-users/getAllUser').success(function(dataResponse,status,headers,config){
         //success
-//        console.log("dataResponse /manage-users/getAllUser",dataResponse);
+        console.log("dataResponse /manage-users/getAllUser",dataResponse);
         appUtils.defaultParseResponse(dataResponse,function(dataResponse){
         	$scope.allUserClass=dataResponse.responseData;
         });
@@ -73,8 +73,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
      * Search User function
      */
     $scope.searchUser=function(){
-    	
-        console.log("$scope.searchUser",$scope.searchUserModel.userName );
+    	console.log("$scope.searchUser",$scope.searchUserModel.userName );
         $http({
             method : 'POST',
             url    : '/manage-users/searchUser/',
@@ -91,7 +90,6 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             console.log("Error",data,status,headers,config);
         });
     }
-    
     /*
      * Get user details for selected user
      */
@@ -117,7 +115,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             	  console.log("dataResponse /manage-users/getSelectedUserDetails/ :",user.userName);
                   $scope.openModal('update');
              
-                console.log("searchUser dataResponse",dataResponse);
+//                console.log("searchUser dataResponse",dataResponse);
 //                $scope.allUserClass=dataResponse.responseData;
             });
         }).error(function(data,status,headers,config){
@@ -126,14 +124,27 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 
         });
     }
-  
+    
+    $scope.addUpdateUser=function()
+    {
+    	console.log("$scope.modalTitle : User", $scope.modalTitle, $scope.modalCode);
+    	if($scope.modalCode && $scope.modalCode =='add'){
+    		$scope.registerNewUser();
+    	}
+//    	console.log("$scope.modalTitle : Add User", $scope.modalTitle);
+    	else if($scope.modalCode && $scope.modalCode=='update'){
+    		$scope.updateUserClass();
+    	}
+//    	else
+//    		console.log("$scope.modalTitle : Cancel User", $scope.modalTitle);
+    }
     /*
     * Update User function call to update User
     */
     $scope.updateUserClass=function()
     {
     	//console.log("$scope.updateUserClass :",$scope.userSelectedClass, angular.equals($scope.userSelectedClass.userDetails,$scope.userSelectedClone.userDetails));
-		console.log("registerUser ", $scope.userSelectedClass);
+//		console.log("updateUserClass ", $scope.userSelectedClass);
 		var selectedUser = $scope.userSelectedClass.basicDetails.userName;
 		$http({
 			method : 'POST',
@@ -143,11 +154,15 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 				'Content-Type' : 'application/json'
 			}
 		}).success(function(dataResponse, status, headers,config) {
+//			$('#modalUpdate').modal({"show":false,"aria-hidden":true});
             // success
             appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
                 console.log("updateUserClass - dataResponse",dataResponse)
+                
                 $scope.userSelectedClass = dataResponse.responseData;
+               
                 appUtils.showSuccess("User "+selectedUser+" updated successfully");
+                $('#modalUpdate').modal({"show":false});
             });
         }).error(function(data, status, headers, config) {
             // error
@@ -156,12 +171,38 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         });
     }
     
+    /*
+	 * Submit button Method for "Add new User"
+	 */
+	$scope.registerNewUser = function() {
+		console.log("registerUser ", $scope.userSelectedClass);
+		var addedUser = $scope.userSelectedClass.basicDetails.userName;
+
+		$http({
+			method : 'POST',
+			url : '/manage-users/users/registerNewUser',
+			data : $scope.userSelectedClass,
+			headers : {
+				'Content-Type' : 'application/json'
+			}
+		}).success(function(dataResponse, status, headers,config) {
+							// success
+							appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+							console.log("registerUser - dataResponse",dataResponse)
+							$scope.userSelectedClass = dataResponse.responseData;
+							appUtils.showSuccess("User "+addedUser+" created successfully");
+											});
+						}).error(function(data, status, headers, config) {
+							// error
+							console.log("Error", data, status,headers, config);
+						});
+		};
+    
     $scope.resetUserClass=function(){
     	$scope.userSelectedClass=angular.copy($scope.userSelectedClone);
     	$scope.userForm.$setPristine();
 //    	console.log("reset changes", $scope.isUserChanged());
     };
-    
     
     $scope.isUserChanged = function ()
     {
@@ -173,62 +214,119 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
      * Back button functionality
      */
     $scope.getBackToMainUsersList=function(){
-        
         $scope.currentUserDetails=null;
-        
     }
+
     $scope.openFileBrowser=function(){
         $('#imageUploader').click();
     }
     
-    /*
-	    * Dropdown JSON data of bibDocTypeMaterial
-	    */ 
-	    $http.get('/manageLibrary/getCountryStateCity').success(function(dataResponse,status,headers,config){
-	        //success
-	        console.log("getCountryStateCity",dataResponse);
-	        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-	            $scope.countryStateCity=dataResponse;
-	         console.log("$scope.getCountryStateCity",$scope.getCountryStateCity);
-	        });
+	/*
+    * Dropdown JSON data of bibDocTypeMaterial
+    */ 
+    $http.get('/manageLibrary/getCountryStateCity').success(function(dataResponse,status,headers,config){
+        //success
+        console.log("getCountryStateCity",dataResponse);
+        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+            $scope.countryStateCity=dataResponse;
+         console.log("$scope.getCountryStateCity",$scope.getCountryStateCity);
+        });
 
-	    }).error(function(data,status,headers,config){
-	        //error
-	        console.log("Error",data,status,headers,config);
-	    });
+    }).error(function(data,status,headers,config){
+        //error
+        console.log("Error",data,status,headers,config);
+    });
 
- 	/*
-	    * Dropdown JSON data of ReligionCaste
-	    */ 
-	    $http.get('/manageLibrary/getReligionCaste').success(function(dataResponse,status,headers,config){
-	        //success
-	        console.log("ReligionCaste",dataResponse);
-	        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-	            $scope.religionCaste=dataResponse;
-	         console.log("$scope.ReligionCaste",$scope.ReligionCaste);
-	        });
+	/*
+    * Dropdown JSON data of ReligionCaste
+    */ 
+    $http.get('/manageLibrary/getReligionCaste').success(function(dataResponse,status,headers,config){
+        //success
+        console.log("ReligionCaste",dataResponse);
+        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+            $scope.religionCaste=dataResponse;
+         console.log("$scope.ReligionCaste",$scope.ReligionCaste);
+        });
 
-	    }).error(function(data,status,headers,config){
-	        //error
-	        console.log("Error",data,status,headers,config);
-	    });
+    }).error(function(data,status,headers,config){
+        //error
+        console.log("Error",data,status,headers,config);
+    });
 
-	    /*
-		    * Dropdown JSON data of Language
-		    */ 
-		    $http.get('/manageLibrary/getLanguages').success(function(dataResponse,status,headers,config){
-		        //success
-		        console.log("getLanguages",dataResponse);
-		        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-		            $scope.languages=dataResponse;
-		         console.log("$scope.languages",$scope.languages);
-		        });
+	/*
+ 	* Dropdown JSON data of Language
+    */ 
+    $http.get('/manageLibrary/getLanguages').success(function(dataResponse,status,headers,config){
+        //success
+        console.log("getLanguages",dataResponse);
+        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+            $scope.languages=dataResponse;
+         console.log("$scope.languages",$scope.languages);
+        });
 
-		    }).error(function(data,status,headers,config){
-		        //error
-		        console.log("Error",data,status,headers,config);
-		    });
+    }).error(function(data,status,headers,config){
+        //error
+        console.log("Error",data,status,headers,config);
+    });
     
+    /*
+	 * Check availability of Registration ID 
+	 */
+	$scope.getregistrationIDAvailabity = function(){
+		var regIdText = {regIdText: $scope.userSelectedClass.basicDetails.regID};
+		console.log("getregistrationIDAvailabity ",regIdText);
+		if(!angular.isUndefined(regIdText))
+			$http({
+				method : 'POST',
+				url : '/manage-users/users/registrationIDAvailabity',
+				data : regIdText,
+				headers : {
+					'Content-Type' : 'application/json'
+				}
+			}).success(function(dataResponse, status, headers,config) {
+								// success
+					appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+					console.log("getregistrationIDAvailabity - dataResponse",dataResponse)
+					$scope.regIdAvailable = dataResponse.responseData.data;
+					console.log("responce data : ",dataResponse.responseData.data.length);
+												});
+							}).error(function(data, status, headers, config) {
+								// error
+								console.log("Error", data, status,headers, config);
+							});
+		else
+			appUtils.showError("Enter correct username");
+		}
+		 /*
+		 * Check availability of username 
+		 */
+		$scope.getUserNameAvailabity = function(){
+			var userText = {userText: $scope.userSelectedClass.basicDetails.userName};
+			console.log("getUserNameAvailabity ",userText);
+			if(!angular.isUndefined(userText))
+				$http({
+					method : 'POST',
+					url : '/manage-users/users/userNameAvailablity',
+					data : userText,
+					headers : {
+						'Content-Type' : 'application/json'
+					}
+				}).success(function(dataResponse, status, headers,config) {
+									// success
+					appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+					console.log("getUserNameAvailabity - dataResponse",dataResponse)
+					$scope.userAvailable = dataResponse.responseData.data;
+//					console.log("responce data : ",dataResponse.responseData.data.length);
+													});
+								}).error(function(data, status, headers, config) {
+									// error
+									console.log("Error", data, status,headers, config);
+
+								});
+			else
+				appUtils.showError("Enter correct username");
+			}
+
     //image upload functionality
     $scope.readURL=function (input) {
 
@@ -276,15 +374,13 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
                 }).error(function(data, status, headers, config) {
                     // error
                     console.log("Error", data, status,headers, config);
-
                 });
             }
-
         }
-
     }
     $scope.openModal=function(code){
         $scope.modalTitle="";
+        $scope.modalCode=code;
         code && code=='add'?$scope.modalTitle="Add User":"";
         code && code=='update'?$scope.modalTitle="Update User":"";
         code && code=='delete'?$scope.modalTitle="Delete User":"";
@@ -292,6 +388,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         $('#modalUpdate').modal({"backdrop": "static","show":true});
         $('#modalUpdate').modal({"show":false});
     }
+    
     $scope.addUserOpenForm=function(){
         /* UserClass POJO Data Model */
         $http.get('/manage-users/userClassData').success(function(dataResponse, status, headers, config) {
@@ -303,12 +400,12 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
                         $scope.userSelectedClass);
                     $scope.openModal("add");
             });
-
         }).error(function(data, status, headers, config) {
             //error
             console.log("Error", data, status, headers, config);
         });
     }
+    
     $scope.batchAddUser=function(){
         $('#csvUploader').click();
     }
@@ -316,7 +413,5 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         appUtils.uploadCSV(thisObj,"/manage-users/uploadUserCSV",function(response){
             console.log("/manage-users/uploadUserCSV response",response)
         });
-
     };
-
 });
