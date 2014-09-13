@@ -93,8 +93,8 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     /*
      * Get user details for selected user
      */
-    $scope.getUserDetails=function(user){
-    console.log("getUserDetails : ",user.userName)
+    $scope.getUserDetails=function(user,code){
+      console.log("getUserDetails : ",user.userName)
       $scope.currentUserDetails='1';
         var userText = {userText: user.userName};
         var primaryKey=userText.__primaryColumn__||"userName";
@@ -113,7 +113,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             	  $scope.userSelectedClass=dataResponse.responseData;
             	  $scope.userSelectedClone=dataResponse.responseData;
             	  console.log("dataResponse /manage-users/getSelectedUserDetails/ :",user.userName);
-                  $scope.openModal('update');
+                  $scope.openModal(code);
              
 //                console.log("searchUser dataResponse",dataResponse);
 //                $scope.allUserClass=dataResponse.responseData;
@@ -385,6 +385,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         code && code=='update'?$scope.modalTitle="Update User":"";
         code && code=='delete'?$scope.modalTitle="Delete User":"";
 
+        $('#myTab li:first>a').click() //always open first tab
         $('#modalUpdate').modal({"backdrop": "static","show":true});
         $('#modalUpdate').modal({"show":false});
     }

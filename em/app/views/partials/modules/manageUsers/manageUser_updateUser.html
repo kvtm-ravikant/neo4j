@@ -55,8 +55,9 @@
 
                         <td ng-repeat="(key,value) in parentConfig">{{user[key]}}</td>
                         <td>
-                            <i class="fa fa-edit" role="button" data-toggle="modal" ng-click="getUserDetails(user)"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
-                            <i class="fa fa-times-circle" role="button" data-toggle="modal" ng-click="deleteUser(user)"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+                            <i class="fa fa-eye" role="button" data-toggle="modal" ng-click="getUserDetails(user,'view')"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+                            <i class="fa fa-edit" role="button" data-toggle="modal" ng-click="getUserDetails(user,'update')"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+                            <i class="fa fa-times-circle" role="button" data-toggle="modal" ng-click="getUserDetails(user,'delete')"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
                         </td>
                     </tr>
                     </tbody>
@@ -95,8 +96,9 @@
 									<div class="form-group">
 										<label class="col-sm-3 control-label">Registraion ID *</label>
 										<div class="col-sm-6">
-											<input type="text" id="regId" class="form-control"
+											<input type="text" id="regId" class="form-control" ng-if="modalCode!='view'"
 												ng-model="userSelectedClass.basicDetails.regID">
+                                            <span ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.regID}}</span>
 										</div>
 										<div ng-if="modalTitle=='Add User'">
 											<span ng-if="regIdAvailable == 0" style="color: green">{{regIdAvailable['regIdText']}}
@@ -109,31 +111,34 @@
 									<div class="form-group">
 										<label for="fName" class="col-sm-3 control-label">First
 											Name </label>
-										<div class="col-sm-6">
-											<input type="text" class="form-control" id="fName"
+										<div class="col-sm-6" ng-if="modalCode!='view'">
+											<input type="text" class="form-control" id="fName" ng-if="modalCode!='view'"
 												ng-model="userSelectedClass.basicDetails.firstName">
 										</div>
+                                        <div class="col-sm-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.firstName}}</div>
 									</div>
 									<div class="form-group">
 										<label for="mName" class="col-sm-3 control-label">Middle
 											Name </label>
-										<div class="col-sm-6">
+										<div class="col-sm-6" ng-if="modalCode!='view'">
 											<input type="text" class="form-control" id="mName"
 												ng-model="userSelectedClass.basicDetails.middleName">
 										</div>
+                                        <div class="col-sm-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.middleName}}</div>
 									</div>
 									<div class="form-group">
 										<label for="lName" class="col-sm-3 control-label">Last
 											Name </label>
 										<div class="col-sm-6">
-											<input type="text" class="form-control" id="lName"
+											<input type="text" class="form-control" id="lName" ng-if="modalCode!='view'"
 												ng-model="userSelectedClass.basicDetails.lastName">
 										</div>
+                                        <div class="col-sm-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.lastName}}</div>
 									</div>
 									<div class="form-group">
 										<label for="sex-type" class="col-sm-3 control-label">Sex
 										</label>
-										<div class="simple-radio col-sm-6" id="sex-type">
+										<div class="simple-radio col-sm-6" id="sex-type" ng-if="modalCode!='view'">
 											<input id="ml" type="radio" name="sex-type" value="M"
 												ng-model="userSelectedClass.basicDetails.sex"
 												parsley-required="true"> <label for="ml">Male</label>
@@ -141,11 +146,12 @@
 												ng-model="userSelectedClass.basicDetails.sex"> <label
 												for="fml">Female</label>
 										</div>
+                                        <div class="col-md-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.sex}}</div>
 									</div>
 									<div class="form-group">
 										<label for="dob" class="col-sm-3 control-label">Date
 											of Birth </label>
-										<div class="col-sm-6">
+										<div class="col-sm-6" ng-if="modalCode!='view'">
 											<div class="input-group">
 												<input type="text" id="userDOB"
 													ng-model="userSelectedClass.basicDetails.DOB"
@@ -156,6 +162,7 @@
 
 											</div>
 										</div>
+                                        <div class="col-md-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.DOB}}</div>
 										<!--<div class="col-sm-6">
                     <input type="text" id="dob" class="em-datepicker datepicker form-control"
                            ng-model="userSelectedClass.basicDetails.DOB">
@@ -163,15 +170,10 @@
                 </div>-->
 									</div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label">Update Profile
-											Image</label>
-										<div></div>
-									</div>
-									<div class="form-group">
 										<label class="col-sm-3 control-label" for="motherTng">Mother
 											Tongue </label>
 										<div>
-											<div class="col-sm-6">
+											<div class="col-sm-6" ng-if="modalCode!='view'">
 
 												<select id="motherTng" name="motherTng"
 													class="btn btn-media dropdown-toggle form-control"
@@ -181,12 +183,13 @@
 														value="{{key}}">{{value.___name___}}</option>
 												</select>
 											</div>
+                                            <div class="col-md-6" ng-if="modalCode=='view'">{{languages[userSelectedClass.basicDetails.languages_motherTongue].___name___}}</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label" for="othrLang">Other
 											Language </label>
-										<div class="col-sm-6">
+										<div class="col-sm-6" ng-if="modalCode!='view'">
 											<select id="othrLang" name="othrLang"
 												class="btn btn-media dropdown-toggle form-control"
 												data-ng-model="userSelectedClass.basicDetails.languages_others">
@@ -195,10 +198,11 @@
 													value="{{key}}">{{value.___name___}}</option>
 											</select>
 										</div>
+                                        <div class="col-md-6" ng-if="modalCode=='view'">{{languages[userSelectedClass.basicDetails.languages_others].___name___}}</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label" for="religion">Religion</label>
-										<div class="col-sm-6">
+										<div class="col-sm-6" ng-if="modalCode!='view'">
 											<select id="religion" name="religion"
 												class="btn btn-media dropdown-toggle form-control"
 												data-ng-model="userSelectedClass.basicDetails.religionId">
@@ -207,14 +211,16 @@
 													value="{{key}}">{{value.___name___}}</option>
 											</select>
 										</div>
+                                        <div class="col-md-6" ng-if="modalCode=='view'">{{religionCaste[userSelectedClass.basicDetails.religionId].___name___}}</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label" for="caste">Caste</label>
-										<div class="col-sm-6">
+										<div class="col-sm-6" ng-if="modalCode!='view'">
 											<input type="text" id="caste"
 												placeholder="Please mention Your Catse" class="form-control"
 												ng-model="userSelectedClass.basicDetails.casteId">
 										</div>
+                                        <div class="col-md-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.casteId}}</div>
 									</div>
 								</form>
 							</div>
