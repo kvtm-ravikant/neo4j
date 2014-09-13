@@ -95,7 +95,7 @@
 							<div class="tab-pane active" id="basicInfo">
 								<form class="form-horizontal" role="form">
 									<div class="form-group">
-										<label class="col-sm-3 control-label">Registraion ID <span style="color:red">&nbsp;*</span></label>
+										<label class="col-sm-3 control-label">Registration ID <span style="color:red">&nbsp;*</span></label>
 										<div class="col-sm-6">
 											<input type="text" id="regId" class="form-control"
 												ng-model="userSelectedClass.basicDetails.regID"
@@ -731,17 +731,30 @@
 											<label for="validation-select" class="col-sm-3 control-label">User
 												Type<span style="color:red">&nbsp;*</span></label>
 											<div class="col-sm-6" ng-if="modalCode!='view'">
+											<select id="validation-select" name="validation-select"
+										class="btn btn-media dropdown-toggle form-control"
+										ng-model="userSelectedClass.basicDetails.userType" ng-if="modalCode=='add'">
+										<option value="">Select Account Type !</option>
+										<option value="1">Teacher</option>
+										<option value="2">Student</option>
+										<option value="3">Parent</option>
+										<option value="4">Staff</option>
+										<option value="5">Other</option>
+									</select>
+											<!--   
 												<input type="text" id="validation-select"
 													name="validation-select" class="form-control"
 													ng-model="userSelectedClass.basicDetails.userType"
-													ng-if="modalCode=='update'" disabled> <input
+													ng-if="modalCode=='update'" disabled> 
+													<input
 													type="text" id="validation-select" name="validation-select"
 													class="form-control"
 													ng-model="userSelectedClass.basicDetails.userType"
 													ng-if="modalCode=='add'"> <span
 													ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.userType}}</span>
+													-->
 											</div>
-											<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.userType}}</div>
+											<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='update'">{{userSelectedClass.basicDetails.userType}}</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label" for="inputUsername">Username<span style="color:red">&nbsp;*</span></label>
