@@ -278,11 +278,12 @@
 												<div class="col-sm-4">
 													<select id="cntCountry" name="cntCountry"
 														class="btn btn-media dropdown-toggle form-control"
-														ng-selected="key==userSelectedClass.primaryAddress.country"
+
 														data-ng-model="userSelectedClass.primaryAddress.country">
 														<option value="">Select Country</option>
 														<option ng-repeat="(key, value) in countryStateCity"
-															value="{{key}}">{{value.___name___}}</option>
+															value="{{key}}"
+                                                            ng-selected="key==userSelectedClass.primaryAddress.country">{{value.___name___}}</option>
 													</select>
 
 												</div>
@@ -293,13 +294,14 @@
 
 													<select id="cntState" name="cntState"
 														class="btn btn-media dropdown-toggle form-control"
-														ng-selected="key==userSelectedClass.primaryAddress.state"
+
 														data-ng-model="userSelectedClass.primaryAddress.state"
 														ng-if="userSelectedClass.primaryAddress.country">
 														<option value="">Select State</option>
 														<option
 															ng-repeat="(key, state) in countryStateCity[userSelectedClass.primaryAddress.country]"
-															ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
+															ng-if="key!='___name___'" value="{{key}}"
+                                                            ng-selected="key==userSelectedClass.primaryAddress.state">{{state.___name___}}</option>
 													</select>
 												</div>
 											</div>
@@ -311,13 +313,14 @@
 												<div class="col-sm-3">
 													<select id="cntCity" name="cntCity"
 														class="btn btn-media dropdown-toggle form-control"
-														ng-selected="key==userSelectedClass.primaryAddress.city"
+
 														data-ng-model="userSelectedClass.primaryAddress.city"
 														ng-if="userSelectedClass.primaryAddress.state">
 														<option value="">Select City</option>
 														<option
 															ng-repeat="(key, city) in countryStateCity[userSelectedClass.primaryAddress.country][userSelectedClass.primaryAddress.state]"
-															ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
+															ng-if="key!='___name___'" value="{{key}}"
+                                                            ng-selected="key==userSelectedClass.primaryAddress.city">{{city.___name___}}</option>
 													</select>
 												</div>
 											</div>
