@@ -240,7 +240,9 @@ module.exports=function(app,Utils){
     });
     app.get("/manageLibrary/searchUser/:searchText",Utils.ensureAuthenticated,function(req,res){
         var searchText=req.params.searchText;
-        libraryMS.searchUser(res,searchText);
+        var loggedInUser=req.session.userDetails;
+        var schoolID=loggedInUser.schoolDetails.schoolId;
+        libraryMS.searchUser(res,searchText,schoolID);
     });
     app.get("/manageLibrary/getBookIssuedDetails/:bookNodeId",Utils.ensureAuthenticated,function(req,res){
         var bookNodeId=req.params.bookNodeId;

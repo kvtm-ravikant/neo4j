@@ -4,6 +4,7 @@
 var fs=require('fs');
 var path=require('path');
 var neo4j = require("node-neo4j");
+var db=getDBInstance();
 module.exports.ensureAuthenticated=function (req, res, next) {
     if (req.session.userDetails) { return next(); }
     res.redirect('login');
@@ -332,6 +333,41 @@ function readUploadedCsv(req,res,callback){
 
 
 }
+
+function searchUser(res,searchText,schoolId){
+    console.log("searchUser",searchText);
+    var responseObj=new createResponse();
+    var searchTextArr=searchText.split(",");
+    var query='Match (s:School{schoolId:"'+schoolId+'"})-[:BELONGS_TO]-(n:User) where ';
+    for(var i= 0,len=searchTextArr.length;i<len;i++){
+        var text=searchTextArr[i];
+        var tempText=text.toLowerCase();
+        query+="("
+        if(tempText=="m" || tempText=="male"){query+='n.sex ="M" OR '};
+        if(tempText=="f" || tempText=="female"){query+='n.sex ="F" OR '};
+        if(tempText=="student"){query+='n.userType ="1" OR '};
+        if(tempText=="teacher"){query+='n.userType ="2" OR '}
+        query+='n.regID =~ ".*'+text+'.*" OR ';
+        query+='n.lastName =~ ".*'+text+'.*" OR ';
+        query+='n.firstName =~ ".*'+text+'.*" OR ';
+        query+='n.middleName =~ ".*'+text+'.*" OR ';
+        (i==len-1)?query+='n.userName =~ ".*'+text+'.*" )':query+='n.userName =~ ".*'+text+'.*" ) AND ';
+
+    }
+    query+='RETURN n';
+    console.log("query",query);
+    db.cypherQuery(query,function(err,reply){
+        console.log("searchUser",query,err);
+        if(!err){
+            responseObj.responseData=reply;
+            res.json(responseObj);
+        }else{
+            responseObj.error=true;
+            responseObj.errorMsg="No Data found.";
+            res.json(responseObj);
+        }
+    });
+}
 module.exports.resolveBoolean = resolveBoolean;
 module.exports.resolveSex = resolveSex;
 module.exports.resolveDataType = resolveDataType;
@@ -352,4 +388,5 @@ module.exports.getDBInstance = getDBInstance;
 module.exports.base64_encode = base64_encode;
 module.exports.base64_decode = base64_decode;
 module.exports.readUploadedCsv = readUploadedCsv;
+module.exports.searchUser = searchUser;
 

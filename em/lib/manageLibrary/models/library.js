@@ -214,11 +214,11 @@ module.exports.getIssuedBookDetails=function(res,bookId){
 }
 
 
-module.exports.searchUser=function(res,searchText){
+module.exports.searchUser=function(res,searchText,schoolId){
     console.log("searchUser",searchText);
     var responseObj=new Utils.Response();
     var searchTextArr=searchText.split(",");
-    var query='Match (n:User) where ';
+    var query='Match (s:School{schoolId:"'+schoolId+'"})(n:User) where ';
     for(var i= 0,len=searchTextArr.length;i<len;i++){
         var text=searchTextArr[i];
         var tempText=text.toLowerCase();

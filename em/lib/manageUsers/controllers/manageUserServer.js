@@ -4,9 +4,6 @@
 var fs=require("fs");
 var userMS=require('../models/User.js');
 var Utils=require("../../common/Utils/Utils.js");
-var neo4j=require("node-neo4j");
-var db=new neo4j("http://localhost:7474");
-
 var UserClass=require("../models/UserClass.js");
 var user=new UserClass();
 var countryStateCity=require("../../common/models/countryStateCity.js");
@@ -20,7 +17,7 @@ module.exports=function(app,Utils){
     });
     /* Get countryStateCity Drop Down Data*/
     app.get("/manageLibrary/getcountryStateCity",Utils.ensureAuthenticated,function(req,res){
-    	console.log("/manageLibrary/getcountryStateCity")
+    	console.log("/manageLibrary/getcountryStateCity");
             res.json(countryStateCity);
     });
     /* Get ReligionCaste Drop Down Data*/
@@ -79,10 +76,13 @@ module.exports=function(app,Utils){
     });
     /* Search the User from textBox*/
     app.post("/manage-users/searchUser/",Utils.ensureAuthenticated,function(req,res){
-        var requestobj=req.body.userName;
-        console.log("requestobj - search user",requestobj, req.body);
+        var searchText=req.body.userName;
+        var loggedInUser=req.session.userDetails;
+        var schoolID=loggedInUser.schoolDetails.schoolId;
+        Utils.searchUser(res,searchText,schoolID);
+        console.log("requestobj - search user",searchText, req.body);
 //        console.log("requestobj - registerNewUser");
-        userMS.searchUser(requestobj,res);
+        //userMS.searchUser(requestobj,res);
         
     });
     /*get selected User */
