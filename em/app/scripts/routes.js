@@ -71,12 +71,21 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
                 displayName:'User Profile'
             }
         })
+        .state('manageUser', {
+            url: "/updateUser",
+            templateUrl: "partials/modules/manageUsers/manageUser_updateUser.html",
+            controller:'manageUser_updateUser',
+            data: {
+                displayName: 'Manage Users'
+            }
+
+        })
         /*  .state('manageUser', {
             url: "/manage-users/users",
             templateUrl: "partials/modules/manageUsers/manageUser.html",
             controller:'manage_user'
         })  */
-        .state('manageUser', {
+        /*.state('manageUser', {
             url: '/manage-users/users',
             // Note: abstract still needs a ui-view for its children to populate.
             // You can simply add it inline here.
@@ -120,7 +129,7 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
                 data:{
                     displayName:'test User'
                 }
-            })
+            })*/
 
         .state('schoolManagement', {
             url: "/schoolManagement/admin",

@@ -39,24 +39,30 @@
 	<div class="row">
 		<!-- ng-if="allUserClass.data" ng-show="!currentUserDetails" -->
 		<div class="col-md-12">
-			<table class="table">
-				<div id="head_nav">
-					<thead class="theadclass">
-						<tr>
-							<th></th>
-							<th ng-repeat="(key,value) in parentConfig">{{value}}</th>
-						</tr>
-					</thead>
-				</div>
-				<tbody>
-					<tr ng-repeat="user in allUserClass.data">
-						<td><i class="fa fa-align-justify" role="button"
-							data-toggle="modal" ng-click="getUserDetails(user)"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
-						</td>
-						<td ng-repeat="(key,value) in parentConfig">{{user[key]}}</td>
-					</tr>
-				</tbody>
-			</table>
+            <div class="col-md-12">
+                <table class="table">
+                    <div id="head_nav">
+                        <thead class="theadclass">
+                        <tr>
+
+                            <th ng-repeat="(key,value) in parentConfig">{{value}}</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                    </div>
+                    <tbody>
+                    <tr ng-repeat="user in allUserClass.data">
+
+                        <td ng-repeat="(key,value) in parentConfig">{{user[key]}}</td>
+                        <td>
+                            <i class="fa fa-edit" role="button" data-toggle="modal" ng-click="getUserDetails(user)"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+                            <i class="fa fa-times-circle" role="button" data-toggle="modal" ng-click="deleteUser(user)"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
 		</div>
 	</div>
 	<div id="modalUpdate" class="modal fade" tabindex="-1" role="dialog">

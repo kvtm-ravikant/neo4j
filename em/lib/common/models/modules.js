@@ -51,23 +51,23 @@ function initAppList(){
             'name':'Manage Users',
             'collapse':true,
             'icon':"users",
-            'abstract':true,
-            'accessList':["*"],
+           /* 'abstract':true,*/
+            'accessList':["*"]/*,
             "childLinks":[
-               /* {
+               *//* {
                     'state': 'manageUser.registerUser',
                     'name':'New User',
                     'collapse':true,
                     'icon':"user",
                     'accessList':["*"]
-                },*/
+                },*//*
                 {
                     'state': 'manageUser.updateUser',
                     'name':'Update User',
                     'collapse':true,
                     'icon':"updUser",
                     'accessList':["*"]
-                }/*,
+                }*//*,
                 {
                     'state': 'manageUser.deleteUser',
                     'name':'Delete User',
@@ -81,8 +81,8 @@ function initAppList(){
                     'collapse':true,
                     'icon':"erase",
                     'accessList':["*"]
-                }*/
-            ]
+                }*//*
+            ]*/
         },
 
         /* User Management -  End */
