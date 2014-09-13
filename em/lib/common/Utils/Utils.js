@@ -354,7 +354,7 @@ function searchUser(res,searchText,schoolId){
         (i==len-1)?query+='n.userName =~ ".*'+text+'.*" )':query+='n.userName =~ ".*'+text+'.*" ) AND ';
 
     }
-    query+='RETURN n';
+    query+=' RETURN n LIMIT 50 ';
     console.log("query",query);
     db.cypherQuery(query,function(err,reply){
         console.log("searchUser",query,err);
