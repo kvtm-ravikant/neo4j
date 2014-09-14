@@ -332,7 +332,7 @@ module.exports.deleteUser = function(userObj,loggedInUser,res) {
 }
 /* Get all Users from USER */
 module.exports.getAllUsers = function(res) {
-	var queryAllUsers = "MATCH (n:User) RETURN n LIMIT 25";
+	var queryAllUsers = "MATCH (n:User) RETURN n LIMIT 50";
 	var responseObj = new Utils.Response();
 	db.cypherQuery(queryAllUsers, function(err, reply) {
 		console.log(err, reply);

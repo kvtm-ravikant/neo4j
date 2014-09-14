@@ -40,7 +40,7 @@
 		<!-- ng-if="allUserClass.data" ng-show="!currentUserDetails" -->
 		<div class="col-md-12">
 			<div class="col-md-12">
-				<table class="table">
+				<table class="table table-bordered table-condensed table-striped table-hover">
 					<div id="head_nav">
 						<thead class="theadclass">
 							<tr>
@@ -53,12 +53,13 @@
 						<tr ng-repeat="user in allUserClass.data">
 
 							<td ng-repeat="(key,value) in parentConfig">{{user[key]}}</td>
-							<td><i class="fa fa-eye" role="button" data-toggle="modal"
-								ng-click="getUserDetails(user,'view')"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
-								<i class="fa fa-edit" role="button" data-toggle="modal"
-								ng-click="getUserDetails(user,'update')"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
-								<i class="fa fa-times-circle" role="button" data-toggle="modal"
-								ng-click="getUserDetails(user,'delete')"></i> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+							<td><a href="#" data-toggle="tooltip" title="Click to view user details"><i class="fa fa-eye" role="button" data-toggle="modal"
+								ng-click="getUserDetails(user,'view')"></i></a>
+							 &nbsp;|&nbsp;<!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+								<a href="#" data-toggle="tooltip" title="Click to update user details"><i class="fa fa-pencil" role="button" data-toggle="modal"
+								ng-click="getUserDetails(user,'update')"></i></a> &nbsp;|&nbsp;<!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+							<a href="#" data-toggle="tooltip" title="Click to delete User"><i class="fa fa-times-circle" role="button" data-toggle="modal"
+								ng-click="getUserDetails(user,'delete')"></i></a><!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
 							</td>
 						</tr>
 					</tbody>
@@ -73,7 +74,9 @@
 				aria-hidden="true">
 				<i class="fa fa-times"></i>
 			</button>
-			<h3>{{modalTitle}}</h3>
+			<h1>
+				<span class="label label-primary">{{modalTitle}}</span>
+			</h1>
 		</div>
 		<div class="modal-body">
 
@@ -81,7 +84,7 @@
 				<!-- ng-if="allUserClass.data" ng-show="currentUserDetails" -->
 				<div class="col-md-12">
 					<div class="col-md-10">
-						<ul class="nav nav-tabs" id="myTab">
+						<ul class="nav nav-pills nav-justified thumbnail setup-panel" id="myTab">
 							<li class="active"><a href="#basicInfo" data-toggle="tab">Basic
 									Details Info</a></li>
 							<li><a href="#primaryCntInfo" data-toggle="tab">Primary
@@ -95,7 +98,9 @@
 							<div class="tab-pane active" id="basicInfo">
 								<form class="form-horizontal" role="form">
 									<div class="form-group">
-										<label class="col-sm-3 control-label">Registration ID <span style="color:red">&nbsp;*</span></label>
+										<label class="col-sm-3 control-label">Registration ID
+											<span style="color: red">&nbsp;*</span>
+										</label>
 										<div class="col-sm-6">
 											<input type="text" id="regId" class="form-control"
 												ng-model="userSelectedClass.basicDetails.regID"
@@ -115,7 +120,8 @@
 									</div>
 									<div class="form-group">
 										<label for="fName" class="col-sm-3 control-label">First
-											Name <span style="color:red">&nbsp;*</span></label>
+											Name <span style="color: red">&nbsp;*</span>
+										</label>
 										<div class="col-sm-6" ng-if="modalCode!='view'">
 											<input type="text" class="form-control" id="fName"
 												ng-if="modalCode!='view'"
@@ -134,7 +140,8 @@
 									</div>
 									<div class="form-group">
 										<label for="lName" class="col-sm-3 control-label">Last
-											Name <span style="color:red">&nbsp;*</span></label>
+											Name <span style="color: red">&nbsp;*</span>
+										</label>
 										<div class="col-sm-6">
 											<input type="text" class="form-control" id="lName"
 												ng-if="modalCode!='view'"
@@ -143,7 +150,8 @@
 										<div class="col-sm-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.lastName}}</div>
 									</div>
 									<div class="form-group">
-										<label for="sex-type" class="col-sm-3 control-label">Sex<span style="color:red">&nbsp;*</span>
+										<label for="sex-type" class="col-sm-3 control-label">Sex<span
+											style="color: red">&nbsp;*</span>
 										</label>
 										<div class="simple-radio col-sm-6" id="sex-type"
 											ng-if="modalCode!='view'">
@@ -158,7 +166,8 @@
 									</div>
 									<div class="form-group">
 										<label for="dob" class="col-sm-3 control-label">Date
-											of Birth <span style="color:red">&nbsp;*</span></label>
+											of Birth <span style="color: red">&nbsp;*</span>
+										</label>
 										<div class="col-sm-6" ng-if="modalCode!='view'">
 											<div class="input-group">
 												<input type="text" id="userDOB"
@@ -238,7 +247,8 @@
 										<div class="row">
 											<div>
 												<label class="col-sm-2 control-label" for="primaryPhone">Phone
-													Number<span style="color:red">&nbsp;*</span></label>
+													Number<span style="color: red">&nbsp;*</span>
+												</label>
 												<div class="col-sm-4" ng-if="modalCode!='view'">
 													<input type="text" id="primaryPhone"
 														placeholder="Phone Number : xxxxxxxxxx"
@@ -249,7 +259,8 @@
 											</div>
 											<div>
 												<label class="col-sm-2 control-label" for="inputEmail">Email
-													Address<span style="color:red">&nbsp;*</span></label>
+													Address<span style="color: red">&nbsp;*</span>
+												</label>
 												<div class="col-sm-4" ng-if="modalCode!='view'">
 													<input type="email" id="inputEmail"
 														placeholder="Enter Your Email Address."
@@ -263,7 +274,8 @@
 										<div class="row">
 											<div>
 												<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
-													Address 1<span style="color:red">&nbsp;*</span></label>
+													Address 1<span style="color: red">&nbsp;*</span>
+												</label>
 												<div class="col-sm-10" ng-if="modalCode!='view'">
 													<input type="text" id="cntStreetAdrOne"
 														placeholder="Enter Street Address" class="form-control"
@@ -276,7 +288,8 @@
 										<div class="row">
 											<div>
 												<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
-													Address 2<span style="color:red">&nbsp;*</span></label>
+													Address 2<span style="color: red">&nbsp;*</span>
+												</label>
 												<div class="col-sm-10" ng-if="modalCode!='view'">
 													<input type="text" id="cntStreetAdrOne"
 														placeholder="Enter Street Address" class="form-control"
@@ -299,7 +312,8 @@
 										<br>
 										<div class="row">
 											<div>
-												<label class="col-sm-2 control-label" for="cntCntry">Country<span style="color:red">&nbsp;*</span></label>
+												<label class="col-sm-2 control-label" for="cntCntry">Country<span
+													style="color: red">&nbsp;*</span></label>
 												<div class="col-sm-4" ng-if="modalCode!='view'">
 													<select id="cntCountry" name="cntCountry"
 														class="btn btn-media dropdown-toggle form-control"
@@ -314,7 +328,8 @@
 												<div class="col-md-4" ng-if="modalCode=='view'">{{countryStateCity[userSelectedClass.primaryAddress.country].___name___}}</div>
 											</div>
 											<div>
-												<label class="col-sm-2 control-label" for="cntState">State<span style="color:red">&nbsp;*</span></label>
+												<label class="col-sm-2 control-label" for="cntState">State<span
+													style="color: red">&nbsp;*</span></label>
 												<div class="col-sm-4" ng-if="modalCode!='view'">
 
 													<select id="cntState" name="cntState"
@@ -334,7 +349,8 @@
 										<br>
 										<div class="row">
 											<div>
-												<label class="col-sm-2 control-label" for="cntCity">City<span style="color:red">&nbsp;*</span></label>
+												<label class="col-sm-2 control-label" for="cntCity">City<span
+													style="color: red">&nbsp;*</span></label>
 												<div class="col-sm-3" ng-if="modalCode!='view'">
 													<select id="cntCity" name="cntCity"
 														class="btn btn-media dropdown-toggle form-control"
@@ -362,7 +378,8 @@
 										<br>
 										<div class="row">
 											<div>
-												<label class="col-sm-2 control-label" for="cntPin">Pincode<span style="color:red">&nbsp;*</span></label>
+												<label class="col-sm-2 control-label" for="cntPin">Pincode<span
+													style="color: red">&nbsp;*</span></label>
 												<div class="col-sm-4" ng-if="modalCode!='view'">
 													<input type="text" id="cntPin" placeholder="Pincode"
 														class="form-control"
@@ -729,19 +746,21 @@
 									<fieldset>
 										<div class="form-group">
 											<label for="validation-select" class="col-sm-3 control-label">User
-												Type<span style="color:red">&nbsp;*</span></label>
+												Type<span style="color: red">&nbsp;*</span>
+											</label>
 											<div class="col-sm-6" ng-if="modalCode!='view'">
-											<select id="validation-select" name="validation-select"
-										class="btn btn-media dropdown-toggle form-control"
-										ng-model="userSelectedClass.basicDetails.userType" ng-if="modalCode=='add'">
-										<option value="">Select Account Type !</option>
-										<option value="1">Teacher</option>
-										<option value="2">Student</option>
-										<option value="3">Parent</option>
-										<option value="4">Staff</option>
-										<option value="5">Other</option>
-									</select>
-											<!--   
+												<select id="validation-select" name="validation-select"
+													class="btn btn-media dropdown-toggle form-control"
+													ng-model="userSelectedClass.basicDetails.userType"
+													ng-if="modalCode=='add'">
+													<option value="">Select User Type !</option>
+													<option value="1">Teacher</option>
+													<option value="2">Student</option>
+													<option value="3">Parent</option>
+													<option value="4">Staff</option>
+													<option value="5">Other</option>
+												</select>
+												<!--   
 												<input type="text" id="validation-select"
 													name="validation-select" class="form-control"
 													ng-model="userSelectedClass.basicDetails.userType"
@@ -754,10 +773,12 @@
 													ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.userType}}</span>
 													-->
 											</div>
-											<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='update'">{{userSelectedClass.basicDetails.userType}}</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='update'">{{userSelectedClass.basicDetails.userType}}</div>
 										</div>
 										<div class="form-group">
-											<label class="col-sm-3 control-label" for="inputUsername">Username<span style="color:red">&nbsp;*</span></label>
+											<label class="col-sm-3 control-label" for="inputUsername">Username<span
+												style="color: red">&nbsp;*</span></label>
 											<div class="col-sm-6" ng-if="modalCode!='view'">
 												<input type="text" id="inputUsername"
 													placeholder="What's your user name" class="form-control"
@@ -767,7 +788,8 @@
 													id="inputUsername" placeholder="What's your user name"
 													class="form-control" title="User Name is required !"
 													required ng-model="userSelectedClass.basicDetails.userName"
-													ng-if="modalCode=='add'" /> <span ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.userName}}</span>
+													ng-if="modalCode=='add'" /> <span
+													ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.userName}}</span>
 
 											</div>
 											<div ng-if="modalTitle=='Add User'" ng-if="modalCode!='view'">
@@ -801,14 +823,8 @@
 						<h4 align="right">
 							<i>{{userSelectedClass.basicDetails.userName}}</i>
 						</h4>
-
-
 					</div>
-
 				</div>
-
-
-
 			</div>
 		</div>
 		<div class="modal-footer">
@@ -817,16 +833,37 @@
 				<i class="fa fa-arrow-circle-left"> Back</i>
 			</button>
 			<button class="btn btn-primary pull-right"
-				ng-click="resetUserClass()">
+				ng-click="resetUserClass()" ng-if="modalCode!='view'&& modalCode!='delete'">
 				<i class="fa fa-rotate-left"> Reset</i>
 			</button>
-			<button class="btn btn-primary pull-right" ng-click="addUpdateUser()">
+			<button class="btn {{buttonStyle}} pull-right" ng-click="addUpdateUser()" ng-if="modalCode!='view'">
 				<i class="fa fa-edit"> {{modalTitle}}</i>
 			</button>
 		</div>
 	</div>
 
-
+	<div class="modal well" tabindex="-1" role="dialog" id="retryModel">
+		<div class="modal-header">
+			<h3>Are you sure ?</h3>
+		</div>
+		<div class="modal-body">{{alertText}}</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" ng-click="ok()">OK</button>
+			<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+		</div>
+	</div>
+<!--  
+	<div class="modal-header">
+		<h3>Error!</h3>
+	</div>
+	<div class="modal-body">
+		<p>Something went wrong!</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="retry()">Retry</button>
+		<button class="btn btn-danger" ng-click="cancel()">Cancel</button>
+	</div>
+ -->
 	<!-- End User Details  -->
 </div>
 

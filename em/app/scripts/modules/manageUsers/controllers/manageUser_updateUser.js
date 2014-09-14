@@ -17,7 +17,8 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 //        console.log("date picker");
         $('#userDOB').focus();
     };
-	/* UserClass POJO Data Model */
+	
+    /* UserClass POJO Data Model */
 	$http.get('/manage-users/userClassData').success(
 			function(dataResponse, status, headers, config) {
 				// success
@@ -112,39 +113,75 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 //            	  $scope.userSelectedClass =  dataResponse.responseData.data[0];
             	  $scope.userSelectedClass=dataResponse.responseData;
             	  $scope.userSelectedClone=dataResponse.responseData;
-            	  console.log("dataResponse /manage-users/getSelectedUserDetails/ :",user.userName);
+            	  console.log("dataResponse /manage-users/getSelectedUserDetails/ :",user.userName," dataResponse : ",dataResponse);
                   $scope.openModal(code);
              
-//                console.log("searchUser dataResponse",dataResponse);
-//                $scope.allUserClass=dataResponse.responseData;
             });
         }).error(function(data,status,headers,config){
             //error
             console.log("Error",data,status,headers,config);
-
         });
     }
     
+    $scope.alertText="";
     $scope.addUpdateUser=function()
     {
     	console.log("$scope.modalTitle : User", $scope.modalTitle, $scope.modalCode);
     	if($scope.modalCode && $scope.modalCode =='add'){
     		$scope.registerNewUser();
     	}
-//    	console.log("$scope.modalTitle : Add User", $scope.modalTitle);
     	else if($scope.modalCode && $scope.modalCode=='update'){
-    		$scope.updateUserClass();
+    		$('#retryModel').modal({"backdrop": "static","show":true});
+    		 $scope.alertText="User details has been changed. Do you want to proceed ?";
     	}
-//    	else
-//    		console.log("$scope.modalTitle : Cancel User", $scope.modalTitle);
+    	else if($scope.modalCode && $scope.modalCode=='delete'){
+    		$('#retryModel').modal({"backdrop": "static","show":true});
+    		$scope.alertText="You are about to delete a User. Please confirm.";
+    	}
     }
+ 
+    $scope.ok=function(){
+//   	console.log("retry model");
+	   if($scope.modalCode && $scope.modalCode=='update'){
+		   $scope.updateUserClass();   
+	   }
+	   else if($scope.modalCode && $scope.modalCode=='delete'){
+   			$scope.deleteUserClass();
+	   }
+   		$('#retryModel').modal('hide');
+    }
+
+   $scope.cancel=function(){
+//  	console.log("retry model");
+  		$('#retryModel').modal('hide');
+   }
+   
+
+    $scope.resetUserClass=function(){
+    	$scope.userSelectedClass=angular.copy($scope.userSelectedClone);
+//    	$scope.userForm.$setPristine();
+    	console.log("reset changes", $scope.isUserChanged());
+    };
+    
+    $scope.isUserChanged=function ()
+    {
+//    	console.log(angular.equals($scope.userSelectedClass, $scope.userSelectedClone));
+    	return angular.equals($scope.userSelectedClass, $scope.userSelectedClone);
+    };
+ 
     /*
+     * Back button functionality
+     */
+    $scope.getBackToMainUsersList=function(){
+        $scope.currentUserDetails=!$scope.currentUserDetails;
+    }
+ 
+   /*
     * Update User function call to update User
     */
     $scope.updateUserClass=function()
     {
     	//console.log("$scope.updateUserClass :",$scope.userSelectedClass, angular.equals($scope.userSelectedClass.userDetails,$scope.userSelectedClone.userDetails));
-//		console.log("updateUserClass ", $scope.userSelectedClass);
 		var selectedUser = $scope.userSelectedClass.basicDetails.userName;
 		$http({
 			method : 'POST',
@@ -154,7 +191,6 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 				'Content-Type' : 'application/json'
 			}
 		}).success(function(dataResponse, status, headers,config) {
-//			$('#modalUpdate').modal({"show":false,"aria-hidden":true});
             // success
             appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
                 console.log("updateUserClass - dataResponse",dataResponse)
@@ -162,12 +198,11 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
                 $scope.userSelectedClass = dataResponse.responseData;
                
                 appUtils.showSuccess("User "+selectedUser+" updated successfully");
-                $('#modalUpdate').modal({"show":false});
+                $('#modalUpdate').modal('hide');
             });
         }).error(function(data, status, headers, config) {
             // error
             console.log("Error", data, status,headers, config);
-
         });
     }
     
@@ -191,6 +226,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 							console.log("registerUser - dataResponse",dataResponse)
 							$scope.userSelectedClass = dataResponse.responseData;
 							appUtils.showSuccess("User "+addedUser+" created successfully");
+							$('#modalUpdate').modal('hide');
 											});
 						}).error(function(data, status, headers, config) {
 							// error
@@ -198,25 +234,35 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 						});
 		};
     
-    $scope.resetUserClass=function(){
-    	$scope.userSelectedClass=angular.copy($scope.userSelectedClone);
-    	$scope.userForm.$setPristine();
-//    	console.log("reset changes", $scope.isUserChanged());
-    };
-    
-    $scope.isUserChanged = function ()
-    {
-//    	console.log(angular.equals($scope.userSelectedClass, $scope.userSelectedClone));
-    	return angular.equals($scope.userSelectedClass, $scope.userSelectedClone);
-    };
-    
     /*
-     * Back button functionality
+     * Delete User function call to update User
      */
-    $scope.getBackToMainUsersList=function(){
-        $scope.currentUserDetails=null;
-    }
+     $scope.deleteUserClass=function()
+     {
+     	console.log("$scope.userSelectedClass :",$scope.userSelectedClass);
+// 		console.log("deleteUser ", $scope.userClass);
+ 		$http({
+ 			method : 'POST',
+ 			url : '/manage-users/users/deleteUser',
+ 			data : $scope.userSelectedClass,
+ 			headers : {
+ 				'Content-Type' : 'application/json'
+ 			}
+ 		}).success(function(dataResponse, status, headers,config) {
+ 							// success
+ 							appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+ 												console.log("deleteUserClass - dataResponse",dataResponse)
+ 												$scope.userSelectedClass.basicDetails = dataResponse.responseData.data[0];
+ 												appUtils.showSuccess("User "+$scope.userSelectedClass.basicDetails.userName+" deleted successfully");
+ 												$('#modalUpdate').modal('hide');
+ 											});
+ 						}).error(function(data, status, headers, config) {
+ 							// error
+ 							console.log("Error", data, status,headers, config);
 
+ 						});
+     };
+    
     $scope.openFileBrowser=function(){
         $('#imageUploader').click();
     }
@@ -321,7 +367,6 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 								}).error(function(data, status, headers, config) {
 									// error
 									console.log("Error", data, status,headers, config);
-
 								});
 			else
 				appUtils.showError("Enter correct username");
@@ -329,8 +374,6 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 
     //image upload functionality
     $scope.readURL=function (input) {
-
-
         if (input.files	&& input.files[0]) {
             var file = input.files[0];
             if(!file){
@@ -378,12 +421,18 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             }
         }
     }
+    
+    
     $scope.openModal=function(code){
         $scope.modalTitle="";
         $scope.modalCode=code;
+        $scope.buttonStyle='btn-primary';
         code && code=='add'?$scope.modalTitle="Add User":"";
         code && code=='update'?$scope.modalTitle="Update User":"";
         code && code=='delete'?$scope.modalTitle="Delete User":"";
+        code && code=='view'?$scope.modalTitle="User Details":"";
+        
+        code && code=='delete'?$scope.buttonStyle="btn-danger":"btn-primary";
 
         $('#myTab li:first>a').click() //always open first tab
         $('#modalUpdate').modal({"backdrop": "static","show":true});
@@ -392,6 +441,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     
     $scope.addUserOpenForm=function(){
         /* UserClass POJO Data Model */
+//    	$scope.modalTitle="Add User";
         $http.get('/manage-users/userClassData').success(function(dataResponse, status, headers, config) {
             // success
             console.log("userClassData", dataResponse);
