@@ -282,6 +282,23 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         //error
         console.log("Error",data,status,headers,config);
     });
+    
+    /*
+     * Dropdown JSON data of userType
+     */ 
+     $http.get('/manageLibrary/getUserType').success(function(dataResponse,status,headers,config){
+         //success
+         console.log("getuserType",dataResponse);
+         appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+             $scope.userType=dataResponse;
+          console.log("$scope.getUserType",$scope.userType);
+         });
+
+     }).error(function(data,status,headers,config){
+         //error
+         console.log("Error",data,status,headers,config);
+     });
+
 
 	/*
     * Dropdown JSON data of ReligionCaste

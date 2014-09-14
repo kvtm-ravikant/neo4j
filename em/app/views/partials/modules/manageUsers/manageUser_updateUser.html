@@ -23,11 +23,11 @@
 				<input class="control-label hide" height="0" width="0" type='file'
 					id="csvUploader"
 					onchange="angular.element(this).scope().uploadCsv(this)" />
-				<button class="btn btn-sm btn-inverse pull-right"
+				<button class="btn btn-sm btn-info pull-right"
 					ng-click="batchAddUser()">
 					<i class="fa fa-users"> Batch Upload</i>
 				</button>
-				<button class="btn btn-sm btn-default pull-right"
+				<button class="btn btn-sm btn-warning pull-right"
 					ng-click="addUserOpenForm()">
 					<i class="fa fa-user"> Add User</i>
 				</button>
@@ -40,27 +40,32 @@
 		<!-- ng-if="allUserClass.data" ng-show="!currentUserDetails" -->
 		<div class="col-md-12">
 			<div class="col-md-12">
-				<table class="table table-bordered table-condensed table-striped table-hover">
+				<table
+					class="table table-bordered table-condensed table-striped table-hover">
 					<div id="head_nav">
-						<thead class="theadclass">
-							<tr>
-								<th ng-repeat="(key,value) in parentConfig">{{value}}</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
+					<thead class="theadclass">
+						<tr>
+							<th ng-repeat="(key,value) in parentConfig">{{value}}</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
 					</div>
 					<tbody>
 						<tr ng-repeat="user in allUserClass.data">
 
 							<td ng-repeat="(key,value) in parentConfig">{{user[key]}}</td>
-							<td><a href="#" data-toggle="tooltip" title="Click to view user details"><i class="fa fa-eye" role="button" data-toggle="modal"
-								ng-click="getUserDetails(user,'view')"></i></a>
-							 &nbsp;|&nbsp;<!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
-								<a href="#" data-toggle="tooltip" title="Click to update user details"><i class="fa fa-pencil" role="button" data-toggle="modal"
-								ng-click="getUserDetails(user,'update')"></i></a> &nbsp;|&nbsp;<!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
-							<a href="#" data-toggle="tooltip" title="Click to delete User"><i class="fa fa-times-circle" role="button" data-toggle="modal"
-								ng-click="getUserDetails(user,'delete')"></i></a><!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
-							</td>
+							<td><a href="#" data-toggle="tooltip"
+								title="Click to view user details"><i class="fa fa-eye"
+									role="button" data-toggle="modal"
+									ng-click="getUserDetails(user,'view')"></i></a> &nbsp;|&nbsp;<!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+								<a href="#" data-toggle="tooltip"
+								title="Click to update user details"><i class="fa fa-pencil"
+									role="button" data-toggle="modal"
+									ng-click="getUserDetails(user,'update')"></i></a> &nbsp;|&nbsp;<!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+								<a href="#" data-toggle="tooltip" title="Click to delete User"><i
+									class="fa fa-times-circle" role="button" data-toggle="modal"
+									ng-click="getUserDetails(user,'delete')"></i></a>
+							<!-- <i class="fa fa-picture-o cursor-pointer"></i>  --></td>
 						</tr>
 					</tbody>
 				</table>
@@ -84,7 +89,8 @@
 				<!-- ng-if="allUserClass.data" ng-show="currentUserDetails" -->
 				<div class="col-md-12">
 					<div class="col-md-10">
-						<ul class="nav nav-pills nav-justified thumbnail setup-panel" id="myTab">
+						<ul class="nav nav-pills nav-justified thumbnail setup-panel"
+							id="myTab">
 							<li class="active"><a href="#basicInfo" data-toggle="tab">Basic
 									Details Info</a></li>
 							<li><a href="#primaryCntInfo" data-toggle="tab">Primary
@@ -749,32 +755,16 @@
 												Type<span style="color: red">&nbsp;*</span>
 											</label>
 											<div class="col-sm-6" ng-if="modalCode!='view'">
-												<select id="validation-select" name="validation-select"
+												<select id="birthPlaceCntry" name="validation-select"
 													class="btn btn-media dropdown-toggle form-control"
-													ng-model="userSelectedClass.basicDetails.userType"
-													ng-if="modalCode=='add'">
-													<option value="">Select User Type !</option>
-													<option value="1">Teacher</option>
-													<option value="2">Student</option>
-													<option value="3">Parent</option>
-													<option value="4">Staff</option>
-													<option value="5">Other</option>
+													data-ng-model="userSelectedClass.basicDetails.userType">
+													<option value="">Select User Type</option>
+													<option ng-repeat="(key, value) in userType"
+														value="{{key}}">{{value.___name___}}</option>
 												</select>
-												<!--   
-												<input type="text" id="validation-select"
-													name="validation-select" class="form-control"
-													ng-model="userSelectedClass.basicDetails.userType"
-													ng-if="modalCode=='update'" disabled> 
-													<input
-													type="text" id="validation-select" name="validation-select"
-													class="form-control"
-													ng-model="userSelectedClass.basicDetails.userType"
-													ng-if="modalCode=='add'"> <span
-													ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.userType}}</span>
-													-->
 											</div>
 											<div class="col-md-4"
-												ng-if="modalCode=='view'||modalCode=='update'">{{userSelectedClass.basicDetails.userType}}</div>
+												ng-if="modalCode=='view'||modalCode=='update'">{{userType[userSelectedClass.basicDetails.userType].___name___}}</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label" for="inputUsername">Username<span
@@ -833,10 +823,12 @@
 				<i class="fa fa-arrow-circle-left"> Back</i>
 			</button>
 			<button class="btn btn-primary pull-right"
-				ng-click="resetUserClass()" ng-if="modalCode!='view'&& modalCode!='delete'">
+				ng-click="resetUserClass()"
+				ng-if="modalCode!='view'&& modalCode!='delete'">
 				<i class="fa fa-rotate-left"> Reset</i>
 			</button>
-			<button class="btn {{buttonStyle}} pull-right" ng-click="addUpdateUser()" ng-if="modalCode!='view'">
+			<button class="btn {{buttonStyle}} pull-right"
+				ng-click="addUpdateUser()" ng-if="modalCode!='view'">
 				<i class="fa fa-edit"> {{modalTitle}}</i>
 			</button>
 		</div>
@@ -852,7 +844,7 @@
 			<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 		</div>
 	</div>
-<!--  
+	<!--  
 	<div class="modal-header">
 		<h3>Error!</h3>
 	</div>
