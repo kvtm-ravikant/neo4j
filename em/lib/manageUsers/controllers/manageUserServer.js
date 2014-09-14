@@ -46,7 +46,8 @@ module.exports=function(app,Utils){
     /* Get all Users from USER */
     app.get("/manage-users/getAllUser",Utils.ensureAuthenticated,function(req,res){
     	console.log("/manage-users/getAllUser");
-        userMS.getAllUsers(res);
+    	 var loggedInUser=req.session.userDetails;
+        userMS.getAllUsers(loggedInUser,res);
     });
     /* Check availability of username  */
     app.post("/manage-users/users/userNameAvailablity",Utils.ensureAuthenticated,function(req,res){
