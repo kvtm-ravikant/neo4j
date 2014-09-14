@@ -114,7 +114,7 @@
 												id="regId" class="form-control"
 												ng-model="userSelectedClass.basicDetails.regID"
 												ng-if="modalCode=='update'" disabled> <span
-												ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.regID}}</span>
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.regID}}</span>
 										</div>
 										<div ng-if="modalTitle=='Add User'">
 											<span ng-if="regIdAvailable == 0" style="color: green">{{regIdAvailable['regIdText']}}
@@ -128,21 +128,21 @@
 										<label for="fName" class="col-sm-3 control-label">First
 											Name <span style="color: red">&nbsp;*</span>
 										</label>
-										<div class="col-sm-6" ng-if="modalCode!='view'">
+										<div class="col-sm-6" ng-if="modalCode!='view'||modalCode!='delete'">
 											<input type="text" class="form-control" id="fName"
-												ng-if="modalCode!='view'"
+												ng-if="modalCode=='add'||modalCode=='update'"
 												ng-model="userSelectedClass.basicDetails.firstName">
 										</div>
-										<div class="col-sm-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.firstName}}</div>
+										<div class="col-sm-6" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.firstName}}</div>
 									</div>
 									<div class="form-group">
 										<label for="mName" class="col-sm-3 control-label">Middle
 											Name </label>
-										<div class="col-sm-6" ng-if="modalCode!='view'">
+										<div class="col-sm-6" ng-if="modalCode=='add'||modalCode=='update'">
 											<input type="text" class="form-control" id="mName"
 												ng-model="userSelectedClass.basicDetails.middleName">
 										</div>
-										<div class="col-sm-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.middleName}}</div>
+										<div class="col-sm-6" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.middleName}}</div>
 									</div>
 									<div class="form-group">
 										<label for="lName" class="col-sm-3 control-label">Last
@@ -150,17 +150,17 @@
 										</label>
 										<div class="col-sm-6">
 											<input type="text" class="form-control" id="lName"
-												ng-if="modalCode!='view'"
+												ng-if="modalCode=='add'||modalCode=='update'"
 												ng-model="userSelectedClass.basicDetails.lastName">
 										</div>
-										<div class="col-sm-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.lastName}}</div>
+										<div class="col-sm-6" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.lastName}}</div>
 									</div>
 									<div class="form-group">
 										<label for="sex-type" class="col-sm-3 control-label">Sex<span
 											style="color: red">&nbsp;*</span>
 										</label>
 										<div class="simple-radio col-sm-6" id="sex-type"
-											ng-if="modalCode!='view'">
+											ng-if="modalCode=='add'||modalCode=='update'">
 											<input id="ml" type="radio" name="sex-type" value="M"
 												ng-model="userSelectedClass.basicDetails.sex"
 												parsley-required="true"> <label for="ml">Male</label>
@@ -168,13 +168,13 @@
 												ng-model="userSelectedClass.basicDetails.sex"> <label
 												for="fml">Female</label>
 										</div>
-										<div class="col-md-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.sex}}</div>
+										<div class="col-md-6" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.sex}}</div>
 									</div>
 									<div class="form-group">
 										<label for="dob" class="col-sm-3 control-label">Date
 											of Birth <span style="color: red">&nbsp;*</span>
 										</label>
-										<div class="col-sm-6" ng-if="modalCode!='view'">
+										<div class="col-sm-6" ng-if="modalCode=='add'||modalCode=='update'">
 											<div class="input-group">
 												<input type="text" id="userDOB"
 													ng-model="userSelectedClass.basicDetails.DOB"
@@ -182,10 +182,9 @@
 													placeholder="Date of Birth"> <span
 													class="input-group-addon cursor-pointer"
 													ng-click="openUserDOB()"><i class="fa fa-calendar"></i></span>
-
 											</div>
 										</div>
-										<div class="col-md-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.DOB}}</div>
+										<div class="col-md-6" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.DOB}}</div>
 										<!--<div class="col-sm-6">
                     <input type="text" id="dob" class="em-datepicker datepicker form-control"
                            ng-model="userSelectedClass.basicDetails.DOB">
@@ -196,8 +195,7 @@
 										<label class="col-sm-3 control-label" for="motherTng">Mother
 											Tongue </label>
 										<div>
-											<div class="col-sm-6" ng-if="modalCode!='view'">
-
+											<div class="col-sm-6" ng-if="modalCode=='add'||modalCode=='update'">
 												<select id="motherTng" name="motherTng"
 													class="btn btn-media dropdown-toggle form-control"
 													data-ng-model="userSelectedClass.basicDetails.languages_motherTongue">
@@ -206,13 +204,13 @@
 														value="{{key}}">{{value.___name___}}</option>
 												</select>
 											</div>
-											<div class="col-md-6" ng-if="modalCode=='view'">{{languages[userSelectedClass.basicDetails.languages_motherTongue].___name___}}</div>
+											<div class="col-md-6" ng-if="modalCode=='view'||modalCode=='delete'">{{languages[userSelectedClass.basicDetails.languages_motherTongue].___name___}}</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label" for="othrLang">Other
 											Language </label>
-										<div class="col-sm-6" ng-if="modalCode!='view'">
+										<div class="col-sm-6" ng-if="modalCode=='add'||modalCode=='update'">
 											<select id="othrLang" name="othrLang"
 												class="btn btn-media dropdown-toggle form-control"
 												data-ng-model="userSelectedClass.basicDetails.languages_others">
@@ -221,11 +219,11 @@
 													value="{{key}}">{{value.___name___}}</option>
 											</select>
 										</div>
-										<div class="col-md-6" ng-if="modalCode=='view'">{{languages[userSelectedClass.basicDetails.languages_others].___name___}}</div>
+										<div class="col-md-6" ng-if="modalCode=='view'||modalCode=='delete'">{{languages[userSelectedClass.basicDetails.languages_others].___name___}}</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label" for="religion">Religion</label>
-										<div class="col-sm-6" ng-if="modalCode!='view'">
+										<div class="col-sm-6" ng-if="modalCode=='add'||modalCode=='update'">
 											<select id="religion" name="religion"
 												class="btn btn-media dropdown-toggle form-control"
 												data-ng-model="userSelectedClass.basicDetails.religionId">
@@ -234,16 +232,16 @@
 													value="{{key}}">{{value.___name___}}</option>
 											</select>
 										</div>
-										<div class="col-md-6" ng-if="modalCode=='view'">{{religionCaste[userSelectedClass.basicDetails.religionId].___name___}}</div>
+										<div class="col-md-6" ng-if="modalCode=='view'||modalCode=='delete'">{{religionCaste[userSelectedClass.basicDetails.religionId].___name___}}</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label" for="caste">Caste</label>
-										<div class="col-sm-6" ng-if="modalCode!='view'">
+										<div class="col-sm-6" ng-if="modalCode=='add'||modalCode=='update'">
 											<input type="text" id="caste"
 												placeholder="Please mention Your Catse" class="form-control"
 												ng-model="userSelectedClass.basicDetails.casteId">
 										</div>
-										<div class="col-md-6" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.casteId}}</div>
+										<div class="col-md-6" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.casteId}}</div>
 									</div>
 								</form>
 							</div>
@@ -255,25 +253,25 @@
 												<label class="col-sm-2 control-label" for="primaryPhone">Phone
 													Number<span style="color: red">&nbsp;*</span>
 												</label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="text" id="primaryPhone"
 														placeholder="Phone Number : xxxxxxxxxx"
 														class="form-control"
 														ng-model="userSelectedClass.contact.phonePrimary" min="10">
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.contact.phonePrimary}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.contact.phonePrimary}}</div>
 											</div>
 											<div>
 												<label class="col-sm-2 control-label" for="inputEmail">Email
 													Address<span style="color: red">&nbsp;*</span>
 												</label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="email" id="inputEmail"
 														placeholder="Enter Your Email Address."
 														class="form-control" title="Email id is required !"
 														required ng-model="userSelectedClass.contact.emailPrimary" />
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.contact.emailPrimary}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.contact.emailPrimary}}</div>
 											</div>
 										</div>
 										<br>
@@ -282,12 +280,12 @@
 												<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
 													Address 1<span style="color: red">&nbsp;*</span>
 												</label>
-												<div class="col-sm-10" ng-if="modalCode!='view'">
+												<div class="col-sm-10" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="text" id="cntStreetAdrOne"
 														placeholder="Enter Street Address" class="form-control"
 														ng-model="userSelectedClass.primaryAddress.street1">
 												</div>
-												<div class="col-md-6" ng-if="modalCode=='view'">{{userSelectedClass.primaryAddress.street1}}</div>
+												<div class="col-md-6" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.primaryAddress.street1}}</div>
 											</div>
 										</div>
 										<br>
@@ -296,23 +294,23 @@
 												<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
 													Address 2<span style="color: red">&nbsp;*</span>
 												</label>
-												<div class="col-sm-10" ng-if="modalCode!='view'">
+												<div class="col-sm-10" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="text" id="cntStreetAdrOne"
 														placeholder="Enter Street Address" class="form-control"
 														ng-model="userSelectedClass.primaryAddress.street2">
 												</div>
-												<div class="col-md-6" ng-if="modalCode=='view'">{{userSelectedClass.primaryAddress.street2}}</div>
+												<div class="col-md-6" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.primaryAddress.street2}}</div>
 											</div>
 										</div>
 										<br>
 										<div class="row">
 											<div>
 												<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
-												<div class="col-sm-10" ng-if="modalCode!='view'">
+												<div class="col-sm-10" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="text" id="cntStreetAdrTwo"
 														placeholder="Provide Landmark" class="form-control">
 												</div>
-												<div class="col-md-6" ng-if="modalCode=='view'">{{userSelectedClass.contact.landmark}}</div>
+												<div class="col-md-6" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.contact.landmark}}</div>
 											</div>
 										</div>
 										<br>
@@ -320,7 +318,7 @@
 											<div>
 												<label class="col-sm-2 control-label" for="cntCntry">Country<span
 													style="color: red">&nbsp;*</span></label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 													<select id="cntCountry" name="cntCountry"
 														class="btn btn-media dropdown-toggle form-control"
 														data-ng-model="userSelectedClass.primaryAddress.country">
@@ -331,12 +329,12 @@
 													</select>
 
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{countryStateCity[userSelectedClass.primaryAddress.country].___name___}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.primaryAddress.country].___name___}}</div>
 											</div>
 											<div>
 												<label class="col-sm-2 control-label" for="cntState">State<span
 													style="color: red">&nbsp;*</span></label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 
 													<select id="cntState" name="cntState"
 														class="btn btn-media dropdown-toggle form-control"
@@ -349,7 +347,7 @@
 															ng-selected="key==userSelectedClass.primaryAddress.state">{{state.___name___}}</option>
 													</select>
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{countryStateCity[userSelectedClass.primaryAddress.country][userSelectedClass.primaryAddress.state].___name___}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.primaryAddress.country][userSelectedClass.primaryAddress.state].___name___}}</div>
 											</div>
 										</div>
 										<br>
@@ -357,7 +355,7 @@
 											<div>
 												<label class="col-sm-2 control-label" for="cntCity">City<span
 													style="color: red">&nbsp;*</span></label>
-												<div class="col-sm-3" ng-if="modalCode!='view'">
+												<div class="col-sm-3" ng-if="modalCode=='add'||modalCode=='update'">
 													<select id="cntCity" name="cntCity"
 														class="btn btn-media dropdown-toggle form-control"
 														data-ng-model="userSelectedClass.primaryAddress.city"
@@ -369,16 +367,16 @@
 															ng-selected="key==userSelectedClass.primaryAddress.city">{{city.___name___}}</option>
 													</select>
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{countryStateCity[userSelectedClass.primaryAddress.country][userSelectedClass.primaryAddress.state][userSelectedClass.primaryAddress.city].___name___}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.primaryAddress.country][userSelectedClass.primaryAddress.state][userSelectedClass.primaryAddress.city].___name___}}</div>
 											</div>
 											<div>
 												<label class="col-sm-2 control-label" for="cntDistct">District</label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="text" id="cntDistct" placeholder="District"
 														class="form-control"
 														ng-model="userSelectedClass.primaryAddress.district">
 												</div>
-												<div class="col-md-6" ng-if="modalCode=='view'">{{userSelectedClass.primaryAddress.district}}</div>
+												<div class="col-md-6" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.primaryAddress.district}}</div>
 											</div>
 										</div>
 										<br>
@@ -386,12 +384,12 @@
 											<div>
 												<label class="col-sm-2 control-label" for="cntPin">Pincode<span
 													style="color: red">&nbsp;*</span></label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="text" id="cntPin" placeholder="Pincode"
 														class="form-control"
 														ng-model="userSelectedClass.primaryAddress.pincode">
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.primaryAddress.pincode}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.primaryAddress.pincode}}</div>
 											</div>
 										</div>
 										<br>
@@ -405,23 +403,23 @@
 											<div>
 												<label class="col-sm-2 control-label" for="primaryPhone">Phone
 													Number</label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="text" id="primaryPhone"
 														placeholder="Phone Number" class="form-control"
 														ng-model="userSelectedClass.contact.phoneSecondary">
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.contact.phoneSecondary}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.contact.phoneSecondary}}</div>
 											</div>
 											<div>
 												<label class="col-sm-2 control-label" for="inputEmail">Email
 													Address</label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="email" id="inputEmail"
 														placeholder="Enter Your Email Address."
 														class="form-control" title="Email id is required !"
 														ng-model="userSelectedClass.contact.emailSecondary" />
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.contact.emailSecondary}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.contact.emailSecondary}}</div>
 											</div>
 										</div>
 										<br>
@@ -429,12 +427,12 @@
 											<div>
 												<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
 													Address 1</label>
-												<div class="col-sm-10" ng-if="modalCode!='view'">
+												<div class="col-sm-10" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="text" id="cntStreetAdrOne"
 														placeholder="Enter Street Address" class="form-control"
 														ng-model="userSelectedClass.SecondaryAddress.street1">
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.SecondaryAddress.street1}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.SecondaryAddress.street1}}</div>
 											</div>
 										</div>
 										<br>
@@ -442,23 +440,23 @@
 											<div>
 												<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
 													Address 2</label>
-												<div class="col-sm-10" ng-if="modalCode!='view'">
+												<div class="col-sm-10" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="text" id="cntStreetAdrOne"
 														placeholder="Enter Street Address" class="form-control"
 														ng-model="userSelectedClass.SecondaryAddress.street2">
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.SecondaryAddress.street2}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.SecondaryAddress.street2}}</div>
 											</div>
 										</div>
 										<br>
 										<div class="row">
 											<div>
 												<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
-												<div class="col-sm-10" ng-if="modalCode!='view'">
+												<div class="col-sm-10" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="text" id="cntStreetAdrTwo"
 														placeholder="Provide Landmark" class="form-control">
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.contact.landmark}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.contact.landmark}}</div>
 											</div>
 										</div>
 										<br>
@@ -466,7 +464,7 @@
 										<div class="row">
 											<div>
 												<label class="col-sm-2 control-label" for="cntSecCntry">Country</label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 													<select id="secSecCountry" name="secSecCountry"
 														class="btn btn-media dropdown-toggle form-control"
 														data-ng-model="userSelectedClass.SecondaryAddress.country">
@@ -474,13 +472,13 @@
 														<option ng-repeat="(key, value) in countryStateCity"
 															value="{{key}}">{{value.___name___}}</option>
 													</select>
-													<div class="col-md-4" ng-if="modalCode=='view'">{{countryStateCity[userSelectedClass.SecondaryAddress.country].___name___}}</div>
+													<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.SecondaryAddress.country].___name___}}</div>
 												</div>
 											</div>
 
 											<div>
 												<label class="col-sm-2 control-label" for="cntSecState">State</label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 													<select id="secSecState" name="secSecState"
 														class="btn btn-media dropdown-toggle form-control"
 														data-ng-model="userSelectedClass.SecondaryAddress.state"
@@ -491,14 +489,14 @@
 															ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
 													</select>
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{countryStateCity[userSelectedClass.SecondaryAddress.country][userSelectedClass.SecondaryAddress.state].___name___}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.SecondaryAddress.country][userSelectedClass.SecondaryAddress.state].___name___}}</div>
 											</div>
 										</div>
 										<br>
 										<div class="row">
 											<div>
 												<label class="col-sm-2 control-label" for="cntSecCity">City</label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 													<select id="secSecCity" name="secSecCity"
 														class="btn btn-media dropdown-toggle form-control"
 														data-ng-model="userSelectedClass.SecondaryAddress.city"
@@ -509,28 +507,28 @@
 															ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
 													</select>
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{countryStateCity[userSelectedClass.SecondaryAddress.country][userSelectedClass.SecondaryAddress.state][userSelectedClass.SecondaryAddress.city].___name___}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.SecondaryAddress.country][userSelectedClass.SecondaryAddress.state][userSelectedClass.SecondaryAddress.city].___name___}}</div>
 											</div>
 											<div>
 												<label class="col-sm-2 control-label" for="cntDistct">District</label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="text" id="cntDistct" placeholder="District"
 														class="form-control"
 														ng-model="userSelectedClass.SecondaryAddress.district">
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.SecondaryAddress.district}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.SecondaryAddress.district}}</div>
 											</div>
 										</div>
 										<br>
 										<div class="row">
 											<div>
 												<label class="col-sm-2 control-label" for="cntPin">Pincode</label>
-												<div class="col-sm-4" ng-if="modalCode!='view'">
+												<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 													<input type="text" id="cntPin" placeholder="Pincode"
 														class="form-control"
 														ng-model="userSelectedClass.SecondaryAddress.pincode">
 												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.SecondaryAddress.pincode}}</div>
+												<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.SecondaryAddress.pincode}}</div>
 											</div>
 										</div>
 										<br>
@@ -541,61 +539,11 @@
 								<form class="form-horizontal" role="form">
 									<fieldset>
 										<div class="col-md-12">
-											<!-- 
 											<div class="row">
 												<div>
 													<label class="col-sm-2 control-label" for="birthPlaceCntry">Birth
 														Place Country</label>
-													<div class="col-sm-4">
-													<select id="birthPlaceCntry" name="birthPlaceCntry"
-														class="btn btn-media dropdown-toggle form-control"
-														data-ng-model="userSelectedClass.basicDetails.birthPlace_country">
-														<option value="">Select Country</option>
-														<option ng-repeat="(key, value) in countryStateCity"
-															value="{{key}}">{{value.___name___}}</option>
-													</select>
-													</div>
-												</div>
-												<div>
-													<label class="col-sm-2 control-label" for="birthPlaceState">Birth
-														Place State</label>
-													<div class="col-sm-4">
-													<select id="birthPlaceState" name="birthPlaceState"
-														class="btn btn-media dropdown-toggle form-control"
-														data-ng-model="userSelectedClass.basicDetails.birthPlace_state"
-														ng-if="userSelectedClass.basicDetails.birthPlace_country">
-														<option value="">Select State</option>
-														<option
-															ng-repeat="(key, state) in countryStateCity[userSelectedClass.basicDetails.birthPlace_country]"
-															ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
-													</select>
-													</div>
-												</div>
-											</div>
-											<br>
-											<div class="row">
-												<div>
-													<label class="col-sm-2 control-label" for="birthPlaceCity">Birth
-														Place City</label>
-													<div class="col-sm-4">
-														<select id="birthPlaceCity" name="birthPlaceCity"
-														class="btn btn-media dropdown-toggle form-control"
-														data-ng-model="userSelectedClass.basicDetails.birthPlace_city"
-														ng-if="userSelectedClass.basicDetails.birthPlace_state">
-														<option value="">Select City</option>
-														<option
-															ng-repeat="(key, city) in countryStateCity[userSelectedClass.basicDetails.birthPlace_country][userSelectedClass.userSelectedClass.basicDetails.birthPlace_state]"
-															ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
-													</select>
-													
-													</div>
-												</div>
-											</div>  -->
-											<div class="row">
-												<div>
-													<label class="col-sm-2 control-label" for="birthPlaceCntry">Birth
-														Place Country</label>
-													<div class="col-sm-6" ng-if="modalCode!='view'">
+													<div class="col-sm-6" ng-if="modalCode=='add'||modalCode=='update'">
 														<select id="birthPlaceCntry" name="birthPlaceCntry"
 															class="btn btn-media dropdown-toggle form-control"
 															data-ng-model="userSelectedClass.basicDetails.birthPlace_country">
@@ -604,7 +552,7 @@
 																value="{{key}}">{{value.___name___}}</option>
 														</select>
 													</div>
-													<div class="col-md-4" ng-if="modalCode=='view'">{{countryStateCity[userSelectedClass.basicDetails.birthPlace_country].___name___}}</div>
+													<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.basicDetails.birthPlace_country].___name___}}</div>
 												</div>
 											</div>
 											<br>
@@ -612,7 +560,7 @@
 												<div>
 													<label class="col-sm-2 control-label" for="birthPlaceState">Birth
 														Place State</label>
-													<div class="col-sm-6" ng-if="modalCode!='view'">
+													<div class="col-sm-6" ng-if="modalCode=='add'||modalCode=='update'">
 														<select id="birthPlaceState" name="birthPlaceState"
 															class="btn btn-media dropdown-toggle form-control"
 															data-ng-model="userSelectedClass.basicDetails.birthPlace_state"
@@ -623,7 +571,7 @@
 																ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
 														</select>
 													</div>
-													<div class="col-md-4" ng-if="modalCode=='view'">{{countryStateCity[userSelectedClass.basicDetails.birthPlace_country].___name___}}</div>
+													<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.basicDetails.birthPlace_country].___name___}}</div>
 												</div>
 											</div>
 											<br>
@@ -631,7 +579,7 @@
 												<div>
 													<label class="col-sm-2 control-label" for="birthPlaceCity">Birth
 														Place City</label>
-													<div class="col-sm-4" ng-if="modalCode!='view'">
+													<div class="col-sm-4" ng-if="modalCode=='add'||modalCode=='update'">
 														<select id="birthPlaceCity" name="birthPlaceCity"
 															class="btn btn-media dropdown-toggle  form-control"
 															data-ng-model="userSelectedClass.basicDetails.birthPlace_city"
@@ -642,7 +590,7 @@
 																ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
 														</select>
 													</div>
-													<div class="col-md-4" ng-if="modalCode=='view'">{{countryStateCity[userSelectedClass.basicDetails.birthPlace_country][userSelectedClass.basicDetails.birthPlace_state].___name___}}</div>
+													<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.basicDetails.birthPlace_country][userSelectedClass.basicDetails.birthPlace_state].___name___}}</div>
 												</div>
 											</div>
 
@@ -651,49 +599,49 @@
 												<div>
 													<label class="col-sm-2 control-label" for="isVisa">VISA
 														Number</label>
-													<div class="col-sm-3" ng-if="modalCode!='view'">
+													<div class="col-sm-3" ng-if="modalCode=='add'||modalCode=='update'">
 														<input id="visaTextSrc" name="visaTextSrc"
 															class="form-control " type="text"
 															ng-model="userSelectedClass.basicDetails.visaDetails"
 															placeholder="Enter your VISA Number">
 													</div>
-													<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.visaDetails}}</div>
+													<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.visaDetails}}</div>
 												</div>
 												<div>
 
 													<label class="col-sm-2 control-label" for="isPassPort">Passport
 														Number</label>
-													<div class="col-sm-3" ng-if="modalCode!='view'">
+													<div class="col-sm-3" ng-if="modalCode=='add'||modalCode=='update'">
 														<input id="passportTextSrc" name="passportTextSrc"
 															class="form-control" type="text"
 															ng-model="userSelectedClass.basicDetails.passportNumber"
 															placeholder="Enter your Passport Number">
 													</div>
-													<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.passportNumber}}</div>
+													<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.passportNumber}}</div>
 												</div>
 											</div>
 											<br>
 											<div class="row">
 												<div>
 													<label class="col-sm-2" for="smsEnb">PAN Number</label>
-													<div class="col-sm-3" ng-if="modalCode!='view'">
+													<div class="col-sm-3" ng-if="modalCode=='add'||modalCode=='update'">
 														<input id="panTextSrc" name="panTextSrc"
 															class="form-control" type="text"
 															ng-model="userSelectedClass.basicDetails.panNumber"
 															placeholder="Enter your PAN Number">
 													</div>
-													<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.panNumber}}</div>
+													<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.panNumber}}</div>
 												</div>
 												<div>
 													<label class="col-sm-2 control-label" for="isResvrdCat">Reserved
 														Category</label>
-													<div class="col-sm-3" ng-if="modalCode!='view'">
+													<div class="col-sm-3" ng-if="modalCode=='add'||modalCode=='update'">
 														<input id="resrvrdCatTextSrc" name="resrvrdCatTextSrc"
 															class="form-control"
 															ng-model="userSelectedClass.basicDetails.isFromReservedCategory"
 															type="text" placeholder="Please mention Category">
 													</div>
-													<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.isFromReservedCategory}}</div>
+													<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.isFromReservedCategory}}</div>
 												</div>
 											</div>
 											<br>
@@ -702,23 +650,23 @@
 													<label class="col-sm-2 control-label"
 														for="isPhysicallyHandicapped">Physically
 														Challenged</label>
-													<div class="col-sm-3" ng-if="modalCode!='view'">
+													<div class="col-sm-3" ng-if="modalCode=='add'||modalCode=='update'">
 														<input type="checkbox" id="isPhysicallyHandicapped"
 															style="margin-top: 20px;"
 															ng-model="userSelectedClass.basicDetails.isPhysicallyHandicapped">
 													</div>
-													<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.isPhysicallyHandicapped}}</div>
+													<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.isPhysicallyHandicapped}}</div>
 												</div>
 												<div>
 													<label class="col-sm-2 control-label"
 														for="isEconomicallyBackward">Economically
 														Challenged</label>
-													<div class="col-sm-3" ng-if="modalCode!='view'">
+													<div class="col-sm-3" ng-if="modalCode=='add'||modalCode=='update'">
 														<input type="checkbox" id="isEconomicallyBackward"
 															style="margin-top: 20px;"
 															ng-model="userSelectedClass.basicDetails.isEconomicallyBackward">
 													</div>
-													<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.isEconomicallyBackward}}</div>
+													<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.isEconomicallyBackward}}</div>
 												</div>
 											</div>
 											<br>
@@ -726,22 +674,22 @@
 												<div>
 													<label class="col-sm-2 control-label" for="smsEnb">Enable
 														SMS Alerts </label>
-													<div class="col-sm-3" ng-if="modalCode!='view'">
+													<div class="col-sm-3" ng-if="modalCode=='add'||modalCode=='update'">
 														<input type="checkbox" id="smsEnb"
 															style="margin-top: 20px;"
 															ng-model="userSelectedClass.basicDetails.isSMSEnabled">
 													</div>
-													<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.isSMSEnabled}}</div>
+													<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.isSMSEnabled}}</div>
 												</div>
 												<div>
 													<label class="col-sm-2 control-label" for="mailEnb">Enable
 														Email Alerts </label>
-													<div class="col-sm-3" ng-if="modalCode!='view'">
+													<div class="col-sm-3" ng-if="modalCode=='add'||modalCode=='update'">
 														<input type="checkbox" id="mailEnb"
 															style="margin-top: 20px;"
 															ng-model="userSelectedClass.basicDetails.isEmailEnabled">
 													</div>
-													<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.isEmailEnabled}}</div>
+													<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.isEmailEnabled}}</div>
 												</div>
 											</div>
 									</fieldset>
@@ -754,7 +702,7 @@
 											<label for="validation-select" class="col-sm-3 control-label">User
 												Type<span style="color: red">&nbsp;*</span>
 											</label>
-											<div class="col-sm-6" ng-if="modalCode!='view'">
+											<div class="col-sm-6" ng-if="modalCode=='add'||modalCode=='update'">
 												<select id="birthPlaceCntry" name="validation-select"
 													class="btn btn-media dropdown-toggle form-control"
 													data-ng-model="userSelectedClass.basicDetails.userType">
@@ -764,12 +712,12 @@
 												</select>
 											</div>
 											<div class="col-md-4"
-												ng-if="modalCode=='view'||modalCode=='update'">{{userType[userSelectedClass.basicDetails.userType].___name___}}</div>
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userType[userSelectedClass.basicDetails.userType].___name___}}</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label" for="inputUsername">Username<span
 												style="color: red">&nbsp;*</span></label>
-											<div class="col-sm-6" ng-if="modalCode!='view'">
+											<div class="col-sm-6" ng-if="modalCode=='add'||modalCode=='update'">
 												<input type="text" id="inputUsername"
 													placeholder="What's your user name" class="form-control"
 													title="User Name is required !" required
@@ -782,7 +730,7 @@
 													ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.userName}}</span>
 
 											</div>
-											<div ng-if="modalTitle=='Add User'" ng-if="modalCode!='view'">
+											<div ng-if="modalTitle=='Add User'" ng-if="modalCode=='add'||modalCode=='update'">
 												<span ng-if="userAvailable == 0" style="color: green">{{userAvailable['userName']}}
 													is Available</span> <span ng-if="userAvailable != 0"
 													style="color: red"> is not Available !</span>
