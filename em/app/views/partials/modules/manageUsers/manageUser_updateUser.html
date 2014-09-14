@@ -24,8 +24,9 @@
 					id="csvUploader"
 					onchange="angular.element(this).scope().uploadCsv(this)" />
 				<button class="btn btn-sm btn-info pull-right"
-					ng-click="batchAddUser()">
+					>
 					<i class="fa fa-users"> Batch Upload</i>
+                    <!--ng-click="batchAddUser()"-->
 				</button>
 				<button class="btn btn-sm btn-warning pull-right"
 					ng-click="addUserOpenForm()">
@@ -45,7 +46,10 @@
 					<div id="head_nav">
 						<thead class="theadclass">
 							<tr>
-								<th ng-repeat="(key,value) in parentConfig">{{value}}</th>
+								<th >Reg ID</th>
+								<th >Name</th>
+								<th >Username</th>
+								<th >User Type</th>
 								<th>Actions</th>
 							</tr>
 						</thead>
@@ -53,7 +57,10 @@
 					<tbody>
 						<tr ng-repeat="user in allUserClass.data">
 
-							<td ng-repeat="(key,value) in parentConfig">{{user[key]}}</td>
+							<td >{{user.regID}}</td>
+							<td >{{user.firstName}} {{user.middleName}} {{user.lastName}}</td>
+							<td >{{user.userName}}</td>
+							<td >{{userType[user.userType].___name___}}</td>
 							<td><a href="#" data-toggle="tooltip"
 								title="Click to view user details"><i class="fa fa-eye"
 									role="button" data-toggle="modal"

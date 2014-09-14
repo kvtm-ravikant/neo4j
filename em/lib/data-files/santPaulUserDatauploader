@@ -88,5 +88,5 @@ CREATE (u)<-[:SOCIAL_NETWORK_OF]-(sd);
 //class association
 LOAD CSV WITH HEADERS FROM "file:/home/ccprod1/projects/neo4j/em/lib/data-files/classStudentAssociationUAT.csv" AS csvLine
 MATCH (school:School { schoolId: 'SPHSS:school:2014:452001' })-[:BELONGS_TO]-(u:User{ userName: csvLine.userName })
-WITH u MATCH (c:Class)-[:CLASS_OF]->(b:School{schoolId:'SPHSS:school:2014:452001'})
-WITH u,c CREATE (u)<-[:STUDENT_OF{batchName:csvLine.batchName,batchStartDatee:csvLine.batchStartDatee,batchEndDate:csvLine.batchEndDate}]-(c)
+WITH u,csvLine MATCH (c:Class{name:csvLine.className,section:csvLine.section})-[:CLASS_OF]->(b:School{schoolId:'SPHSS:school:2014:452001'})
+WITH u,c,csvLine CREATE (u)<-[:STUDENT_OF{batchName:csvLine.batchName,batchStartDate:csvLine.batchStartDate,batchEndDate:csvLine.batchEndDate}]-(c)

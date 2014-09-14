@@ -52,7 +52,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     $scope.currentUserDetails=null;
     
     $scope.parentConfig={
-    		"userName":"User Name",
+    		/*"userName":"User Name",*/
             "DOB":"Date of Birth",
             "firstName":"First Name",
             "lastName":" Last Name",
