@@ -331,8 +331,11 @@ module.exports.deleteUser = function(userObj,loggedInUser,res) {
 	    }
 }
 /* Get all Users from USER */
-module.exports.getAllUsers = function(res) {
-	var queryAllUsers = "MATCH (n:User) RETURN n LIMIT 25";
+module.exports.getAllUsers = function(loggedInUser, res) {
+	
+	var schoolId=loggedInUser.schoolDetails.schoolId;
+//	var queryAllUsers='match (n:School)-[r1:BELONGS_TO]->(u:User) where n.schoolId="'+schoolId+'" and u.softDelete=false return n,u order by u.updatedAt desc';
+	var queryAllUsers = "MATCH (n:User) RETURN n LIMIT 50";
 	var responseObj = new Utils.Response();
 	db.cypherQuery(queryAllUsers, function(err, reply) {
 		console.log(err, reply);

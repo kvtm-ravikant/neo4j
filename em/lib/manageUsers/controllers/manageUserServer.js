@@ -9,6 +9,7 @@ var user=new UserClass();
 var countryStateCity=require("../../common/models/countryStateCity.js");
 var religionCaste=require("../../common/models/religion.js");
 var languages=require("../../common/models/language.js");
+var userType=require("../../common/models/userType.js");
 
 module.exports=function(app,Utils){
     app.get("/manage-users/users",function(req,res){
@@ -29,7 +30,13 @@ module.exports=function(app,Utils){
     app.get("/manageLibrary/getLanguages",Utils.ensureAuthenticated,function(req,res){
     	console.log("/manageLibrary/getLanguages")
             res.json(languages);
+    });
+    /* Get user Type Drop Down Data*/
+    app.get("/manageLibrary/getUserType",Utils.ensureAuthenticated,function(req,res){
+    	console.log("/manageLibrary/getUserType")
+            res.json(userType);
     });    
+   
     app.get("/manage-users/userClassData",Utils.ensureAuthenticated,function(req,res){
         var user=new UserClass();
         var responseObj = new Utils.Response();
@@ -39,7 +46,8 @@ module.exports=function(app,Utils){
     /* Get all Users from USER */
     app.get("/manage-users/getAllUser",Utils.ensureAuthenticated,function(req,res){
     	console.log("/manage-users/getAllUser");
-        userMS.getAllUsers(res);
+    	 var loggedInUser=req.session.userDetails;
+        userMS.getAllUsers(loggedInUser,res);
     });
     /* Check availability of username  */
     app.post("/manage-users/users/userNameAvailablity",Utils.ensureAuthenticated,function(req,res){
