@@ -259,6 +259,15 @@ module.exports=function(app,Utils){
         console.log("requestObj issueLibBook",requestObj);
         libraryMS.returnBook(res,requestObj)
     });
+    /*
+     * Get Child Book details for selected Book id of Parent Book
+     */
+    app.post("/manage-users/getSelectedChildBookDetails/",Utils.ensureAuthenticated,function(req,res){
+        var requestObj=req.body;
+        console.log("requestObj issueLibBook",requestObj);
+        libraryMS.childBookDetailsbyIsbnBookId(res,requestObj);
+    });
+    
     app.post("/manageLibrary/uploadCSV",Utils.ensureAuthenticated,function(req,res){
         console.log("/manageLibrary/uploadCSV");
         //try{

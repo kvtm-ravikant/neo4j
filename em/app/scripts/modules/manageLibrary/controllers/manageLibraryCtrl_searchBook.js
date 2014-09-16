@@ -22,7 +22,6 @@ educationMediaApp.controller('libraryManagement_searchBook', function ($scope, $
             console.log("Error",data,status,headers,config);
     });
 
-
     $scope.parentConfig={
         "categoryName":"Category",
         "bookTitle":"Book Title",
@@ -37,7 +36,8 @@ educationMediaApp.controller('libraryManagement_searchBook', function ($scope, $
         "location":"Location",
         "starRating":"Star Rating"
     }
-    $scope.searchBookModel={
+   
+   $scope.searchBookModel={
         "parentBook":{
             "bookTitle":"",
             "authorName":"",
@@ -240,6 +240,78 @@ educationMediaApp.controller('libraryManagement_searchBook', function ($scope, $
             appUtils.showError(msg);
         }
     }
+    
+    $scope.selectedChildBookCriteria={
+    		"isbn" : "",
+    		"bookId" : ""
+    	}
+    /*
+     * Get Child Book details for selected Book id of Parent Book
+     */
+    $scope.getSelectedChildBookDetails=function(selectedBook,code){
+      console.log("getSelectedChildBookDetails : ",selectedBook, code, selectedBook.bookId, $scope.currentSelectedBook.isbn)
+      
+       $scope.selectedChildBookCriteria.bookId=selectedBook.bookId;
+       $scope.selectedChildBookCriteria.isbn=$scope.currentSelectedBook.isbn;
+//        console.log("$scope.getSelectedChildBookDetails",selectedChildBookCriteria);
+        $http({
+            method : 'POST',
+            url    : '/manage-users/getSelectedChildBookDetails/',
+            data   : $scope.selectedChildBookCriteria,
+            headers: {'Content-Type': 'application/json'}
+        }).success(function(dataResponse,status,headers,config){
+            //success
+            appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+            $scope.selectedChildBookDetails=dataResponse.responseData.data[0];
+            console.log("dataResponse /manage-users/getSelectedChildBookDetails/ :  ",dataResponse.responseData.data[0]);
+            
+            $scope.openChildBookModal(code);
+             
+            });
+        }).error(function(data,status,headers,config){
+            //error
+            console.log("Error",data,status,headers,config);
+        });
+    }
+    
+    /*
+     *  Child Book Modal Popup Function
+     */
+    $scope.openChildBookModal=function(code){
+        $scope.modalTitle="Books";
+        $scope.modalCode=code;
+        $scope.buttonStyle='btn-primary';
+        code && code=='add'?$scope.modalTitle="Add Book":"";
+        code && code=='update'?$scope.modalTitle="Update Book":"";
+        code && code=='delete'?$scope.modalTitle="Delete Book":"";
+        code && code=='view'?$scope.modalTitle="Book Details":"";
+        
+        code && code=='delete'?$scope.buttonStyle="btn-danger":"btn-primary";
+
+        $('#myTab li:first>a').click() //always open first tab
+        $('#childBookModal').modal({"backdrop": "static","show":true});
+        $('#childBookModal').modal({"show":false});
+    }
+    
+    /*
+     *  Parent Book Modal Popup Function
+     */
+    $scope.getSelectedParentBookDetails=function(code){
+        $scope.modalTitle="Book Title";
+        $scope.modalCode=code;
+        $scope.buttonStyle='btn-primary';
+        code && code=='add'?$scope.modalTitle="Add Book":"";
+        code && code=='update'?$scope.modalTitle="Update Book":"";
+        code && code=='delete'?$scope.modalTitle="Delete Book":"";
+        code && code=='view'?$scope.modalTitle="Book Details":"";
+        
+        code && code=='delete'?$scope.buttonStyle="btn-danger":"btn-primary";
+
+        $('#myTab li:first>a').click() //always open first tab
+        $('#parentBookModal').modal({"backdrop": "static","show":true});
+        $('#parentBookModal').modal({"show":false});
+    }
+    
     $scope.uploadFileCSV = function(thisObj) {
         console.log("uploadFile",thisObj,thisObj.files,$(thisObj).attr("name"));
         var file = thisObj.files[0];

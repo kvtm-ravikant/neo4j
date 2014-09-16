@@ -1,251 +1,677 @@
 <div class="row" ng-controller="libraryManagement_searchBook">
+	<!-- Top Search Bar - Start -->
+	<div class="row">
+		<div class="col-md-10 topbar">
+			<div class="input-group">
+				<input ng-model="searchBookModel.searchText"
+					class="col-md-12 searchclass" placeholder="Search"
+					class="nodeSearchInputBox" /> <span class="input-group-addon "
+					id="datamodal" data-toggle="popover"> <i class="fa fa-times"
+					ng-click="clearSearch();searchBooks()"></i>&nbsp;|&nbsp; <i
+					class="fa fa-search cursor-pointer" ng-click="searchBooks()"></i>&nbsp;|&nbsp;
+					<i ng-show="!isSearchBoxOpened"
+					class="fa fa-chevron-down cursor-pointer"
+					ng-click="openSearchBox()"></i> <i ng-show="isSearchBoxOpened"
+					class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i>
+				</span>
+			</div>
+		</div>
+		<div class="col-md-1">
+			<button class="btn btn-sm btn-warning pull-right">
+				<i class="fa fa-book"> Add Book Title</i>
+			</button>
 
- <div class="row">
-        <div class="col-md-10 topbar">
-                <div class="input-group">
-                    <input ng-model="searchBookModel.searchText" class="col-md-12 searchclass" placeholder="Search" class="nodeSearchInputBox" />
-                    <span class="input-group-addon " id="datamodal" data-toggle="popover">
-                    <i class="fa fa-times"	ng-click="clearSearch();searchBooks()"></i>&nbsp;|&nbsp;
-                        <i class="fa fa-search cursor-pointer" ng-click="searchBooks()" ></i>&nbsp;|&nbsp;
-                        <i  ng-show="!isSearchBoxOpened" class="fa fa-chevron-down cursor-pointer" ng-click="openSearchBox()"></i>
-                        <i  ng-show="isSearchBoxOpened" class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i>
-                    </span>
-            </div>
-            <div class="col-md-4">
-                <!--<button class="btn btn-default pull-right">Add Book</button>-->
-            </div>
-        </div>
-    </div>
-    <div class="row " ng-show="isSearchBoxOpened">
-        <div class="col-md-12 ">
-            <div class="col-md-9 advSearchBox">
-                <form role="form">
-                    <div class="form-group">
-                        <div class="col-sm-4">
-                            <label for="name">Book Title</label>
-                            <input type="text" class="form-control data-form-search " placeholder="Title Of Book" ng-model="searchBookModel.parentBook.bookTitle">
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="name">Authors Name </label >
-                            <input type="text" class="form-control data-form-search " placeholder="Author Of Book" ng-model="searchBookModel.parentBook.authorName">
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="name">ISBN </label >
-                            <input type="text" class="form-control data-form-search " placeholder="ISBN" ng-model="searchBookModel.parentBook.isbn">
-                        </div>
+		</div>
+	</div>
+	<div class="row " ng-show="isSearchBoxOpened">
+		<div class="col-md-12 ">
+			<div class="col-md-9 advSearchBox">
+				<form role="form">
+					<div class="form-group">
+						<div class="col-sm-4">
+							<label for="name">Book Title</label> <input type="text"
+								class="form-control data-form-search "
+								placeholder="Title Of Book"
+								ng-model="searchBookModel.parentBook.bookTitle">
+						</div>
+						<div class="col-sm-4">
+							<label for="name">Authors Name </label> <input type="text"
+								class="form-control data-form-search "
+								placeholder="Author Of Book"
+								ng-model="searchBookModel.parentBook.authorName">
+						</div>
+						<div class="col-sm-4">
+							<label for="name">ISBN </label> <input type="text"
+								class="form-control data-form-search " placeholder="ISBN"
+								ng-model="searchBookModel.parentBook.isbn">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-4">
+							<label for="name">Book ID </label> <input type="text"
+								class="form-control data-form-search " placeholder="Book Id"
+								ng-model="searchBookModel.childBook.bookId">
+						</div>
+						<div class="col-sm-4">
+							<label for="name">User Registration ID </label> <input
+								type="text" class="form-control data-form-search "
+								placeholder="User Registration ID"
+								ng-model="searchBookModel.userDetails.regID">
+						</div>
+						<div class="col-sm-4">
+							<label for="name">Username</label> <input type="text"
+								class="form-control data-form-search " placeholder="Username"
+								ng-model="searchBookModel.userDetails.userName">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-4">
+							<label for="name">First Name </label> <input type="text"
+								class="form-control data-form-search "
+								placeholder="Issuer first name"
+								ng-model="searchBookModel.userDetails.firstName">
+						</div>
+						<div class="col-sm-4">
+							<label for="name">Middle name </label> <input type="text"
+								class="form-control data-form-search "
+								placeholder="Issuer middle name"
+								ng-model="searchBookModel.userDetails.middleName">
+						</div>
+						<div class="col-sm-4">
+							<label for="name">Last name </label> <input type="text"
+								class="form-control data-form-search "
+								placeholder="Issuer last name"
+								ng-model="searchBookModel.userDetails.lastName">
+						</div>
 
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-4">
-                            <label for="name">Book ID </label >
-                            <input type="text" class="form-control data-form-search " placeholder="Book Id" ng-model="searchBookModel.childBook.bookId">
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="name">User Registration ID </label >
-                            <input type="text" class="form-control data-form-search " placeholder="User Registration ID" ng-model="searchBookModel.userDetails.regID">
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="name">Username</label >
-                            <input type="text" class="form-control data-form-search " placeholder="Username" ng-model="searchBookModel.userDetails.userName">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-4">
-                            <label for="name">First Name </label >
-                            <input type="text" class="form-control data-form-search " placeholder="Issuer first name" ng-model="searchBookModel.userDetails.firstName">
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="name">Middle name </label >
-                            <input type="text" class="form-control data-form-search " placeholder="Issuer middle name" ng-model="searchBookModel.userDetails.middleName">
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="name">Last name </label >
-                            <input type="text" class="form-control data-form-search " placeholder="Issuer last name" ng-model="searchBookModel.userDetails.lastName">
-                        </div>
-
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-4">
-                            <label for="name">Class </label >
-                            <input type="text" class="form-control data-form-search " placeholder="Class" ng-model="searchBookModel.userDetails.class">
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="name">Section</label >
-                            <input type="text" class="form-control data-form-search " placeholder="Section" ng-model="searchBookModel.userDetails.section">
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <br>
-                            <button ng-click="searchBooks()" class="btn btn-primary pull-right">Search&nbsp;<i id="datamodal" class="fa fa-search" data-toggle="popover"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-    </div>
-    <div class="row">
-        <!--<div class="col-md-12 " id="booksdiv">
+					</div>
+					<div class="form-group">
+						<div class="col-sm-4">
+							<label for="name">Class </label> <input type="text"
+								class="form-control data-form-search " placeholder="Class"
+								ng-model="searchBookModel.userDetails.class">
+						</div>
+						<div class="col-sm-4">
+							<label for="name">Section</label> <input type="text"
+								class="form-control data-form-search " placeholder="Section"
+								ng-model="searchBookModel.userDetails.section">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<br>
+							<button ng-click="searchBooks()"
+								class="btn btn-primary pull-right">
+								Search&nbsp;<i id="datamodal" class="fa fa-search"
+									data-toggle="popover"></i>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Top Search Bar - End -->
+	<div class="row">
+		<!--<div class="col-md-12 " id="booksdiv">
 
         </div>-->
-    </div>
-    <div class="row vertical-spacer"></div>
-    <div class="row" ng-if="books.data" ng-show="!currentBookDetails">
-        <div class="col-md-10" >
-            <table class="table" id="booksearchtable">
-                <div id="head_nav">
-                    <thead class="theadclass">
-                        <tr>
-                            <th></th>
-                            <th ng-repeat="(key,value) in parentConfig" >{{value}}</th>
+	</div>
 
-                        </tr>
-                    </thead>
-                </div>
-                <tbody>
-                    <tr ng-repeat="book in books.data">
-                        <td>
-                            <i class="fa fa-align-justify cursor-pointer" ng-click="getBookDetails(book)"></i>
-                            <i class="fa fa-picture-o cursor-pointer" ng-click="getShowImage(book)"></i>
-                        </td>
-                        <td ng-repeat="(key,value) in parentConfig" >{{book[key]}}</td>
+	<div class="row vertical-spacer"></div>
 
-                    </tr>
-                </tbody>
-            </table>
+	<!-- Parent Book Summary - Start -->
+	<div class="row" ng-if="books.data" ng-show="!currentBookDetails">
+		<div class="col-md-10">
+			<table class="table" id="booksearchtable">
+				<div id="head_nav">
+					<thead class="theadclass">
+						<tr>
+							<th></th>
+							<th ng-repeat="(key,value) in parentConfig">{{value}}</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+				</div>
+				<tbody>
+					<tr ng-repeat="book in books.data">
+						<td><i class="fa fa-align-justify cursor-pointer"
+							ng-click="getBookDetails(book)"></i> <i
+							class="fa fa-picture-o cursor-pointer"
+							ng-click="getShowImage(book)"></i></td>
+						<td ng-repeat="(key,value) in parentConfig">{{book[key]}}</td>
+						<td><a href="#" data-toggle="tooltip"
+							title="Click to view Book details"><i class="fa fa-eye"
+								role="button" data-toggle="modal"
+								ng-click="getSelectedParentBookDetails('view')"></i></a>
+							&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
+							title="Click to update Book details"><i class="fa fa-pencil"
+								role="button" data-toggle="modal"
+								ng-click="getSelectedParentBookDetails('update')"></i></a>
+							&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
+							title="Click to delete Book"><i class="fa fa-times-circle"
+								role="button" data-toggle="modal"
+								ng-click="getSelectedParentBookDetails('delete')"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
 
-        </div>
-        <div class="col-md-2 " >
-                <div class="row" id="booksdiv1"></div>
-                <div class="row" id="booksdiv2"></div>
-                <div class="row" id="booksdiv3"></div>
-        </div>
+		</div>
+		<div class="col-md-2 ">
 
-    </div>
-    <div class="row" ng-if="books.data" ng-show="currentBookDetails">
-        <div class="col-md-12" >
-            <h4>Selected Book<button class="btn btn-sm btn-primary pull-right" ng-click="getBackToMainBookList()">Back</button></h4>
-            <div class="col-md-4" ng-repeat="(key,value) in parentConfig" >
-                <strong>{{value}}</strong>:{{currentSelectedBook[key]}}
-            </div>
+			<div class="row" id="booksdiv1"></div>
+			<div class="row" id="booksdiv2"></div>
+			<div class="row" id="booksdiv3"></div>
+		</div>
 
-        </div>
-        <div class="col-md-9" >
-            <h4>Book Details</h4>
-            <table class="table">
-                <div id="head_nav_1">
-                    <thead class="theadclass">
-                    <tr>
-                        <th ng-repeat="(key,value) in childConfig" >{{value}}</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                </div>
-                <tbody>
-                <tr ng-repeat="book in currentBookDetails">
-                    <td ng-repeat="(key,value) in childConfig" >{{book[key]}}</td>
-                    <td>
-                        <span class="cursor-pointer" ng-if="book.bookStatus=='Available'" ng-click="showIssueBookHtml(book)">Issue</span>
-                        <span class="cursor-pointer" ng-if="book.bookStatus=='Unavailable'" ng-click="showReturnBookHtml(book)">Return</span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-3" ng-if="issueThisBook">
-            <div class="col-md-12"> Search User:<br>
-                <div class="input-group">
-                    <input ng-model="issueBookObj.userSearchText" class="col-md-12 searchclass" placeholder="Search User" class="nodeSearchInputBox" />
-                    <span class="input-group-addon " id="datamodal" data-toggle="popover">
-                        <i class="fa fa-search cursor-pointer" ng-click="searchUser()" ></i>
-                    </span>
-                </div>
-                <ul ng-if="searchedUserData" style="padding:2px;">
-                    <li ng-repeat="user in searchedUserData" ><span class="cursor-pointer" ng-click="selectUserToIssueBook(user)">{{user.firstName}} {{user.middleName}} {{user.LastName}} ({{user.DOB}})</span></li>
-                </ul>
-                <h4>Issue Book</h4>
-            </div>
+	</div>
+	<!-- Parent Book Summary - End -->
+	<!--  Selected Book Header detail - Start -->
+	<div class="row" ng-if="books.data" ng-show="currentBookDetails">
+		<div class="col-md-12">
+			<h4>
+				Selected Book
+				<button class="btn btn-sm btn-primary pull-right">Add New
+					Book</button>
+				&nbsp;&nbsp;
+				<button class="btn btn-sm btn-warning pull-right"
+					ng-click="getBackToMainBookList()">Back</button>
+			</h4>
+			<div class="col-md-4" ng-repeat="(key,value) in parentConfig">
+				<strong>{{value}}</strong>:{{currentSelectedBook[key]}}
+			</div>
+		</div>
+		<!--  Selected Book Header detail - End -->
+		<!--  Child Book Summary - Start -->
+		<div class="col-md-9">
+			<h4>Book Details</h4>
+			<table class="table">
+				<div id="head_nav_1">
+					<thead class="theadclass">
+						<tr>
+							<th ng-repeat="(key,value) in childConfig">{{value}}</th>
+							<th>Issue/Return</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+				</div>
+				<tbody>
+					<tr ng-repeat="book in currentBookDetails">
+						<td ng-repeat="(key,value) in childConfig">{{book[key]}}</td>
+						<td><span class="cursor-pointer"
+							ng-if="book.bookStatus=='Available'"
+							ng-click="showIssueBookHtml(book)">Issue</span> <span
+							class="cursor-pointer" ng-if="book.bookStatus=='Unavailable'"
+							ng-click="showReturnBookHtml(book)">Return</span></td>
+						<td><a href="#" data-toggle="tooltip"
+							title="Click to view Book details"><i class="fa fa-eye"
+								role="button" data-toggle="modal"
+								ng-click="getSelectedChildBookDetails(book,'view')"></i></a>
+							&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
+							title="Click to update Book details"><i class="fa fa-pencil"
+								role="button" data-toggle="modal"
+								ng-click="getSelectedChildBookDetails(book,'update')"></i></a>
+							&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
+							title="Click to delete Book"><i class="fa fa-times-circle"
+								role="button" data-toggle="modal"
+								ng-click="getSelectedChildBookDetails(book,'delete')"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!--  Child Book Summary - End -->
+		<!-- Child Book Details Modal - Start -->
+		<div class="modal" tabindex="-1" role="dialog" id="childBookModal">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">
+					<i class="fa fa-times"></i>
+				</button>
+				<h1>
+					<span class="label label-primary">{{modalTitle}}</span>
+				</h1>
+			</div>
+			<div class="modal-body well">
+				<form class="well">
+					<fieldset>
+						<div class="col-md-12">
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="barCode">Bar
+										Code</label>
+									<div class="col-sm-4"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<input type="text" id="barCode"
+											placeholder="Please Enter Bar Code " class="form-control"
+											ng-model="selectedChildBookDetails.barCode">
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.barCode}}</div>
+								</div>
+								<div>
+									<label class="col-md-2 control-label" for="publicationDate">Publication
+										Date</label>
+									<div class="col-md-3 classselector"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<div class="input-group">
+											<input type="text" id="publicationDate"
+												ng-model="selectedChildBookDetails.publicationDate"
+												class="em-datepicker datepicker searchclass"
+												placeholder="Publication Date"> <span
+												class="input-group-addon cursor-pointer"
+												ng-click="openPublicationDate()"><i
+												class="fa fa-calendar"></i></span>
+										</div>
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.publicationDate}}</div>
+								</div>
+							</div>
+							<br />
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="loc">Location</label>
+									<div class="col-sm-4"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<input type="text" id="loc"
+											placeholder="What is the book's location ?"
+											class="form-control"
+											ng-model="selectedChildBookDetails.location">
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.location}}</div>
+								</div>
+								<div>
+									<label class="col-md-2 control-label" for="purchaseDate">Purchase
+										Date</label>
+									<div class="col-md-3 classselector"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<div class="input-group">
+											<input type="text" id="purchaseDate" ng-model="purchaseDate"
+												class="em-datepicker datepicker searchclass"
+												placeholder="Purchase Date"> <span
+												class="input-group-addon cursor-pointer"
+												ng-click="openPurchaseDate()"><i
+												class="fa fa-calendar"></i></span>
+										</div>
+										<div class="col-sm-4"
+											ng-if="modalCode=='view'||modalCode=='delete'">{{purchaseDate}}</div>
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="pricePaid">Price
+										Paid </label>
+									<div class="col-sm-4"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<input type="text" id="pricePaid"
+											placeholder="Please enter paid price" class="form-control"
+											ng-model="selectedChildBookDetails.pricePaid">
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.pricePaid}}</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label" for="bookSts">Book
+										Status </label>
+									<div class="col-sm-4"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<select id="bookSts" name="validation-select"
+											class="btn btn-media dropdown-toggle"
+											data-ng-model="selectedChildBookDetails.bookStatus">
+											<option value="">Select Book Status</option>
+											<option value="A">Available</option>
+											<option value="B">Bindery</option>
+											<option value="D">Damaged</option>
+											<option value="S">Display</option>
+										</select>
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.bookStatus}}</div>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="outletName">Outlet
+										Name</label>
+									<div class="col-sm-10"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<input type="text" id="outletName"
+											placeholder="Please enter the Outlet Name"
+											class="form-control"
+											ng-model="selectedChildBookDetails.outletName" />
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.outletName}}</div>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="desc">Description</label>
+									<div class="col-sm-10"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<input type="text" id="desc"
+											placeholder="Please enter book's description here "
+											class="form-control"
+											ng-model="selectedChildBookDetails.description">
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.description}}</div>
+								</div>
+							</div>
+							<br>
+							<div class="row ">
+								<div>
+									<label class="col-sm-2 control-label" for="matAcp">Material
+										Accompanied</label>
+									<div class="col-sm-4"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<input type="text" id="matAcp"
+											placeholder="Material Accompanied i.e. CD, MAP etc ? Please enter"
+											class="form-control"
+											ng-model="selectedChildBookDetails.materialAccompanied">
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.materialAccompanied}}</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label" for="acqMode">Acquisition
+										Mode </label>
+									<div class="col-sm-4"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<select id="acqMode" name="validation-select"
+											class="btn btn-media dropdown-toggle"
+											data-ng-model="selectedChildBookDetails.acqMode">
+											<option value="">Select Acquisition</option>
+											<option value="E">Exchange</option>
+											<option value="G">Gratis/Gift</option>
+											<option value="P">Purchased</option>
+											<option value="S">Subscribed</option>
+										</select>
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.acqMode}}</div>
+								</div>
+							</div>
+							<br>
+							<div class="row ">
+								<div>
+									<label class="col-sm-2 control-label" for="tag">Tag
+										Type</label>
+									<div class="col-sm-4"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<input type="tag" id="tag" placeholder="What's the Tag ?"
+											class="form-control" ng-model="selectedChildBookDetails.tag">
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.tag}}</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label">Ready For
+										Distribution</label>
+									<div class="col-sm-4"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<label for="button-radio-1" class="col-sm-8 control-label">
+											<input type="radio" name="button-radio" id="button-radio-1"
+											value="1" checked> Yes <input type="radio"
+											name="button-radio" id="button-radio-2" value="2"> No
+										</label>
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.purchaseDate}}</div>
+								</div>
+							</div>
+							<br>
+							<div class="row ">
+								<div>
+									<label class="col-sm-2 control-label" for="pricePaid">Book
+										Id</label>
+									<div class="col-sm-4"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<input type="text" id="pricePaid"
+											placeholder="Please enter paid price" class="form-control"
+											ng-model="selectedChildBookDetails.bookId">
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.bookId}}</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label" for="accessList">Access
+										Type</label>
+									<div class="col-sm-4"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<select id="accessList" name="validation-select"
+											class="btn btn-media dropdown-toggle">
+											<option value="">Who Can Access</option>
+											<option value="A">All</option>
+											<option value="T">Teachers</option>
+											<option value="S">Students</option>
+										</select>
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.purchaseDate}}</div>
+								</div>
 
+							</div>
+							<br>
+					</fieldset>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary pull-left" data-dismiss="modal"
+					aria-hidden="true" ng-click="getBackToMainUsersList()">
+					<i class="fa fa-arrow-circle-left"> Back</i>
+				</button>
+				<button class="btn btn-primary pull-right"
+					ng-click="resetUserClass()"
+					ng-if="modalCode!='view'&& modalCode!='delete'">
+					<i class="fa fa-rotate-left"> Reset</i>
+				</button>
+				<button class="btn {{buttonStyle}} pull-right"
+					ng-click="addUpdateUser()" ng-if="modalCode!='view'">
+					<i class="fa fa-edit"> {{modalTitle}}</i>
+				</button>
+			</div>
+		</div>
+		<!-- Child Book Details Modal - End -->
 
-            <div class="col-md-12" ng-if="selectedUser">
-                User: {{selectedUser.firstName}} {{selectedUser.middleName}} {{selectedUser.LastName}} ({{selectedUser.DOB}})
-            </div>
-            <div class="col-md-12">
-                Book Id: {{issueThisBook.bookId}}
-            </div>
-            <div class="col-md-12">
-                Issue Date: {{issueBookObj.issueDate|date:'dd/MM/yyyy'}}
-            </div>
-            <div class="col-md-12">
-                Return Date: {{issueBookObj.dueDate|date:'dd/MM/yyyy'}}
-            </div>
-            <div class="col-md-12">
-                Issue Comment: <br>
-                <textarea ng-model="issueBookObj.issueComment" placeholder="comments"></textarea>
-            </div>
-            <div class="col-md-12">
-                <br>
-                <button class="btn btn-xs btn-primary" ng-click="issueLibBook()">Issue book</button>
-            </div>
+<!-- Parent Book Details Modal - Start -->
+		<div class="modal" tabindex="-1" role="dialog" id="parentBookModal">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">
+					<i class="fa fa-times"></i>
+				</button>
+				<h1>
+					<span class="label label-primary">{{modalTitle}}</span>
+				</h1>
+			</div>
+			<div class="modal-body well">
+				<form class="well">
+					<fieldset>
+						<div class="col-md-12">
+							<div class="row">
+								<div>
+									<label class="col-sm-2 control-label" for="barCode">Bar
+										Code</label>
+									<div class="col-sm-4"
+										>
+										<input type="text" id="barCode"
+											placeholder="Please Enter Bar Code " class="form-control"
+											ng-model="selectedChildBookDetails.barCode">
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.barCode}}</div>
+								</div>
+								<div>
+									<label class="col-md-2 control-label" for="publicationDate">Publication
+										Date</label>
+									<div class="col-md-3 classselector"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<div class="input-group">
+											<input type="text" id="publicationDate"
+												ng-model="selectedChildBookDetails.publicationDate"
+												class="em-datepicker datepicker searchclass"
+												placeholder="Publication Date"> <span
+												class="input-group-addon cursor-pointer"
+												ng-click="openPublicationDate()"><i
+												class="fa fa-calendar"></i></span>
+										</div>
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.publicationDate}}</div>
+								</div>
+							</div>
+							<br>
+							<div class="row ">
+								<div>
+									<label class="col-sm-2 control-label" for="pricePaid">Book
+										Id</label>
+									<div class="col-sm-4"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<input type="text" id="pricePaid"
+											placeholder="Please enter paid price" class="form-control"
+											ng-model="selectedChildBookDetails.bookId">
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.bookId}}</div>
+								</div>
+								<div>
+									<label class="col-sm-2 control-label" for="accessList">Access
+										Type</label>
+									<div class="col-sm-4"
+										>
+										<select id="accessList" name="validation-select"
+											class="btn btn-media dropdown-toggle">
+											<option value="">Who Can Access</option>
+											<option value="A">All</option>
+											<option value="T">Teachers</option>
+											<option value="S">Students</option>
+										</select>
+									</div>
+									<div class="col-sm-4"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.purchaseDate}}</div>
+								</div>
 
-        </div>
-        <div class="col-md-3" ng-if="returnThisBook">
+							</div>
+							<br>
+					</fieldset>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary pull-left" data-dismiss="modal"
+					aria-hidden="true" ng-click="getBackToMainUsersList()">
+					<i class="fa fa-arrow-circle-left"> Back</i>
+				</button>
+				<button class="btn btn-primary pull-right"
+					ng-click="resetUserClass()"
+					ng-if="modalCode!='view'&& modalCode!='delete'">
+					<i class="fa fa-rotate-left"> Reset</i>
+				</button>
+				<button class="btn {{buttonStyle}} pull-right"
+					ng-click="addUpdateUser()" ng-if="modalCode!='view'">
+					<i class="fa fa-edit"> {{modalTitle}}</i>
+				</button>
+			</div>
+		</div>
+		<!-- Parent Book Details Modal - End -->
 
-            <div class="col-md-12">
-                <h4>Return Book</h4>
-                 User:{{userToReturn.firstName}} {{userToReturn.middleName}} {{userToReturn.LastName}} ({{userToReturn.DOB}})<br>
-
-            </div>
-            <div class="col-md-12">
-                Book Id: {{returnThisBook.bookId}}
-            </div>
-            <div class="col-md-12">
-                Issue Date: {{returnIsuedDetails.issueDate|date:'dd/MM/yyyy'}}
-            </div>
-            <div class="col-md-12">
-                Due Date: {{returnIsuedDetails.dueDate|date:'dd/MM/yyyy'}}
-            </div>
-            <div class="col-md-12">
-                Issue Comment: <br>
-                <textarea ng-model="returnIsuedDetails.issueComment" placeholder="comments"></textarea>
-            </div>
-            <div class="col-md-12">
-                Return Date: <br>
-                {{returnIsuedDetails.submittedDate|date:'dd/MM/yyyy'}}
-            </div>
-            <div class="col-md-12">
-                Return Comment: <br>
-                <textarea ng-model="returnIsuedDetails.submitComment" placeholder="comments"></textarea>
-            </div>
-
-            <div class="col-md-12">
-                <br>
-                <button class="btn btn-xs btn-primary" ng-click="returnLibBook()">Return book</button>
-            </div>
-
-        </div>
-    </div>
+		<!--  Issue Book Part - Start -->
+		<div class="col-md-3" ng-if="issueThisBook">
+			<div class="col-md-12">
+				Search User:<br>
+				<div class="input-group">
+					<input ng-model="issueBookObj.userSearchText"
+						class="col-md-12 searchclass" placeholder="Search User"
+						class="nodeSearchInputBox" /> <span class="input-group-addon "
+						id="datamodal" data-toggle="popover"> <i
+						class="fa fa-search cursor-pointer" ng-click="searchUser()"></i>
+					</span>
+				</div>
+				<ul ng-if="searchedUserData" style="padding: 2px;">
+					<li ng-repeat="user in searchedUserData"><span
+						class="cursor-pointer" ng-click="selectUserToIssueBook(user)">{{user.firstName}}
+							{{user.middleName}} {{user.LastName}} ({{user.DOB}})</span></li>
+				</ul>
+				<h4>Issue Book</h4>
+			</div>
+			<div class="col-md-12" ng-if="selectedUser">User:
+				{{selectedUser.firstName}} {{selectedUser.middleName}}
+				{{selectedUser.LastName}} ({{selectedUser.DOB}})</div>
+			<div class="col-md-12">Book Id: {{issueThisBook.bookId}}</div>
+			<div class="col-md-12">Issue Date:
+				{{issueBookObj.issueDate|date:'dd/MM/yyyy'}}</div>
+			<div class="col-md-12">Return Date:
+				{{issueBookObj.dueDate|date:'dd/MM/yyyy'}}</div>
+			<div class="col-md-12">
+				Issue Comment: <br>
+				<textarea ng-model="issueBookObj.issueComment"
+					placeholder="comments"></textarea>
+			</div>
+			<div class="col-md-12">
+				<br>
+				<button class="btn btn-xs btn-primary" ng-click="issueLibBook()">Issue
+					book</button>
+			</div>
+		</div>
+		<!--  Issue Book Part - End -->
+		<!--  Return Book Part - Start -->
+		<div class="col-md-3" ng-if="returnThisBook">
+			<div class="col-md-12">
+				<h4>Return Book</h4>
+				User:{{userToReturn.firstName}} {{userToReturn.middleName}}
+				{{userToReturn.LastName}} ({{userToReturn.DOB}})<br>
+			</div>
+			<div class="col-md-12">Book Id: {{returnThisBook.bookId}}</div>
+			<div class="col-md-12">Issue Date:
+				{{returnIsuedDetails.issueDate|date:'dd/MM/yyyy'}}</div>
+			<div class="col-md-12">Due Date:
+				{{returnIsuedDetails.dueDate|date:'dd/MM/yyyy'}}</div>
+			<div class="col-md-12">
+				Issue Comment: <br>
+				<textarea ng-model="returnIsuedDetails.issueComment"
+					placeholder="comments"></textarea>
+			</div>
+			<div class="col-md-12">
+				Return Date: <br>
+				{{returnIsuedDetails.submittedDate|date:'dd/MM/yyyy'}}
+			</div>
+			<div class="col-md-12">
+				Return Comment: <br>
+				<textarea ng-model="returnIsuedDetails.submitComment"
+					placeholder="comments"></textarea>
+			</div>
+			<div class="col-md-12">
+				<br>
+				<button class="btn btn-xs btn-primary" ng-click="returnLibBook()">Return
+					book</button>
+			</div>
+		</div>
+		<!--  Return Book Part - End -->
+	</div>
 </div>
-
-<div class="modal fade" id="bookCoverModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"></h4>
-            </div>
-            <div class="col-lg-12 modal-body">
-                <img src="{{imageModalDetails.path}}" alt="Image not avaiable">
-            </div>
-        </div>
-    </div>
+<!-- View Book Image Modal - Start -->
+<div class="modal fade" id="bookCoverModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title"></h4>
+			</div>
+			<div class="col-lg-12 modal-body">
+				<img src="{{imageModalDetails.path}}" alt="Image not avaiable">
+			</div>
+		</div>
+	</div>
 </div>
+<!-- View Book Image Modal - End -->
+
 <!--{{books.data[0]}}-->
 
 </div>

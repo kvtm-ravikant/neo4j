@@ -124,7 +124,7 @@ function initAppList(){
                     'accessList':["*"]
                 }
             ]
-        }
+        },
         /* Library Management -  End */
        /* {
             'state': 'libraryManagement',
@@ -133,6 +133,14 @@ function initAppList(){
             'icon':"users",
             'accessList':["*"]
         },
+      
+        {
+            'state': 'schoolManagement',
+            'name':'Manage School',
+            'collapse':true,
+            'icon':"users",
+            'accessList':["*"]
+        },  */
         {
             'state': 'schoolManagement',
             'name':'Manage School',
@@ -140,7 +148,7 @@ function initAppList(){
             'icon':"users",
             'accessList':["*"]
         }
-        */
+        
     ];
     return appList;
 }

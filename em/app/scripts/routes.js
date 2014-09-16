@@ -129,7 +129,7 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
                 data:{
                     displayName:'test User'
                 }
-            })*/
+            })
 
         .state('schoolManagement', {
             url: "/schoolManagement/admin",
@@ -137,6 +137,14 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
             controller:'schoolManagement',
             data:{
                 displayName:'School Management'
+            }
+        })*/
+        .state('schoolManagement', {
+            url: "/schoolManagement/schoolProfile",
+            templateUrl: "partials/modules/schoolAdmin/schoolAdmin_schoolProfile.html",
+            controller:'schoolAdmin_schoolProfile',
+            data:{
+                displayName:'School Profile'
             }
         })
 
