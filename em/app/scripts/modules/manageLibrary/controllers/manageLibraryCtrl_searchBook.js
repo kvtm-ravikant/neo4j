@@ -297,15 +297,16 @@ educationMediaApp.controller('libraryManagement_searchBook', function ($scope, $
      *  Parent Book Modal Popup Function
      */
     $scope.getSelectedParentBookDetails=function(code){
-        $scope.modalTitle="Book Title";
-        $scope.modalCode=code;
+    	console.log("getSelectedParentBookDetails ", code);
+        $scope.modalBookTitle="Book Title";
+        $scope.modalTitleCode=code;
         $scope.buttonStyle='btn-primary';
-        code && code=='add'?$scope.modalTitle="Add Book":"";
-        code && code=='update'?$scope.modalTitle="Update Book":"";
-        code && code=='delete'?$scope.modalTitle="Delete Book":"";
-        code && code=='view'?$scope.modalTitle="Book Details":"";
+        code && code=='addTitle'?$scope.modalTitleCode="Add Book Title":"";
+        code && code=='updateTitle'?$scope.modalTitleCode="Update Book Title":"";
+        code && code=='deleteTitle'?$scope.modalTitleCode="Delete Book Title":"";
+        code && code=='viewTitle'?$scope.modalTitleCode="Book Title Details":"";
         
-        code && code=='delete'?$scope.buttonStyle="btn-danger":"btn-primary";
+        code && code=='deleteTitle'?$scope.buttonStyle="btn-danger":"btn-primary";
 
         $('#myTab li:first>a').click() //always open first tab
         $('#parentBookModal').modal({"backdrop": "static","show":true});
