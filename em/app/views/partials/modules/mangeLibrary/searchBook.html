@@ -16,11 +16,12 @@
 				</span>
 			</div>
 		</div>
-		<div class="col-md-1">
-			<button class="btn btn-sm btn-warning pull-right">
+		<div class="col-md-2">
+			<button class="btn btn-sm btn-warning pull-right" ng-if="!currentBookDetails">
 				<i class="fa fa-book"> Add Book Title</i>
 			</button>
-
+<button class="btn btn-sm btn-primary pull-right" ng-if="currentBookDetails">Add New
+					Book</button>
 		</div>
 	</div>
 	<div class="row " ng-show="isSearchBoxOpened">
@@ -143,15 +144,15 @@
 						<td><a href="#" data-toggle="tooltip"
 							title="Click to view Book details"><i class="fa fa-eye"
 								role="button" data-toggle="modal"
-								ng-click="getSelectedParentBookDetails('view')"></i></a>
+								ng-click="getSelectedParentBookDetails('viewTitle')"></i></a>
 							&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
 							title="Click to update Book details"><i class="fa fa-pencil"
 								role="button" data-toggle="modal"
-								ng-click="getSelectedParentBookDetails('update')"></i></a>
+								ng-click="getSelectedParentBookDetails('updateTitle')"></i></a>
 							&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
 							title="Click to delete Book"><i class="fa fa-times-circle"
 								role="button" data-toggle="modal"
-								ng-click="getSelectedParentBookDetails('delete')"></i></a></td>
+								ng-click="getSelectedParentBookDetails('deleteTitle')"></i></a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -171,8 +172,10 @@
 		<div class="col-md-12">
 			<h4>
 				Selected Book
+				<!--  
 				<button class="btn btn-sm btn-primary pull-right">Add New
 					Book</button>
+					 -->
 				&nbsp;&nbsp;
 				<button class="btn btn-sm btn-warning pull-right"
 					ng-click="getBackToMainBookList()">Back</button>
@@ -227,9 +230,10 @@
 					aria-hidden="true">
 					<i class="fa fa-times"></i>
 				</button>
-				<h1>
-					<span class="label label-primary">{{modalTitle}}</span>
-				</h1>
+				<h3>
+					{{modalTitle}}
+					<!-- 					<span class="label label-primary"></span> -->
+				</h3>
 			</div>
 			<div class="modal-body well">
 				<form class="well">
@@ -479,106 +483,7 @@
 		</div>
 		<!-- Child Book Details Modal - End -->
 
-<!-- Parent Book Details Modal - Start -->
-		<div class="modal" tabindex="-1" role="dialog" id="parentBookModal">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
-					<i class="fa fa-times"></i>
-				</button>
-				<h1>
-					<span class="label label-primary">{{modalTitle}}</span>
-				</h1>
-			</div>
-			<div class="modal-body well">
-				<form class="well">
-					<fieldset>
-						<div class="col-md-12">
-							<div class="row">
-								<div>
-									<label class="col-sm-2 control-label" for="barCode">Bar
-										Code</label>
-									<div class="col-sm-4"
-										>
-										<input type="text" id="barCode"
-											placeholder="Please Enter Bar Code " class="form-control"
-											ng-model="selectedChildBookDetails.barCode">
-									</div>
-									<div class="col-sm-4"
-										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.barCode}}</div>
-								</div>
-								<div>
-									<label class="col-md-2 control-label" for="publicationDate">Publication
-										Date</label>
-									<div class="col-md-3 classselector"
-										ng-if="modalCode=='add'||modalCode=='update'">
-										<div class="input-group">
-											<input type="text" id="publicationDate"
-												ng-model="selectedChildBookDetails.publicationDate"
-												class="em-datepicker datepicker searchclass"
-												placeholder="Publication Date"> <span
-												class="input-group-addon cursor-pointer"
-												ng-click="openPublicationDate()"><i
-												class="fa fa-calendar"></i></span>
-										</div>
-									</div>
-									<div class="col-sm-4"
-										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.publicationDate}}</div>
-								</div>
-							</div>
-							<br>
-							<div class="row ">
-								<div>
-									<label class="col-sm-2 control-label" for="pricePaid">Book
-										Id</label>
-									<div class="col-sm-4"
-										ng-if="modalCode=='add'||modalCode=='update'">
-										<input type="text" id="pricePaid"
-											placeholder="Please enter paid price" class="form-control"
-											ng-model="selectedChildBookDetails.bookId">
-									</div>
-									<div class="col-sm-4"
-										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.bookId}}</div>
-								</div>
-								<div>
-									<label class="col-sm-2 control-label" for="accessList">Access
-										Type</label>
-									<div class="col-sm-4"
-										>
-										<select id="accessList" name="validation-select"
-											class="btn btn-media dropdown-toggle">
-											<option value="">Who Can Access</option>
-											<option value="A">All</option>
-											<option value="T">Teachers</option>
-											<option value="S">Students</option>
-										</select>
-									</div>
-									<div class="col-sm-4"
-										ng-if="modalCode=='view'||modalCode=='delete'">{{selectedChildBookDetails.purchaseDate}}</div>
-								</div>
 
-							</div>
-							<br>
-					</fieldset>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary pull-left" data-dismiss="modal"
-					aria-hidden="true" ng-click="getBackToMainUsersList()">
-					<i class="fa fa-arrow-circle-left"> Back</i>
-				</button>
-				<button class="btn btn-primary pull-right"
-					ng-click="resetUserClass()"
-					ng-if="modalCode!='view'&& modalCode!='delete'">
-					<i class="fa fa-rotate-left"> Reset</i>
-				</button>
-				<button class="btn {{buttonStyle}} pull-right"
-					ng-click="addUpdateUser()" ng-if="modalCode!='view'">
-					<i class="fa fa-edit"> {{modalTitle}}</i>
-				</button>
-			</div>
-		</div>
-		<!-- Parent Book Details Modal - End -->
 
 		<!--  Issue Book Part - Start -->
 		<div class="col-md-3" ng-if="issueThisBook">
@@ -653,7 +558,194 @@
 		</div>
 		<!--  Return Book Part - End -->
 	</div>
+
+	<!-- Parent Book Details Modal - Start -->
+	<div class="modal" tabindex="-1" role="dialog" id="parentBookModal">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">
+				<i class="fa fa-times"></i>
+			</button>
+			<h1>
+				<span class="label label-primary">{{modalTitleCode}}</span>
+			</h1>
+		</div>
+		<div class="modal-body well">
+			<form action="">
+				<fieldset>
+					<div class="col-md-12">
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="isbnNum">ISBN
+								</label>
+								<div class="col-sm-4">
+									<input type="text" id="isbnNum"
+										placeholder="Please enter ISBN Number" class="form-control"
+										ng-model="parentBook.isbn" title="ISBN is required !" required>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="bookTitle">Title</label>
+								<div class="col-sm-10">
+									<input type="text" id="bookTitle"
+										placeholder="Please enter book title here "
+										class="form-control" ng-model="parentBook.bookTitle"
+										title="Title is required !" required>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="subTitle">Sub
+									Title</label>
+								<div class="col-sm-10">
+									<input type="text" id="subTitle"
+										placeholder="Please enter book's sub title here "
+										class="form-control" ng-model="parentBook.bookSubTitle">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row ">
+							<div>
+								<label class="col-sm-2 control-label" for="bookAuthor">Author</label>
+								<div class="col-sm-10">
+									<input type="text" id="bookAuthor"
+										placeholder="Please Enter author Name " class="form-control"
+										ng-model="parentBook.authorName" title="Author is required !"
+										required>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="editionNum">Edition</label>
+								<div class="col-sm-2">
+									<input type="text" id="editionNum" placeholder="Edition Number"
+										class="form-control" ng-model="parentBook.edition">
+								</div>
+							</div>
+							<div>
+								<label class="col-sm-2 control-label" for="lang">Language</label>
+								<div class="col-sm-4">
+									<input type="text" id="lang"
+										placeholder="Need to Change in Drop down" class="form-control"
+										ng-model="parentBook.language" title="Language is required !"
+										required>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row ">
+							<div>
+								<label class="col-sm-2 control-label" for="bookPublisher">Publisher</label>
+								<div class="col-sm-10">
+									<input type="text" id="bookPublisher"
+										placeholder="Please Enter Publisher Name "
+										class="form-control" ng-model="parentBook.publisher"
+										title="Publisher is required !" required>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="catName">Category
+									Name</label>
+								<div class="col-sm-4">
+									<input type="text" id="catName"
+										placeholder="Need to add drop down" class="form-control"
+										ng-model="parentBook.categoryName"
+										title="Category Name is required !" required />
+								</div>
+							</div>
+							<div>
+								<label class="col-sm-2 control-label" for="bibLvl">Bib
+									Level</label>
+								<div class="col-sm-2">
+									<select id="bibLvl" name=""
+										bibLvl""
+											class="btn btn-media dropdown-toggle"
+										data-ng-model="parentBook.bibLevel">
+										<option value="">Select Bib Level</option>
+										<option ng-repeat="(key, value) in parentBookDD"
+											value="{{key}}">{{value.___name___}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div>
+								<label class="col-sm-2 control-label" for="mat">Materials
+								</label>
+								<div class="col-sm-2">
+									<select id="mat" name="validation-select"
+										class="btn btn-media dropdown-toggle"
+										data-ng-model="parentBook.material"
+										ng-if="parentBook.bibLevel">
+										<option value="">Select Materials</option>
+										<option
+											ng-repeat="(key, material) in parentBookDD[parentBook.bibLevel]"
+											ng-if="key!='___name___'" value="{{key}}">{{material.___name___}}</option>
+									</select>
+								</div>
+							</div>
+							<div>
+								<label class="col-sm-2 control-label" for="docType">Doc
+									Type </label>
+								<div class="col-sm-3">
+									<select id="docType" name="validation-select"
+										class="btn btn-media dropdown-toggle"
+										data-ng-model="parentBook.docType" ng-if="parentBook.material">
+										<option value="">Select Doc Type</option>
+										<option
+											ng-repeat="(key,docType) in parentBookDD[parentBook.bibLevel][parentBook.material]"
+											value="{{key}}">{{docType.___name___}}</option>
+									</select>
+								</div>
+							</div>
+							<div>
+								<label class="col-sm-2 control-label" for="bookCount">Number
+									Of Copies</label>
+								<div class="col-sm-1">
+									<input type="text" id="bookCount"
+										placeholder="Number Of Copies " class="form-control"
+										ng-model="parentBook.bookCopies">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row "></div>
+
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary pull-left" data-dismiss="modal"
+				aria-hidden="true" ng-click="getBackToMainUsersList()">
+				<i class="fa fa-arrow-circle-left"> Back</i>
+			</button>
+			<button class="btn btn-primary pull-right"
+				ng-click="resetUserClass()"
+				ng-if="modalTitleCode!='view'&& modalTitleCode!='delete'">
+				<i class="fa fa-rotate-left"> Reset</i>
+			</button>
+			<button class="btn {{buttonStyle}} pull-right"
+				ng-click="addUpdateUser()" ng-if="modalTitleCode!='view'">
+				<i class="fa fa-edit"> {{modalTitleCode}}</i>
+			</button>
+		</div>
+	</div>
+	<!-- Parent Book Details Modal - End -->
 </div>
+
 <!-- View Book Image Modal - Start -->
 <div class="modal fade" id="bookCoverModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
