@@ -923,15 +923,37 @@ input.ng-invalid.ng-dirty,textarea.ng-invalid.ng-dirty { border: solid red 1px; 
 .modal-body{
     background-color: #fff;
     border:1px solid #fff;
+    margin-bottom: 0px;
+    border-radius: 0px;
 }
 .checkboxstyleclass{
     margin-top: 20px;
 }
+#myLibTab li.active>a {
+    color: #438EA9;
+    border-radius: 0px;
+    background-color: whitesmoke;
+}
+#myLibTab li>a:hover {
+    background-color:#dddddd;
+    color:#555;
+    border-radius: 0px;
+    border:1px solid #999;
+}
 #myTab li>a{
     color : #438EA9;
     border-radius: 0px;
+    border:1px solid white;
 }
-
+#myTab li:hover>a{
+    color : #438EA9;
+    border-radius: 0px;
+    border:1px solid white;
+}
+.label{
+    border-radius:0px;
+    font-weight:400;
+}
 h2,p{
     font-size:100%;
     font-weight:normal;
@@ -985,6 +1007,7 @@ h2,p{
 }
 .thumbnail{
     border-radius:0px;
+    margin-bottom:0px;
 }
 .modal{
     padding:50px;
@@ -1010,10 +1033,12 @@ h2,p{
     color: #438EA9;
     border-radius: 0px;
     background-color:whitesmoke;
+    border:1px solid white;
 }
 #myTab li>a:hover {
     background-color:#dddddd;
     color:#555;
+    border-radius: 0px;
     border:1px solid #999;
 }
 .breadcrumb {
@@ -1025,6 +1050,9 @@ h2,p{
     color: #cccccc;
     content: ">";
     font-weight:600;
+}
+.paddright{
+    margin-right:10px;
 }
 .tab-content{
     background-color:whitesmoke;

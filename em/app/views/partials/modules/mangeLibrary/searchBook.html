@@ -16,11 +16,12 @@
 				</span>
 			</div>
 		</div>
-		<div class="col-md-1">
-			<button class="btn btn-sm btn-warning pull-right">
+		<div class="col-md-2">
+			<button class="btn btn-sm btn-warning pull-right" ng-if="!currentBookDetails">
 				<i class="fa fa-book"> Add Book Title</i>
 			</button>
-
+<button class="btn btn-sm btn-primary pull-right" ng-if="currentBookDetails">Add New
+					Book</button>
 		</div>
 	</div>
 	<div class="row " ng-show="isSearchBoxOpened">
@@ -143,15 +144,15 @@
 						<td><a href="#" data-toggle="tooltip"
 							title="Click to view Book details"><i class="fa fa-eye"
 								role="button" data-toggle="modal"
-								ng-click="getSelectedParentBookDetails('view')"></i></a>
+								ng-click="getSelectedParentBookDetails('viewTitle')"></i></a>
 							&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
 							title="Click to update Book details"><i class="fa fa-pencil"
 								role="button" data-toggle="modal"
-								ng-click="getSelectedParentBookDetails('update')"></i></a>
+								ng-click="getSelectedParentBookDetails('updateTitle')"></i></a>
 							&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
 							title="Click to delete Book"><i class="fa fa-times-circle"
 								role="button" data-toggle="modal"
-								ng-click="getSelectedParentBookDetails('delete')"></i></a></td>
+								ng-click="getSelectedParentBookDetails('deleteTitle')"></i></a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -211,7 +212,7 @@
 							title="Click to update Book details"><i class="fa fa-pencil"
 								role="button" data-toggle="modal"
 								ng-click="getSelectedChildBookDetails(book,'update')"></i></a>
-							&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
+							 <a href="#" data-toggle="tooltip"
 							title="Click to delete Book"><i class="fa fa-times-circle"
 								role="button" data-toggle="modal"
 								ng-click="getSelectedChildBookDetails(book,'delete')"></i></a></td>
@@ -227,9 +228,10 @@
 					aria-hidden="true">
 					<i class="fa fa-times"></i>
 				</button>
-				<h1>
-					<span class="label label-primary">{{modalTitle}}</span>
-				</h1>
+				<h3>
+					{{modalTitle}}
+					<!-- 					<span class="label label-primary"></span> -->
+				</h3>
 			</div>
 			<div class="modal-body well">
 				<form class="well">
