@@ -6,6 +6,8 @@ var path=require('path');
 var neo4j = require("node-neo4j");
 var db=getDBInstance();
 module.exports.ensureAuthenticated=function (req, res, next) {
+    console.log("ensureAuthenticated req.session.libraryDetails",req.session.libraryDetails);
+
     if (req.session.userDetails) { return next(); }
     res.redirect('login');
 }

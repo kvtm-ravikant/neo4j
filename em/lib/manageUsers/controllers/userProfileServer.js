@@ -20,7 +20,7 @@ module.exports=function(app,Utils){
         var userDetails=req.session.userDetails;
         var clonedUserDetails=Utils.clone(userDetails);
         //resolve birth country
-        console.log(clonedUserDetails.basicDetails.birthPlace_country,location);
+        //console.log(clonedUserDetails.basicDetails.birthPlace_country,location);
         if(clonedUserDetails.basicDetails.hasOwnProperty("birthPlace_country") && clonedUserDetails.basicDetails.birthPlace_country){
             clonedUserDetails.basicDetails.birthPlace_country=location.countries[clonedUserDetails.basicDetails.birthPlace_country.toString()].countryName;
         }
@@ -31,7 +31,7 @@ module.exports=function(app,Utils){
         //delete city as we don't have its resolver
         delete clonedUserDetails.basicDetails.birthPlace_city;
         delete clonedUserDetails.basicDetails.accessList;
-        console.log("clonedUserDetails.basicDetails",clonedUserDetails.basicDetails);
+        //console.log("clonedUserDetails.basicDetails",clonedUserDetails.basicDetails);
         //religion
         clonedUserDetails.basicDetails.religionName=religion[clonedUserDetails.basicDetails.religionId];
 
@@ -84,7 +84,7 @@ module.exports=function(app,Utils){
         };
 
         //sending response
-        console.log("clonedUserDetails",clonedUserDetails);
+        //console.log("clonedUserDetails",clonedUserDetails);
         var responseObj=new Utils.Response();
         responseObj.responseData=latestobj;
         res.json(responseObj);
@@ -93,7 +93,7 @@ module.exports=function(app,Utils){
     });
 }
 function getFullName(user){
-    console.log("user",user);
+    //console.log("user",user);
     var fullNameArr=[];
     user && user.salutation && user.salutation.length>0?fullNameArr.push(user.salutation):null;
     user && user.firstName && user.firstName.length>0?fullNameArr.push(user.firstName):null;

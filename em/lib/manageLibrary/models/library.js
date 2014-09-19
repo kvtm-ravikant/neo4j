@@ -2,14 +2,26 @@
  * Created by ravikant on 11/8/14.
  */
 var Utils = require("../../common/Utils/Utils.js");
+var BookClass = require("./bookClass.js");
 var db=Utils.getDBInstance();
-module.exports.getAllBooks=function (res){
-    var queryAllBooks="MATCH (p:ParentBook) RETURN p";
+module.exports.getAllBooks=function (res,schoolID){
+    var queryAllBooks="MATCH (c)-[:`PARENTBOOK_OF`]->pb-[:BELONGS_TO]->(lib)-[:`LIBRARY_OF`]->(school{schoolId:'"+schoolID+"'}) RETURN pb,c ORDER BY pb.isbn ASC LIMIT 25";
     var responseObj=new Utils.Response();
     db.cypherQuery(queryAllBooks,function(err,reply){
         console.log(err,reply);
-        if(!err){
-            responseObj.responseData=reply;
+        if(!err && reply && reply.data && reply.data.length>0){
+            var booksList=[];
+            var bookIndexMap={};
+            for(var i= 0,len=reply.data.length;i<len;i++){
+                var row=reply.data[0];// parent=row[0],child=row[1]
+                if(bookIndexMap.hasOwnProperty(row[0].isbn)){
+                    booksList[bookIndexMap[row[0].isbn]].addChildBook(row[1]);
+                }else{
+                    bookIndexMap[row[0].isbn]=booksList.length-1;
+                    var book=new BookClass.completeBook(row[0],row[1]);
+                }
+            }
+            responseObj.responseData=booksList;
             res.json(responseObj);
         }else{
             responseObj.error=true;

@@ -116,7 +116,7 @@ module.exports=function (){
         console.log("cypherQuery",userDetailsQuery);
         db.cypherQuery(userDetailsQuery, function(err, result){
             if(result){
-                console.log("cypherQuery",err,result,userDetailsQuery);
+                console.log("cypherQuery",err);
                 callback(req,res,result);
             }else if(err && res){
                 Utils.defaultErrorResponse(res,"Failed to find User Details for "+userName+".");
@@ -136,7 +136,36 @@ module.exports=function (){
     }
     this.setUserDataInSession=function(req){
         delete this.basicDetails.hashPassword;
+
         req.session.userDetails=this;
+        //getLibraryAndSetInSession(this.schoolDetails.schoolId,req);
+        var libQuery='MATCH (a:Library)-[:`LIBRARY_OF`]->(b:School{schoolId:"'+this.schoolDetails.schoolId+'"}) RETURN a;';
+        db.cypherQuery(libQuery, function(err, result){
+            if(result && result.data.length==1){
+                console.log("cypherQuery getLibrary",err,result,libQuery);
+                req.session.libraryDetails=result.data[0];
+                console.log("getLibraryAndSetInSession req.session.libraryDetails",req.session.libraryDetails);
+                console.log("getLibraryAndSetInSession req.session.libraryDetails",req);
+            }else if(err ){
+                console.log("getLibraryAndSetInSession err",err);
+            }
+
+        });
     }
+
+}
+function getLibraryAndSetInSession(schoolId,req){
+    console.log("getLibraryAndSetInSession ");
+    var libQuery='MATCH (a:Library)-[:`LIBRARY_OF`]->(b:School{schoolId:"'+schoolId+'"}) RETURN a;';
+    db.cypherQuery(libQuery, function(err, result){
+        if(result && result.data.length==1){
+            console.log("cypherQuery getLibrary",err,result,libQuery);
+            req.session.libraryDetails=result.data[0];
+            console.log("getLibraryAndSetInSession req.session.libraryDetails",req.session.libraryDetails);
+        }else if(err ){
+            console.log("getLibraryAndSetInSession err",err);
+        }
+
+    });
 }
 

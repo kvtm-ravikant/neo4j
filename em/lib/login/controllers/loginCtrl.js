@@ -4,6 +4,7 @@
 var UserClass=require("../../manageUsers/models/UserClass.js");
 var user=new UserClass();
 var Utils=require("../../common/Utils/Utils.js");
+var db=Utils.getDBInstance();
 var appList=require("../../common/models/modules.js").getAppList();
 
 module.exports=function(app){
@@ -30,12 +31,16 @@ module.exports=function(app){
                 result.columns.length>3?sn=result.data[0][3]:null;
                 result.columns.length>4?school=result.data[0][4]:null;
                 result.columns.length>4?contact=result.data[0][5]:null;
-                console.log(userDet,pAddress,sAddress,sn,school,contact);
+                //console.log(userDet,pAddress,sAddress,sn,school,contact);
+                //set library details
+                //school?getLibraryAndSetInSession(school.schoolId,req):null;
+
                 if(userDet!=null){
                     if(userDet.hashPassword==password){
                         user.setUserDetails(userDet,pAddress,sAddress,sn,school,contact);
                         user.setUserDataInSession(req);
-                        console.log("req.session.userDetails",req.session.userDetails);
+                        //console.log("req.session.userDetails",req.session.userDetails);
+
                         var menuList=filterMenuItems(new appList(),userDet.userType);
                         req.session.menuList=menuList;
                         res.redirect("/index");
@@ -70,20 +75,16 @@ function filterMenuItems(menuList,userType){
     for(var i= 0,loopLen=menuList.length;i<loopLen;i++){
         var menu=menuList[i];
         if(menu.hasOwnProperty('accessList')){
+
             if(menu.hasOwnProperty('childLinks')){
                 var childlinksArr=[];
                 for(var j= 0,loopLenJ=menu.childLinks.length;j<loopLenJ;j++){
                     var childMenu=menu.childLinks[j];
                     if(childMenu.hasOwnProperty('accessList')){
-                        if(childMenu.accessList.length>0 && childMenu.accessList[0]=="*"){
+                        if((childMenu.accessList.length>0 && childMenu.accessList[0]=="*")||(childMenu.accessList.indexOf(userType)>-1)){
                             delete childMenu.accessList;
                             childlinksArr.push(childMenu);
-                        }else if(childMenu.accessList.indexOf(userType)>-1){
-                            console.log("childMenu.accessList.indexOf(userType)>-1",childMenu)
-                            delete childMenu.accessList;
-                            childlinksArr.push(childMenu);
-                        }else{
-                            console.log("childMenu ELSE",childMenu);
+
                         }
                     }
 
@@ -105,48 +106,5 @@ function filterMenuItems(menuList,userType){
     console.log("newMenuList",newMenuList);
     return newMenuList;
 }
-
-/*function createSchool(){
-    //school id [school name 3 char]:[board]:[year]:[pin code]
-    var schoolIdVal="dav:cbse:1990:122001";
-    var selectquery='MATCH (n:School{schoolId:"'+schoolIdVal+'"})  RETURN n';
-    db.cypherQuery(selectquery, function(err, result){
-        console.log("err",err);
-        if(err) throw err;
-        else if(result.data.length==0){
-            var query='CREATE (ee:School { name: "D.A.V Public School", schoolId: "dav:cbse:1990:122001", desc: "Dayanand Anglo vedic public school",schoolHeadId:"" })';
-            db.cypherQuery(query, function(err, result){
-                console.log("err",err);
-                if(err) throw err;
-
-                console.log(result,"created"); // delivers an array of query results
-                //console.log(result.columns); // delivers an array of names of objects getting returned
-            });
-        }
-
-    })
-
-}*/
-//select and delete
-/*var selectquery='MATCH (n:School{schoolId:"dav:cbse:1990:122001"})  RETURN n';
-db.cypherQuery(selectquery, function(err, result){
-    console.log("err",err);
-    if(err) throw err;
-    for(var i=0;i<result.data.length;i++){
-        var id=result.data[i]._id;
-        db.deleteNode(id, function(err, node){
-            if(err) throw err;
-
-            if(node === true){
-                // node deleted
-                console.log(node,"delete :(");
-            } else {
-                console.log(node,"NOT deleted :)");
-                // node not deleted because not found or because of existing relationships
-            }
-        });
-    }
-    console.log(result); // delivers an array of query results
-    //console.log(result.columns); // delivers an array of names of objects getting returned
-});*/
+//
 
