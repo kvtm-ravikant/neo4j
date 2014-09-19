@@ -1064,3 +1064,10 @@ h2,p{
 .nav > li > a {
     cursor: pointer;
 }
+
+input.ng-invalid {
+  border: 1px solid red;
+}
+input.ng-valid {
+  border: 1px solid green;
+}
