@@ -123,12 +123,60 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         });
     }
     
+    
+    $scope.signupForm = function() {
+    	var messageQue=[];
+    	  var errorObj={error:false,errorMsg:[]};
+    	  
+    	console.log("basicDetailsForm " ,$scope.basicDetailsForm,"$scope.basicDetailsForm.$valid :",$scope.primaryCntForm," message : ",messageQue );
+
+    	if($scope.basicDetailsForm.regId.$modelValue.length<3){
+    		errorObj.error=true
+            errorObj.errorMsg.push("Registration Id is not valid.");
+         }
+    	if($scope.basicDetailsForm.fname.$modelValue.length<3){
+    		errorObj.error=true
+            errorObj.errorMsg.push("First Name is not valid.");
+		}
+    	if($scope.basicDetailsForm.lName.$modelValue.length<3){
+    		errorObj.error=true
+            errorObj.errorMsg.push("Last Name is not valid.");
+		}
+    	if($scope.basicDetailsForm.userDOB.$modelValue.length<6){
+    		errorObj.error=true
+            errorObj.errorMsg.push("Date of birth is not valid.");
+		}
+//    	if($scope.primaryCntForm.cntStreetAdrOne.$modelValue.length<5){
+//    		errorObj.error=true
+//            errorObj.errorMsg.push("Street Name is not valid.");
+//		}
+    	
+    	var erroMsg=errorObj.errorMsg.join('<br>');
+    	
+    	if(erroMsg.length>0){
+    		appUtils.showError(erroMsg);	
+    	}
+        
+    	if(erroMsg.length==0){
+    		$scope.addUpdateUser();
+    	}
+        
+        console.log(erroMsg.length);
+//    	if ($scope.basicDetailsForm.$dirty) {
+//    		    	console.log("basicDetailsForm",$scope.basicDetailsForm);
+//	    } else {
+//	      $scope.basicDetailsForm.submitted = true;
+//	    }
+	  }
+    
     $scope.alertText="";
     $scope.addUpdateUser=function()
     {
+    	$scope.submitted = false;
+    	 
     	console.log("$scope.modalTitle : User", $scope.modalTitle, $scope.modalCode);
     	if($scope.modalCode && $scope.modalCode =='add'){
-    		$scope.registerNewUser();
+//    		$scope.registerNewUser();
     	}
     	else if($scope.modalCode && $scope.modalCode=='update'){
     		$('#retryModel').modal({"backdrop": "static","show":true});
@@ -156,11 +204,11 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
   		$('#retryModel').modal('hide');
    }
    
-
     $scope.resetUserClass=function(){
     	$scope.userSelectedClass=angular.copy($scope.userSelectedClone);
 //    	$scope.userForm.$setPristine();
-    	console.log("reset changes", $scope.isUserChanged());
+    	$scope.basicDetailsForm.$setPristine();
+    	console.log("reset changes", $scope.isUserChanged(), " $scope.basicDetailsForm.$setPristine() ", $scope.basicDetailsForm.$setPristine());
     };
     
     $scope.isUserChanged=function ()
