@@ -36,7 +36,7 @@ module.exports=function(app,Utils){
     	console.log("/manageLibrary/getUserType")
             res.json(userType);
     });    
-   
+    /* UserClass POJO Data Model */
     app.get("/manage-users/userClassData",Utils.ensureAuthenticated,function(req,res){
         var user=new UserClass();
         var responseObj = new Utils.Response();

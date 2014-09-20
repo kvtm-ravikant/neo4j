@@ -1,38 +1,35 @@
-var address=require('../../models/schoolClass.js');
-var neo4j=require("node-neo4j");
-var db=new neo4j("http://localhost:7474");
-console.log("db",db);
+var Utils=require("../../common/Utils/Utils.js");
+var schoolMS=require('../models/School.js');
+var schoolClass = require('../models/schoolClass.js');
+var neo4j = require("node-neo4j");
+var db = new neo4j("http://localhost:7474");
+console.log("db", db);
 
-module.exports=function(app){
-    app.get("/manage-org/create-org",function(req,res){
-        console.log("Inside create-org");
-        //res.render('index');
-
+module.exports = function(app) {
+	
+	 /* schoolClass POJO Data Model */
+//    app.get("/schoolManagement/getSchoolClass",Utils.ensureAuthenticated,function(req,res){
+//        var school=new schoolClass();
+//        var responseObj = new Utils.Response();
+//        responseObj.responseData=school;
+//        res.json(responseObj);
+//    });
+	
+	 /* Get all School from school */
+    app.get("/schoolManagement/getAllSchool",Utils.ensureAuthenticated,function(req,res){
+    	console.log("/schoolManagement/getAllSchool");
+    	 var loggedInUser=req.session.userDetails;
+    	 schoolMS.getAllSchools(loggedInUser,res);
     });
-    app.get("/manage-org/create-org/getOrgConfig",function(req,res){
-        console.log("Inside /manage-org/create-org/getOrgConfig",organization.org);
-        res.json(organization.org);
-
-    });
-    app.post("/manage-org/create-org/saveOrg",function(req,res){
-        console.log("Inside /manage-org/create-org/saveOrg",req.body);
-        var query='CREATE (n '+JSON.stringify(req.body)+' RETURN n)';
-        console.log("query",query);
-        db.cypherQuery(query, function(err, result){
-            console.log("err",err);
-            if(err) throw err;
-
-            console.log(result); // delivers an array of query results
-            //console.log(result.columns); // delivers an array of names of objects getting returned
-        });
-        /*db.insertNode(req.body,function(err,node){
-            console.log("node",node);
-            console.log("node id",node.id);
-            res.json({"done":true});
-        });*/
-
-
+    /*get selected School */
+    app.post("/schoolManagement/getSchoolDetails",Utils.ensureAuthenticated,function(req,res){
+        var requestobj=req.body.schoolId;
+//        console.log("requestobj - manage-users/getSelectedUserDetails",requestobj, req.body.userName);
+//        console.log("requestobj - registerNewUser");
+//        userMS.addNewUser(requestobj,res);
+        schoolMS.getSelectedSchool(requestobj,req,res);
     });
 
+    
+    
 }
-

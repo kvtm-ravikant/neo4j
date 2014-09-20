@@ -35,6 +35,7 @@ require('./lib/manageOrg/controllers/createOrg.js')(app);
 require('./lib/manageAttendence/controllers/createAttendence.js')(app,Utils);
 require('./lib/manageLibrary/controllers/libraryServerController.js')(app,Utils);
 require('./lib/common/controllerUtil.js')(app,Utils);
+require('./lib/schoolAdmin/controllers/schoolAdminServer.js')(app,Utils);
 
 process.on('uncaughtException', function (err) {
     console.error('uncaughtException:', err.message)

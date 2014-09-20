@@ -48,7 +48,7 @@ module.exports=function (){
     }
     this.primaryAddress={
         street2: '',
-        pincode: '452001',
+        pincode: "",
         street1: '',
         state: '',
         district: '',

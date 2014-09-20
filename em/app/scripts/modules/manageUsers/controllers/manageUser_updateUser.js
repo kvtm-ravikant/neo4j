@@ -123,33 +123,64 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         });
     }
     
-    
+    /*
+     * Create User Validation
+     */
     $scope.signupForm = function() {
     	var messageQue=[];
     	  var errorObj={error:false,errorMsg:[]};
     	  
-    	console.log("basicDetailsForm " ,$scope.basicDetailsForm,"$scope.basicDetailsForm.$valid :",$scope.primaryCntForm," message : ",messageQue );
+    	console.log("basicDetailsForm " ,$scope.basicDetailsForm,"$scope.basicDetailsForm.$valid :",$scope.modalCode," message : ",messageQue );
 
-    	if($scope.basicDetailsForm.regId.$modelValue.length<3){
+    	if($scope.userSelectedClass.basicDetails.regID.length<3){
     		errorObj.error=true
-            errorObj.errorMsg.push("Registration Id is not valid.");
+            errorObj.errorMsg.push("Enter Registration Id provided to you.");
          }
-    	if($scope.basicDetailsForm.fname.$modelValue.length<3){
+    	if($scope.userSelectedClass.basicDetails.firstName.length<3){
     		errorObj.error=true
-            errorObj.errorMsg.push("First Name is not valid.");
+            errorObj.errorMsg.push("You don't have First Name ? Enter your first Name.");
 		}
-    	if($scope.basicDetailsForm.lName.$modelValue.length<3){
+    	if($scope.userSelectedClass.basicDetails.lastName.length<3){
     		errorObj.error=true
-            errorObj.errorMsg.push("Last Name is not valid.");
+            errorObj.errorMsg.push("What about Last name. It's needed.");
 		}
-    	if($scope.basicDetailsForm.userDOB.$modelValue.length<6){
+    	if($scope.userSelectedClass.basicDetails.sex.length<1){
     		errorObj.error=true
-            errorObj.errorMsg.push("Date of birth is not valid.");
+            errorObj.errorMsg.push("Choose your gender.");
 		}
-//    	if($scope.primaryCntForm.cntStreetAdrOne.$modelValue.length<5){
-//    		errorObj.error=true
-//            errorObj.errorMsg.push("Street Name is not valid.");
-//		}
+		if($scope.userSelectedClass.basicDetails.DOB.length<6){
+    		errorObj.error=true
+            errorObj.errorMsg.push("What is your birthday ?");
+		}
+    	if($scope.userSelectedClass.primaryAddress.street1.length<5){
+    		errorObj.error=true
+            errorObj.errorMsg.push("Street Name is not valid.");
+		}
+    	if($scope.userSelectedClass.primaryAddress.country.length<3){
+    		errorObj.error=true
+            errorObj.errorMsg.push("Select contact Country.");
+		}
+    	if($scope.userSelectedClass.primaryAddress.state.length<3){
+    		errorObj.error=true
+            errorObj.errorMsg.push("Select contact State.");
+		}
+    	if($scope.userSelectedClass.primaryAddress.city.length<3){
+    		errorObj.error=true
+            errorObj.errorMsg.push("Select contact City.");
+		}
+    	if($scope.userSelectedClass.primaryAddress.pincode.length!=6){
+    		errorObj.error=true
+            errorObj.errorMsg.push("Enter 6 digit pincode.");
+		}
+    	if($scope.userSelectedClass.basicDetails.userType<3){
+    		errorObj.error=true
+            errorObj.errorMsg.push("User Type is not valid.");
+		}
+    	if($scope.userSelectedClass.basicDetails.userName<3){
+    		errorObj.error=true
+            errorObj.errorMsg.push("Create your user name.");
+		}
+    	
     	
     	var erroMsg=errorObj.errorMsg.join('<br>');
     	
@@ -157,10 +188,13 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     		appUtils.showError(erroMsg);	
     	}
         
-    	if(erroMsg.length==0){
+    	if(erroMsg.length==0 && ($scope.modalCode=='add'||$scope.modalCode=='update')){
     		$scope.addUpdateUser();
     	}
-        
+    	else if ($scope.modalCode=='view'||$scope.modalCode=='delete'){
+    		$scope.addUpdateUser();
+    	}
+    	
         console.log(erroMsg.length);
 //    	if ($scope.basicDetailsForm.$dirty) {
 //    		    	console.log("basicDetailsForm",$scope.basicDetailsForm);

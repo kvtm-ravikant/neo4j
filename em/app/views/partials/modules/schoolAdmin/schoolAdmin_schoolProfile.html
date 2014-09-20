@@ -1,108 +1,207 @@
-<div class="row" ng-controller="schoolAdmin_schoolProfile">
-	<div class="content">
-		<div class="main-header">
-			<!--  <em>{{text}}</em>  -->
-		</div>
-		<br>
-		<div class="main-content">
-			<ul class="nav nav-tabs">
-				<li class="active"><a href="page-profile.html#profile-tab"
-					data-toggle="tab"></i>Institution Profile</a></li>
-			</ul>
-
-			<div class="tab-content profile-page">
-<!-- 
-								<div class="col-md-3">
-									<div class="user-info-right">
-										<img src="images/userProfile/male.png" alt="Profile Picture" />
-									</div>
-								</div>
- -->
-				<div class="tab-pane profile active" id="profile-tab">
-
-					<form class="form-horizontal" role="form" id="basicDetailsForm"
-						name="basicDetailsForm">
-						<fieldset>
-							
-							<br>
-							<div class="form-group">
-							<label class="col-sm-2 control-label" for="othrLang">School
-								Name </label>
-							<div class="col-sm-5">
-								<input type="text" id="caste"
-									placeholder="Please mention school name" class="form-control"
-									ng-model="userSelectedClass.basicDetails.casteId">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label" for="religion">School
-								Id</label>
-							<div class="col-sm-5">
-								<input type="text" id="caste"
-									placeholder="Please mention school Id" class="form-control"
-									ng-model="userSelectedClass.basicDetails.casteId">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label" for="caste">Description</label>
-							<div class="col-sm-5">
-								<input type="text" id="caste"
-									placeholder="Describe the school." class="form-control"
-									ng-model="userSelectedClass.basicDetails.casteId">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label" for="caste">School
-								Address</label>
-							<div class="col-sm-5">
-								<input type="text" id="caste"
-									placeholder="Please mention School address." class="form-control"
-									ng-model="userSelectedClass.basicDetails.casteId">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label" for="caste">Phone
-								Number</label>
-							<div class="col-sm-5">
-								<input type="text" id="caste"
-									placeholder="Please mention school contact number." class="form-control"
-									ng-model="userSelectedClass.basicDetails.casteId">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label" for="caste">Email
-								Address </label>
-							<div class="col-sm-5">
-								<input type="text" id="caste"
-									placeholder="Please mention school email id." class="form-control"
-									ng-model="userSelectedClass.basicDetails.casteId">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label" for="caste">Website
-								URL</label>
-							<div class="col-sm-5">
-								<input type="text" id="caste"
-									placeholder="Please mention school website URL." class="form-control"
-									ng-model="userSelectedClass.basicDetails.casteId">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label" for="caste">Registration
-								Number</label>
-							<div class="col-sm-5">
-								<input type="text" id="caste"
-									placeholder="Please mention registration number of school" class="form-control"
-									ng-model="userSelectedClass.basicDetails.casteId">
-							</div>
-						</div>
-						</fieldset>
-					</form>
-				</div>
-
-
+<div ng-controller="schoolAdmin_schoolProfile">
+	<!--  <em>{{text}}</em>  -->
+	<!-- Search Start -->
+	<div class="row">
+		<div class="col-md-9 topbar">
+			<div class="input-group">
+				<input ng-model="searchBookModel.searchText"
+					class="col-md-12 searchclass" placeholder="Search School"
+					class="nodeSearchInputBox" /> <span class="input-group-addon "
+					id="datamodal" data-toggle="popover"> <i class="fa fa-times"
+					ng-click="clearSearch();searchBooks()"></i>&nbsp;|&nbsp; <i
+					class="fa fa-search cursor-pointer" ng-click="searchBooks()"></i>
+				</span>
 			</div>
 		</div>
+		<div class="col-md-3">
+			<button class="btn btn-sm btn-warning pull-right"
+				ng-click="openModal('add')">
+				<i class="fa fa-institution"> Add School</i>
+			</button>
+		</div>
 	</div>
-</div>
+	<!-- Search End -->
+	<div class="row vertical-spacer"></div>
+	<!--  School Summary - Start -->
+	<br>
+	<div class="row">
+		<div class="col-md-12">
+			<table
+				class="table table-bordered table-condensed table-striped table-hover"
+				id="booksearchtable">
+				<div id="head_nav">
+					<thead class="theadclass">
+						<tr>
+							<th ng-repeat="(key,value) in parentConfig">{{value}}</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+				</div>
+				<tbody>
+					<tr ng-repeat="school in allSchool.data">
+						<td ng-repeat="(key,value) in parentConfig">{{school[key]}}</td>
+						<td><a href="#" data-toggle="tooltip"
+							title="Click to view Book details"><i class="fa fa-eye"
+								role="button" data-toggle="modal"
+								ng-click="getSelectedSchoolDetails(school,'view')"></i></a>
+							&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
+							title="Click to update Book details"><i class="fa fa-pencil"
+								role="button" data-toggle="modal"
+								ng-click="getSelectedSchoolDetails(school,'update')"></i></a>
+							&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
+							title="Click to delete Book"><i class="fa fa-times-circle"
+								role="button" data-toggle="modal"
+								ng-click="getSelectedSchoolDetails(school,'delete')"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!--  School Summary - Start -->
+	<!-- School Details - Start -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="schoolModel">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">
+				<i class="fa fa-times"></i>
+			</button>
+			<h1>
+				<span class="label label-primary">{{modalTitle}}</span>
+			</h1>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<!-- ng-if="allUserClass.data" ng-show="currentUserDetails" -->
+				<div class="col-md-12">
+					<div class="col-md-12">
+						<ul class="nav nav-pills nav-justified thumbnail setup-panel"
+							id="myTab">
+							<li class="active"><a href="#basicInfo" data-toggle="tab">Institution
+									Profile</a></li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="schoolInfo">
+								<form class="form-horizontal" role="form" id="basicDetailsForm"
+									name="basicDetailsForm">
+									<fieldset>
+										<br>
+										<div class="form-group">
+											<label class="col-sm-2 control-label" for="othrLang">School
+												Name </label>
+											<div class="col-sm-5">
+												<input type="text" id="schoolName"
+													ng-disabled="disableInput"
+													placeholder="Please mention school name"
+													class="form-control" ng-model="selectedSchoolDetails.name">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label" for="religion">School
+												Id</label>
+											<div class="col-sm-5">
+												<input type="text" id="schoolId" ng-disabled="disableInput"
+													placeholder="Please mention school Id" class="form-control"
+													ng-model="selectedSchoolDetails.schoolId">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label" for="religion">School
+												Head Id</label>
+											<div class="col-sm-5">
+												<input type="text" id="schoolId" ng-disabled="disableInput"
+													placeholder="Please mention school Id" class="form-control"
+													ng-model="selectedSchoolDetails.schoolHeadId">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label" for="caste">Description</label>
+											<div class="col-sm-5">
+												<input type="text" id="schoolDesc"
+													ng-disabled="disableInput"
+													placeholder="Describe the school." class="form-control"
+													ng-model="selectedSchoolDetails.desc">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label" for="caste">School
+												Address</label>
+											<div class="col-sm-5">
+												<input type="text" id="schoolAddr" disabled="disabled"
+													placeholder="Please mention School address."
+													class="form-control" ng-model="selectedSchoolDetails.name">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label" for="caste">Phone
+												Number</label>
+											<div class="col-sm-5">
+												<input type="text" id="schoolCntNum" disabled="disabled"
+													placeholder="Please mention school contact number."
+													class="form-control" ng-model="selectedSchoolDetails.name">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label" for="caste">Email
+												Address </label>
+											<div class="col-sm-5">
+												<input type="text" id="schoolMailId" disabled="disabled"
+													placeholder="Please mention school email id."
+													class="form-control" ng-model="selectedSchoolDetails.name">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label" for="caste">Website
+												URL</label>
+											<div class="col-sm-5">
+												<input type="text" id="schoolUrl" disabled="disabled"
+													placeholder="Please mention school website URL."
+													class="form-control" ng-model="selectedSchoolDetails.name">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label" for="caste">Registration
+												Number</label>
+											<div class="col-sm-5">
+												<input type="text" id="schoolRegNum" disabled="disabled"
+													placeholder="Please mention registration number of school"
+													class="form-control" ng-model="selectedSchoolDetails.name">
+											</div>
+										</div>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary pull-left" data-dismiss="modal"
+					aria-hidden="true" ng-click="getBackToMainUsersList()">
+					<i class="fa fa-arrow-circle-left"> Back</i>
+				</button>
+				<button class="btn btn-primary pull-right"
+					ng-click="resetUserClass()"
+					ng-if="modalCode!='view'&& modalCode!='delete'">
+					<i class="fa fa-rotate-left"> Reset</i>
+				</button>
+				<button class="btn {{buttonStyle}} pull-right"
+					ng-click="signupForm()" ng-if="modalCode!='view'">
+					<i class="fa fa-edit"> {{modalTitle}}</i>
+				</button>
+			</div>
+		</div>
+
+		<div class="modal well" tabindex="-1" role="dialog" id="retryModel">
+			<div class="modal-header">
+				<h3>Are you sure ?</h3>
+			</div>
+			<div class="modal-body">{{alertText}}</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" ng-click="ok()">OK</button>
+				<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+	<!-- School Details - End -->
 </div>
