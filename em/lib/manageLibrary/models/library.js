@@ -4,23 +4,35 @@
 var Utils = require("../../common/Utils/Utils.js");
 var BookClass = require("./bookClass.js");
 var db=Utils.getDBInstance();
-module.exports.getAllBooks=function (res,schoolID){
-    var queryAllBooks="MATCH (c)-[:`PARENTBOOK_OF`]->pb-[:BELONGS_TO]->(lib)-[:`LIBRARY_OF`]->(school{schoolId:'"+schoolID+"'}) RETURN pb,c ORDER BY pb.isbn ASC LIMIT 25";
+//getAllBooks(null,'SPHSS:school:2014:452001');
+function getAllBooks(res,schoolID){
+    var queryAllBooks='MATCH (c)-[:PARENTBOOK_OF]->pb-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb,c  LIMIT 20';
     var responseObj=new Utils.Response();
     db.cypherQuery(queryAllBooks,function(err,reply){
-        console.log(err,reply);
+        console.log(err,queryAllBooks);
         if(!err && reply && reply.data && reply.data.length>0){
             var booksList=[];
             var bookIndexMap={};
             for(var i= 0,len=reply.data.length;i<len;i++){
                 var row=reply.data[0];// parent=row[0],child=row[1]
+                //console.log("row[0].isbn",row[0]);
+                //if(row[0].isbn=="")continue;
+                //console.log("row",row[]);
                 if(bookIndexMap.hasOwnProperty(row[0].isbn)){
+                    console.log("row[0].isbn",row[0].isbn);
+                    var index=bookIndexMap[row[0].isbn];
+                    console.log("index",index);
+                    var tempBook=booksList[index];
                     booksList[bookIndexMap[row[0].isbn]].addChildBook(row[1]);
                 }else{
-                    bookIndexMap[row[0].isbn]=booksList.length-1;
+                    console.log("row[0].isbn",row[0].isbn,bookIndexMap);
+                    bookIndexMap[row[0].isbn]=booksList.length;
                     var book=new BookClass.completeBook(row[0],row[1]);
+                    booksList.push(book);
                 }
             }
+            console.log(JSON.stringify(booksList));
+            console.log("bookIndexMap",bookIndexMap);
             responseObj.responseData=booksList;
             res.json(responseObj);
         }else{
@@ -30,6 +42,7 @@ module.exports.getAllBooks=function (res,schoolID){
         }
     });
 }
+module.exports.getAllBooks=getAllBooks;
 module.exports.getChildBooks=function(primaryKey,value,res){
     var query='Match (a:ParentBook{'+primaryKey+':"'+value+'"})-[:PARENTBOOK_OF]->(c) return c';
     var responseObj=new Utils.Response();

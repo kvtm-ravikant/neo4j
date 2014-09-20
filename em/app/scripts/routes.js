@@ -80,6 +80,14 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
             }
 
         })
+        .state('libraryManagement', {
+            url: "/manageLibrary",
+            templateUrl: "partials/modules/mangeLibrary/mangeLibrary.html",
+            controller:'libraryManagement',
+            data: {
+                displayName: 'Library Management'
+            }
+        })
         /*  .state('manageUser', {
             url: "/manage-users/users",
             templateUrl: "partials/modules/manageUsers/manageUser.html",
@@ -148,16 +156,8 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
             }
         })
 
-		.state('libraryManagement', {
-            url: '/libraryManagement',
-            // Note: abstract still needs a ui-view for its children to populate.
-            // You can simply add it inline here.
-            template: '<ui-view/>',
-            data: {
-                displayName: 'Library Management'
-            }
-        })
-        	.state('libraryManagement.searchBook', {
+
+        	/*.state('libraryManagement.searchBook', {
                 parent:'libraryManagement',
                 url: "/libraryManagement/searchBooks",
                 templateUrl: "partials/modules/mangeLibrary/searchBook.html",
@@ -192,6 +192,6 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
                 data:{
                     displayName:'Inventory Books'
                 }
-            })
+            })*/
               /* Libaray Management - End */
 });

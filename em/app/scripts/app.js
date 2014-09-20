@@ -1,7 +1,7 @@
 'use strict';
 angular.module("dashboard",[]);
 angular.module("manageUsers",[]);
-var educationMediaApp=angular.module('educationMediaApp', ['ng-bootstrap-datepicker','ui.router','SpinnerApp'])
+var educationMediaApp=angular.module('educationMediaApp', ['ng-bootstrap-datepicker','ui.router','SpinnerApp','DirectiveUtil'])
     .run(
         [          '$rootScope', '$state', '$stateParams',
             function ($rootScope,   $state,   $stateParams) {

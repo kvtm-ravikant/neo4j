@@ -93,9 +93,9 @@ function initAppList(){
             'collapse':true,
             'icon':"book",
             'accessList':["*"],
-            'abstract':true,
+           /* 'abstract':true,*/
             "childLinks":[
-                {
+                /*{
                     'state': 'libraryManagement.searchBook',
                     'name':'Search',
                     'collapse':true,
@@ -122,7 +122,7 @@ function initAppList(){
                     'collapse':true,
                     'icon':"add",
                     'accessList':["*"]
-                }
+                }*/
             ]
         },
         /* Library Management -  End */

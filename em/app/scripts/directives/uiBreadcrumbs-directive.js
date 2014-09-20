@@ -1,4 +1,5 @@
-educationMediaApp.directive('uiBreadcrumbs', function($interpolate, $state) {
+var DirectiveUtil=angular.module('DirectiveUtil',[]);
+DirectiveUtil.directive('uiBreadcrumbs', function($interpolate, $state) {
     return {
         restrict: 'E',
         templateUrl: 'partials/breadcrumb.html',
@@ -139,6 +140,22 @@ educationMediaApp.directive('uiBreadcrumbs', function($interpolate, $state) {
                 }
                 return alreadyUsed;
             }
+        }
+    };
+});
+DirectiveUtil.directive('customPopover', function () {
+    return {
+        restrict: 'A',
+        template: '<span>{{label}}</span>',
+        link: function (scope, el, attrs) {
+            scope.label = attrs.popoverLabel;
+
+            $(el).popover({
+                trigger: 'click',
+                html: true,
+                content: attrs.popoverHtml,
+                placement: attrs.popoverPlacement
+            });
         }
     };
 });

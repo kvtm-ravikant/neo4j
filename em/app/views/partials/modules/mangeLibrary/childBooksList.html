@@ -1,0 +1,30 @@
+<div class="col-md-12 child-books-container" ng-if="book.isChildOpen">
+
+
+    <div class="col-md-12">
+        <div class="col-md-2 div-table-header-th">Book ID</div>
+        <div class="col-md-1 div-table-header-th">Status</div>
+        <div class="col-md-3 div-table-header-th">Description</div>
+        <div class="col-md-2 div-table-header-th">Location</div>
+        <div class="col-md-1 div-table-header-th">Rating</div>
+        <div class="col-md-3 div-table-header-th">Actions</div>
+    </div>
+    <div class="col-md-12" ng-repeat="childbook in book.children">
+        <div class="col-md-2 div-table-td-first div-table-td">{{childbook.bookId}}</div>
+        <div class="col-md-1 div-table-td">{{childbook.bookStatus}}</div>
+        <div class="col-md-3 div-table-td">
+            {{moreText(childbook.description)}}
+            <span class="custom-link" ng-if="childbook.description.length>20" custom-popover popover-html="{{childbook.description}}" popover-placement="bottom" popover-label="more.."></span>
+        </div>
+        <div class="col-md-2 div-table-td">{{childbook.location}}</div>
+        <div class="col-md-1 div-table-td">{{childbook.starRating}}</div>
+        <div class="col-md-3 div-table-td">
+            <a href="#" data-toggle="tooltip" title="Click to issue book" ng-if="childbook.bookStatus=='Unavailable'">Return Book &nbsp;|&nbsp;</a>
+            <a href="#" data-toggle="tooltip" title="Click to issue book" ng-if="childbook.bookStatus=='Available'">Issue Book &nbsp;|&nbsp;</a>
+            <a href="#" data-toggle="tooltip" title="Click to view book details"><i class="fa fa-eye" role="button" data-toggle="modal" ></i></a> &nbsp;|&nbsp;
+            <a href="#" data-toggle="tooltip" title="Click to update book details"><i class="fa fa-pencil" role="button" data-toggle="modal" ></i></a> &nbsp;|&nbsp;
+            <a href="#" data-toggle="tooltip" title="Click to delete book"><i class="fa fa-times-circle" role="button" data-toggle="modal" ></i></a>&nbsp;|&nbsp;
+            <a href="#" data-toggle="tooltip" title="Click to add book"><i class="fa fa-plus" role="button" data-toggle="modal" ></i></a>
+        </div>
+    </div>
+</div>
