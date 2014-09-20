@@ -8,8 +8,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
     }
     //get default book
-    libraryService.getAllBooks()
-        .then(
+    libraryService.getAllBooks().then(
                 function(dataResponse){
                     console.log("dataResponse",dataResponse);
                     appUtils.defaultParseResponse(dataResponse,function(dataResponse){
