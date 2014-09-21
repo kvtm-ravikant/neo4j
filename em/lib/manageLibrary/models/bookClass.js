@@ -40,7 +40,7 @@ function ChildBook(){
     this.createdDate="";
 }
 
-function completeBook(parentBook,childBooks){
+function CompleteBook(parentBook,childBooks){
     this.parentbook=parentBook?parentBook:null;
     this.children=[];
     this.isChildOpen=false;
@@ -55,4 +55,4 @@ function completeBook(parentBook,childBooks){
 
 module.exports.ParentBook=ParentBook;
 module.exports.ChildBook=ChildBook;
-module.exports.completeBook=completeBook;
+module.exports.CompleteBook=CompleteBook;

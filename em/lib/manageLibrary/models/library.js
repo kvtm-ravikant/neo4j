@@ -22,7 +22,7 @@ function getAllBooks(res,schoolID){
                     tempBook.addChildBook(row[1]);
                 }else{
                     bookIndexMap[row[0].isbn]=booksList.length;
-                    var book=new BookClass.completeBook(row[0],row[1]);
+                    var book=new BookClass.CompleteBook(row[0],row[1]);
                     booksList.push(book);
                 }
             }
@@ -287,4 +287,11 @@ module.exports.searchUser=function(res,searchText,schoolId){
             res.json(responseObj);
         }
     });
+}
+
+module.exports.getBookPOJO=function(res){
+    var parentBook=new BookClass.ParentBook();
+    var childBook=new BookClass.ChildBook();
+    var book=new BookClass.CompleteBook(parentBook,childBook);
+    res.json(book);
 }

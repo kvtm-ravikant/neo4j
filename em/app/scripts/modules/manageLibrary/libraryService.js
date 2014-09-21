@@ -3,12 +3,21 @@
  */
 educationMediaApp.service('libraryService',function($http, $q){
         return({
-            getAllBooks: getAllBooks
+            getAllBooks: getAllBooks,
+            getBookPOJO:getBookPOJO
         });
         function getAllBooks(){
             var request = $http({
                 method: "get",
                 url: "/manageLibrary/getAllBooks"
+            });
+
+            return( request.then( handleSuccess, handleError ) );
+        }
+        function getBookPOJO(){
+            var request = $http({
+                method: "get",
+                url: "/manageLibrary/getBookPOJO"
             });
 
             return( request.then( handleSuccess, handleError ) );

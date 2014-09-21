@@ -207,6 +207,9 @@ module.exports=function(app,Utils){
         var schoolID=loggedInUser.schoolDetails.schoolId;
         libraryMS.getAllBooks(res,schoolID);
     });
+    app.get("/manageLibrary/getBookPOJO",Utils.ensureAuthenticated,function(req,res){
+        libraryMS.getBookPOJO(res);
+    });
     /* Add NEW Book Title Drop Down*/
     app.get("/manageLibrary/getParentBookDD",Utils.ensureAuthenticated,function(req,res){
 //        libraryMS.getAllBooks(res);

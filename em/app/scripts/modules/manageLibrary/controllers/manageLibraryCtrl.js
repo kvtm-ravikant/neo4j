@@ -17,6 +17,16 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
                 }
 
             );
+    //get POJO book
+    libraryService.getBookPOJO().then(
+                function(dataResponse){
+                    console.log("getBookPOJO",dataResponse);
+                    appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                       $scope.bookClass=dataResponse.responseData;
+                    })
+                }
+
+            );
 
     //toggle key of a map
     $scope.toggleMapKeyValue=function(map,key){
