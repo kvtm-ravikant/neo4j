@@ -1071,3 +1071,32 @@ input.ng-invalid {
 input.ng-valid {
   border: 1px solid green;
 }
+.div-table-header-th{
+    background-color: #438EA9;
+    padding: .5em;
+    color: #efefef;
+    border-right: 1px solid #ccc;
+}
+.div-table-td-first{
+    border-left: 1px solid #ccc;
+}
+.div-table-td{
+    padding: .3em;
+    color: #555;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background-color: #fff;
+}
+.theme-color-bg{
+    background-color: #438EA9;
+}
+.child-books-container{
+    background-color: #efefef;
+    padding-right: 0px;
+
+}
+.custom-link{
+    color:#105cb6;
+    text-decoration: underline;
+    cursor: pointer;
+}

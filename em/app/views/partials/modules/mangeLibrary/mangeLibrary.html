@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-sm btn-primary pull-right" >
+                <button class="btn btn-sm btn-primary pull-right" ng-click="openAddBookForm()">
                     <i class="fa fa-book"> Add Book</i>
                 </button>
 
@@ -60,5 +60,6 @@
             </div>
         </div>
     </div>
+    <div ng-include="'partials/modules/mangeLibrary/addBook.html'"></div>
 
 </div>

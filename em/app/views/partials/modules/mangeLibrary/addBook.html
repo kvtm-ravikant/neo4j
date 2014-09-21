@@ -1,0 +1,52 @@
+<div id="addBookToLib" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">
+            <i class="fa fa-times"></i>
+        </button>
+        <h4>
+            Add Book
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-10">
+                    <ul class="nav nav-pills nav-justified thumbnail setup-panel"
+                        id="myTab">
+                        <li class="active"><a href="#bookInfo" data-toggle="tab">Book Information</a></li>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="bookInfo">
+                                <form class="form-horizontal" role="form" id="bookInfoForm" name="bookInfoForm">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">ISBN
+                                            <span style="color: red">&nbsp;*</span>
+                                        </label>
+                                        <div class="col-sm-6">
+                                            <!--<input type="text" class="form-control" id="regId"
+                                                   name="regId"
+                                                   ng-model="userSelectedClass.basicDetails.regID"
+                                                   ng-if="modalCode=='add'" required="required" ng-minlength=3
+                                                   ng-maxlength=20 placeholder="Please enter registration Id.">-->
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary pull-left" data-dismiss="modal"
+                aria-hidden="true" >
+            <i class="fa fa-arrow-circle-left"> Back</i>
+        </button>
+
+        <button class="btn pull-right">
+            <i class="fa fa-edit"> Add</i>
+        </button>
+    </div>
+</div>

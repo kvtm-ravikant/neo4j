@@ -26,4 +26,8 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     $scope.moreText=function(text){
         return text.substring(0,20);
     }
+
+    $scope.openAddBookForm=function(){
+        $('#addBookToLib').modal('show');
+    }
 });
