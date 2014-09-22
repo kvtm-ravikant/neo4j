@@ -57,5 +57,41 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     $scope.openAddBookForm=function(){
         $('#addBookToLib').modal('show');
     }
+    
+    $scope.addChildTab=function(){
+    	console.log("addChildTab ");
+    	  setAllInactive();
+          addNewWorkspace();
+    }
+    
+    var setAllInactive = function() {
+    	console.log("setAllInactive ");
+        angular.forEach($scope.workspaces, function(workspace) {
+            workspace.active = false;
+        });
+    };
+ 
+    var addNewWorkspace = function() {
+    	
+        var id = $scope.workspaces.length + 1;
+        if($scope.workspaces.length<5){
+        	$scope.workspaces.push({
+                id: id,
+                name: "Book Copy",// + id,
+                active: true
+            });	
+        }
+        else
+        	appUtils.showError("You cannot add more than 5 Books !");
+        
+        console.log("addNewWorkspace ",id,"workspaces : ",$scope.workspaces );
+    };
+ 
+    $scope.workspaces =
+    [
+        { id: "1", name: "Book Copy", active:false }
+    ];
+ 
 });
+
 
