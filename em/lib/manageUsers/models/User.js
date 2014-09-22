@@ -301,17 +301,19 @@ module.exports.deleteUser = function(userObj,loggedInUser,res) {
 	        var defaultErrorMsg="Failed to update user. Please contact administrator.";
 	        
 	        var findUserQuery = 'MATCH (n:User{userName:"' + userObj.basicDetails.userName + '"})  RETURN n';
-	        var deleteQuery='MATCH (n:User{userName:"' + userObj.basicDetails.userName + '"}) set n.softDelete = FALSE return n';
+	        var deleteQuery='MATCH (n:User{userName:"' + userObj.basicDetails.userName + '"}) set n.softDelete =true return n';
 	        
-	        console.log("deleteUser : ", userObj.basicDetails.userName, loggedInUser);
-	        
-	        db.cypherQuery("findUserQuery",findUserQuery, function(err, result) {
+	        console.log("findUserQuery : ", findUserQuery);
+	        console.log("deleteUser : ", deleteQuery);
+
+	        db.cypherQuery(findUserQuery, function(err, result) {
 	            console.log("findUserQuery",err, result)
-	            if(err || !result || (result && result.data && result.data.length==0)){
+	            if(!err && result && result.data && result.data.length==1){
                     var currentTimestamp=(new Date()).getTime();
                     userObj.basicDetails.updatedAt=currentTimestamp;
 
                     db.cypherQuery(deleteQuery, function(err, reply) {
+                        console.log("deleteQuery err, reply",err, reply)
                     	if (!err) {
                 			responseObj.responseData = reply;
                 			res.json(responseObj);

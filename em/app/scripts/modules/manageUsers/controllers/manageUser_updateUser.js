@@ -152,7 +152,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     		errorObj.error=true
             errorObj.errorMsg.push("What is your birthday ?");
 		}
-        if(!(($scope.userSelectedClass.contact.phonePrimary && $scope.userSelectedClass.contact.phonePrimary.length>10) ||
+        if(!(($scope.userSelectedClass.contact.phonePrimary && $scope.userSelectedClass.contact.phonePrimary.length>=10) ||
             ($scope.userSelectedClass.contact.emailPrimary) ||
             (($scope.userSelectedClass.primaryAddress.street1.length<5 || angular.isUndefined($scope.userSelectedClass.primaryAddress.street1))
                 && ($scope.userSelectedClass.primaryAddress.country.length<1 || angular.isUndefined($scope.userSelectedClass.primaryAddress.country))
@@ -165,7 +165,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             errorObj.error=true
             errorObj.errorMsg.push("Please enter Primary Phone Number or Primary Email Address OR Primary Complete residential address.");
         }
-    	
+
     	if(angular.isUndefined($scope.userSelectedClass.basicDetails.userType)){
     		errorObj.error=true
             errorObj.errorMsg.push("User Type is not valid.");
@@ -331,7 +331,9 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
  												$scope.userSelectedClass.basicDetails = dataResponse.responseData.data[0];
  												appUtils.showSuccess("User "+$scope.userSelectedClass.basicDetails.userName+" deleted successfully");
  												$('#modalUpdate').modal('hide');
+                                                location.reload();
  											});
+
  						}).error(function(data, status, headers, config) {
  							// error
  							console.log("Error", data, status,headers, config);
