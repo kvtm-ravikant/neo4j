@@ -130,53 +130,53 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     	var messageQue=[];
     	  var errorObj={error:false,errorMsg:[]};
     	  
-    	console.log("basicDetailsForm " ,$scope.basicDetailsForm,"$scope.basicDetailsForm.$valid :",$scope.modalCode," message : ",messageQue );
+    	console.log("basicDetailsForm " ,$scope.basicDetailsForm,"$scope.basicDetailsForm.$valid :",$scope.userSelectedClass," message : ",messageQue );
 
-    	if($scope.userSelectedClass.basicDetails.regID.length<3){
+    	if($scope.userSelectedClass.basicDetails.regID.length<3 || angular.isUndefined($scope.userSelectedClass.basicDetails.regID)){
     		errorObj.error=true
             errorObj.errorMsg.push("Enter Registration Id provided to you.");
          }
-    	if($scope.userSelectedClass.basicDetails.firstName.length<3){
+    	if($scope.userSelectedClass.basicDetails.firstName.length<3 || angular.isUndefined($scope.userSelectedClass.basicDetails.firstName)){
     		errorObj.error=true
             errorObj.errorMsg.push("You don't have First Name ? Enter your first Name.");
 		}
-    	if($scope.userSelectedClass.basicDetails.lastName.length<3){
+    	if($scope.userSelectedClass.basicDetails.lastName.length<3 || angular.isUndefined($scope.userSelectedClass.basicDetails.lastName)){
     		errorObj.error=true
             errorObj.errorMsg.push("What about Last name. It's needed.");
 		}
-    	if($scope.userSelectedClass.basicDetails.sex.length<1){
+    	if($scope.userSelectedClass.basicDetails.sex.length<1 || angular.isUndefined($scope.userSelectedClass.basicDetails.sex)){
     		errorObj.error=true
             errorObj.errorMsg.push("Choose your gender.");
 		}
-		if($scope.userSelectedClass.basicDetails.DOB.length<6){
+		if($scope.userSelectedClass.basicDetails.DOB.length<6 || angular.isUndefined($scope.userSelectedClass.basicDetails.DOB)){
     		errorObj.error=true
             errorObj.errorMsg.push("What is your birthday ?");
 		}
-    	if($scope.userSelectedClass.primaryAddress.street1.length<5){
+    	if($scope.userSelectedClass.primaryAddress.street1.length<5 || angular.isUndefined($scope.userSelectedClass.primaryAddress.street1)){
     		errorObj.error=true
             errorObj.errorMsg.push("Street Name is not valid.");
 		}
-    	if($scope.userSelectedClass.primaryAddress.country.length<3){
+    	if($scope.userSelectedClass.primaryAddress.country.length<1 || angular.isUndefined($scope.userSelectedClass.primaryAddress.country)){
     		errorObj.error=true
             errorObj.errorMsg.push("Select contact Country.");
 		}
-    	if($scope.userSelectedClass.primaryAddress.state.length<3){
+    	if($scope.userSelectedClass.primaryAddress.state.length<2 || angular.isUndefined($scope.userSelectedClass.primaryAddress.state)){
     		errorObj.error=true
             errorObj.errorMsg.push("Select contact State.");
 		}
-    	if($scope.userSelectedClass.primaryAddress.city.length<3){
+    	if($scope.userSelectedClass.primaryAddress.city.length<3 || angular.isUndefined($scope.userSelectedClass.primaryAddress.city)){
     		errorObj.error=true
             errorObj.errorMsg.push("Select contact City.");
 		}
-    	if($scope.userSelectedClass.primaryAddress.pincode.length!=6){
+    	if($scope.userSelectedClass.primaryAddress.pincode.length!=6 || angular.isUndefined($scope.userSelectedClass.primaryAddress.pincode)){
     		errorObj.error=true
             errorObj.errorMsg.push("Enter 6 digit pincode.");
 		}
-    	if($scope.userSelectedClass.basicDetails.userType<3){
+    	if($scope.userSelectedClass.basicDetails.userType<3  || angular.isUndefined($scope.userSelectedClass.basicDetails.userType)){
     		errorObj.error=true
             errorObj.errorMsg.push("User Type is not valid.");
 		}
-    	if($scope.userSelectedClass.basicDetails.userName<3){
+    	if($scope.userSelectedClass.basicDetails.userName<3 || angular.isUndefined($scope.userSelectedClass.basicDetails.userName)){
     		errorObj.error=true
             errorObj.errorMsg.push("Create your user name.");
 		}

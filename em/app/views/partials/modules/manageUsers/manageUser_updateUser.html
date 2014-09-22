@@ -247,7 +247,7 @@
 														class="btn btn-media dropdown-toggle form-control"
 														data-ng-model="userSelectedClass.basicDetails.languages_motherTongue">
 														<option value="">Select Mother Tounge</option>
-														<option ng-repeat="(key, value) in languages"
+														<option ng-repeat="(key, value) in languages" ng-selected="key==userSelectedClass.basicDetails.languages_motherTongue"
 															value="{{key}}">{{value.___name___}}</option>
 													</select>
 												</div>
@@ -264,7 +264,7 @@
 													class="btn btn-media dropdown-toggle form-control"
 													data-ng-model="userSelectedClass.basicDetails.languages_others">
 													<option value="">Select Other Language</option>
-													<option ng-repeat="(key, value) in languages"
+													<option ng-repeat="(key, value) in languages" ng-selected="key==userSelectedClass.basicDetails.languages_others"
 														value="{{key}}">{{value.___name___}}</option>
 												</select>
 											</div>
@@ -279,7 +279,7 @@
 													class="btn btn-media dropdown-toggle form-control"
 													data-ng-model="userSelectedClass.basicDetails.religionId">
 													<option value="">Select Religion</option>
-													<option ng-repeat="(key, value) in religionCaste"
+													<option ng-repeat="(key, value) in religionCaste | orderBy:[value.___name___]" ng-selected="key==userSelectedClass.basicDetails.religionId"
 														value="{{key}}">{{value.___name___}}</option>
 												</select>
 											</div>
@@ -572,7 +572,7 @@
 															class="btn btn-media dropdown-toggle form-control"
 															data-ng-model="userSelectedClass.SecondaryAddress.country">
 															<option value="">Select Country</option>
-															<option ng-repeat="(key, value) in countryStateCity"
+															<option ng-repeat="(key, value) in countryStateCity" ng-selected="key==userSelectedClass.SecondaryAddress.country"
 																value="{{key}}">{{value.___name___}}</option>
 														</select>
 														<div class="col-md-4"
@@ -591,6 +591,7 @@
 															<option value="">Select State</option>
 															<option
 																ng-repeat="(key, state) in countryStateCity[userSelectedClass.SecondaryAddress.country]"
+																ng-selected="key==userSelectedClass.SecondaryAddress.state"
 																ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
 														</select>
 													</div>
@@ -611,6 +612,7 @@
 															<option value="">Select State</option>
 															<option
 																ng-repeat="(key, city) in countryStateCity[userSelectedClass.SecondaryAddress.country][userSelectedClass.SecondaryAddress.state]"
+																ng-selected="key==userSelectedClass.SecondaryAddress.city"
 																ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
 														</select>
 													</div>
@@ -661,7 +663,7 @@
 															class="btn btn-media dropdown-toggle form-control"
 															data-ng-model="userSelectedClass.basicDetails.birthPlace_country">
 															<option value="">Select Country</option>
-															<option ng-repeat="(key, value) in countryStateCity"
+															<option ng-repeat="(key, value) in countryStateCity" ng-selected="key==userSelectedClass.basicDetails.birthPlace_country"
 																value="{{key}}">{{value.___name___}}</option>
 														</select>
 													</div>
@@ -683,6 +685,7 @@
 															<option value="">Select State</option>
 															<option
 																ng-repeat="(key, state) in countryStateCity[userSelectedClass.basicDetails.birthPlace_country]"
+																ng-selected="key==userSelectedClass.basicDetails.birthPlace_state"
 																ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
 														</select>
 													</div>
@@ -704,6 +707,7 @@
 															<option value="">Select City</option>
 															<option
 																ng-repeat="(key, city) in countryStateCity[userSelectedClass.basicDetails.birthPlace_country][userSelectedClass.basicDetails.birthPlace_state]"
+																ng-selected="key==userSelectedClass.basicDetails.birthPlace_city"
 																ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
 														</select>
 													</div>
@@ -842,14 +846,16 @@
 													<select id="birthPlaceCntry" name="validation-select"
 														class="btn btn-media dropdown-toggle form-control"
 														data-ng-model="userSelectedClass.basicDetails.userType">
-														<option value="">Select User Type</option>
+														<option>Select User Type</option>
 														<option ng-repeat="(key, value) in userType"
-															value="{{key}}">{{value.___name___}}</option>
+														ng-selected="key==userSelectedClass.basicDetails.userType"
+															value="{{key}}">{{value.___name___}} </option>
 													</select>
 												</div>
 												<div class="col-md-4"
 													ng-if="modalCode=='view'||modalCode=='delete'">{{userType[userSelectedClass.basicDetails.userType].___name___}}</div>
 											</div>
+											
 											<div class="form-group">
 												<label class="col-sm-3 control-label" for="inputUsername">Username<span
 													style="color: red">&nbsp;*</span></label>

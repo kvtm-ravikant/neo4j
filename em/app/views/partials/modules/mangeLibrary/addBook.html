@@ -1,52 +1,225 @@
 <div id="addBookToLib" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"
-                aria-hidden="true">
-            <i class="fa fa-times"></i>
-        </button>
-        <h4>
-            Add Book
-        </h4>
-    </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-10">
-                    <ul class="nav nav-pills nav-justified thumbnail setup-panel"
-                        id="myTab">
-                        <li class="active"><a href="#bookInfo" data-toggle="tab">Book Information</a></li>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="bookInfo">
-                                <form class="form-horizontal" role="form" id="bookInfoForm" name="bookInfoForm">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">ISBN
-                                            <span style="color: red">&nbsp;*</span>
-                                        </label>
-                                        <div class="col-sm-6">
-                                            <!--<input type="text" class="form-control" id="regId"
-                                                   name="regId"
-                                                   ng-model="userSelectedClass.basicDetails.regID"
-                                                   ng-if="modalCode=='add'" required="required" ng-minlength=3
-                                                   ng-maxlength=20 placeholder="Please enter registration Id.">-->
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true">
+			<i class="fa fa-times"></i>
+		</button>
+		<h4>
+			Add Book
+			<button type="button">
+				<a href="#" data-toggle="tooltip" title="Click to add book"><i
+					class="fa fa-plus" role="button" data-toggle="modal"></i></a>
+			</button>
+		</h4>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-12">
+					<ul class="nav nav-pills nav-justified thumbnail setup-panel"
+						id="myTab">
+						<li class="active"><a href="#bookInfo" data-toggle="tab">Book
+								Information</a></li>
+								
 
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="bookInfo">
+								<form class="form-horizontal" role="form" id="bookInfoForm"
+									name="bookInfoForm">
+									<fieldset>
+										<div class="col-md-12">
+											<div class="row">
+												<div>
+													<label class="col-sm-2 control-label" for="isbnNum">ISBN
+													</label>
+													<div class="col-sm-4">
+														<input type="text" id="isbnNum"
+															placeholder="Please enter ISBN Number"
+															class="form-control" ng-model="parentBook.isbn"
+															title="ISBN is required !" required>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div>
+													<label class="col-sm-2 control-label" for="bookTitle">Title</label>
+													<div class="col-sm-10">
+														<input type="text" id="bookTitle"
+															placeholder="Please enter book title here "
+															class="form-control" ng-model="parentBook.bookTitle"
+															title="Title is required !" required>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div>
+													<label class="col-sm-2 control-label" for="subTitle">Sub
+														Title</label>
+													<div class="col-sm-10">
+														<input type="text" id="subTitle"
+															placeholder="Please enter book's sub title here "
+															class="form-control" ng-model="parentBook.bookSubTitle">
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row ">
+												<div>
+													<label class="col-sm-2 control-label" for="bookAuthor">Author</label>
+													<div class="col-sm-10">
+														<input type="text" id="bookAuthor"
+															placeholder="Please Enter author Name "
+															class="form-control" ng-model="parentBook.authorName"
+															title="Author is required !" required>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div>
+													<label class="col-sm-2 control-label" for="editionNum">Edition</label>
+													<div class="col-sm-2">
+														<input type="text" id="editionNum"
+															placeholder="Edition Number" class="form-control"
+															ng-model="parentBook.edition">
+													</div>
+												</div>
+												<div>
+													<label class="col-sm-2 control-label" for="lang">Language</label>
+													<div class="col-sm-4">
+														<input type="text" id="lang"
+															placeholder="Need to Change in Drop down"
+															class="form-control" ng-model="parentBook.language"
+															title="Language is required !" required>
+													</div>
+												</div>
+												<!-- 
+            <div>
+                <label class="col-sm-2 control-label" for="bindType">Binding Type </label>
+                <div class="col-sm-3">
+                    <select id="bindType" name="validation-select" class="btn btn-media dropdown-toggle" data-ng-model="parentBook.bindingType">
+                        <option value="">Select Binding Type !</option>
+                        <option value="HL">Half Leather</option>
+                        <option value="FL">Full Leather</option>
+                        <option value="HB">Hard Bound</option>
+                    </select>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary pull-left" data-dismiss="modal"
-                aria-hidden="true" >
-            <i class="fa fa-arrow-circle-left"> Back</i>
-        </button>
+             -->
+												<!-- div>
+                <label class="col-sm-2 control-label" for="bindType">Binding Type </label>
+                <div class="col-sm-4   ">
+                    <input type="text" id="bindType" placeholder="Need to add drop down" class="form-control" ng-model="parentBook.bindingType"
+                           title="Binding Type is required !" required>
+                </div>
+            </div -->
+											</div>
+											<br>
 
-        <button class="btn pull-right">
-            <i class="fa fa-edit"> Add</i>
-        </button>
-    </div>
+
+											<div class="row ">
+												<div>
+													<label class="col-sm-2 control-label" for="bookPublisher">Publisher</label>
+													<div class="col-sm-10">
+														<input type="text" id="bookPublisher"
+															placeholder="Please Enter Publisher Name "
+															class="form-control" ng-model="parentBook.publisher"
+															title="Publisher is required !" required>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+
+												<div>
+													<label class="col-sm-2 control-label" for="catName">Category
+														Name</label>
+													<div class="col-sm-4">
+														<input type="text" id="catName"
+															placeholder="Need to add drop down" class="form-control"
+															ng-model="parentBook.categoryName"
+															title="Category Name is required !" required />
+													</div>
+												</div>
+												<div>
+													<label class="col-sm-2 control-label" for="bibLvl">Bib
+														Level</label>
+													<div class="col-sm-2">
+														<select id="bibLvl" name=""
+															bibLvl""
+											class="btn btn-media dropdown-toggle"
+															data-ng-model="parentBook.bibLevel">
+															<option value="">Select Bib Level</option>
+															<option ng-repeat="(key, value) in parentBookDD"
+																value="{{key}}">{{value.___name___}}</option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div>
+													<label class="col-sm-2 control-label" for="mat">Materials
+													</label>
+													<div class="col-sm-2">
+														<select id="mat" name="validation-select"
+															class="btn btn-media dropdown-toggle"
+															data-ng-model="parentBook.material"
+															ng-if="parentBook.bibLevel">
+															<option value="">Select Materials</option>
+															<option
+																ng-repeat="(key, material) in parentBookDD[parentBook.bibLevel]"
+																ng-if="key!='___name___'" value="{{key}}">{{material.___name___}}</option>
+														</select>
+													</div>
+												</div>
+												<div>
+													<label class="col-sm-2 control-label" for="docType">Doc
+														Type </label>
+													<div class="col-sm-3">
+														<select id="docType" name="validation-select"
+															class="btn btn-media dropdown-toggle"
+															data-ng-model="parentBook.docType"
+															ng-if="parentBook.material">
+															<option value="">Select Doc Type</option>
+															<option
+																ng-repeat="(key,docType) in parentBookDD[parentBook.bibLevel][parentBook.material]"
+																value="{{key}}">{{docType.___name___}}</option>
+														</select>
+													</div>
+												</div>
+												<div>
+													<label class="col-sm-2 control-label" for="bookCount">Number
+														Of Copies</label>
+													<div class="col-sm-1">
+														<input type="text" id="bookCount"
+															placeholder="Number Of Copies " class="form-control"
+															ng-model="parentBook.bookCopies">
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row "></div>
+										</div>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary pull-left" data-dismiss="modal"
+			aria-hidden="true">
+			<i class="fa fa-arrow-circle-left"> Back</i>
+		</button>
+
+		<button class="btn btn-primary pull-right">
+			<i class="fa fa-edit"> Add</i>
+		</button>
+	</div>
 </div>
