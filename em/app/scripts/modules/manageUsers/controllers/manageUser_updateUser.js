@@ -148,31 +148,25 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     		errorObj.error=true
             errorObj.errorMsg.push("Choose your gender.");
 		}
-		if($scope.userSelectedClass.basicDetails.DOB.length<6 || angular.isUndefined($scope.userSelectedClass.basicDetails.DOB)){
+		if(angular.isUndefined($scope.userSelectedClass.basicDetails.DOB && $scope.userSelectedClass.basicDetails.DOB.length<6 )){
     		errorObj.error=true
             errorObj.errorMsg.push("What is your birthday ?");
 		}
-    	if($scope.userSelectedClass.primaryAddress.street1.length<5 || angular.isUndefined($scope.userSelectedClass.primaryAddress.street1)){
-    		errorObj.error=true
-            errorObj.errorMsg.push("Street Name is not valid.");
-		}
-    	if($scope.userSelectedClass.primaryAddress.country.length<1 || angular.isUndefined($scope.userSelectedClass.primaryAddress.country)){
-    		errorObj.error=true
-            errorObj.errorMsg.push("Select contact Country.");
-		}
-    	if($scope.userSelectedClass.primaryAddress.state.length<2 || angular.isUndefined($scope.userSelectedClass.primaryAddress.state)){
-    		errorObj.error=true
-            errorObj.errorMsg.push("Select contact State.");
-		}
-    	if($scope.userSelectedClass.primaryAddress.city.length<3 || angular.isUndefined($scope.userSelectedClass.primaryAddress.city)){
-    		errorObj.error=true
-            errorObj.errorMsg.push("Select contact City.");
-		}
-    	if($scope.userSelectedClass.primaryAddress.pincode.length!=6 || angular.isUndefined($scope.userSelectedClass.primaryAddress.pincode)){
-    		errorObj.error=true
-            errorObj.errorMsg.push("Enter 6 digit pincode.");
-		}
-    	if($scope.userSelectedClass.basicDetails.userType<3  || angular.isUndefined($scope.userSelectedClass.basicDetails.userType)){
+        if(!(($scope.userSelectedClass.contact.phonePrimary && $scope.userSelectedClass.contact.phonePrimary.length>10) ||
+            ($scope.userSelectedClass.contact.emailPrimary) ||
+            (($scope.userSelectedClass.primaryAddress.street1.length<5 || angular.isUndefined($scope.userSelectedClass.primaryAddress.street1))
+                && ($scope.userSelectedClass.primaryAddress.country.length<1 || angular.isUndefined($scope.userSelectedClass.primaryAddress.country))
+                && ($scope.userSelectedClass.primaryAddress.state.length<2 || angular.isUndefined($scope.userSelectedClass.primaryAddress.state))
+                && ($scope.userSelectedClass.primaryAddress.pincode.length!=6 || angular.isUndefined($scope.userSelectedClass.primaryAddress.pincode))
+                && ($scope.userSelectedClass.primaryAddress.city.length<3 || angular.isUndefined($scope.userSelectedClass.primaryAddress.city))
+                )
+            )
+          ){
+            errorObj.error=true
+            errorObj.errorMsg.push("Please enter Primary Phone Number or Primary Email Address OR Primary Complete residential address.");
+        }
+    	
+    	if(angular.isUndefined($scope.userSelectedClass.basicDetails.userType)){
     		errorObj.error=true
             errorObj.errorMsg.push("User Type is not valid.");
 		}
