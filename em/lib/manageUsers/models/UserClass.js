@@ -105,7 +105,7 @@ module.exports=function (){
                   'WITH user,pAddress,sAddress '+
                   'MATCH (user)-[:SOCIAL_NETWORK_OF]-(sn:SocialNetwork) '+
                   'WITH user,pAddress,sAddress,sn '+
-                  'MATCH (user)-[:BELONGS_TO]-(school:School) '+
+                  'MATCH (user)-[:USER_OF]-(school:School) '+
                   'WITH user,pAddress,sAddress,sn,school '+
                   'MATCH (user)-[:CONTACT_OF]-(contact:Contact) '+
                   'RETURN user,pAddress,sAddress,sn,school,contact ';

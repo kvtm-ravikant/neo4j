@@ -15,7 +15,7 @@ var subjectMap=require("../../common/models/Subject.js");
 
 module.exports.getStudentsOfGivenClass=function(req,res,classObj){
     var responseObj=new Utils.Response();
-    var query='MATCH (class{name:"'+classObj.name+'",section:"'+classObj.section+'"})-[:`STUDENT_OF`]-(student) RETURN student ORDER BY student.firstName';
+    var query='MATCH (class{name:"'+classObj.name+'",section:"'+classObj.section+'"})<-[:`STUDENT_OF`]-(student) RETURN student ORDER BY student.firstName';
     console.log("getStudentsOfGivenClass",query);
     db.cypherQuery(query,function(err,result){
 
@@ -132,7 +132,7 @@ module.exports.searchAttendance=function(req,res,searchObj){
     var timestamp=searchObj.timestamp;
     var timetableId=searchObj.timetable._id;
     var searchQuery='START class=node('+classId+'),timetable=node('+timetableId+') ' +
-                    'MATCH class-[r1:STUDENT_OF]-student ' +
+                    'MATCH class<-[r1:STUDENT_OF]-student ' +
                     'WITH class, r1, student ' +
                     'ORDER BY student.firstName,student.middleName,student.lastName ' +
                     'MATCH timetable-[r2:ATTENDANCE_OF{timestamp:'+timestamp+'}]-student ' +
@@ -173,7 +173,7 @@ module.exports.searchAttendance=function(req,res,searchObj){
             responseObj.responseData=retObj;
             res.json(responseObj);
         }else{
-            var studentQuery='START class=node('+classId+') MATCH class-[r:`STUDENT_OF`]-(b:User{userType:"1"}) WITH b ORDER BY b.firstName,b.middleName,b.lastName '+
+            var studentQuery='START class=node('+classId+') MATCH class<-[r:`STUDENT_OF`]-(b:User{userType:"1"}) WITH b ORDER BY b.firstName,b.middleName,b.lastName '+
                 'MATCH (parent)-[:`PRIMARY_GUARDIAN_OF`]-(b) WITH b,parent MATCH (parent)-[r1:CONTACT_OF]-(c:Contact) RETURN b,c;';
             console.log("studentQuery",studentQuery);
             db.cypherQuery(studentQuery,function(err,result){
@@ -279,7 +279,7 @@ module.exports.getTeacherReport=function (req,res,requestObj){
   var newSubjectMap=subjectMap[schoolId];
   var query="";
   if(userDetails.basicDetails.userType==2){
-      query='MATCH (a:Class{name:"'+classObj.name+'",section:"'+classObj.section+'"})-[:`STUDENT_OF`]->';
+      query='MATCH (a:Class{name:"'+classObj.name+'",section:"'+classObj.section+'"})<-[:`STUDENT_OF`]->';
       if(selectedStudent && selectedStudent.id!='-1'){
           query=query+'(b:User{regID:"'+selectedStudent.id+'"}) ';
       }else{

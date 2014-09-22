@@ -83,7 +83,7 @@ module.exports.searchBooks=function(requestObj,res){
         if(requestObj.userDetails.class && requestObj.userDetails.section){
             classCondition.push('c.class="'+requestObj.userDetails.class+'"');
             classCondition.push('c.section="'+requestObj.userDetails.section+'"')
-            query+=' (c:Class) -[r2:STUDENT_OF]-';
+            query+=' (c:Class) <-[r2:STUDENT_OF]-';
         }
         query+='(u:User)-[r:ISSUED_TO]-(cb:ChildBook) WHERE ';
         requestObj.userDetails.regID?tempQuery.push('u.regID="'+requestObj.userDetails.regID+'"'):null;

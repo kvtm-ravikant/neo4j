@@ -336,27 +336,56 @@ function readUploadedCsv(req,res,callback){
 
 }
 
-function searchUser(res,searchText,schoolId){
+function searchUser(res,searchText,schoolId,classObj){
     console.log("searchUser",searchText);
     var responseObj=new createResponse();
     var searchTextArr=searchText.split(",");
-    var query='Match (s:School{schoolId:"'+schoolId+'"})-[:BELONGS_TO]-(n:User) where ';
+    var query;
+    if((classObj && (classObj.name || classObj.section)) || searchText.indexOf('/')>-1){
+        query= 'match (n:User) -[r1:STUDENT_OF]->(c:Class)-[r2:CLASS_OF]->(s:School{schoolId:"quest:coaching:2013:452001"})  '
+    }else{
+        query='Match (s:School{schoolId:"'+schoolId+'"})<-[:USER_OF]-(n:User) ';
+    }
+
+    searchText?query+=' WHERE ':'';
+    var tempFullQuery=[];
     for(var i= 0,len=searchTextArr.length;i<len;i++){
         var text=searchTextArr[i];
         var tempText=text.toLowerCase();
-        query+="("
-        if(tempText=="m" || tempText=="male"){query+='n.sex ="M" OR '};
-        if(tempText=="f" || tempText=="female"){query+='n.sex ="F" OR '};
-        if(tempText=="student"){query+='n.userType ="1" OR '};
-        if(tempText=="teacher"){query+='n.userType ="2" OR '}
-        query+='n.regID =~ ".*'+text+'.*" OR ';
-        query+='n.lastName =~ ".*'+text+'.*" OR ';
-        query+='n.firstName =~ ".*'+text+'.*" OR ';
-        query+='n.middleName =~ ".*'+text+'.*" OR ';
-        (i==len-1)?query+='n.userName =~ ".*'+text+'.*" )':query+='n.userName =~ ".*'+text+'.*" ) AND ';
+        var tempQueryArr=[];
+        if(text){
+            //query+="("
+            if(tempText=="m" || tempText=="male"){tempQueryArr.push('n.sex ="M" ')};
+            if(tempText=="f" || tempText=="female"){tempQueryArr.push('n.sex ="F" ')};
+            if(tempText=="student"){tempQueryArr.push('n.userType ="1" ')}
+            if(tempText=="teacher"){tempQueryArr.push('n.userType ="2" ')}
+
+            tempQueryArr.push('n.regID =~ ".*'+text+'.*" ');
+            tempQueryArr.push('n.lastName =~ ".*'+text+'.*" ');
+            tempQueryArr.push('n.firstName =~ ".*'+text+'.*" ');
+            tempQueryArr.push('n.middleName =~ ".*'+text+'.*"');
+            tempQueryArr.push('n.userName =~ ".*'+text+'.*"');
+
+            if(text.indexOf('/')>-1){
+                var tempClass=text.split('/');
+                var className=tempClass.length>0?tempClass[0]:'';
+                var classSection=tempClass.length>1?tempClass[1]:'';
+                className?tempQueryArr.push('c.name ="'+className+'"  '):'';
+                classSection?tempQueryArr.push('c.section ="'+classSection+'" '):'';
+            }
+            classObj && classObj.name?tempQueryArr.push('c.name ="'+text+'" '):'';
+            classObj && classObj.section?tempQueryArr.push('c.section ="'+text+'" '):'';
+            if(tempQueryArr.length>0){
+                tempFullQuery.push(" ( "+tempQueryArr.join(' OR ')+" ) ");
+            }
+
+            //(i==len-1) ?query+=' ) ':query+=' ) AND ';
+        }
+
 
     }
-    query+=' RETURN n LIMIT 50 ';
+    query+=tempFullQuery.join(" AND ");
+    query+=' RETURN n order by n.userName asc LIMIT 50 ';
     console.log("query",query);
     db.cypherQuery(query,function(err,reply){
         console.log("searchUser",query,err);

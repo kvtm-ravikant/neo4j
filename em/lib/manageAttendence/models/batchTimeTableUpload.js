@@ -8,7 +8,7 @@ var db=new neo4j("http://localhost:7474");
 var dataPath="../../data-files/QuestTimeTableCSC.csv";
 
 var schoolIdVal="quest:coaching:2013:452001";
-var selectquery='MATCH (a{schoolId:"quest:coaching:2013:452001"})-[:`BELONGS_TO`]->(b{userType:"2"})  RETURN b';
+var selectquery='MATCH (a{schoolId:"quest:coaching:2013:452001"})-[:`USER_OF`]->(b{userType:"2"})  RETURN b';
 var teacherMap={}
 //update
 /*

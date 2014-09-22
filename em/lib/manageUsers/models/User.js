@@ -34,7 +34,7 @@ module.exports = function(config) {
 								throw err;
 							else if (school.data.length == 1) {
 								var schoolNodeId = school.data[0]._id;
-								var relationShip = "BELONGS_TO";
+								var relationShip = "USER_OF";
 								var relationShipData = {
 									"since" : myData.createdAt
 								};
@@ -115,7 +115,7 @@ function addNewUser(userObj,loggedInUser,res) {
                         var schoolNodeID=loggedInUser.schoolDetails._id;//logged In user's school
                         console.log("userNodeID",userNodeID,"schoolNodeID",schoolNodeID);
 
-                        db.insertRelationship(schoolNodeID,userNodeID,"BELONGS_TO",{"from":userBasicDetails.createdAt},function(err,resultRel){
+                        db.insertRelationship(schoolNodeID,userNodeID,"USER_OF",{"from":userBasicDetails.createdAt},function(err,resultRel){
                             console.log("associate user to School",err,resultRel);
                             if(!err){
                                 insertionStatus["School-[BELONGS_TO]-User"]=true;
@@ -208,7 +208,7 @@ function addNewUser(userObj,loggedInUser,res) {
                                                      "batchEndDate": Utils.ddmmyyyyStrToTimeStamp("31/03/2015"),
                                                      "rollNum":userObj.classRollNum
                                                     }
-                                    db.insertRelationship(userNodeID,classId,"STUDENT_OF",{},function(err,resultRel){
+                                    db.insertRelationship(classId,userNodeID,"STUDENT_OF",{},function(err,resultRel){
                                         console.log("associate social network to user",err,resultRel);
                                         if(!err){
                                             insertionStatus["SocialNetwork-[SOCIAL_NETWORK_OF]-User"]=true;
@@ -336,10 +336,11 @@ module.exports.getAllUsers = function(loggedInUser, res) {
 	var schoolId=loggedInUser.schoolDetails.schoolId;
 //	var queryAllUsers='match (n:School)-[r1:BELONGS_TO]->(u:User) where n.schoolId="'+schoolId+'" and u.softDelete=false return n,u order by u.updatedAt desc';
 	//var queryAllUsers = "MATCH (school:School{schoolId{}})(n:User) RETURN n LIMIT 50";
-    var queryAllUsers= "MATCH (n:School)-[r1:BELONGS_TO]->(u:User) where n.schoolId='"+schoolId+"' and u.softeDelete=false return u order by u.updatedAt desc LIMIT 50";
-	var responseObj = new Utils.Response();
+    var queryAllUsers= "MATCH (n:School)<-[r1:USER_OF]-(u:User) where n.schoolId='"+schoolId+"' and u.softDelete=false return u order by u.userName ASC LIMIT 50";
+	console.log("queryAllUsers",queryAllUsers);
+    var responseObj = new Utils.Response();
 	db.cypherQuery(queryAllUsers, function(err, reply) {
-		console.log(err, reply);
+		console.log(err);
 		if (!err) {
 			responseObj.responseData = reply;
 			res.json(responseObj);
