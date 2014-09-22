@@ -28,6 +28,23 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 
             );
 
+    /*
+     * Dropdown JSON data of bibDocTypeMaterial
+     */ 
+     $http.get('/manageLibrary/getParentBookDD').success(function(dataResponse,status,headers,config){
+         //success
+//         console.log("getParentBookDD",dataResponse);
+         appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+             $scope.parentBookDD=dataResponse;
+          console.log("$scope.parentBookDD",$scope.parentBookDD);
+         });
+
+     }).error(function(data,status,headers,config){
+         //error
+         console.log("Error",data,status,headers,config);
+     });
+
+    
     //toggle key of a map
     $scope.toggleMapKeyValue=function(map,key){
         map[key]=!map[key];
@@ -41,3 +58,4 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         $('#addBookToLib').modal('show');
     }
 });
+
