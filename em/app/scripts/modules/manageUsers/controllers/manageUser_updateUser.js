@@ -147,16 +147,20 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
      * Create User Validation
      */
     $scope.signupForm = function() {
+        if($scope.modalCode && $scope.modalCode=='delete'){
+            $scope.addUpdateUser();
+            return;
+        };
     	var messageQue=[];
     	  var errorObj={error:false,errorMsg:[]};
     	  
     	console.log("basicDetailsForm " ,$scope.basicDetailsForm,"$scope.basicDetailsForm.$valid :",$scope.userSelectedClass," message : ",messageQue );
 
-    	if($scope.userSelectedClass.basicDetails.regID || ($scope.userSelectedClass.basicDetails.regID && $scope.userSelectedClass.basicDetails.regID.length<3 )){
+    	if($scope.userSelectedClass.basicDetails.regID && $scope.userSelectedClass.basicDetails.regID.length<3 ){
     		errorObj.error=true
             errorObj.errorMsg.push("Enter Registration Id provided to you.");
          }
-    	if($scope.userSelectedClass.basicDetails.firstName || ($scope.userSelectedClass.basicDetails.firstName && $scope.userSelectedClass.basicDetails.firstName.length<3 )){
+    	if($scope.userSelectedClass.basicDetails.firstName && $scope.userSelectedClass.basicDetails.firstName.length<3 ){
     		errorObj.error=true
             errorObj.errorMsg.push("You don't have First Name ? Enter your first Name.");
 		}
@@ -164,7 +168,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     		errorObj.error=true
             errorObj.errorMsg.push("What about Last name. It's needed.");
 		}
-    	if($scope.userSelectedClass.basicDetails.sex || ($scope.userSelectedClass.basicDetails.sex && $scope.userSelectedClass.basicDetails.sex.length<1)){
+    	if($scope.userSelectedClass.basicDetails.sex && $scope.userSelectedClass.basicDetails.sex.length<1){
     		errorObj.error=true
             errorObj.errorMsg.push("Choose your gender.");
 		}
@@ -203,9 +207,6 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     	}
         
     	if(erroMsg.length==0 && ($scope.modalCode=='add'||$scope.modalCode=='update')){
-    		$scope.addUpdateUser();
-    	}
-    	else if ($scope.modalCode=='view'||$scope.modalCode=='delete'){
     		$scope.addUpdateUser();
     	}
     	

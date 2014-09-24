@@ -914,7 +914,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-2" ng-if="modalCode=='update' || modalCode=='add'">
 							<img ng-if="userSelectedClass.basicDetails.profileImagePath"
 								class="profile-image"
 								src="{{userSelectedClass.basicDetails.profileImagePath}}"
@@ -923,6 +923,24 @@
 								ng-if="!userSelectedClass.basicDetails.profileImagePath"
 								class="cursor-ponter" src="images/userProfile/male.png"
 								width="100%" ng-click="openFileBrowser()">
+                            <input class="control-label hide" height="0"
+								width="0" type='file' id="imageUploader" accept="image/*"
+								image="image2"
+								onchange="angular.element(this).scope().readURL(this)"
+								resize-max-width="150" resize-quality="0.7" />
+							<h4 align="right">
+								<i>{{userSelectedClass.basicDetails.userName}}</i>
+							</h4>
+						</div>
+                        <div class="col-md-2" ng-if="modalCode=='view' || modalCode=='delete'">
+							<img ng-if="userSelectedClass.basicDetails.profileImagePath"
+								class="profile-image"
+								src="{{userSelectedClass.basicDetails.profileImagePath}}"
+								width="100%"  >
+                            <img
+								ng-if="!userSelectedClass.basicDetails.profileImagePath"
+								class="cursor-ponter" src="images/userProfile/male.png"
+								width="100%" >
                             <input class="control-label hide" height="0"
 								width="0" type='file' id="imageUploader" accept="image/*"
 								image="image2"
