@@ -1,11 +1,10 @@
 <div ng-controller="manageUser_updateUser" class="row" weight="100%">
-	<!--  <h1>{{text}}</h1>-->
 	<div class="row">
 		<div class="col-md-12 topbar">
 			<br>
 			<div class="col-md-9">
 				<div class="input-group">
-					<input ng-model="searchUserModel.userName" clear-input
+					<input ng-model="searchUserModel.searchText" clear-input
 						class="col-md-12 searchclass" placeholder="Enter User Name"
 						class="nodeSearchInputBox" /> <span class="input-group-addon"
 						id="datamodal" data-toggle="popover"> <i
@@ -13,6 +12,11 @@
 						ng-click="clearSearch();searchUser();getBackToMainUsersList()"></i>&nbsp;|&nbsp;
 						<i class="fa fa-search cursor-pointer"
 						ng-click="searchUser(); getBackToMainUsersList()"></i>&nbsp;
+                        <i ng-show="!isSearchBoxOpened"
+                           class="fa fa-chevron-down cursor-pointer"
+                           ng-click="openSearchBox()"></i>
+                        <i ng-show="isSearchBoxOpened"
+                           class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i>
 					</span>
 				</div>
 			</div>
@@ -33,6 +37,7 @@
 
 		</div>
 	</div>
+    <div ng-include="'partials/modules/manageUsers/advancedUserSearch.html'"></div>
 	<!-- Top Bar Ends -->
 	<br>
 	<div class="row">

@@ -336,56 +336,111 @@ function readUploadedCsv(req,res,callback){
 
 }
 
-function searchUser(res,searchText,schoolId,classObj){
-    console.log("searchUser",searchText);
-    var responseObj=new createResponse();
-    var searchTextArr=searchText.split(",");
+function searchUser(res,searchObj,schoolId,classObj){
+    console.log("searchUser",searchObj,schoolId);
     var query;
-    if((classObj && (classObj.name || classObj.section)) || searchText.indexOf('/')>-1){
-        query= 'match (n:User) -[r1:STUDENT_OF]->(c:Class)-[r2:CLASS_OF]->(s:School{schoolId:"'+schoolId+'"})  '
-    }else{
-        query='Match (s:School{schoolId:"'+schoolId+'"})<-[:USER_OF]-(n:User) ';
-    }
+    var responseObj=new createResponse();
+    if(searchObj.searchText!==''){
+        var searchText=searchObj.searchText;
+        var searchTextArr=searchText.split(",");
 
-    searchText?query+=' WHERE ':'';
-    var tempFullQuery=[];
-    for(var i= 0,len=searchTextArr.length;i<len;i++){
-        var text=searchTextArr[i];
-        var tempText=text.toLowerCase();
-        var tempQueryArr=[];
-        if(text){
-            //query+="("
-            if(tempText=="m" || tempText=="male"){tempQueryArr.push('n.sex ="M" ')};
-            if(tempText=="f" || tempText=="female"){tempQueryArr.push('n.sex ="F" ')};
-            if(tempText=="student"){tempQueryArr.push('n.userType ="1" ')}
-            if(tempText=="teacher"){tempQueryArr.push('n.userType ="2" ')}
-
-            tempQueryArr.push('n.regID =~ ".*'+text+'.*" ');
-            tempQueryArr.push('n.lastName =~ ".*'+text+'.*" ');
-            tempQueryArr.push('n.firstName =~ ".*'+text+'.*" ');
-            tempQueryArr.push('n.middleName =~ ".*'+text+'.*"');
-            tempQueryArr.push('n.userName =~ ".*'+text+'.*"');
-
-            if(text.indexOf('/')>-1){
-                var tempClass=text.split('/');
-                var className=tempClass.length>0?tempClass[0]:'';
-                var classSection=tempClass.length>1?tempClass[1]:'';
-                className?tempQueryArr.push('c.name ="'+className+'"  '):'';
-                classSection?tempQueryArr.push('c.section ="'+classSection+'" '):'';
-            }
-            classObj && classObj.name?tempQueryArr.push('c.name ="'+text+'" '):'';
-            classObj && classObj.section?tempQueryArr.push('c.section ="'+text+'" '):'';
-            if(tempQueryArr.length>0){
-                tempFullQuery.push(" ( "+tempQueryArr.join(' OR ')+" ) ");
-            }
-
-            //(i==len-1) ?query+=' ) ':query+=' ) AND ';
+        if((classObj && (classObj.name || classObj.section)) || searchText.indexOf('/')>-1){
+            query= 'match (n:User) -[r1:STUDENT_OF]->(c:Class)-[r2:CLASS_OF]->(s:School{schoolId:"'+schoolId+'"})  '
+        }else{
+            query='Match (s:School{schoolId:"'+schoolId+'"})<-[:USER_OF]-(n:User) ';
         }
 
+        searchText?query+=' WHERE ':'';
+        var tempFullQuery=[];
+        for(var i= 0,len=searchTextArr.length;i<len;i++){
+            var text=searchTextArr[i];
+            var tempText=text.toLowerCase();
+            var tempQueryArr=[];
+            if(text){
+                //query+="("
+                if(tempText=="m" || tempText=="male"){tempQueryArr.push('n.sex ="M" ')};
+                if(tempText=="f" || tempText=="female"){tempQueryArr.push('n.sex ="F" ')};
+                if(tempText=="student"){tempQueryArr.push('n.userType ="1" ')}
+                if(tempText=="teacher"){tempQueryArr.push('n.userType ="2" ')}
 
+                tempQueryArr.push('n.regID =~ ".*'+text+'.*" ');
+                tempQueryArr.push('n.lastName =~ ".*'+text+'.*" ');
+                tempQueryArr.push('n.firstName =~ ".*'+text+'.*" ');
+                tempQueryArr.push('n.middleName =~ ".*'+text+'.*"');
+                tempQueryArr.push('n.userName =~ ".*'+text+'.*"');
+
+                if(text.indexOf('/')>-1){
+                    var tempClass=text.split('/');
+                    var className=tempClass.length>0?tempClass[0]:'';
+                    var classSection=tempClass.length>1?tempClass[1]:'';
+                    className?tempQueryArr.push('c.name ="'+className+'"  '):'';
+                    classSection?tempQueryArr.push('c.section ="'+classSection+'" '):'';
+                }
+                classObj && classObj.name?tempQueryArr.push('c.name ="'+text+'" '):'';
+                classObj && classObj.section?tempQueryArr.push('c.section ="'+text+'" '):'';
+                if(tempQueryArr.length>0){
+                    tempFullQuery.push(" ( "+tempQueryArr.join(' OR ')+" ) ");
+                }
+
+                //(i==len-1) ?query+=' ) ':query+=' ) AND ';
+            }
+
+
+        }
+        query+=tempFullQuery.join(" AND ");
+        query+=' RETURN n order by n.userName asc LIMIT 50 ';
+
+    }else{
+
+        var query='MATCH (s:School) <-[r1:USER_OF]-(u:User) where s.schoolId="'+schoolId+'" AND u.softDelete=false ';
+        if(searchObj.hasOwnProperty('userName') && searchObj.userName){
+            query+=' AND u.userName="'+searchObj.userName+'" '
+        }
+        query+=' WITH u ';
+        if(searchObj.hasOwnProperty('class') && searchObj.class){
+            var classObj=JSON.parse(searchObj.class);
+            query+=' MATCH (c:Class) <-[r2:STUDENT_OF]-( u ) WHERE c.name="'+classObj.name+'" AND c.section ="'+classObj.section+'" '
+        }
+        if(searchObj.hasOwnProperty('firstName') && searchObj.firstName){
+            query+=' AND u.firstName="'+searchObj.firstName+'" '
+        }
+        if(searchObj.hasOwnProperty('middleName') && searchObj.middleName){
+            query+=' AND u.middleName="'+searchObj.middleName+'" '
+        }
+        if(searchObj.hasOwnProperty('lastName') && searchObj.lastName){
+            query+=' AND u.lastName="'+searchObj.lastName+'" '
+        }
+        if(searchObj.hasOwnProperty('userType') && searchObj.userType){
+            query+=' AND u.userType="'+searchObj.userType+'" '
+        }
+        if(searchObj.hasOwnProperty('regID') && searchObj.regID){
+            query+=' AND u.regID="'+searchObj.regID+'" '
+        }
+
+        query+='WITH u ';
+        if(searchObj.hasOwnProperty('class') && searchObj.class){
+            query+=', c ';
+        }
+        if((searchObj.hasOwnProperty('emailPrimary') && searchObj.emailPrimary)||
+            (searchObj.hasOwnProperty('phonePrimary') && searchObj.phonePrimary)){
+            query+=' MATCH (ct:Contact) -[r3:CONTACT_OF]-> ( u ) WHERE';
+        }
+        if(searchObj.hasOwnProperty('emailPrimary') && searchObj.emailPrimary){
+            query+='  ct.emailPrimary="'+searchObj.emailPrimary+'" '
+        }
+        if(searchObj.hasOwnProperty('phonePrimary') && searchObj.phonePrimary){
+            query+='  ct.phonePrimary="'+searchObj.phonePrimary+'" '
+        }
+        query+=' return u ';
+        if(searchObj.hasOwnProperty('class') && searchObj.class){
+            query+=' , c ';
+        }
+        if((searchObj.hasOwnProperty('emailPrimary') && searchObj.emailPrimary)||
+            (searchObj.hasOwnProperty('phonePrimary') && searchObj.phonePrimary)){
+            query+=' ,ct ';
+        }
+        query+=' LIMIT 50';
     }
-    query+=tempFullQuery.join(" AND ");
-    query+=' RETURN n order by n.userName asc LIMIT 50 ';
     console.log("query",query);
     db.cypherQuery(query,function(err,reply){
         console.log("searchUser",query,err);
@@ -398,6 +453,7 @@ function searchUser(res,searchText,schoolId,classObj){
             res.json(responseObj);
         }
     });
+
 }
 module.exports.resolveBoolean = resolveBoolean;
 module.exports.resolveSex = resolveSex;

@@ -84,11 +84,11 @@ module.exports=function(app,Utils){
     });
     /* Search the User from textBox*/
     app.post("/manage-users/searchUser/",Utils.ensureAuthenticated,function(req,res){
-        var searchText=req.body.userName;
+        var searchObj=req.body;
         var loggedInUser=req.session.userDetails;
         var schoolID=loggedInUser.schoolDetails.schoolId;
-        Utils.searchUser(res,searchText,schoolID);
-        console.log("requestobj - search user",searchText, req.body);
+        Utils.searchUser(res,searchObj,schoolID);
+        console.log("requestobj - search user",searchObj);
 //        console.log("requestobj - registerNewUser");
         //userMS.searchUser(requestobj,res);
         

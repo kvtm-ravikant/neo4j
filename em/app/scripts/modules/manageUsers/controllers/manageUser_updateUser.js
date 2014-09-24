@@ -4,7 +4,10 @@
  */
 educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,iconClassMapping,appUtils) {
 
-    $scope.text="manageUser_updateUser";
+    $scope.isSearchBoxOpened=false;
+    $scope.openSearchBox=function(){
+        $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
+    }
     $('.datepicker').datepicker(
         {format: 'dd/mm/yyyy',
             language: 'en',
@@ -17,7 +20,17 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 //        console.log("date picker");
         $('#userDOB').focus();
     };
-	
+    $http.get('/manage-attendence/create-attendence/getClassList').success(function(dataResponse,status,headers,config){
+        //success
+        console.log("dataResponse getClassList",dataResponse);
+        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+            $scope.classList=dataResponse.responseData;
+        });
+
+    }).error(function(data,status,headers,config){
+            //error
+            console.log("Error",data,status,headers,config);
+        });
     /* UserClass POJO Data Model */
 	$http.get('/manage-users/userClassData').success(
 			function(dataResponse, status, headers, config) {
@@ -60,7 +73,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             
         }
     $scope.searchUserModel={
-          "userName":""
+          "searchText":""
         }
     
     /*
@@ -74,7 +87,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
      * Search User function
      */
     $scope.searchUser=function(){
-    	console.log("$scope.searchUser",$scope.searchUserModel.userName );
+    	console.log("$scope.searchUser",$scope.searchUserModel );
         $http({
             method : 'POST',
             url    : '/manage-users/searchUser/',
@@ -86,10 +99,12 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
                 console.log("searchUser dataResponse",dataResponse);
                 $scope.allUserClass=dataResponse.responseData;
             });
+
         }).error(function(data,status,headers,config){
             //error
             console.log("Error",data,status,headers,config);
         });
+        $scope.isSearchBoxOpened=false;
     }
     /*
      * Get user details for selected user
@@ -560,4 +575,5 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             console.log("/manage-users/uploadUserCSV response",response)
         });
     };
+
 });
