@@ -1127,4 +1127,6 @@ input.ng-valid {
     width: 63%;
     margin-left: 15px;
 }
-.fa{ color:black;}
+.fa{
+    color:black;
+}
