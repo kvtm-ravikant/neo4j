@@ -132,19 +132,19 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     	  
     	console.log("basicDetailsForm " ,$scope.basicDetailsForm,"$scope.basicDetailsForm.$valid :",$scope.userSelectedClass," message : ",messageQue );
 
-    	if($scope.userSelectedClass.basicDetails.regID.length<3 || angular.isUndefined($scope.userSelectedClass.basicDetails.regID)){
+    	if($scope.userSelectedClass.basicDetails.regID || ($scope.userSelectedClass.basicDetails.regID && $scope.userSelectedClass.basicDetails.regID.length<3 )){
     		errorObj.error=true
             errorObj.errorMsg.push("Enter Registration Id provided to you.");
          }
-    	if($scope.userSelectedClass.basicDetails.firstName.length<3 || angular.isUndefined($scope.userSelectedClass.basicDetails.firstName)){
+    	if($scope.userSelectedClass.basicDetails.firstName || ($scope.userSelectedClass.basicDetails.firstName && $scope.userSelectedClass.basicDetails.firstName.length<3 )){
     		errorObj.error=true
             errorObj.errorMsg.push("You don't have First Name ? Enter your first Name.");
 		}
-    	if($scope.userSelectedClass.basicDetails.lastName.length<3 || angular.isUndefined($scope.userSelectedClass.basicDetails.lastName)){
+    	if($scope.userSelectedClass.basicDetails.lastName && ($scope.userSelectedClass.basicDetails.lastName && $scope.userSelectedClass.basicDetails.lastName.length<3)){
     		errorObj.error=true
             errorObj.errorMsg.push("What about Last name. It's needed.");
 		}
-    	if($scope.userSelectedClass.basicDetails.sex.length<1 || angular.isUndefined($scope.userSelectedClass.basicDetails.sex)){
+    	if($scope.userSelectedClass.basicDetails.sex || ($scope.userSelectedClass.basicDetails.sex && $scope.userSelectedClass.basicDetails.sex.length<1)){
     		errorObj.error=true
             errorObj.errorMsg.push("Choose your gender.");
 		}

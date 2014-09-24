@@ -342,7 +342,7 @@ function searchUser(res,searchText,schoolId,classObj){
     var searchTextArr=searchText.split(",");
     var query;
     if((classObj && (classObj.name || classObj.section)) || searchText.indexOf('/')>-1){
-        query= 'match (n:User) -[r1:STUDENT_OF]->(c:Class)-[r2:CLASS_OF]->(s:School{schoolId:"quest:coaching:2013:452001"})  '
+        query= 'match (n:User) -[r1:STUDENT_OF]->(c:Class)-[r2:CLASS_OF]->(s:School{schoolId:"'+schoolId+'"})  '
     }else{
         query='Match (s:School{schoolId:"'+schoolId+'"})<-[:USER_OF]-(n:User) ';
     }
