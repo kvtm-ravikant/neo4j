@@ -396,11 +396,8 @@ function searchUser(res,searchObj,schoolId,classObj){
         if(searchObj.hasOwnProperty('userName') && searchObj.userName){
             query+=' AND u.userName="'+searchObj.userName+'" '
         }
-        query+=' WITH u ';
-        if(searchObj.hasOwnProperty('class') && searchObj.class){
-            var classObj=JSON.parse(searchObj.class);
-            query+=' MATCH (c:Class) <-[r2:STUDENT_OF]-( u ) WHERE c.name="'+classObj.name+'" AND c.section ="'+classObj.section+'" '
-        }
+
+
         if(searchObj.hasOwnProperty('firstName') && searchObj.firstName){
             query+=' AND u.firstName="'+searchObj.firstName+'" '
         }
@@ -416,11 +413,14 @@ function searchUser(res,searchObj,schoolId,classObj){
         if(searchObj.hasOwnProperty('regID') && searchObj.regID){
             query+=' AND u.regID="'+searchObj.regID+'" '
         }
-
-        query+='WITH u ';
+        query+=' WITH u ';
         if(searchObj.hasOwnProperty('class') && searchObj.class){
-            query+=', c ';
+
+            var classObj=JSON.parse(searchObj.class);
+            query+=' MATCH (c:Class) <-[r2:STUDENT_OF]-( u ) WHERE c.name="'+classObj.name+'" AND c.section ="'+classObj.section+'" '
+
         }
+
         if((searchObj.hasOwnProperty('emailPrimary') && searchObj.emailPrimary)||
             (searchObj.hasOwnProperty('phonePrimary') && searchObj.phonePrimary)){
             query+=' MATCH (ct:Contact) -[r3:CONTACT_OF]-> ( u ) WHERE';
