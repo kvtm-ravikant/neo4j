@@ -1100,3 +1100,30 @@ input.ng-valid {
     text-decoration: underline;
     cursor: pointer;
 }
+.advSearchBoxLib {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin-top: 0px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    position: absolute;
+    background: white;
+    z-index: 1;
+    margin-left: 15px;
+    width: 70.5%;
+
+}
+.advSearchBoxUser {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin-top: 0px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    position: absolute;
+    background: white;
+    z-index: 1;
+    width: 63%;
+    margin-left: 15px;
+}

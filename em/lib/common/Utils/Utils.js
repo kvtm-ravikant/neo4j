@@ -388,7 +388,7 @@ function searchUser(res,searchObj,schoolId,classObj){
 
         }
         query+=tempFullQuery.join(" AND ");
-        query+=' RETURN n order by n.userName asc LIMIT 50 ';
+        query+=' RETURN n order by n.userName ASC LIMIT 50 ';
 
     }else{
 
@@ -431,15 +431,7 @@ function searchUser(res,searchObj,schoolId,classObj){
         if(searchObj.hasOwnProperty('phonePrimary') && searchObj.phonePrimary){
             query+='  ct.phonePrimary="'+searchObj.phonePrimary+'" '
         }
-        query+=' return u ';
-        if(searchObj.hasOwnProperty('class') && searchObj.class){
-            query+=' , c ';
-        }
-        if((searchObj.hasOwnProperty('emailPrimary') && searchObj.emailPrimary)||
-            (searchObj.hasOwnProperty('phonePrimary') && searchObj.phonePrimary)){
-            query+=' ,ct ';
-        }
-        query+=' LIMIT 50';
+        query+=' RETURN u order by u.userName ASC LIMIT 50 ';
     }
     console.log("query",query);
     db.cypherQuery(query,function(err,reply){

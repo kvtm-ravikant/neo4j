@@ -12,7 +12,9 @@
                 </div>
                 &lt;!&ndash; /input-group &ndash;&gt;
             </li>-->
-            <li ng-repeat="menuItem in menu"  >
+            <li><a id="smallSidenav"><i class="pull-left fa fa-chevron-right"></i>Collapse</a></li>
+            <li><a id="largeSidenav"><i class="pull-left fa fa-chevron-left"></i>Expand</a></li>
+            <li ng-repeat="menuItem in menu">
                 <a ng-if="menuItem.abstract==true" ng-class="{active: $state.includes(menuItem.state)}" ng-click="toggleMenu(menuItem,menuItem.collapse,$event)"><i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}} <i class="pull-right" ng-class="!menuItem.collapse?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
                 <a class="collapsediv" ng-if="menuItem.abstract!=true" ui-sref="{{menuItem.state}}" ng-class="{active: $state.includes(menuItem.state)}">
                     <i class="{{iconClassMapping[menuItem.icon]}}"></i> {{menuItem.name}} </a>
@@ -40,6 +42,23 @@
                     navMain.collapse('hide');
                 });
             }
+            $("#largeSidenav").hide();
+            $("#smallSidenav").click(function(){
+                $("#largeSidenav").show();
+                $("#smallSidenav").hide();
+                $('#page-wrapper').animate({ 'margin-left': '50px'}, 500);
+                $('.navbar-static-side').animate({ 'width': '50px'}, 500);
+                $(".nav >li > a").css("color","transparent");
+                $(".fa-chevron-down").hide();
+            });
+            $("#largeSidenav").click(function(){
+                $("#largeSidenav").hide();
+                $("#smallSidenav").show();
+                $('#page-wrapper').animate({ 'margin-left': '250px'}, 500);
+                $('.navbar-static-side').animate({ 'width': '250px'}, 500);
+                $(".nav >li > a").css("color","black");
+                $(".fa-chevron-down").show();
+            });
         });
     </script>
     <!-- /.sidebar-collapse -->

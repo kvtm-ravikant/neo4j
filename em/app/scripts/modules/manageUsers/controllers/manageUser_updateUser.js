@@ -80,7 +80,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
      * Clear function for search clear text
      */
     $scope.clearSearch = function () {
-        $scope.searchUserModel.userName = "";
+        $scope.searchUserModel.searchText = "";
     };
     
     /*
@@ -105,6 +105,11 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             console.log("Error",data,status,headers,config);
         });
         $scope.isSearchBoxOpened=false;
+    }
+    $scope.resetSearchUser=function(){
+        $scope.searchUserModel={
+            "searchText":""
+        }
     }
     /*
      * Get user details for selected user
