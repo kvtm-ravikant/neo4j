@@ -13,9 +13,9 @@
 				<ul class="nav nav-pills nav-justified thumbnail setup-panel"
 					id="myTab">
 					<li class="active"><a href="#basicInfo" data-toggle="tab">Book Details</a></li>
-					<li ng-repeat="workspace in workspaces" active=workspace.active><a
-						href="#bookCopyInfo" {{workspace.id}} data-toggle="tab">{{workspace.name}}
-							: {{workspace.id}}</a></li>
+					<li ng-repeat="childBook in childBooks" active=childBook.active><a
+						href="#bookCopyInfo{{childBook.id}}" data-toggle="tab">{{childBook.name}}
+							: {{childBook.id}}</a></li>
 					<li>
 						<button class="btn btn-primary pull-right"
 							ng-click="addChildTab()">
@@ -32,14 +32,15 @@
 							</fieldset>
 						</form>
 					</div>
-					<div class="tab-pane" id="bookCopyInfo"{{workspace.id}}>
-						<form class="form-horizontal" role="form" >
+				<!-- <div class="tab-pane" id="bookCopyInfo{{childBook.id}}" ng-repeat="childBook in childBooks">    -->	
+						<form class="form-horizontal" role="form" id="bookCopyInfo{{childBook.id}}" ng-repeat="childBook in childBooks">
 							<fieldset>
+							bookCopyInfo{{childBook.id}}
 								<div
 									ng-include="'partials/modules/mangeLibrary/ChildBookPartial.html'"></div>
 							</fieldset>
 						</form>
-					</div>
+					<!--  </div>  -->
 				</div>
 			</div>
 		</div>
@@ -50,7 +51,7 @@
 			<i class="fa fa-arrow-circle-left"> Back</i>
 		</button>
 
-		<button class="btn btn-primary pull-right">
+		<button class="btn btn-primary pull-right" ng-click="validateChildBook()">
 			<i class="fa fa-edit"> Add</i>
 		</button>
 	</div>
