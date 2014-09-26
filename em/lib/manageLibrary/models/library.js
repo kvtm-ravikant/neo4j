@@ -120,7 +120,7 @@ module.exports.searchBooks=function(requestObj,res){
         }
     });
 }
-
+/* addParentBook - DB Insert */
 module.exports.addNewBook=function(requestObj,res){
     var parentBookObj=requestObj;
     var query;
@@ -169,6 +169,82 @@ module.exports.addNewBook=function(requestObj,res){
             }
         })
     }
+    
+    function insertCompleteBook(requestObj,res){
+//	Match (n:ParentBook) where n.isbn='123456789X';
+    try{
+        var responseObj = new Utils.Response();
+        var defaultErrorMsg="Failed to add Book. Please contact administrator.";
+
+        var findParentISBN = 'MATCH (n:ParentBook {isbn:"123"}) RETURN n';
+        
+        db.cypherQuery("findParentISBN",findParentISBN, function(err, result) {
+            console.log("findParentISBN",err, result)
+            if(err || !result || (result && result.data && result.data.length==0)){
+            	var parentBookDetails=fillParentBookValues(requestObj.parentbook);
+                //create Parent node
+                db.insertNode(parentBookDetails, ["ParentBook"], function(err, addbookReply) {
+                    console.log("create ParentBook node", err,addbookReply);
+                    if (!err && addbookReply && addbookReply.hasOwnProperty('_id')) {
+                        var insertionStatus={
+                            "ParentBook-[PARENTBOOK_OF]-ChildBook":false,
+                        }
+                        var parentBookNodeID=addbookReply._id;
+                        console.log("parentBookNodeID",parentBookNodeID);
+
+                        //create childBook node
+                        var childBookDetails=fillChildBookValues(requestObj.children[0]);
+                        db.insertNode(requestObj.children[0], ["ChildBook"], function(err, addChildReply) {
+                            console.log("create ChildBook node", err,addChildReply);
+                            if (!err && addChildReply && addChildReply.hasOwnProperty('_id')) {
+                                if(!err){
+                                    insertionStatus["ChildBook"]=true;
+                                }
+                                var childBookNodID=addChildReply._id;
+                                //associate childBook to ParentBook                                
+                                db.insertRelationship(parentBookNodeID,childBookNodID,"PARENTBOOK_OF",{},function(err,resultRel){
+                                    console.log("associate childBook to ParentBook",err,resultRel);
+                                    if(!err){
+                                        insertionStatus["ParentBook-[PARENTBOOK_OF]-ChildBook"]=true;
+                                    }
+                                });
+                            }
+                        });
+                        setTimeout(function(){
+                            console.log("insertionStatus",insertionStatus);
+                            responseObj.responseData=insertionStatus;
+                            res.json(responseObj);
+                        },200);
+                    } else {
+                        Utils.defaultErrorResponse(res,defaultErrorMsg);
+                    }
+                });//insertNode end
+
+            }else{
+                Utils.defaultErrorResponse(res,defaultErrorMsg);
+            }
+        });//findParentISBN end
+    }catch(e){
+        console.log("insertCompleteBook",e);
+        Utils.defaultErrorResponse(res,defaultErrorMsg);
+    }
+};
+module.exports.insertCompleteBook=insertCompleteBook;
+function fillParentBookValues(parentBookDetails){
+    var currentTimestamp=(new Date()).getTime();
+//    parentBookDetails.updatedAt=currentTimestamp;
+//    parentBookDetails.createdAt=currentTimestamp;
+    parentBookDetails.softDelete="FALSE";
+    return parentBookDetails;
+};
+function fillChildBookValues(childBookDetails){
+    var currentTimestamp=(new Date()).getTime();
+    childBookDetails.updatedDate=currentTimestamp;
+    childBookDetails.createdDate=currentTimestamp;
+    childBookDetails.softDelete="FALSE";
+    return childBookDetails;
+}
+    
 
 module.exports.issueBook=function(res,childBook,userID,issueDetails){
     console.log("issueBook",childBook,userID,issueDetails);

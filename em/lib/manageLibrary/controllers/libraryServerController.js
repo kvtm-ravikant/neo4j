@@ -225,6 +225,12 @@ module.exports=function(app,Utils){
         console.log("requestobj",requestobj);
         libraryMS.searchBooks(requestobj,res);
     })
+/*  addCompleteBook - Query to Insert Parent Book with Child Information   */
+    app.post("/manageLibrary/addCompleteBook",Utils.ensureAuthenticated,function(req,res){
+        var requestobj=req.body;
+        console.log("requestobj - addCompleteBook",requestobj);
+        libraryMS.insertCompleteBook(requestobj,res);
+    })
 /*  addNewBook - Query for Parent Book Information   */
     app.post("/manageLibrary/addNewBook",Utils.ensureAuthenticated,function(req,res){
         var requestobj=req.body;

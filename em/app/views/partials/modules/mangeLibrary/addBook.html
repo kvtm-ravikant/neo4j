@@ -32,15 +32,14 @@
 							</fieldset>
 						</form>
 					</div>
-				<!-- <div class="tab-pane" id="bookCopyInfo{{childBook.id}}" ng-repeat="childBook in childBooks">    -->	
-						<form class="form-horizontal" role="form" id="bookCopyInfo{{childBook.id}}" ng-repeat="childBook in childBooks">
+				 <div class="tab-pane" id="bookCopyInfo{{childBook.id}}" ng-repeat="childBook in childBooks"> 	
+						<form class="form-horizontal" role="form" id="bookCopyInfo{{childBook.id}}">
 							<fieldset>
-							bookCopyInfo{{childBook.id}}
 								<div
 									ng-include="'partials/modules/mangeLibrary/ChildBookPartial.html'"></div>
 							</fieldset>
 						</form>
-					<!--  </div>  -->
+				  </div>  
 				</div>
 			</div>
 		</div>
@@ -51,7 +50,7 @@
 			<i class="fa fa-arrow-circle-left"> Back</i>
 		</button>
 
-		<button class="btn btn-primary pull-right" ng-click="validateChildBook()">
+		<button class="btn btn-primary pull-right" ng-click="onSubmitBook()">
 			<i class="fa fa-edit"> Add</i>
 		</button>
 	</div>
