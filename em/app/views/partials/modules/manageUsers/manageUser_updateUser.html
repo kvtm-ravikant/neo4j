@@ -224,9 +224,9 @@
 												of Birth <span style="color: red">&nbsp;*</span>
 											</label>
 											<div class="col-sm-6"
-												ng-if="modalCode=='add'||modalCode=='update'">
+												>
 												<div class="input-group">
-													<input type="text" id="userDOB" name="userDOB"
+													<input type="text" id="userDOB" name="userDOB" ng-disabled="modalCode=='view'||modalCode=='delete'" 
 														ng-model="userSelectedClass.basicDetails.DOB"
 														class="em-datepicker datepicker form-control"
 														placeholder="Date of Birth" required="required"> <span
@@ -234,8 +234,10 @@
 														ng-click="openUserDOB()"><i class="fa fa-calendar"></i></span>
 												</div>
 											</div>
+											<!-- 											
 											<div class="col-md-6"
 												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.DOB}}</div>
+	 										-->  
 											<!--<div class="col-sm-6">
                     <input type="text" id="dob" class="em-datepicker datepicker form-control"
                            ng-model="userSelectedClass.basicDetails.DOB">
@@ -847,7 +849,7 @@
 													style="color: red">&nbsp;*</span>
 												</label>
 												<div class="col-sm-6"
-													ng-if="modalCode=='add'||modalCode=='update'">
+													ng-if="modalCode=='add'">
 													<select id="birthPlaceCntry" name="validation-select"
 														class="btn btn-media dropdown-toggle form-control"
 														data-ng-model="userSelectedClass.basicDetails.userType">
@@ -858,7 +860,7 @@
 													</select>
 												</div>
 												<div class="col-md-4"
-													ng-if="modalCode=='view'||modalCode=='delete'">{{userType[userSelectedClass.basicDetails.userType].___name___}}</div>
+													ng-if="modalCode=='view'||modalCode=='update'||modalCode=='delete'">{{userType[userSelectedClass.basicDetails.userType].___name___}}</div>
 											</div>
 											
 											<div class="form-group">

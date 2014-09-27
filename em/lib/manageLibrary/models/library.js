@@ -187,7 +187,7 @@ module.exports.addNewBook=function(requestObj,res){
                     console.log("create ParentBook node", err,addbookReply);
                     if (!err && addbookReply && addbookReply.hasOwnProperty('_id')) {
                         var insertionStatus={
-                            "ParentBook-[PARENTBOOK_OF]-ChildBook":false,
+                            "ParentBook-[CHILDBOOK_OF]-ChildBook":false,
                         }
                         var parentBookNodeID=addbookReply._id;
                         console.log("parentBookNodeID",parentBookNodeID);
@@ -202,10 +202,11 @@ module.exports.addNewBook=function(requestObj,res){
                                 }
                                 var childBookNodID=addChildReply._id;
                                 //associate childBook to ParentBook                                
-                                db.insertRelationship(parentBookNodeID,childBookNodID,"PARENTBOOK_OF",{},function(err,resultRel){
-                                    console.log("associate childBook to ParentBook",err,resultRel);
+//                                db.insertRelationship(parentBookNodeID,childBookNodID,"PARENTBOOK_OF",{},function(err,resultRel){
+                                db.insertRelationship(childBookNodID,parentBookNodeID,"CHILDBOOK_OF",{},function(err,resultRel){
+                                		console.log("associate childBook to ParentBook",err,resultRel);
                                     if(!err){
-                                        insertionStatus["ParentBook-[PARENTBOOK_OF]-ChildBook"]=true;
+                                        insertionStatus["ParentBook-[CHILDBOOK_OF]-ChildBook"]=true;
                                     }
                                 });
                             }
