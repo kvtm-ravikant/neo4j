@@ -58,8 +58,10 @@ module.exports=function(app,Utils){
     /* Check availability of registration ID  */
     app.post("/manage-users/users/registrationIDAvailabity",Utils.ensureAuthenticated,function(req,res){
     	var requestobj=req.body;
-    	console.log("Puneet /manage-users/users/registrationIDAvailabity",req.body);
-        userMS.searchRegId(requestobj,res);
+        var loggedInUser=req.session.userDetails;
+        var schoolID=loggedInUser.schoolDetails.schoolId;
+    	console.log("Puneet /manage-users/users/registrationIDAvailabity",req.body,schoolID);
+        userMS.searchRegId(requestobj,schoolID,res);
     });
     /* New User Registration */
     app.post("/manage-users/users/registerNewUser",Utils.ensureAuthenticated,function(req,res){

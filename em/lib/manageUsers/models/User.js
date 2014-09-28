@@ -355,10 +355,10 @@ module.exports.getAllUsers = function(loggedInUser, res) {
 }
 
 /* find the available registration ID for the given registration ID to create new user */
-module.exports.searchRegId = function(requestObj,res) {
+module.exports.searchRegId = function(requestObj,schoolID,res) {
 //	console.log("is User Name exist ?", requestObj);
 	var responseObj = new Utils.Response();
-	var query = 'MATCH (n:User{regID:"' + requestObj.regIdText + '"})  RETURN n';
+    var query='Match (s:School{schoolId:"'+schoolID+'"})<-[:USER_OF]-(n:User{regID:"' + requestObj.regIdText + '"}) RETURN n';
 
 	console.log("registration ID availability query :", query);
 	db.cypherQuery(query, function(err, reply) {

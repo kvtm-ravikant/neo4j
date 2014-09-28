@@ -457,26 +457,26 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 	$scope.getregistrationIDAvailabity = function(){
 		var regIdText = {regIdText: $scope.userSelectedClass.basicDetails.regID};
 		console.log("getregistrationIDAvailabity ",regIdText);
-		if(!angular.isUndefined(regIdText))
-			$http({
-				method : 'POST',
-				url : '/manage-users/users/registrationIDAvailabity',
-				data : regIdText,
-				headers : {
-					'Content-Type' : 'application/json'
-				}
-			}).success(function(dataResponse, status, headers,config) {
-								// success
-					appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
-					console.log("getregistrationIDAvailabity - dataResponse",dataResponse)
-					$scope.regIdAvailable = dataResponse.responseData.data;
-					console.log("responce data : ",dataResponse.responseData.data.length);
-												});
-							}).error(function(data, status, headers, config) {
-								// error
-								console.log("Error", data, status,headers, config);
-							});
-		else
+		if(!angular.isUndefined(regIdText)){
+            $http({
+                method : 'POST',
+                url : '/manage-users/users/registrationIDAvailabity',
+                data : regIdText,
+                headers : {
+                    'Content-Type' : 'application/json'
+                }
+            }).success(function(dataResponse, status, headers,config) {
+                // success
+                appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+                    console.log("getregistrationIDAvailabity - dataResponse",dataResponse)
+                    $scope.regIdAvailable = dataResponse.responseData.data;
+                    console.log("responce data : ",dataResponse.responseData.data.length);
+                });
+            }).error(function(data, status, headers, config) {
+                // error
+                console.log("Error", data, status,headers, config);
+            });
+        }else
 			appUtils.showError("Enter correct username");
 		}
 		 /*
