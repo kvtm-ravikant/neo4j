@@ -18,10 +18,12 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
                 }
 
             );
+    var bookClassPOJO;
     //get POJO book
     libraryService.getBookPOJO().then(
                 function(dataResponse){
                     appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                       bookClassPOJO=appUtils.cloneJSObj(dataResponse);
                        $scope.bookClass=dataResponse;
                        $scope.parentBook=dataResponse.parentbook;
                        $scope.childBookArray=dataResponse.children;
@@ -228,16 +230,19 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
            childBook.active = false;
        });
    };
-    var addNewchildBook = function() {   
-    	 var id = $scope.childBooks.length;
-    	if($scope.childBooks.length<1){
+    var addNewchildBook = function() {
+         var childBookPoJO=appUtils.cloneJSObj(bookClassPOJO.children[0]);
+        $scope.childBooks.push(childBookPoJO);
+         console.log("childBookPoJO",childBookPoJO);
+    	// var id = $scope.childBooks.length;
+    	/*if($scope.childBooks.length<1){
     		$scope.childBooks.push({
                 id: id+1,
                 name: "Book Copy",// + id,
                 modal: $scope.childBookClassModal,
                 active: true
             });	
-    	}
+    	}*/
     	
 //    	if($scope.childBooks.length<3 && $scope.childBooks.length>0){
 //    		console.log("bookCopyInfo{{childBook.id}} : ",$scope.childBooks[0]," $('#bookCopyInfo1') : ",$('#bookCopyInfo1'));
@@ -246,8 +251,8 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 //    		}
 //    		validateChildBook($scope.childBooks[$scope.childBooks.length-1]);
 //       	}
-    	 else
-         	appUtils.showError("You cannot add more than 1 Books !");
+    	/* else
+         	appUtils.showError("You cannot add more than 1 Books !");*/
     	
 //        console.log("addNewchildBook ",id,"childBooks : ",$scope.childBooks );
     };

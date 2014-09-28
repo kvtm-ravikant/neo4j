@@ -13,15 +13,16 @@
 				<ul class="nav nav-pills nav-justified thumbnail setup-panel"
 					id="myTab">
 					<li class="active"><a href="#basicInfo" data-toggle="tab">Book Details</a></li>
-					<li ng-repeat="childBook in childBooks" active=childBook.active><a
-						href="#bookCopyInfo{{childBook.id}}" data-toggle="tab">{{childBook.name}}
-							: {{childBook.id}}</a></li>
-					<li>
-						<button class="btn btn-primary pull-right"
-							ng-click="addChildTab()">
-							<i class="fa fa-plus"></i>
-						</button>
-					</li>
+
+                    <li ng-repeat="childBook in childBooks" active=childBook.active><a
+						href="#bookCopyInfo{{$index}}" data-toggle="tab">Book Copy {{$index+1}}</a></li>
+                    <li>
+                        <button class="btn btn-primary addBookButton"
+                                ng-click="addChildTab()">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </li>
+
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane active" id="basicInfo">
@@ -32,11 +33,10 @@
 							</fieldset>
 						</form>
 					</div>
-				 <div class="tab-pane" id="bookCopyInfo{{childBook.id}}" ng-repeat="childBook in childBooks"> 	
-						<form class="form-horizontal" role="form" id="bookCopyInfo{{childBook.id}}">
+				 <div class="tab-pane"  ng-repeat="childBook in childBooks" id="bookCopyInfo{{$index}}">
+						<form class="form-horizontal" role="form" id="bookCopyInfoForm{{$index}}">
 							<fieldset>
-								<div
-									ng-include="'partials/modules/mangeLibrary/ChildBookPartial.html'"></div>
+								<div ng-include="'partials/modules/mangeLibrary/ChildBookPartial.html'"></div>
 							</fieldset>
 						</form>
 				  </div>  

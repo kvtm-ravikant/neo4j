@@ -955,11 +955,22 @@ input.ng-invalid.ng-dirty,textarea.ng-invalid.ng-dirty { border: solid red 1px; 
     color : #438EA9;
     border-radius: 0px;
     border:1px solid white;
+    max-width: 225px;
 }
 #myTab li:hover>a{
     color : #438EA9;
     border-radius: 0px;
     border:1px solid white;
+}
+@media (min-width: 768px) {
+    .nav-justified > li {
+        display: table-cell;
+        width: 24%;
+    }
+}
+.addBookButton{
+    height: 41px;
+    width: 41px;
 }
 .label{
     border-radius:0px;
@@ -1137,7 +1148,4 @@ input.ng-valid {
     z-index: 1;
     width: 63%;
     margin-left: 15px;
-}
-.fa{
-    color:black;
 }
