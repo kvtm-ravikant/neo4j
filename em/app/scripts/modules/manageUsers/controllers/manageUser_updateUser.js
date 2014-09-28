@@ -152,54 +152,54 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             return;
         };
     	var messageQue=[];
-    	  var errorObj={error:false,errorMsg:[]};
-    	  
+    	var errorObj={error:false,errorMsg:[]};
+    	var basicDetails=$scope.userSelectedClass.basicDetails;
     	console.log("basicDetailsForm " ,$scope.basicDetailsForm,"$scope.basicDetailsForm.$valid :",$scope.userSelectedClass," message : ",messageQue );
 
-    	if($scope.userSelectedClass.basicDetails.regID && $scope.userSelectedClass.basicDetails.regID.length<3 ){
-    		errorObj.error=true
+    	if(!basicDetails.regID || (basicDetails.regID && basicDetails.regID.trim().length<3) ){
+    		errorObj.error=true;
             errorObj.errorMsg.push("Enter Registration Id provided to you.");
          }
-    	if($scope.userSelectedClass.basicDetails.firstName && $scope.userSelectedClass.basicDetails.firstName.length<3 ){
+    	if(!basicDetails.firstName || (basicDetails.firstName && basicDetails.firstName.trim().length<3) ){
     		errorObj.error=true
             errorObj.errorMsg.push("You don't have First Name ? Enter your first Name.");
 		}
-    	if($scope.userSelectedClass.basicDetails.lastName && ($scope.userSelectedClass.basicDetails.lastName && $scope.userSelectedClass.basicDetails.lastName.length<3)){
-    		errorObj.error=true
+    	if(!basicDetails.lastName && (basicDetails.lastName && basicDetails.lastName.trim().length<3)){
+    		errorObj.error=true;
             errorObj.errorMsg.push("What about Last name. It's needed.");
 		}
-    	if($scope.userSelectedClass.basicDetails.sex && $scope.userSelectedClass.basicDetails.sex.length<1){
-    		errorObj.error=true
+    	if(!basicDetails.sex && (basicDetails.sex && basicDetails.sex.length<1)){
+    		errorObj.error=true;
             errorObj.errorMsg.push("Choose your gender.");
 		}
-		if(angular.isUndefined($scope.userSelectedClass.basicDetails.DOB && $scope.userSelectedClass.basicDetails.DOB.length<6 )){
-    		errorObj.error=true
+		if(!basicDetails.DOB && (basicDetails.DOB && basicDetails.DOB.length<6) ){
+    		errorObj.error=true;
             errorObj.errorMsg.push("What is your birthday ?");
 		}
-        if(!(($scope.userSelectedClass.contact.phonePrimary && $scope.userSelectedClass.contact.phonePrimary.length>=10) ||
-            ($scope.userSelectedClass.contact.emailPrimary) ||
-            (($scope.userSelectedClass.primaryAddress.street1.length<5 || angular.isUndefined($scope.userSelectedClass.primaryAddress.street1))
-                && ($scope.userSelectedClass.primaryAddress.country.length<1 || angular.isUndefined($scope.userSelectedClass.primaryAddress.country))
-                && ($scope.userSelectedClass.primaryAddress.state.length<2 || angular.isUndefined($scope.userSelectedClass.primaryAddress.state))
-                && ($scope.userSelectedClass.primaryAddress.pincode.length!=6 || angular.isUndefined($scope.userSelectedClass.primaryAddress.pincode))
-                && ($scope.userSelectedClass.primaryAddress.city.length<3 || angular.isUndefined($scope.userSelectedClass.primaryAddress.city))
+        var contact=$scope.userSelectedClass.contact;
+        var primaryAddress=$scope.userSelectedClass.primaryAddress;
+        if(!((contact.phonePrimary && contact.phonePrimary.trim().length>3) ||
+            (contact.emailPrimary && appUtils.validateEmail(contact.emailPrimary)) ||
+            ((primaryAddress.street1 && primaryAddress.street1.length<5 )
+                && (primaryAddress.country.length<1)
+                && (primaryAddress.state && primaryAddress.state.length<2 )
+                && (primaryAddress.pincode && primaryAddress.pincode.length!=6 )
+                && (primaryAddress.city && primaryAddress.city.length<3)
                 )
-            )
-          ){
-            errorObj.error=true
+
+          )){
+            errorObj.error=true;
             errorObj.errorMsg.push("Please enter Primary Phone Number or Primary Email Address OR Primary Complete residential address.");
         }
 
-    	if(angular.isUndefined($scope.userSelectedClass.basicDetails.userType)){
-    		errorObj.error=true
+    	if(!basicDetails.userType || (basicDetails.userType && !$scope.userType.hasOwnProperty(basicDetails.userType))){
+    		errorObj.error=true;
             errorObj.errorMsg.push("User Type is not valid.");
 		}
-    	if($scope.userSelectedClass.basicDetails.userName<3 || angular.isUndefined($scope.userSelectedClass.basicDetails.userName)){
-    		errorObj.error=true
+    	if(!basicDetails.userName || (basicDetails.userName && basicDetails.userName<3 )){
+    		errorObj.error=true;
             errorObj.errorMsg.push("Create your user name.");
 		}
-    	
-    	
     	var erroMsg=errorObj.errorMsg.join('<br>');
     	
     	if(erroMsg.length>0){
@@ -225,7 +225,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     	 
     	console.log("$scope.modalTitle : User", $scope.modalTitle, $scope.modalCode);
     	if($scope.modalCode && $scope.modalCode =='add'){
-//    		$scope.registerNewUser();
+    		$scope.registerNewUser();
     	}
     	else if($scope.modalCode && $scope.modalCode=='update'){
     		$('#retryModel').modal({"backdrop": "static","show":true});

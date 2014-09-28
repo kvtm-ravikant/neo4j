@@ -91,7 +91,7 @@ function addNewUser(userObj,loggedInUser,res) {
         var defaultErrorMsg="Failed to add user. Please contact administrator.";
 
         var findUserQuery = 'MATCH (n:User{userName:"' + userObj.basicDetails.userName + '"})  RETURN n';
-        db.cypherQuery("findUserQuery",findUserQuery, function(err, result) {
+        db.cypherQuery(findUserQuery, function(err, result) {
             console.log("findUserQuery",err, result)
             if(err || !result || (result && result.data && result.data.length==0)){
                 var userBasicDetails=fillUserDefaultValues(userObj.basicDetails);
@@ -115,7 +115,7 @@ function addNewUser(userObj,loggedInUser,res) {
                         var schoolNodeID=loggedInUser.schoolDetails._id;//logged In user's school
                         console.log("userNodeID",userNodeID,"schoolNodeID",schoolNodeID);
 
-                        db.insertRelationship(schoolNodeID,userNodeID,"USER_OF",{"from":userBasicDetails.createdAt},function(err,resultRel){
+                        db.insertRelationship(userNodeID,schoolNodeID,"USER_OF",{"from":userBasicDetails.createdAt},function(err,resultRel){
                             console.log("associate user to School",err,resultRel);
                             if(!err){
                                 insertionStatus["School-[BELONGS_TO]-User"]=true;
@@ -130,7 +130,7 @@ function addNewUser(userObj,loggedInUser,res) {
                                 }
                                 var contactNodeID=addContactReply._id;
                                 //associate contact to user
-                                db.insertRelationship(contactNodeID,userNodeID,"CONTACT_OF",{},function(err,resultRel){
+                                db.insertRelationship(userNodeID,contactNodeID,"CONTACT_OF",{},function(err,resultRel){
                                     console.log("associate contact to user",err,resultRel);
                                     if(!err){
                                         insertionStatus["Contact-[CONTACT_OF]-User"]=true;
@@ -148,7 +148,7 @@ function addNewUser(userObj,loggedInUser,res) {
                                 }
                                 var addressPrimaryNodeID=addPrimaryAddressReply._id;
                                 //associate Primary Address to user
-                                db.insertRelationship(addressPrimaryNodeID,userNodeID,"PRIMARY_ADDRESS_OF",{},function(err,resultRel){
+                                db.insertRelationship(userNodeID,addressPrimaryNodeID,"PRIMARY_ADDRESS_OF",{},function(err,resultRel){
                                     console.log("associate Primary Address to user",err,resultRel);
                                     if(!err){
                                         insertionStatus["PrimaryAddress-[PRIMARY_ADDRESS_OF]-User"]=true;
@@ -166,7 +166,7 @@ function addNewUser(userObj,loggedInUser,res) {
                                 }
                                 var addressSecondaryNodeID=addSecondaryAddressReply._id;
                                 //associate Secondary Address to user
-                                db.insertRelationship(addressSecondaryNodeID,userNodeID,"SECONDARY_ADDRESS_OF",{},function(err,resultRel){
+                                db.insertRelationship(userNodeID,addressSecondaryNodeID,"SECONDARY_ADDRESS_OF",{},function(err,resultRel){
                                     console.log("associate Secondary Address to user",err,resultRel);
                                     if(!err){
                                         insertionStatus["SecondaryAddress-[SECONDARY_ADDRESS_OF]-User"]=true;
@@ -184,7 +184,7 @@ function addNewUser(userObj,loggedInUser,res) {
                                 }
                                 var socialNetworkNodeID=addsocialNetworkReply._id;
                                 //associate social network to user
-                                db.insertRelationship(socialNetworkNodeID,userNodeID,"SOCIAL_NETWORK_OF",{},function(err,resultRel){
+                                db.insertRelationship(userNodeID,socialNetworkNodeID,"SOCIAL_NETWORK_OF",{},function(err,resultRel){
                                     console.log("associate social network to user",err,resultRel);
                                     if(!err){
                                         insertionStatus["SocialNetwork-[SOCIAL_NETWORK_OF]-User"]=true;
@@ -243,6 +243,7 @@ function fillUserDefaultValues(userBasicDetails){
     userBasicDetails.updatedAt=currentTimestamp;
     userBasicDetails.createdAt=currentTimestamp;
     userBasicDetails.hashPassword="password";
+    userBasicDetails.softDelete=false;
     return userBasicDetails;
 }
 
@@ -255,9 +256,9 @@ module.exports.updateUser = function(userObj,loggedInUser,res) {
 	        var defaultErrorMsg="Failed to update user. Please contact administrator.";
 
 	        var findUserQuery = 'MATCH (n:User{userName:"' + userObj.basicDetails.userName + '"})  RETURN n';
-	        db.cypherQuery("findUserQuery",findUserQuery, function(err, result) {
+	        db.cypherQuery(findUserQuery, function(err, result) {
 	            console.log("findUserQuery",err, result)
-	            if(err || !result || (result && result.data && result.data.length==0)){
+	            if(err || !result || (result && result.data && result.data.length==1)){
                     var currentTimestamp=(new Date()).getTime();
                     userObj.basicDetails.updatedAt=currentTimestamp;
                     db.updateNode(userObj.basicDetails._id, userObj.basicDetails, function(err, node){
