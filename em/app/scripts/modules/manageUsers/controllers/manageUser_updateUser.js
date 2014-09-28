@@ -132,7 +132,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
 //            	  $scope.userSelectedClass =  dataResponse.responseData.data[0];
             	  $scope.userSelectedClass=dataResponse.responseData;
-            	  $scope.userSelectedClone=dataResponse.responseData;
+            	  $scope.userSelectedClone=appUtils.cloneJSObj(dataResponse.responseData);
             	  console.log("dataResponse /manage-users/getSelectedUserDetails/ :",user.userName," dataResponse : ",dataResponse);
                   $scope.openModal(code);
              
