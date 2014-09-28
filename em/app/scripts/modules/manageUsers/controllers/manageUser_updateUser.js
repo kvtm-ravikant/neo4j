@@ -410,7 +410,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
          console.log("getuserType",dataResponse);
          appUtils.defaultParseResponse(dataResponse,function(dataResponse){
              $scope.userType=dataResponse;
-          console.log("$scope.getUserType",$scope.userType);
+             console.log("$scope.getUserType",$scope.userType);
          });
 
      }).error(function(data,status,headers,config){
