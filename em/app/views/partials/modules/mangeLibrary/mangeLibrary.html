@@ -36,8 +36,8 @@
                 <div class="col-md-2 div-table-header-th">Book Title</div>
                 <div class="col-md-2 div-table-header-th">Publisher</div>
                 <div class="col-md-1 div-table-header-th">ISBN</div>
-                <div class="col-md-2 div-table-header-th">Category</div>
-                <div class="col-md-2 div-table-header-th">
+                <div class="col-md-1 div-table-header-th">Category</div>
+                <div class="col-md-3 div-table-header-th">
                     Actions
                 </div>
             </div>
@@ -47,8 +47,8 @@
                 <div class="col-md-2 div-table-td">{{book.parentbook.bookTitle}}</div>
                 <div class="col-md-2 div-table-td">{{book.parentbook.publisher}}</div>
                 <div class="col-md-1 div-table-td">{{book.parentbook.isbn}}</div>
-                <div class="col-md-2 div-table-td">{{book.parentbook.categoryName}}</div>
-                <div class="col-md-2 div-table-td">
+                <div class="col-md-1 div-table-td">{{book.parentbook.categoryName}}</div>
+                <div class="col-md-3 div-table-td">
                     <a href="#" data-toggle="tooltip" title="Click to view book details"><i class="fa fa-eye" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'view')"></i></a> &nbsp;|&nbsp;
                     <a href="#" data-toggle="tooltip" title="Click to update book details"><i class="fa fa-pencil" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'update')"></i></a> &nbsp;|&nbsp;
                     <a href="#" data-toggle="tooltip" title="Click to delete book"><i class="fa fa-times-circle" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'delete')"></i></a>&nbsp;|&nbsp;

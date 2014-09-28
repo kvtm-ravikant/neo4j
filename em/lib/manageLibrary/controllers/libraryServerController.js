@@ -206,6 +206,7 @@ module.exports=function(app,Utils){
         var loggedInUser=req.session.userDetails;
         var schoolID=loggedInUser.schoolDetails.schoolId;
         libraryMS.getAllBooks(res,schoolID);
+        libraryMS.getLibrary(schoolID,req);
     });
     app.get("/manageLibrary/getBookPOJO",Utils.ensureAuthenticated,function(req,res){
         libraryMS.getBookPOJO(res);
@@ -222,7 +223,7 @@ module.exports=function(app,Utils){
     });
     app.post("/manageLibrary/searchBooks",Utils.ensureAuthenticated,function(req,res){
         var requestobj=req.body;
-        console.log("requestobj",requestobj);
+        console.log("requestobj",requestobj,req.session.currentLibrary);
         libraryMS.searchBooks(requestobj,res);
     })
 /*  addCompleteBook - Query to Insert Parent Book with Child Information   */
@@ -231,7 +232,7 @@ module.exports=function(app,Utils){
         var loggedInUser=req.session.userDetails;
         var schoolID=loggedInUser.schoolDetails.schoolId;
         console.log("requestobj - addCompleteBook",requestobj);
-        libraryMS.insertCompleteBook(requestobj,res,schoolID);
+        libraryMS.insertCompleteBook(requestobj,res,schoolID,req.session.currentLibrary);
     })
 /*  addNewBook - Query for Parent Book Information   */
     app.post("/manageLibrary/addNewBook",Utils.ensureAuthenticated,function(req,res){

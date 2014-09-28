@@ -326,6 +326,52 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 	   $('#childBookModalforSmy').modal('show');
 	   console.log("childBooksList.html");	   
    }
+
+    $scope.searchBookModel={
+        "parentBook":{
+            "bookTitle":"",
+            "authorName":"",
+            "isbn":""
+
+        },
+        "userDetails":{
+            "regID":"",
+            "firstName":"",
+            "middleName":"",
+            "lastName":"",
+            "class":"",
+            "section":""
+        },
+        "childBook":{
+            "bookId":""
+        },
+        "searchText":""
+    }
+    $scope.searchBooks=function(){
+        console.log("$scope.searchBookModel",$scope.searchBookModel);
+        $http({
+            method : 'POST',
+            url    : '/manageLibrary/searchBooks',
+            data   : $scope.searchBookModel,
+            headers: {'Content-Type': 'application/json'}
+        }).success(function(dataResponse,status,headers,config){
+                //success
+                appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                    console.log("searchBooks dataResponse",dataResponse)
+                    if(dataResponse.responseData.columns.length<2){
+                        $scope.books=dataResponse.responseData;
+                    }else{
+
+                    }
+                    $scope.isSearchBoxOpened=false;
+                });
+            }).error(function(data,status,headers,config){
+                //error
+                console.log("Error",data,status,headers,config);
+
+            });
+
+    }
    
       
       
