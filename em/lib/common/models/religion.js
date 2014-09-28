@@ -26,7 +26,7 @@ module.exports=
 "R21":{"___name___":"Tenrikyo"},
 "R22":{"___name___":"Unitarian-Universalism"},
 "R23":{"___name___":"Zoroastrianism"},
-"R24":{"___name___":"primal-indigenous"}
+"R24":{"___name___":"Primal-indigenous"}
 }
 //{
 //    "1":"Hindu",

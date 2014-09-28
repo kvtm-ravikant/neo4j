@@ -581,5 +581,6 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             console.log("/manage-users/uploadUserCSV response",response)
         });
     };
+    $scope.lovMapToArr=appUtils.lovMapToArr;
 
 });

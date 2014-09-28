@@ -270,6 +270,17 @@ angular.module('educationMediaApp').factory('appUtils',["$http",function ($http)
 
             }
 
+        },
+        "lovMapToArr":function(map){
+            var arr=[];
+            for(var key in map){
+                var obj=map[key];
+                if(typeof obj=='object'){
+                    obj.key=key;
+                    arr.push(obj);
+                }
+            }
+            return arr;
         }
     };
 
