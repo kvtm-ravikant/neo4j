@@ -316,6 +316,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
                
                 appUtils.showSuccess("User "+selectedUser+" updated successfully");
                 $('#modalUpdate').modal('hide');
+                $scope.searchUser();
             });
         }).error(function(data, status, headers, config) {
             // error
@@ -338,18 +339,19 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 				'Content-Type' : 'application/json'
 			}
 		}).success(function(dataResponse, status, headers,config) {
-							// success
-							appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
-							console.log("registerUser - dataResponse",dataResponse)
-							$scope.userSelectedClass = dataResponse.responseData;
-							appUtils.showSuccess("User "+addedUser+" created successfully");
-							$('#modalUpdate').modal('hide');
-											});
-						}).error(function(data, status, headers, config) {
-							// error
-							console.log("Error", data, status,headers, config);
-						});
-		};
+            // success
+            appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+                console.log("registerUser - dataResponse",dataResponse)
+                $scope.userSelectedClass = dataResponse.responseData;
+                appUtils.showSuccess("User "+addedUser+" created successfully");
+                $('#modalUpdate').modal('hide');
+                $scope.searchUser();
+            });
+        }).error(function(data, status, headers, config) {
+            // error
+            console.log("Error", data, status,headers, config);
+        });
+    };
     
     /*
      * Delete User function call to update User
@@ -366,20 +368,20 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
  				'Content-Type' : 'application/json'
  			}
  		}).success(function(dataResponse, status, headers,config) {
- 							// success
- 							appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
- 												console.log("deleteUserClass - dataResponse",dataResponse)
- 												$scope.userSelectedClass.basicDetails = dataResponse.responseData.data[0];
- 												appUtils.showSuccess("User "+$scope.userSelectedClass.basicDetails.userName+" deleted successfully");
- 												$('#modalUpdate').modal('hide');
-                                                location.reload();
- 											});
+            // success
+            appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+                console.log("deleteUserClass - dataResponse",dataResponse)
+                $scope.userSelectedClass.basicDetails = dataResponse.responseData.data[0];
+                appUtils.showSuccess("User "+$scope.userSelectedClass.basicDetails.userName+" deleted successfully");
+                $('#modalUpdate').modal('hide');
+                $scope.searchUser();
+            });
 
- 						}).error(function(data, status, headers, config) {
- 							// error
- 							console.log("Error", data, status,headers, config);
+        }).error(function(data, status, headers, config) {
+            // error
+            console.log("Error", data, status,headers, config);
 
- 						});
+        });
      };
     
     $scope.openFileBrowser=function(){

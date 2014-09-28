@@ -22,13 +22,13 @@
 			</div>
 
 			<div class="col-md-3">
-				<input class="control-label hide" height="0" width="0" type='file'
+				<!--<input class="control-label hide" height="0" width="0" type='file'
 					id="csvUploader"
 					onchange="angular.element(this).scope().uploadCsv(this)" />
 				<button class="btn btn-sm btn-info pull-right">
 					<i class="fa fa-users"> Batch Upload</i>
-					<!--ng-click="batchAddUser()"-->
-				</button>
+					&lt;!&ndash;ng-click="batchAddUser()"&ndash;&gt;
+				</button>-->
 				<button class="btn btn-sm btn-warning pull-right"
 					ng-click="addUserOpenForm()">
 					<i class="fa fa-user"> Add User</i>
@@ -115,8 +115,8 @@
 										name="basicDetailsForm">
                                         <div class="form-group">
                                             <label for="validation-select"
-                                                   class="col-sm-3 control-label">User Type<span
-                                                    style="color: red">&nbsp;*</span>
+                                                   class="col-sm-3 control-label">User Type
+                                                <span style="color: red">&nbsp;*</span>
                                             </label>
                                             <div class="col-sm-6"
                                                  ng-if="modalCode=='add'">
@@ -369,7 +369,7 @@
 											<div class="row">
 												<div>
 													<label class="col-sm-2 control-label" for="primaryPhone">Phone
-														Number<span style="color: red">&nbsp;*</span>
+														Number<span style="color: green">&nbsp;*</span>
 													</label>
 													<div class="col-sm-4"
 														ng-if="modalCode=='add'||modalCode=='update'">
@@ -384,7 +384,7 @@
 												</div>
 												<div>
 													<label class="col-sm-2 control-label" for="inputEmail">Email
-														Address<span style="color: red">&nbsp;*</span>
+														Address<span style="color: green">&nbsp;*</span>
 													</label>
 													<div class="col-sm-4"
 														ng-if="modalCode=='add'||modalCode=='update'">
@@ -402,7 +402,7 @@
 											<div class="row">
 												<div>
 													<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
-														Address 1<span style="color: red">&nbsp;*</span>
+														Address 1<span style="color: green">&nbsp;*</span>
 													</label>
 													<div class="col-sm-10"
 														ng-if="modalCode=='add'||modalCode=='update'">
@@ -455,7 +455,7 @@
 											<div class="row">
 												<div>
 													<label class="col-sm-2 control-label" for="cntCntry">Country<span
-														style="color: red">&nbsp;*</span></label>
+														style="color: green">&nbsp;*</span></label>
 													<div class="col-sm-4"
 														ng-if="modalCode=='add'||modalCode=='update'">
 														<select id="cntCountry" name="cntCountry"
@@ -473,7 +473,7 @@
 												</div>
 												<div>
 													<label class="col-sm-2 control-label" for="cntState">State<span
-														style="color: red">&nbsp;*</span></label>
+														style="color: green">&nbsp;*</span></label>
 													<div class="col-sm-4"
 														ng-if="modalCode=='add'||modalCode=='update'">
 
@@ -496,7 +496,7 @@
 											<div class="row">
 												<div>
 													<label class="col-sm-2 control-label" for="cntCity">City<span
-														style="color: red">&nbsp;*</span></label>
+														style="color: green">&nbsp;*</span></label>
 													<div class="col-sm-3"
 														ng-if="modalCode=='add'||modalCode=='update'">
 														<select id="cntCity" name="cntCity"
@@ -529,7 +529,7 @@
 											<div class="row">
 												<div>
 													<label class="col-sm-2 control-label" for="cntPin">Pincode<span
-														style="color: red">&nbsp;*</span></label>
+														style="color: green">&nbsp;*</span></label>
 													<div class="col-sm-4"
 														ng-if="modalCode=='add'||modalCode=='update'">
 														<input type="text" id="cntPin" placeholder="Pincode"
