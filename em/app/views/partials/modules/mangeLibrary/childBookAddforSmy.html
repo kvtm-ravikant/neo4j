@@ -1,0 +1,57 @@
+<div id="childBookModalforSmy" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true">
+			<i class="fa fa-times"></i>
+		</button>
+		<h4>Add Book Copy</h4>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<!-- ng-if="allUserClass.data" ng-show="currentUserDetails" -->
+			<div class="col-md-12">
+				<ul class="nav nav-pills nav-justified thumbnail setup-panel"
+					id="myTab">
+					<li class="active"><a href="#basicInfo" data-toggle="tab">Book Copy</a></li>
+					<li ng-repeat="childBook in childBooks" active=childBook.active><a
+						href="#bookCopyInfo{{childBook.id}}" data-toggle="tab">{{childBook.name}}
+							: {{childBook.id}}</a></li>
+					<li>
+						<button class="btn btn-primary pull-right"
+							ng-click="addChildTab()">
+							<i class="fa fa-plus"></i>
+						</button>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="basicInfo">
+						<form class="form-horizontal" role="form">
+							<fieldset>
+								<div
+									ng-include="'partials/modules/mangeLibrary/ChildBookPartial.html'"></div>
+							</fieldset>
+						</form>
+					</div>
+				 <div class="tab-pane" id="bookCopyInfo{{childBook.id}}" ng-repeat="childBook in childBooks"> 	
+						<form class="form-horizontal" role="form" id="bookCopyInfo{{childBook.id}}">
+							<fieldset>
+								<div
+									ng-include="'partials/modules/mangeLibrary/ChildBookPartial.html'"></div>
+							</fieldset>
+						</form>
+				  </div>  
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary pull-left" data-dismiss="modal"
+			aria-hidden="true">
+			<i class="fa fa-arrow-circle-left"> Back</i>
+		</button>
+
+		<button class="btn btn-primary pull-right" ng-click="onSubmitBook()">
+			<i class="fa fa-edit"> Add</i>
+		</button>
+	</div>
+</div>

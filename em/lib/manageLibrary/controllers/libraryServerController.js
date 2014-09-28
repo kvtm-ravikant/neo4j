@@ -228,8 +228,10 @@ module.exports=function(app,Utils){
 /*  addCompleteBook - Query to Insert Parent Book with Child Information   */
     app.post("/manageLibrary/addCompleteBook",Utils.ensureAuthenticated,function(req,res){
         var requestobj=req.body;
+        var loggedInUser=req.session.userDetails;
+        var schoolID=loggedInUser.schoolDetails.schoolId;
         console.log("requestobj - addCompleteBook",requestobj);
-        libraryMS.insertCompleteBook(requestobj,res);
+        libraryMS.insertCompleteBook(requestobj,res,schoolID);
     })
 /*  addNewBook - Query for Parent Book Information   */
     app.post("/manageLibrary/addNewBook",Utils.ensureAuthenticated,function(req,res){

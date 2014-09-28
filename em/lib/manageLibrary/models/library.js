@@ -170,7 +170,7 @@ module.exports.addNewBook=function(requestObj,res){
         })
     }
     
-    function insertCompleteBook(requestObj,res){
+    function insertCompleteBook(requestObj,res,schoolID){
 //	Match (n:ParentBook) where n.isbn='123456789X';
     try{
         var responseObj = new Utils.Response();

@@ -157,7 +157,10 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    		var messageQue=[];
    		var errorObj={error:false,errorMsg:[]};
   	 
-   	
+   		if(childBook.modal.bookId.length<1|| angular.isUndefined(childBook.modal.bookId)){
+	    	 errorObj.error=true
+	    	 errorObj.errorMsg.push("Book Id is not valid.");
+	    }
    		if(childBook.modal.bookStatus.length<1|| angular.isUndefined(childBook.modal.bookStatus)){
 	    	 errorObj.error=true
 	    	 errorObj.errorMsg.push("Book Status is not valid.");
@@ -254,6 +257,74 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 		   addCompleteBook();
    }
  
+   /*
+    * Open View/Edit/Delete Parent Book Modal from Summary
+    */
+   $scope.openParentBookFromSmy=function(book,code){
+	   $scope.parentModalTitle="";
+       $scope.parentModalCode=code;
+       
+       $scope.buttonStyle='btn-primary';
+
+       code && code=='update'?$scope.parentModalTitle="Update Book Details":"";
+       code && code=='delete'?$scope.parentModalTitle="Delete Book Details":"";
+       code && code=='view'?$scope.parentModalTitle="Book Details":"";
+       
+       code && code=='delete'?$scope.buttonStyle="btn-danger":"btn-primary";
+
+       $scope.parentFormDisabled=true;
+       code && code=='update'?$scope.parentFormDisabled=false:true;
+       code && code=='delete'?$scope.parentFormDisabled=true:false;
+       code && code=='view'?$scope.parentFormDisabled=true:false;
+       
+       $('#parentBookViewEditDelforSmy').modal({"backdrop": "static","show":true});
+       $('#parentBookViewEditDelforSmy').modal({"show":false});
+	   
+	   console.log("parentBookViewEditDelforSmy.html: book : ",book, "childbook length : ",book.children.length);	 
+//	   $scope.parentBook.
+	   angular.copy(book.parentbook,$scope.parentBook);
+   }
+
+   /*
+    * Open View/Edit/Delete Child Book Modal from Summary
+    */
+   $scope.openChildBookFromSmy=function(childbook, code){
+	   $scope.childModalTitle="";
+       $scope.childModalCode=code;
+       $scope.buttonStyle='btn-primary';
+
+       code && code=='update'?$scope.childModalTitle="Update Book Copy":"";
+       code && code=='delete'?$scope.childModalTitle="Delete Book Copy":"";
+       code && code=='view'?$scope.childModalTitle="Book Copy":"";
+       
+       code && code=='delete'?$scope.buttonStyle="btn-danger":"btn-primary";
+       
+       $scope.childFormDisabled=true;
+       code && code=='update'?$scope.childFormDisabled=false:true;
+       code && code=='delete'?$scope.childFormDisabled=true:false;
+       code && code=='view'?$scope.childFormDisabled=true:false;
+
+
+       $('#childBookforEditViewDelete').modal({"backdrop": "static","show":true});
+       $('#childBookforEditViewDelete').modal({"show":false});
+
+       console.log("openChildBookFromSmy.html : childbook ", childbook);	   
+//       $scope.childBooks[0].childBook.modal=childbook;
+   }
+
+   
+   /*
+    * Open Add Child Book Modal from Summary (+)
+    */
+   
+   $scope.openAddChildFromSmy=function(){
+	   $('#childBookModalforSmy').modal('show');
+	   console.log("childBooksList.html");	   
+   }
+   
+      
+      
+   
 });
 
 
