@@ -1,0 +1,44 @@
+<div id="childBookforEditViewDelete" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true">
+			<i class="fa fa-times"></i>
+		</button>
+		<h4>{{childModalTitle}}</h4>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<!-- ng-if="allUserClass.data" ng-show="currentUserDetails" -->
+			<div class="col-md-12">
+				<ul class="nav nav-pills nav-justified thumbnail setup-panel"
+					id="myTab">
+					<li class="active"><a href="#basicInfo" data-toggle="tab">Book Copy</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="basicInfo">
+						<form class="form-horizontal" role="form">
+							<fieldset ng-disabled="childFormDisabled">
+								<div
+									ng-include="'partials/modules/mangeLibrary/ChildBookPartial.html'"></div>
+							</fieldset>
+						</form>
+					</div>
+				 </div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary pull-left" data-dismiss="modal"
+			aria-hidden="true">
+			<i class="fa fa-arrow-circle-left"> Back</i>
+		</button>
+
+<!-- 		<button class="btn btn-primary pull-right"> -->
+<!-- 			<i class="fa fa-edit"> View/Edit/update</i> -->
+<!-- 		</button> -->
+		<button class="btn {{buttonStyle}} pull-right"
+					ng-click="signupForm()" ng-if="modalCode!='view'">
+					<i class="fa fa-edit"> {{childModalTitle}}</i>
+				</button>
+	</div>
+</div>

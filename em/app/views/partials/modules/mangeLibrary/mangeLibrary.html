@@ -49,9 +49,9 @@
                 <div class="col-md-1 div-table-td">{{book.parentbook.isbn}}</div>
                 <div class="col-md-2 div-table-td">{{book.parentbook.categoryName}}</div>
                 <div class="col-md-2 div-table-td">
-                    <a href="#" data-toggle="tooltip" title="Click to view book details"><i class="fa fa-eye" role="button" data-toggle="modal" ></i></a> &nbsp;|&nbsp;
-                    <a href="#" data-toggle="tooltip" title="Click to update book details"><i class="fa fa-pencil" role="button" data-toggle="modal" ></i></a> &nbsp;|&nbsp;
-                    <a href="#" data-toggle="tooltip" title="Click to delete book"><i class="fa fa-times-circle" role="button" data-toggle="modal" ></i></a>&nbsp;|&nbsp;
+                    <a href="#" data-toggle="tooltip" title="Click to view book details"><i class="fa fa-eye" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'view')"></i></a> &nbsp;|&nbsp;
+                    <a href="#" data-toggle="tooltip" title="Click to update book details"><i class="fa fa-pencil" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'update')"></i></a> &nbsp;|&nbsp;
+                    <a href="#" data-toggle="tooltip" title="Click to delete book"><i class="fa fa-times-circle" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'delete')"></i></a>&nbsp;|&nbsp;
 
                     <i class="cursor-pointer fa " ng-class="!book.isChildOpen?'fa-chevron-down':'fa-chevron-up'" role="button" ng-click="toggleMapKeyValue(book,'isChildOpen')" ></i>
                 </div>
@@ -61,4 +61,7 @@
         </div>
     </div>
     <div ng-include="'partials/modules/mangeLibrary/addBook.html'"></div>
+    <div ng-include="'partials/modules/mangeLibrary/childBookAddforSmy.html'"></div>
+    <div ng-include="'partials/modules/mangeLibrary/childBookforViewEditDelSmy.html'"></div>
+    <div ng-include="'partials/modules/mangeLibrary/parentBookViewEditDelforSmy.html'"></div>
 </div>
