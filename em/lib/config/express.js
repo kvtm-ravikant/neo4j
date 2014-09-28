@@ -37,12 +37,10 @@ module.exports = function(app) {
      app.engine('html', require('ejs').renderFile);
      app.set('view engine', 'html');
      app.use(express.logger('dev'));
-     app.use(express.bodyParser());
+     app.use(express.bodyParser({limit: '50mb'}));
      app.use(express.methodOverride());
      app.use(express.cookieParser());
      app.use(express.session({ secret: 'em 2014' }));
-     app.use(express.json({limit: '50mb'}));
-     app.use(express.urlencoded({limit: '50mb'}));
      // Router needs to be last
      app.use(app.router);
   });
