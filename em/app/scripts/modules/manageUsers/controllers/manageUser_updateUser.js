@@ -263,9 +263,14 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
   		$('#retryModel').modal('hide');
    }
     $scope.getBackFromModal=function(){
-        $scope.modelBack=true;
-        $('#retryModel').modal({"backdrop": "static","show":true});
-        $scope.alertText="You are sure you want to go back. You will loose un-saved data.";
+        if($scope.modalCode!='view'){
+            $scope.modelBack=true;
+            $('#retryModel').modal({"backdrop": "static","show":true});
+            $scope.alertText="You are sure you want to go back. You will loose un-saved data.";
+        }else{
+            $('#modalUpdate').modal('hide');
+        }
+
 
     }
     $scope.resetUserClass=function(){

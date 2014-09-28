@@ -106,12 +106,67 @@
 								<li><a href="#secondaryCntInfo" data-toggle="tab">Secondary
 										Contact Info</a></li>
 								<li><a href="#othrInfo" data-toggle="tab">Other Info</a></li>
-								<li><a href="#accInfo" data-toggle="tab">Account Info</a></li>
+								<!--<li><a href="#accInfo" data-toggle="tab">Account Info</a></li>-->
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="basicInfo">
+
 									<form class="form-horizontal" role="form" id="basicDetailsForm"
 										name="basicDetailsForm">
+                                        <div class="form-group">
+                                            <label for="validation-select"
+                                                   class="col-sm-3 control-label">User Type<span
+                                                    style="color: red">&nbsp;*</span>
+                                            </label>
+                                            <div class="col-sm-6"
+                                                 ng-if="modalCode=='add'">
+                                                <select  name="validation-select"
+                                                        class="btn btn-media dropdown-toggle form-control"
+                                                        data-ng-model="userSelectedClass.basicDetails.userType">
+                                                    <option>Select User Type</option>
+                                                    <option ng-repeat="item in lovMapToArr(userType) | orderBy:'___name___':false "
+                                                            ng-selected="item.key==userSelectedClass.basicDetails.userType"
+                                                            value="{{item.key}}">{{item.___name___}} </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4"
+                                                 ng-if="modalCode=='view'||modalCode=='update'||modalCode=='delete'">{{userType[userSelectedClass.basicDetails.userType].___name___}}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="inputUsername">Username<span
+                                                    style="color: red">&nbsp;*</span></label>
+                                            <div class="col-sm-6"
+                                                 ng-if="modalCode=='add'||modalCode=='update'">
+                                                <input type="text" id="inputUsername"
+                                                       placeholder="What's your user name" class="form-control"
+                                                       required
+                                                       ng-model="userSelectedClass.basicDetails.userName"
+                                                       ng-if="modalCode=='update'" disabled /> <input type="text"
+                                                                                                      id="inputUsername" name="inputUsername" placeholder="What's your user name"
+                                                                                                      class="form-control" title="User Name is required !"
+                                                                                                      required ng-minlength=3 ng-maxlength=20
+                                                                                                      ng-model="userSelectedClass.basicDetails.userName"
+                                                                                                      ng-if="modalCode=='add'" /> <span
+                                                    ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.userName}}</span>
+                                                <div class="error-container"
+                                                     ng-show="basicDetailsForm.inputUsername.$dirty && basicDetailsForm.inputUsername.$invalid">
+                                                    <small class="error"
+                                                           ng-show="basicDetailsForm.$error.minlength">Username is required to be at least 3 characters.</small> <small
+                                                        class="error"
+                                                        ng-show="basicDetailsForm.$error.maxlength">Username
+                                                    Id cannot be longer than 20 characters.</small>
+                                                </div>
+                                            </div>
+                                            <div ng-if="modalTitle=='Add User'"
+                                                 ng-if="modalCode=='add'||modalCode=='update'">
+													<span ng-if="userAvailable == 0" style="color: green">{{userAvailable['userName']}}
+														is Available</span> <span ng-if="userAvailable != 0"
+                                                                                  style="color: red"> is not Available !</span>
+                                                <button class="btn" ng-click="getUserNameAvailabity()">Available
+                                                    ?</button>
+                                            </div>
+                                            <div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.userName}}</div>
+                                        </div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label">Registration ID
 												<span style="color: red">&nbsp;*</span>
@@ -840,80 +895,7 @@
 										</fieldset>
 									</form>
 								</div>
-								<div class="tab-pane" id="accInfo">
-									<form class="form-horizontal" role="form" id="accInfoForm" name="accInfoForm">
-										<fieldset>
-											<div class="form-group">
-												<label for="validation-select"
-													class="col-sm-3 control-label">User Type<span
-													style="color: red">&nbsp;*</span>
-												</label>
-												<div class="col-sm-6"
-													ng-if="modalCode=='add'">
-													<select id="birthPlaceCntry" name="validation-select"
-														class="btn btn-media dropdown-toggle form-control"
-														data-ng-model="userSelectedClass.basicDetails.userType">
-														<option>Select User Type</option>
-														<option ng-repeat="(key, value) in userType"
-														ng-selected="key==userSelectedClass.basicDetails.userType"
-															value="{{key}}">{{value.___name___}} </option>
-													</select>
-												</div>
-												<div class="col-md-4"
-													ng-if="modalCode=='view'||modalCode=='update'||modalCode=='delete'">{{userType[userSelectedClass.basicDetails.userType].___name___}}</div>
-											</div>
-											
-											<div class="form-group">
-												<label class="col-sm-3 control-label" for="inputUsername">Username<span
-													style="color: red">&nbsp;*</span></label>
-												<div class="col-sm-6"
-													ng-if="modalCode=='add'||modalCode=='update'">
-													<input type="text" id="inputUsername"
-														placeholder="What's your user name" class="form-control"
-														title="User Name is required !" required
-														ng-model="userSelectedClass.basicDetails.userName"
-														ng-if="modalCode=='update'" disabled /> <input type="text"
-														id="inputUsername" name="inputUsername" placeholder="What's your user name"
-														class="form-control" title="User Name is required !"
-														required ng-minlength=3 ng-maxlength=20
-														ng-model="userSelectedClass.basicDetails.userName"
-														ng-if="modalCode=='add'" /> <span
-														ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.userName}}</span>
-													<div class="error-container"
-														ng-show="accInfoForm.inputUsername.$dirty && accInfoForm.inputUsername.$invalid">
-														<small class="error"
-															ng-show="accInfoForm.$error.minlength">Username is required to be at least 3 characters.</small> <small
-															class="error"
-															ng-show="accInfoForm.$error.maxlength">Username
-															Id cannot be longer than 20 characters.</small>
-													</div>
-												</div>
-												<div ng-if="modalTitle=='Add User'"
-													ng-if="modalCode=='add'||modalCode=='update'">
-													<span ng-if="userAvailable == 0" style="color: green">{{userAvailable['userName']}}
-														is Available</span> <span ng-if="userAvailable != 0"
-														style="color: red"> is not Available !</span>
-													<button class="btn" ng-click="getUserNameAvailabity()">Available
-														?</button>
-												</div>
-												<div class="col-md-4" ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.userName}}</div>
-											</div>
 
-											<div class="form-group"
-												ng-if="modalCode=='add'||modalCode=='update'">
-												<label class="col-sm-3 control-label" for="imgInp">Upload
-													Image</label>
-												<div class="col-sm-4">
-													<input class="control-label" type='file' id="imgInp"
-														ng-click="openFileBrowser()" accept="image/*"
-														image="image2" resize-max-height="180"
-														resize-max-width="150" resize-quality="0.7" />
-												</div>
-											</div>
-
-										</fieldset>
-									</form>
-								</div>
 							</div>
 						</div>
 						<div class="col-md-2" ng-if="modalCode=='update' || modalCode=='add'">
