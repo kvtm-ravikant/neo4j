@@ -579,8 +579,8 @@
 															class="btn btn-media dropdown-toggle form-control"
 															data-ng-model="userSelectedClass.SecondaryAddress.country">
 															<option value="">Select Country</option>
-															<option ng-repeat="(key, value) in countryStateCity" ng-selected="key==userSelectedClass.SecondaryAddress.country"
-																value="{{key}}">{{value.___name___}}</option>
+															<option ng-repeat="item in lovMapToArr(countryStateCity) | orderBy:'___name___':false" ng-selected="item.key==userSelectedClass.SecondaryAddress.country"
+																value="{{item.key}}">{{item.___name___}}</option>
 														</select>
 														<div class="col-md-4"
 															ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.SecondaryAddress.country].___name___}}</div>
@@ -597,9 +597,9 @@
 															ng-if="userSelectedClass.SecondaryAddress.country">
 															<option value="">Select State</option>
 															<option
-																ng-repeat="(key, state) in countryStateCity[userSelectedClass.SecondaryAddress.country]"
-																ng-selected="key==userSelectedClass.SecondaryAddress.state"
-																ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
+																ng-repeat="item in lovMapToArr(countryStateCity[userSelectedClass.SecondaryAddress.country]) "
+																ng-selected="item.key==userSelectedClass.SecondaryAddress.state"
+																 value="{{item.key}}">{{item.___name___}}</option>
 														</select>
 													</div>
 													<div class="col-md-4"
@@ -616,11 +616,11 @@
 															class="btn btn-media dropdown-toggle form-control"
 															data-ng-model="userSelectedClass.SecondaryAddress.city"
 															ng-if="userSelectedClass.SecondaryAddress.state">
-															<option value="">Select State</option>
+															<option value="">Select City</option>
 															<option
-																ng-repeat="(key, city) in countryStateCity[userSelectedClass.SecondaryAddress.country][userSelectedClass.SecondaryAddress.state]"
-																ng-selected="key==userSelectedClass.SecondaryAddress.city"
-																ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
+																ng-repeat="item in lovMapToArr(countryStateCity[userSelectedClass.SecondaryAddress.country][userSelectedClass.SecondaryAddress.state]) | orderBy:'___name___':false "
+																ng-selected="item.key==userSelectedClass.SecondaryAddress.city"
+																 value="{{item.key}}">{{item.___name___}}</option>
 														</select>
 													</div>
 													<div class="col-md-4"
@@ -670,8 +670,8 @@
 															class="btn btn-media dropdown-toggle form-control"
 															data-ng-model="userSelectedClass.basicDetails.birthPlace_country">
 															<option value="">Select Country</option>
-															<option ng-repeat="(key, value) in countryStateCity" ng-selected="key==userSelectedClass.basicDetails.birthPlace_country"
-																value="{{key}}">{{value.___name___}}</option>
+															<option ng-repeat="item in lovMapToArr(countryStateCity) | orderBy:'___name___':false" ng-selected="item.key==userSelectedClass.basicDetails.birthPlace_country"
+																value="{{item.key}}">{{item.___name___}}</option>
 														</select>
 													</div>
 													<div class="col-md-4"
@@ -691,9 +691,9 @@
 															ng-if="userSelectedClass.basicDetails.birthPlace_country">
 															<option value="">Select State</option>
 															<option
-																ng-repeat="(key, state) in countryStateCity[userSelectedClass.basicDetails.birthPlace_country]"
-																ng-selected="key==userSelectedClass.basicDetails.birthPlace_state"
-																ng-if="key!='___name___'" value="{{key}}">{{state.___name___}}</option>
+																ng-repeat="item in lovMapToArr(countryStateCity[userSelectedClass.basicDetails.birthPlace_country]) | orderBy:'___name___':false "
+																ng-selected="item.key==userSelectedClass.basicDetails.birthPlace_state"
+																ng-if="item.key!='___name___'" value="{{item.key}}">{{item.___name___}}</option>
 														</select>
 													</div>
 													<div class="col-md-4"
@@ -713,9 +713,9 @@
 															ng-if="userSelectedClass.basicDetails.birthPlace_state">
 															<option value="">Select City</option>
 															<option
-																ng-repeat="(key, city) in countryStateCity[userSelectedClass.basicDetails.birthPlace_country][userSelectedClass.basicDetails.birthPlace_state]"
-																ng-selected="key==userSelectedClass.basicDetails.birthPlace_city"
-																ng-if="key!='___name___'" value="{{key}}">{{city.___name___}}</option>
+																ng-repeat="item in lovMapToArr(countryStateCity[userSelectedClass.basicDetails.birthPlace_country][userSelectedClass.basicDetails.birthPlace_state]) | orderBy:'___name___':false "
+																ng-selected="item.key==userSelectedClass.basicDetails.birthPlace_city"
+																ng-if="item.key!='___name___'" value="{{item.key}}">{{item.___name___}}</option>
 														</select>
 													</div>
 													<div class="col-md-4"

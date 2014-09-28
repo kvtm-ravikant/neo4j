@@ -532,7 +532,7 @@ module.exports = {
 		            "___name___": "Tripura-Other"
 		        }
 		    },
-		    "": {
+		    "UT": {
 		        "___name___": "Uttaranchal",
 		        "DEH": {
 		            "___name___": "Dehradun"
