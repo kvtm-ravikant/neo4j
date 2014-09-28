@@ -77,7 +77,7 @@ module.exports=function(app,Utils){
                 ]
             },
           hiddenObject:{
-              profileImagePath:"images/userProfile/"+clonedUserDetails.schoolDetails.schoolId.replace(/:/g,"_")+"_"+clonedUserDetails.basicDetails.regID+".png",
+              profileImagePath:clonedUserDetails.basicDetails.profileImagePath,
               fullName:getFullName(clonedUserDetails.basicDetails)
           }
 

@@ -164,15 +164,15 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     		errorObj.error=true
             errorObj.errorMsg.push("You don't have First Name ? Enter your first Name.");
 		}
-    	if(!basicDetails.lastName && (basicDetails.lastName && basicDetails.lastName.trim().length<3)){
+    	if(!basicDetails.lastName || (basicDetails.lastName && basicDetails.lastName.trim().length<3)){
     		errorObj.error=true;
             errorObj.errorMsg.push("What about Last name. It's needed.");
 		}
-    	if(!basicDetails.sex && (basicDetails.sex && basicDetails.sex.length<1)){
+    	if(!basicDetails.sex || (basicDetails.sex && basicDetails.sex.length<1)){
     		errorObj.error=true;
             errorObj.errorMsg.push("Choose your gender.");
 		}
-		if(!basicDetails.DOB && (basicDetails.DOB && basicDetails.DOB.length<6) ){
+		if(!basicDetails.DOB || (basicDetails.DOB && basicDetails.DOB && basicDetails.DOB.length<6) ){
     		errorObj.error=true;
             errorObj.errorMsg.push("What is your birthday ?");
 		}
@@ -180,14 +180,14 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         var primaryAddress=$scope.userSelectedClass.primaryAddress;
         if(!((contact.phonePrimary && contact.phonePrimary.trim().length>3) ||
             (contact.emailPrimary && appUtils.validateEmail(contact.emailPrimary)) ||
-            ((primaryAddress.street1 && primaryAddress.street1.length<5 )
-                && (primaryAddress.country.length<1)
-                && (primaryAddress.state && primaryAddress.state.length<2 )
-                && (primaryAddress.pincode && primaryAddress.pincode.length!=6 )
-                && (primaryAddress.city && primaryAddress.city.length<3)
-                )
-
-          )){
+            (      primaryAddress.street1
+                && primaryAddress.country
+                && primaryAddress.state
+                && (primaryAddress.pincode && primaryAddress.pincode.length==6 )
+                && primaryAddress.city
+            )
+            )
+          ){
             errorObj.error=true;
             errorObj.errorMsg.push("Please enter Primary Phone Number or Primary Email Address OR Primary Complete residential address.");
         }
@@ -523,11 +523,11 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
                 appUtils.showError("Please choose a .png  or .jpg or .jpeg file.");
                 return;
             }
-            if (file.size>30000) {
+            /*if (file.size>30000) {
                 $(input).val("");
                 appUtils.showError("Please choose file of size less than 30KB.");
                 return;
-            }
+            }*/
             try{
                 var reader = new FileReader();
                 reader.onload = function(e) {

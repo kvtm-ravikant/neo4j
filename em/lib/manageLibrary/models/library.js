@@ -178,7 +178,7 @@ module.exports.addNewBook=function(requestObj,res){
 
         var findParentISBN = 'MATCH (n:ParentBook {isbn:"123"}) RETURN n';
         
-        db.cypherQuery("findParentISBN",findParentISBN, function(err, result) {
+        db.cypherQuery(findParentISBN, function(err, result) {
             console.log("findParentISBN",err, result)
             if(err || !result || (result && result.data && result.data.length==0)){
             	var parentBookDetails=fillParentBookValues(requestObj.parentbook);
@@ -199,23 +199,23 @@ module.exports.addNewBook=function(requestObj,res){
                             if (!err && addChildReply && addChildReply.hasOwnProperty('_id')) {
                                 if(!err){
                                     insertionStatus["ChildBook"]=true;
+                                    var childBookNodID=addChildReply._id;
+                                    db.insertRelationship(parentBookNodeID,childBookNodID,"CHILDBOOK_OF",{},function(err,resultRel){
+                                        console.log("associate childBook to ParentBook",err,resultRel);
+                                        if(!err){
+                                            insertionStatus["ParentBook-[CHILDBOOK_OF]-ChildBook"]=true;
+                                            res.json(responseObj);
+                                        }else{
+                                            Utils.defaultErrorResponse(res,defaultErrorMsg);
+                                        }
+                                    });
+                                }else{
+                                    Utils.defaultErrorResponse(res,defaultErrorMsg);
                                 }
-                                var childBookNodID=addChildReply._id;
-                                //associate childBook to ParentBook                                
-//                                db.insertRelationship(parentBookNodeID,childBookNodID,"PARENTBOOK_OF",{},function(err,resultRel){
-                                db.insertRelationship(childBookNodID,parentBookNodeID,"CHILDBOOK_OF",{},function(err,resultRel){
-                                		console.log("associate childBook to ParentBook",err,resultRel);
-                                    if(!err){
-                                        insertionStatus["ParentBook-[CHILDBOOK_OF]-ChildBook"]=true;
-                                    }
-                                });
+                            }else{
+                                Utils.defaultErrorResponse(res,defaultErrorMsg);
                             }
                         });
-                        setTimeout(function(){
-                            console.log("insertionStatus",insertionStatus);
-                            responseObj.responseData=insertionStatus;
-                            res.json(responseObj);
-                        },200);
                     } else {
                         Utils.defaultErrorResponse(res,defaultErrorMsg);
                     }
@@ -235,14 +235,14 @@ function fillParentBookValues(parentBookDetails){
     var currentTimestamp=(new Date()).getTime();
 //    parentBookDetails.updatedAt=currentTimestamp;
 //    parentBookDetails.createdAt=currentTimestamp;
-    parentBookDetails.softDelete="FALSE";
+    parentBookDetails.softDelete=false;
     return parentBookDetails;
 };
 function fillChildBookValues(childBookDetails){
     var currentTimestamp=(new Date()).getTime();
     childBookDetails.updatedDate=currentTimestamp;
     childBookDetails.createdDate=currentTimestamp;
-    childBookDetails.softDelete="FALSE";
+    childBookDetails.softDelete=false;
     return childBookDetails;
 }
     
