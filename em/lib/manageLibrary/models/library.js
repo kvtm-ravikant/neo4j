@@ -176,7 +176,7 @@ module.exports.addNewBook=function(requestObj,res){
         var responseObj = new Utils.Response();
         var defaultErrorMsg="Failed to add Book. Please contact administrator.";
 
-        var findParentISBN = 'MATCH (n:ParentBook {isbn:"123"}) RETURN n';
+        var findParentISBN = '(pb{isbn:"123"})-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb';
         
         db.cypherQuery(findParentISBN, function(err, result) {
             console.log("findParentISBN",err, result)
