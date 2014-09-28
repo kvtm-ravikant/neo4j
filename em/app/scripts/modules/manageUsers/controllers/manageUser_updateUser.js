@@ -239,20 +239,35 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
  
     $scope.ok=function(){
 //   	console.log("retry model");
-	   if($scope.modalCode && $scope.modalCode=='update'){
-		   $scope.updateUserClass();   
-	   }
-	   else if($scope.modalCode && $scope.modalCode=='delete'){
+       if($scope.modelBack){
+           $scope.modelBack=false;
+           $('#retryModel').modal('hide');
+           $('#modalUpdate').modal('hide');
+       }else if($scope.modalCode && $scope.modalCode=='update'){
+		   $scope.updateUserClass();
+           $('#retryModel').modal('hide');
+	   }else if($scope.modalCode && $scope.modalCode=='delete'){
    			$scope.deleteUserClass();
-	   }
-   		$('#retryModel').modal('hide');
+           $('#retryModel').modal('hide');
+	   }else{
+           $('#retryModel').modal('hide');
+       }
+
     }
 
    $scope.cancel=function(){
 //  	console.log("retry model");
+       if( $scope.modelBack){
+           $scope.modelBack=false;
+       }
   		$('#retryModel').modal('hide');
    }
-   
+    $scope.getBackFromModal=function(){
+        $scope.modelBack=true;
+        $('#retryModel').modal({"backdrop": "static","show":true});
+        $scope.alertText="You are sure you want to go back. You will loose un-saved data.";
+
+    }
     $scope.resetUserClass=function(){
     	$scope.userSelectedClass=angular.copy($scope.userSelectedClone);
 //    	$scope.userForm.$setPristine();
@@ -265,7 +280,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 //    	console.log(angular.equals($scope.userSelectedClass, $scope.userSelectedClone));
     	return angular.equals($scope.userSelectedClass, $scope.userSelectedClone);
     };
- 
+
     /*
      * Back button functionality
      */
@@ -541,7 +556,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     
     $scope.openModal=function(code){
         $scope.modalTitle="";
-        $scope.modalCode=code;
+        $scope.modalCode=code || $scope.modalCode;
         $scope.buttonStyle='btn-primary';
         code && code=='add'?$scope.modalTitle="Add User":"";
         code && code=='update'?$scope.modalTitle="Update User":"";
