@@ -4,7 +4,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 
     //open Search box
     $scope.isSearchBoxOpened=false;
-    
+    //child Books array for adding dynamic tabs
+    $scope.childBooks = [];
+        
     $scope.openSearchBox=function(){
         $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
     }
@@ -16,14 +18,15 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
                         $scope.booksList=dataResponse.responseData;
                     })
                 }
-
             );
     var bookClassPOJO;
+    var selectedBookPOJO;
     //get POJO book
     libraryService.getBookPOJO().then(
                 function(dataResponse){
                     appUtils.defaultParseResponse(dataResponse,function(dataResponse){
                        bookClassPOJO=appUtils.cloneJSObj(dataResponse);
+                       selectedBookPOJO=appUtils.cloneJSObj(dataResponse);
                        $scope.bookClass=dataResponse;
                        $scope.parentBook=dataResponse.parentbook;
                        $scope.childBookArray=dataResponse.children;
@@ -61,6 +64,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 
     $scope.openAddBookForm=function(){
         $('#addBookToLib').modal('show');
+        $scope.childBooks = [];
     }
 
     /* 
@@ -78,7 +82,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
             //success
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
                 console.log("addNewBook - dataResponse",dataResponse)
-//                $scope.parentBook=dataResponse.responseData;
+                $scope.parentBook=dataResponse.responseData;
             });
         }).error(function(data,status,headers,config){
             //error
@@ -88,13 +92,19 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     };
     
      var validateParentBook=function(){
+
     	 var messageQue=[];
    	  	 var errorObj={error:false,errorMsg:[]};
    	  	 
-//      if($scope.parentBook.bindingType.length<1|| angular.isUndefined($scope.parentBook.bindingType)){
-//    	  errorObj.error=true
-//          errorObj.errorMsg.push("Binding Typeis not valid.");
+   	  	 var messageParentQue=[];
+   	  	 var errorParentObj={error:false,errorMsg:[]};
+	  	 
+   	  	 
+//      if($scope.parentBook._id.length<1|| angular.isUndefined($scope.parentBook._id)){
+//    	  errorParentObj.error=true
+//    	  errorParentObj.errorMsg.push("Book is not added. Please contact administrator");
 //      };
+   	  	 
       if($scope.parentBook.bookTitle.length<3|| angular.isUndefined($scope.parentBook.bookTitle)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Book Title is not valid.");
@@ -135,7 +145,6 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	  errorObj.error=true
           errorObj.errorMsg.push("Doc Type is not valid.");  
       }
-      
       if(errorObj.error==true){
     	  errorObj.errorMsg.push("Please complete the Book Details Form.");
       }
@@ -143,55 +152,50 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 
     	var erroMsg=errorObj.errorMsg.join('<br>');
     	
-    	if(erroMsg.length>0){
-    		appUtils.showError(erroMsg);	
-    	}
+//    	var errorMsg=errorParentObj.errorMsg.join('<br>');
     	
-    	return errorObj.error;
+//    	if(errorParentObj.error=true){
+//    		appUtils.showError(errorMsg);	
+//    		return errorParentObj.error;
+//    	}
+//    	else 
+    		if(erroMsg.length>0){
+    		appUtils.showError(erroMsg);
+    		return errorObj.error;
+    	}
     }
     
    var validateChildBook=function(childBook){
 	   console.log("validateChildBook :  childBook ", childBook);	   
-//    	for(var i=0; i<$scope.childBooks.length;i++){
-//			console.log("$scope.childBooks[i] : ",$scope.childBooks[i], "$scope.childBooks ",$scope.childBooks);	
-//			$scope.bookClass.children[0]=$scope.childBooks[i].modal;
-//		}
-   		var messageQue=[];
+
+	    var messageQue=[];
    		var errorObj={error:false,errorMsg:[]};
   	 
-   		if(childBook.modal.bookId.length<1|| angular.isUndefined(childBook.modal.bookId)){
+   		if(childBook.bookId.length<1|| angular.isUndefined(childBook.bookId)){
 	    	 errorObj.error=true
 	    	 errorObj.errorMsg.push("Book Id is not valid.");
 	    }
-   		if(childBook.modal.bookStatus.length<1|| angular.isUndefined(childBook.modal.bookStatus)){
+   		if(childBook.bookStatus.length<1|| angular.isUndefined(childBook.bookStatus)){
 	    	 errorObj.error=true
 	    	 errorObj.errorMsg.push("Book Status is not valid.");
 	    }
-   		if(childBook.modal.outletName.length<1 || angular.isUndefined(childBook.modal.outletName)){
+   		if(childBook.outletName.length<1 || angular.isUndefined(childBook.outletName)){
    			errorObj.error=true
    			errorObj.errorMsg.push("OutLet is not valid.");
    		}
-   		if(childBook.modal.location.length<1 || angular.isUndefined(childBook.modal.location)){
+   		if(childBook.location.length<1 || angular.isUndefined(childBook.location)){
    			errorObj.error=true
    			errorObj.errorMsg.push("Location is not valid.");
    		}
-//   		if(childBook.modal.purchaseDate.length<1 || angular.isUndefined(childBook.modal.purchaseDate)){
-//   			errorObj.error=true
-//   			errorObj.errorMsg.push("Purchase Date is not valid.");
-//   		}
-//   		if(childBook.modal.publicationDate.length<1 || angular.isUndefined(childBook.modal.publicationDate)){
-//   			errorObj.error=true
-//   			errorObj.errorMsg.push("Publication Date is not valid.");
-//   		}
-   		if(childBook.modal.pricePaid.length<1 || angular.isUndefined(childBook.modal.pricePaid)){
+   		if(childBook.pricePaid.length<1 || angular.isUndefined(childBook.pricePaid)){
    			errorObj.error=true
    			errorObj.errorMsg.push("Price is not valid.");
    		}
-   		if(childBook.modal.barCode.length<1 || angular.isUndefined(childBook.modal.barCode)){
+   		if(childBook.barCode.length<1 || angular.isUndefined(childBook.barCode)){
    			errorObj.error=true
    			errorObj.errorMsg.push("Bar Code is not valid.");
    		}
-   		if(childBook.modal.description.length<1 || angular.isUndefined(childBook.modal.description)){
+   		if(childBook.description.length<1 || angular.isUndefined(childBook.description)){
    			errorObj.error=true
    			errorObj.errorMsg.push("Description is not valid.");
    		}
@@ -214,15 +218,15 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    $scope.addChildTab=function(){
    	console.log("addChildTab ");
    	if(!validateParentBook()){
-   		setAllInactive();
-        addNewchildBook();
-   	}
-   	  
+   		addCompleteBook();
+//   		setAllInactive();
+//        addNewchildBook();
+   	}   	  
 //         validateParentBook();
 //         console.log("validateParentBook ",validateParentBook());
    }
    
-   $scope.childBooks = [];
+  
    
    var setAllInactive = function() {
    	console.log("setAllInactive ");
@@ -231,10 +235,25 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
        });
    };
     var addNewchildBook = function() {
-         var childBookPoJO=appUtils.cloneJSObj(bookClassPOJO.children[0]);
-        $scope.childBooks.push(childBookPoJO);
-         console.log("childBookPoJO",childBookPoJO);
-    	// var id = $scope.childBooks.length;
+    	var childBookPoJO=appUtils.cloneJSObj(bookClassPOJO.children[0]);
+    	
+    	if($scope.childBooks.length<1){
+    		 $scope.childBooks.push(childBookPoJO);
+    	}
+    	else if($scope.childBooks.length<3 && $scope.childBooks.length>0){
+    		console.log("$scope.childBooks ",$scope.childBooks, "kgsad ",$scope.childBooks.length,"  $scope.bookClass : ", $scope.bookClass);	
+    		if(!validateChildBook($scope.childBooks[($scope.childBooks.length-1)])){
+//    			for(var i=0; i<$scope.childBooks.length;i++){
+//        			console.log("$scope.childBooks[i] : ",$scope.childBooks[i], "$scope.childBooks ",$scope.childBooks);	
+//        		}
+    			$scope.childBooks.push(childBookPoJO);
+    		}
+    		
+    	}
+       
+        console.log("childBookPoJO",childBookPoJO);
+    	
+        // var id = $scope.childBooks.length;
     	/*if($scope.childBooks.length<1){
     		$scope.childBooks.push({
                 id: id+1,
@@ -258,7 +277,8 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     };
  
    $scope.onSubmitBook=function(){
-	   if(!validateChildBook($scope.childBooks[0]))
+//	   if(!validateChildBook($scope.childBooks[0]))
+//	   if(!validateParentBook())
 		   addCompleteBook();
    }
  
@@ -289,11 +309,180 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 //	   $scope.parentBook.
 	   angular.copy(book.parentbook,$scope.parentBook);
    }
+   
+   $scope.alertText="";
+   $scope.updateDeleteParentBook=function()
+   {
+   	 
+   	console.log("$scope.parentModalTitle : ParentBook", $scope.parentModalTitle, $scope.parentModalCode);
+   	   	
+    if($scope.parentModalCode && $scope.parentModalCode=='update'){
+   		$('#retryModel').modal({"backdrop": "static","show":true});
+   		 $scope.alertText="Book details has been changed. Do you want to proceed ?";
+//    	console.log("Update Parent Book ",$scope.parentBook);
+   	}
+   	else if($scope.parentModalCode && $scope.parentModalCode=='delete'){
+   		$('#retryModel').modal({"backdrop": "static","show":true});
+   		$scope.alertText="You are about to delete a Book. Please confirm.";
+//   		console.log("Update Parent Book ",$scope.parentBook);
+   	}
+   	else if($scope.childModalCode && $scope.childModalCode=='update'){
+   		$('#retryModel').modal({"backdrop": "static","show":true});
+   		 $scope.alertText="Book Copy has been changed. Do you want to proceed ?";
+   	}
+   	else if($scope.childModalCode && $scope.childModalCode=='delete'){
+   		$('#retryModel').modal({"backdrop": "static","show":true});
+   		$scope.alertText="You are about to delete a Book Copy. Please confirm.";
+   		
+   	}
+   }
+   
+   $scope.ok=function(){
+  	console.log("retry model");
+  		if($scope.parentModalCode && $scope.parentModalCode=='update'){
+		  $scope.updateParentBook();
+          $('#retryModel').modal('hide');
+	   }else if($scope.parentModalCode && $scope.parentModalCode=='delete'){
+		   $scope.deleteParentBook();
+		   $('#retryModel').modal('hide');
+	   }
+	   else 
+		   if($scope.childModalCode && $scope.childModalCode=='update'){
+		  $scope.updateChildBook();
+		  $('#retryModel').modal('hide');
+	   }else if($scope.childModalCode && $scope.childModalCode=='delete'){
+		   $scope.deleteChildBook();
+		   $('#retryModel').modal('hide');
+	   }else{
+          $('#retryModel').modal('hide');
+      }
+   }
+
+  $scope.cancel=function(){
+	$('#retryModel').modal('hide');
+  }
+
+  /*
+   * Update ParentBook function call to update Parent Book
+   */
+   $scope.updateParentBook=function()
+   {
+//   	console.log("$scope.updateParentBook :",$scope.parentBook);
+		var selectedISBN = $scope.parentBook.isbn;
+		$http({
+			method : 'POST',
+			url : '/manageLibrary/updateParentBook',
+			data : $scope.parentBook,
+			headers : {
+				'Content-Type' : 'application/json'
+			}
+		}).success(function(dataResponse, status, headers,config) {
+           // success
+           appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+               console.log("updateParentBook - dataResponse",dataResponse)
+               
+               $scope.parentBook = dataResponse.responseData;
+              
+               appUtils.showSuccess("Book ISBN "+selectedISBN+" updated successfully");
+               $('#parentBookViewEditDelforSmy').modal('hide');
+           });
+       }).error(function(data, status, headers, config) {
+           // error
+           console.log("Error", data, status,headers, config);
+       });
+   }
+  
+   /*
+    * Delete Parent Book function call to Delete Parent Book
+    */
+    $scope.deleteParentBook=function()
+    {
+    	console.log("$scope.deleteParentBook :",$scope.parentBook);
+		$http({
+			method : 'POST',
+			url : '/manageLibrary/deleteParentBook',
+			data : $scope.parentBook,
+			headers : {
+				'Content-Type' : 'application/json'
+			}
+		}).success(function(dataResponse, status, headers,config) {
+           // success
+           appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+               console.log("deleteParentBook - dataResponse",dataResponse)
+               appUtils.showSuccess("Book "+$scope.parentBook.isbn+" deleted successfully");
+               $('#parentBookViewEditDelforSmy').modal('hide');
+           });
+       }).error(function(data, status, headers, config) {
+           // error
+           console.log("Error", data, status,headers, config);
+       });
+    };
+    
+    /*
+     * Update childBook function call to update Parent Book
+     */
+     $scope.updateChildBook=function()
+     {
+     	console.log("$scope.updateChildBook :",selectedBookPOJO);
+  		var selectedISBN = selectedBookPOJO.parentbook.isbn;
+  		var selectedBookId = selectedBookPOJO.children[0].bookId;
+  		$http({
+  			method : 'POST',
+  			url : '/manageLibrary/updateChildBook',
+  			data : selectedBookPOJO,
+  			headers : {
+  				'Content-Type' : 'application/json'
+  			}
+  		}).success(function(dataResponse, status, headers,config) {
+             // success
+             appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+                 console.log("updateChildBook - dataResponse",dataResponse)
+                 
+                 selectedBookPOJO = dataResponse.responseData;
+                
+                 appUtils.showSuccess("Book Copy "+selectedBookId+" of Book ISBN "+selectedISBN+" updated successfully");
+                 $('#childBookforEditViewDelete').modal('hide');
+                 $scope.searchBooks();
+             });
+         }).error(function(data, status, headers, config) {
+             // error
+             console.log("Error", data, status,headers, config);
+         });
+     }
+    
+     /*
+      * Delete Child Book function call to Delete Child Book
+      */
+      $scope.deleteChildBook=function()
+      {
+      	console.log("$scope.deleteChildBook :",$scope.parentBook);
+      	var selectedISBN = selectedBookPOJO.parentbook.isbn;
+  		var selectedBookId = selectedBookPOJO.children[0].bookId;
+  		$http({
+  			method : 'POST',
+  			url : '/manageLibrary/deleteChildBook',
+  			data : selectedBookPOJO,
+  			headers : {
+  				'Content-Type' : 'application/json'
+  			}
+  		}).success(function(dataResponse, status, headers,config) {
+             // success
+             appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+                 console.log("deleteChildBook - dataResponse",dataResponse)
+                 appUtils.showSuccess("Book Copy "+selectedBookId+" of Book ISBN "+selectedISBN+" deleted successfully");
+                 $('#childBookforEditViewDelete').modal('hide');
+                 $scope.searchBooks();
+             });
+         }).error(function(data, status, headers, config) {
+             // error
+             console.log("Error", data, status,headers, config);
+         });
+      };
 
    /*
     * Open View/Edit/Delete Child Book Modal from Summary
     */
-   $scope.openChildBookFromSmy=function(childbook, code){
+   $scope.openChildBookFromSmy=function(book, childbook, code){
 	   $scope.childModalTitle="";
        $scope.childModalCode=code;
        $scope.buttonStyle='btn-primary';
@@ -313,20 +502,50 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
        $('#childBookforEditViewDelete').modal({"backdrop": "static","show":true});
        $('#childBookforEditViewDelete').modal({"show":false});
 
-       console.log("openChildBookFromSmy.html : childbook ", childbook);	   
-//       $scope.childBooks[0].childBook.modal=childbook;
+       console.log("openChildBookFromSmy.html : childbook ", childbook," Book: ",book);	
+       
+       for(var j=0; j<book.children.length;j++){
+//    	   console.log("book.children[j] : ",book.children[j].bookId," childbook.bookId ",childbook.bookId);
+    	   if(childbook.bookId==book.children[j].bookId)
+    		   $scope.childBook=book.children[j];
+    	   
+    	   selectedBookPOJO.parentbook=book.parentbook;
+           selectedBookPOJO.children[0]=$scope.childBook;
+       }
+     
+//       console.log("selectedBookPOJO : ", selectedBookPOJO);
    }
-
    
    /*
     * Open Add Child Book Modal from Summary (+)
     */
-   
    $scope.openAddChildFromSmy=function(){
 	   $('#childBookModalforSmy').modal('show');
-	   console.log("childBooksList.html");	   
+	   console.log("childBooksList.html");	
+	   $scope.childBooks = [];
+	   
    }
 
+   
+   /*
+    *  Insert Child Book Modal in Only Add Book Copy TAB 
+    */
+   $scope.addOnlyChildTab=function(){
+	   
+	   console.log("addOnlyChildTab ",$scope.childBooks );
+	   var childBookPoJO=appUtils.cloneJSObj(bookClassPOJO.children[0]);
+   	
+   	if($scope.childBooks.length < 4){
+   		 $scope.childBooks.push(childBookPoJO);
+   	}
+   	else {
+   		appUtils.showError("Maximum 5 Book Copies can be added.")
+   	}
+   }
+   
+   /*
+    * Search Modal for Search
+    */
     $scope.searchBookModel={
         "parentBook":{
             "bookTitle":"",
@@ -347,6 +566,10 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         },
         "searchText":""
     }
+    
+    /*
+     * Search function 
+     */
     $scope.searchBooks=function(){
         console.log("$scope.searchBookModel",$scope.searchBookModel);
         $http({

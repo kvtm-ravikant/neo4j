@@ -30,7 +30,7 @@
 				<div class="col-sm-4">
 					<input type="text" id="barCode" name="barCode"
 						placeholder="Please Enter Bar Code " class="form-control"
-						ng-model="childBook.modal.barCode">
+						ng-model="childBook.barCode">
 				</div>
 			</div>
 			<div>
@@ -39,7 +39,7 @@
 				<div class="col-sm-4">
 					<select id="acqMode" name="validation-select"
 						class="btn btn-media dropdown-toggle"
-						data-ng-model="childBook.modal.acqMode">
+						data-ng-model="childBook.acqMode">
 						<option value="">Select Acquisition</option>
 						<option value="E">Exchange</option>
 						<option value="G">Gratis/Gift</option>
@@ -57,7 +57,7 @@
 				<div class="col-sm-4">
 					<input type="text" id="pricePaid"
 						placeholder="Please enter paid price" class="form-control"
-						ng-model="childBook.modal.pricePaid">
+						ng-model="childBook.pricePaid">
 				</div>
 			</div>
 			<div>
@@ -66,7 +66,7 @@
 				<div class="col-sm-4">
 					<select id="bookSts" name="validation-select"
 						class="btn btn-media dropdown-toggle"
-						data-ng-model="childBook.modal.bookStatus">
+						data-ng-model="childBook.bookStatus">
 						<option value="">Select Book Status</option>
 						<option value="A">Available</option>
 						<option value="B">Bindery</option>
@@ -84,7 +84,7 @@
 				<div class="col-sm-10">
 					<input type="text" id="outletName"
 						placeholder="Please enter the Outlet Name" class="form-control"
-						ng-model="childBook.modal.outletName" />
+						ng-model="childBook.outletName" />
 				</div>
 			</div>
 		</div>
@@ -95,7 +95,7 @@
 				<div class="col-sm-10">
 					<input type="text" id="desc"
 						placeholder="Please enter book's description here "
-						class="form-control" ng-model="childBook.modal.description">
+						class="form-control" ng-model="childBook.description">
 				</div>
 			</div>
 		</div>
@@ -106,7 +106,7 @@
 				<div class="col-sm-3">
 					<input type="text" id="loc"
 						placeholder="What is the book's location ?" class="form-control"
-						ng-model="childBook.modal.location">
+						ng-model="childBook.location">
 				</div>
 			</div>
 			<div>
@@ -116,7 +116,7 @@
 					<input type="text" id="matAcp"
 						placeholder="Material Accompanied i.e. CD, MAP etc ? Please enter"
 						class="form-control"
-						ng-model="childBook.modal.materialAccompanied">
+						ng-model="childBook.materialAccompanied">
 				</div>
 			</div>
 		</div>
@@ -126,7 +126,7 @@
 				<label class="col-sm-2 control-label" for="tag">Tag Type</label>
 				<div class="col-sm-4">
 					<input type="tag" id="tag" placeholder="What's the Tag ?"
-						class="form-control" ng-model="childBook.modal.tag">
+						class="form-control" ng-model="childBook.tag">
 				</div>
 			</div>
 			<div>

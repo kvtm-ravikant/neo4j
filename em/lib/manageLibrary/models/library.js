@@ -65,7 +65,6 @@ module.exports.getChildBooks=function(primaryKey,value,res){
     });
 }
 module.exports.searchBooks=function(requestObj,res){
-
     var parentBookObj=requestObj.parentBook;
     var query;
     if(requestObj.searchText!=""){
@@ -161,11 +160,10 @@ function addParentBook(libraryObj,parentBookObj,res){
         responseObj.errorMsg="Failed to add main book.";
         res.json(responseObj);
     }
-
 }
 module.exports.addParentBook=addParentBook;
 
-/* addChildBook - DB Insert */
+/* addChildBook - DB Insert - Start*/
 function addChildBook(res, childBookObj,parentBookNodeID){
     console.log("addChildBook Server : ", childBookObj);
     var defaultErrorMsg="Failed to this Book copy. Please contact administrator.";
@@ -193,6 +191,7 @@ function addChildBook(res, childBookObj,parentBookNodeID){
     });
 }
 module.exports.addChildBook=addChildBook;
+/* addChildBook - DB Insert - End*/
     
 function insertCompleteBook(requestObj,res,schoolID,libraryObj){
     try{
@@ -200,8 +199,10 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
         var defaultErrorMsg="Failed to add Book. Please contact administrator.";
 
         var findParentISBN = 'MATCH (pb{isbn:"'+requestObj.parentbook.isbn+'"})-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb,lib';
+        
         //parent book addition
         if(libraryObj && requestObj.parentbook.hasOwnProperty('_id') && requestObj.parentbook._id!=null){
+        	console.log("requestObj.parentbook.hasOwnProperty : ",requestObj.parentbook._id);
             db.cypherQuery(findParentISBN, function(err, result) {
                 console.log("findParentISBN",err, result);
                 if(!err || !result || (result && result.data && result.data.length==0)){
@@ -209,7 +210,8 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
                     addParentBook(libraryObj,parentBookDetails,res);
                 }
             });
-        }else{ //child Book Addition
+        }
+        else{ //child Book Addition
             var childLen=responseObj.children.length;
             if(childLen>0 && requestObj.parentbook.hasOwnProperty('_id') && requestObj.parentbook._id ){
                 var childBookObj=responseObj.children[childLen-1];
@@ -219,11 +221,8 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
                 }else{
                     Utils.defaultErrorResponse(res,childBookObj.bookId+" is already added.");
                 }
-
             }
         }
-
-
     }catch(e){
         console.log("insertCompleteBook",e);
         Utils.defaultErrorResponse(res,defaultErrorMsg);
@@ -232,8 +231,8 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
 module.exports.insertCompleteBook=insertCompleteBook;
 function fillParentBookValues(parentBookDetails){
     var currentTimestamp=(new Date()).getTime();
-    parentBookDetails.edition=parseInt(parentBookObj.edition,10);
-    parentBookDetails.bookCopies=parseInt(parentBookObj.bookCopies,10);
+    parentBookDetails.edition=parseInt(parentBookDetails.edition,10);
+    parentBookDetails.bookCopies=parseInt(parentBookDetails.bookCopies,10);
     if(isNaN(parentBookDetails.bookCopies))
         parentBookDetails.bookCopies=0;
 
@@ -249,7 +248,6 @@ function fillChildBookValues(childBookDetails){
     childBookDetails.softDelete=false;
     return childBookDetails;
 }
-    
 
 module.exports.issueBook=function(res,childBook,userID,issueDetails){
     console.log("issueBook",childBook,userID,issueDetails);
@@ -270,7 +268,6 @@ module.exports.issueBook=function(res,childBook,userID,issueDetails){
                     res.json(responseObj);
                 }
             });
-
         }else{
             responseObj.error=true;
             responseObj.errorMsg="Failed to issue Book.";
@@ -296,7 +293,6 @@ module.exports.returnBook=function(res,requestObj){
             });
         }
     })
-
 }
 module.exports.getIssuedBookDetails=function(res,bookId){
     var query='Start n=node('+bookId+') WITH n MATCH (n)-[r:ISSUED_TO]->(b) RETURN b,r';
@@ -334,7 +330,132 @@ module.exports.childBookDetailsbyIsbnBookId=function(res,bookId){
     });
 }
 
+/*
+ * Update ParentBook details
+ */
+module.exports.updateParentBook = function(parentBook,loggedInUser,schoolID,res) {
+	  try{
+	        var responseObj = new Utils.Response();
+	        var defaultErrorMsg="Failed to update Book. Please contact administrator.";
+	        var findParentISBN = 'MATCH (pb{isbn:"' + parentBook.isbn + '"})-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb';
 
+	        db.cypherQuery(findParentISBN, function(err, result) {
+	            console.log("findParentISBN",err, result)
+	            if(err || !result || (result && result.data && result.data.length==1)){
+                    var currentTimestamp=(new Date()).getTime();
+                    parentBook.updatedAt=currentTimestamp;
+                    db.updateNode(parentBook._id, parentBook, function(err, node){
+                        if(err) throw err;
+                        node === true?console.log("Book updated"):console.log("Failed to update Book details");
+                        res.json(responseObj)
+                    });
+
+	            }else{
+	                Utils.defaultErrorResponse(res,defaultErrorMsg);
+	            }
+	        });//findParentISBN end
+	    }catch(e){
+	        console.log("updateParentBook",e);
+	        Utils.defaultErrorResponse(res,defaultErrorMsg);
+	    }
+}
+
+/*
+ * Delete ParentBook details  
+ */
+module.exports.deleteParentBook = function(parentBook,loggedInUser,schoolID,res) {
+	  try{
+	        var responseObj = new Utils.Response();
+	        var defaultErrorMsg="Failed to Delete Book. Please contact administrator.";
+	        var findParentISBN = 'MATCH (pb{isbn:"' + parentBook.isbn + '"})-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb';
+
+	        db.cypherQuery(findParentISBN, function(err, result) {
+	            console.log("findParentISBN",err, result)
+	            if(err || !result || (result && result.data && result.data.length==1)){
+                    var currentTimestamp=(new Date()).getTime();
+                    parentBook.updatedAt=currentTimestamp;
+                    parentBook.softDelete="true";
+                    db.updateNode(parentBook._id, parentBook, function(err, node){
+                        if(err) throw err;
+                        node === true?console.log("Book deleted"):console.log("Failed to delete Book details");
+                        res.json(responseObj)
+                    });
+
+	            }else{
+	                Utils.defaultErrorResponse(res,defaultErrorMsg);
+	            }
+	        });//findParentISBN end
+	    }catch(e){
+	        console.log("deleteParentBook",e);
+	        Utils.defaultErrorResponse(res,defaultErrorMsg);
+	    }
+}
+
+/*
+ * Update ChildBook details
+ */
+module.exports.updateChildBook = function(book,loggedInUser,schoolID,res) {
+	  try{
+	        var responseObj = new Utils.Response();
+	        var childBook=book.children[0];
+	        var defaultErrorMsg="Failed to update Book Copy. Please contact administrator.";
+//	        match (n:ParentBook{isbn:"123456789X"}) -[r:CHILDBOOK_OF]- (j:ChildBook{bookId:"1"}) return n,j;
+//	        var findParentISBN = 'MATCH (pb{isbn:"' + book.parentbook.isbn + '"})-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb';
+	        var findParentISBN  = 'MATCH (n:ParentBook{isbn:"' + book.parentbook.isbn + '"}) -[r:CHILDBOOK_OF]- (j:ChildBook{bookId:"'+childBook.bookId+'"}) return j';
+	        
+	        db.cypherQuery(findParentISBN, function(err, result) {
+	            console.log("findParentISBN",err, result)
+	            if(err || !result || (result && result.data && result.data.length==1)){
+                    var currentTimestamp=(new Date()).getTime();
+                    childBook.updatedAt=currentTimestamp;
+                    db.updateNode(childBook._id, childBook, function(err, node){
+                        if(err) throw err;
+                        node === true?console.log("Book Copy updated"):console.log("Failed to update Book Copy");
+                        res.json(responseObj)
+                    });
+
+	            }else{
+	                Utils.defaultErrorResponse(res,defaultErrorMsg);
+	            }
+	        });//findParentISBN end
+	    }catch(e){
+	        console.log("updateChildBook",e);
+	        Utils.defaultErrorResponse(res,defaultErrorMsg);
+	    }
+}
+
+/*
+ * Delete ChildBook details  
+ */
+module.exports.deleteChildBook = function(book,loggedInUser,schoolID,res) {
+	  try{
+	        var responseObj = new Utils.Response();
+	        var childBook=book.children[0];
+	        var defaultErrorMsg="Failed to Delete Book Copy. Please contact administrator.";
+//	        var findParentISBN = 'MATCH (pb{isbn:"' + parentBook.isbn + '"})-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb';
+	        var findParentISBN  = 'MATCH (n:ParentBook{isbn:"' + book.parentbook.isbn + '"}) -[r:CHILDBOOK_OF]- (j:ChildBook{bookId:"'+childBook.bookId+'"}) return j';
+	        
+	        db.cypherQuery(findParentISBN, function(err, result) {
+	            console.log("findParentISBN",err, result)
+	            if(err || !result || (result && result.data && result.data.length==1)){
+                    var currentTimestamp=(new Date()).getTime();
+                    childBook.updatedAt=currentTimestamp;
+                    childBook.softDelete="true";
+                    db.updateNode(childBook._id, childBook, function(err, node){
+                        if(err) throw err;
+                        node === true?console.log("Book Copy deleted"):console.log("Failed to delete Book Copy");
+                        res.json(responseObj)
+                    });
+
+	            }else{
+	                Utils.defaultErrorResponse(res,defaultErrorMsg);
+	            }
+	        });//findParentISBN end
+	    }catch(e){
+	        console.log("deleteParentBook",e);
+	        Utils.defaultErrorResponse(res,defaultErrorMsg);
+	    }
+}
 module.exports.searchUser=function(res,searchText,schoolId){
     console.log("searchUser",searchText);
     var responseObj=new Utils.Response();

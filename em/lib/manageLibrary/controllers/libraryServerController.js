@@ -231,7 +231,7 @@ module.exports=function(app,Utils){
         var requestobj=req.body;
         var loggedInUser=req.session.userDetails;
         var schoolID=loggedInUser.schoolDetails.schoolId;
-        console.log("requestobj - addCompleteBook",requestobj);
+//        console.log("requestobj - addCompleteBook",requestobj);
         libraryMS.insertCompleteBook(requestobj,res,schoolID,req.session.currentLibrary);
     })
 /*  addNewBook - Query for Parent Book Information   */
@@ -240,12 +240,44 @@ module.exports=function(app,Utils){
         console.log("requestobj - addNewBook",requestobj);
         libraryMS.addNewBook(requestobj,res);
     })
+/*  updateParentBook - Query for update Parent Book Information   */
+    app.post("/manageLibrary/updateParentBook",Utils.ensureAuthenticated,function(req,res){
+        var parentBook=req.body;
+        var loggedInUser=req.session.userDetails;
+        var schoolID=loggedInUser.schoolDetails.schoolId;
+        console.log("requestobj - updateParentBook",parentBook);
+        libraryMS.updateParentBook(parentBook,loggedInUser,schoolID,res);
+    })
+/*  deleteParentBook - Query for delete Parent Book Information   */
+    app.post("/manageLibrary/deleteParentBook",Utils.ensureAuthenticated,function(req,res){
+        var parentBook=req.body;
+        var loggedInUser=req.session.userDetails;
+        var schoolID=loggedInUser.schoolDetails.schoolId;
+        console.log("requestobj - deleteParentBook",parentBook);
+        libraryMS.deleteParentBook(parentBook,loggedInUser,schoolID,res);
+    })
 /*  addChildBook - Query for Child Book Information   */
     app.post("/manageLibrary/addChildBook",Utils.ensureAuthenticated,function(req,res){
         var requestobj=req.body;
         console.log("requestobj - addChildBook",requestobj);
 //        libraryMS.addChildBook(requestobj,res);
         libraryMS.addChildBook(res, req.body.childBook,req.body.isbn)
+    })
+/*  updateChildBook - Query for update Child Book Information   */
+    app.post("/manageLibrary/updateChildBook",Utils.ensureAuthenticated,function(req,res){
+        var book=req.body;
+        var loggedInUser=req.session.userDetails;
+        var schoolID=loggedInUser.schoolDetails.schoolId;
+        console.log("requestobj - updateChildBook",book);
+        libraryMS.updateChildBook(book,loggedInUser,schoolID,res);
+    })
+/*  deleteChildBook - Query for delete Child Book Information   */
+    app.post("/manageLibrary/deleteChildBook",Utils.ensureAuthenticated,function(req,res){
+        var book=req.body;
+        var loggedInUser=req.session.userDetails;
+        var schoolID=loggedInUser.schoolDetails.schoolId;
+        console.log("requestobj - deleteChildBook",book);
+        libraryMS.deleteChildBook(book,loggedInUser,schoolID,res);
     })
     app.get("/manageLibrary/getUserSearchText/:primaryKey/:value",Utils.ensureAuthenticated,function(req,res){
         var primaryKey=req.params.primaryKey

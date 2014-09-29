@@ -17,6 +17,7 @@ function ParentBook(){
     this.authorName="";
     this.docType="";
     this.softDelete="";
+    this._id="";
 
 }
 function ChildBook(){
@@ -38,6 +39,7 @@ function ChildBook(){
     this.materialAccompanied="";
     this.updatedDate="";
     this.createdDate="";
+    this._id="";
 }
 
 function CompleteBook(parentBook,childBooks){
