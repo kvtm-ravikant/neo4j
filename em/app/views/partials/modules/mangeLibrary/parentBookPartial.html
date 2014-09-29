@@ -86,8 +86,6 @@
             </div -->
 			</div>
 			<br>
-
-
 			<div class="row ">
 				<div>
 					<label class="col-sm-2 control-label" for="bookPublisher">Publisher</label>
@@ -101,7 +99,6 @@
 			</div>
 			<br>
 			<div class="row">
-
 				<div>
 					<label class="col-sm-2 control-label" for="catName">Category
 						Name</label>
@@ -121,7 +118,6 @@
 							<option value="">Select Language</option>
 							<option ng-repeat="(key, value) in languages" value="{{key}}">{{value.___name___}}</option>
 						</select>
-
 					</div>
 				</div>
 			</div>
@@ -138,7 +134,7 @@
 					</div>
 				</div>
 				<div>
-					<label class="col-sm-2 control-label" for="mat">Materials </label>
+					<label class="col-sm-2 control-label" for="mat" ng-if="parentBook.bibLevel">Materials </label>
 					<div class="col-sm-2">
 						<select id="mat" name="validation-select"
 							class="btn btn-media dropdown-toggle"
@@ -151,7 +147,7 @@
 					</div>
 				</div>
 				<div>
-					<label class="col-sm-2 control-label" for="docType">Doc
+					<label class="col-sm-2 control-label" for="docType" ng-if="parentBook.bibLevel">Doc
 						Type </label>
 					<div class="col-sm-2">
 						<select id="docType" name="validation-select"
@@ -164,11 +160,9 @@
 						</select>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</fieldset>
-
 </div>
 <!-- label data-ng-model="parentBook">{{parentBook.isbn}} </label -->
 <br>
