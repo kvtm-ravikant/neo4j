@@ -236,13 +236,13 @@
 										</div>
 										<div class="form-group">
 											<label for="lName" class="col-sm-3 control-label">Last
-												Name <span style="color: red">&nbsp;*</span>
+												Name
 											</label>
 											<div class="col-sm-6">
 												<input type="text" class="form-control" id="lName"
 													name="lName" ng-if="modalCode=='add'||modalCode=='update'"
 													ng-model="userSelectedClass.basicDetails.lastName"
-													placeholder="Please enter last name." required="required"
+													placeholder="Please enter last name."
 													ng-minlength=3 ng-maxlength=20>
 												<div class="error-container"
 													ng-show="basicDetailsForm.lName.$dirty && basicDetailsForm.lName.$invalid">
@@ -258,16 +258,15 @@
 
 										</div>
 										<div class="form-group">
-											<label for="sex-type" class="col-sm-3 control-label">Gender<span
-												style="color: red">&nbsp;*</span>
+											<label for="sex-type" class="col-sm-3 control-label">Gender
 											</label>
 											<div class="simple-radio col-sm-6" id="sex-type"
 												ng-if="modalCode=='add'||modalCode=='update'">
 												<input id="ml" type="radio" name="sex-type" value="M"
-													ng-model="userSelectedClass.basicDetails.sex"
-													required="required" parsley-required="true"> <label
-													for="ml">Male</label> <input id="fml" type="radio"
-													name="sex-type" value="F" required="required"
+													ng-model="userSelectedClass.basicDetails.sex">
+                                                <label for="ml">Male</label>
+                                                <input id="fml" type="radio"
+													name="sex-type" value="F"
 													ng-model="userSelectedClass.basicDetails.sex"> <label
 													for="fml">Female</label>
 											</div>
@@ -276,7 +275,7 @@
 										</div>
 										<div class="form-group">
 											<label for="dob" class="col-sm-3 control-label">Date
-												of Birth <span style="color: red">&nbsp;*</span>
+												of Birth
 											</label>
 											<div class="col-sm-6"
 												>
@@ -284,7 +283,7 @@
 													<input type="text" id="userDOB" name="userDOB" ng-disabled="modalCode=='view'||modalCode=='delete'" 
 														ng-model="userSelectedClass.basicDetails.DOB"
 														class="em-datepicker datepicker form-control"
-														placeholder="Date of Birth" required="required"> <span
+														placeholder="Date of Birth" > <span
 														class="input-group-addon cursor-pointer"
 														ng-click="openUserDOB()"><i class="fa fa-calendar"></i></span>
 												</div>
@@ -377,7 +376,8 @@
 															placeholder="Phone Number : xxxxxxxxxx"
 															class="form-control"
 															ng-model="userSelectedClass.contact.phonePrimary"
-															min="10">
+                                                            required
+															min="4">
 													</div>
 													<div class="col-md-4"
 														ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.contact.phonePrimary}}</div>
@@ -497,7 +497,7 @@
 												<div>
 													<label class="col-sm-2 control-label" for="cntCity">City<span
 														style="color: green">&nbsp;*</span></label>
-													<div class="col-sm-3"
+													<div class="col-sm-4"
 														ng-if="modalCode=='add'||modalCode=='update'">
 														<select id="cntCity" name="cntCity"
 															class="btn btn-media dropdown-toggle form-control"
