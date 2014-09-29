@@ -4,7 +4,8 @@
 educationMediaApp.service('libraryService',function($http, $q){
         return({
             getAllBooks: getAllBooks,
-            getBookPOJO:getBookPOJO
+            getBookPOJO:getBookPOJO,
+            getLanguageDD:getLanguageDD
         });
         function getAllBooks(){
             var request = $http({
@@ -18,6 +19,14 @@ educationMediaApp.service('libraryService',function($http, $q){
             var request = $http({
                 method: "get",
                 url: "/manageLibrary/getBookPOJO"
+            });
+
+            return( request.then( handleSuccess, handleError ) );
+        }
+        function getLanguageDD(){
+            var request = $http({
+                method: "get",
+                url: "/manageLibrary/getLanguages"
             });
 
             return( request.then( handleSuccess, handleError ) );

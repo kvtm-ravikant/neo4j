@@ -13,7 +13,6 @@
 				<ul class="nav nav-pills nav-justified thumbnail setup-panel"
 					id="myTab">
 					<li class="active"><a href="#basicInfo" data-toggle="tab">Book Copy</a></li>
-
                     <li ng-repeat="childBook in childBooks" active=childBook.active><a
                             href="#bookCopyInfo{{$index}}" data-toggle="tab">Book Copy {{$index+1}}</a></li>
                     <li>

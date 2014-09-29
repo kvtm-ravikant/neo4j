@@ -36,6 +36,18 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
                     })
                 }
             );
+    
+    	/*
+	    * Dropdown JSON data of Language
+	    */ 
+    libraryService.getLanguageDD().then(
+            function(dataResponse){
+                appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                	$scope.languages=dataResponse;
+//                   console.log("$scope.getLanguageDD : ",dataResponse);
+                })
+            }
+        );
 
     /*
      * Dropdown JSON data of bibDocTypeMaterial
