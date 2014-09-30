@@ -1,7 +1,8 @@
-<nav class="navbar-default navbar-static-side" role="navigation" ng-controller="SideNavBarCtrl" >
-    <div id="nav-main" class="sidebar-collapse">
-        <ul class="nav " id="side-menu">
-           <!-- <li class="sidebar-search">
+<nav class="navbar-default navbar-static-side" role="navigation"
+	ng-controller="SideNavBarCtrl">
+	<div id="nav-main" class="sidebar-collapse">
+		<ul class="nav " id="side-menu">
+			<!-- <li class="sidebar-search">
                 <div class="input-group custom-search-form">
                     <input type="text" class="form-control" placeholder="Search...">
                             <span class="input-group-btn">
@@ -12,27 +13,37 @@
                 </div>
                 &lt;!&ndash; /input-group &ndash;&gt;
             </li>-->
-            <li><a id="smallSidenav"><i class="pull-left fa fa-chevron-right"></i>Collapse</a></li>
-            <li><a id="largeSidenav"><i class="pull-left fa fa-chevron-left"></i>&nbsp;</a></li>
-            <li ng-repeat="menuItem in menu">
-                <a ng-if="menuItem.abstract==true" ng-class="{active: $state.includes(menuItem.state)}" ng-click="toggleMenu(menuItem,menuItem.collapse,$event)"><i class="{{iconClassMapping[menuItem.icon]}}"></i><span class="menuName"> {{menuItem.name}}</span> <i class="pull-right" ng-class="!menuItem.collapse?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
-                <a class="collapsediv" ng-if="menuItem.abstract!=true" ui-sref="{{menuItem.state}}" ng-class="{active: $state.includes(menuItem.state)}">
-                    <i class="{{iconClassMapping[menuItem.icon]}}"></i><span class="menuName">{{menuItem.name}}</span> </a>
+			<li><a id="smallSidenav"><i
+					class="pull-left fa fa-chevron-right"></i>Collapse</a></li>
+			<li><a id="largeSidenav"><i
+					class="pull-left fa fa-chevron-left"></i></a></li>
+			<li ng-repeat="menuItem in menu"><a
+				ng-if="menuItem.abstract==true"
+				ng-class="{active: $state.includes(menuItem.state)}"
+				ng-click="toggleMenu(menuItem,menuItem.collapse,$event)"> <i
+					class="{{iconClassMapping[menuItem.icon]}}"></i>&nbsp;<span
+					class="menuName"> {{menuItem.name}}</span> <i class="pull-right"
+					ng-class="!menuItem.collapse?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+				<a class="collapsediv" ng-if="menuItem.abstract!=true"
+				ui-sref="{{menuItem.state}}"
+				ng-class="{active: $state.includes(menuItem.state)}"> <i
+					class="{{iconClassMapping[menuItem.icon]}}"></i>&nbsp;&nbsp;<span
+					class="menuName">{{menuItem.name}}</span>
+			</a> <!-- /.nav-second-level -->
+				<ul class="nav nav-second-level" ng-if="menuItem.childLinks"
+					class="sideNavbar" ng-hide="menuItem.collapse">
+					<li ng-repeat="childMenuItem in menuItem.childLinks"><a
+						class="collapsediv" ui-sref="{{childMenuItem.state}}"
+						ng-class="{activeSubMenu: $state.includes(childMenuItem.state)}"><i
+							class="{{iconClassMapping[childMenuItem.icon]}}"></i>&nbsp;<span
+							class="menuName"> {{childMenuItem.name}}</span></span></a></li>
 
-                <!-- /.nav-second-level -->
-                <ul class="nav nav-second-level" ng-if="menuItem.childLinks" class="sideNavbar" ng-hide="menuItem.collapse" >
-                    <li ng-repeat="childMenuItem in menuItem.childLinks" >
-                        <a class="collapsediv" ui-sref="{{childMenuItem.state}}" ng-class="{activeSubMenu: $state.includes(childMenuItem.state)}"><i class="{{iconClassMapping[childMenuItem.icon]}}"></i><span class="menuName"> {{childMenuItem.name}}</span></span></a>
-                    </li>
+				</ul></li>
 
-                </ul>
-
-            </li>
-
-        </ul>
-        <!-- /#side-menu -->
-    </div>
-    <script>
+		</ul>
+		<!-- /#side-menu -->
+	</div>
+	<script>
         $(function(){
             var windowWidth = $(window).width();
             if(windowWidth < 992){
@@ -59,6 +70,6 @@
             });
         });
     </script>
-    <!-- /.sidebar-collapse -->
+	<!-- /.sidebar-collapse -->
 </nav>
 <!-- /.navbar-static-side -->

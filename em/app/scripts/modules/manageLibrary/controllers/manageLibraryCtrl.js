@@ -84,7 +84,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
      */
     var addCompleteBook=function()
     {
-        console.log("Add Complete Book ",$scope.parentBook);
+        console.log("Add Complete Book ",$scope.bookClass);
         $http({
             method : 'POST',
             url    : '/manageLibrary/addCompleteBook',
@@ -93,8 +93,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         }).success(function(dataResponse,status,headers,config){
             //success
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-                console.log("addNewBook - dataResponse",dataResponse)
-                $scope.parentBook=dataResponse.responseData;
+//                console.log("addNewBook - dataResponse",dataResponse)
+                $scope.parentBook._id=dataResponse.responseData;
+                console.log("addNewBook - dataResponse",dataResponse,"_id : ",$scope.parentBook._id);
             });
         }).error(function(data,status,headers,config){
             //error
@@ -109,17 +110,41 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    	  	 var errorObj={error:false,errorMsg:[]};
    	  	 
    	  	 var messageParentQue=[];
-   	  	 var errorParentObj={error:false,errorMsg:[]};
-	  	 
+   	  	 var errorParentObj={error:false,errorMsg:[]};	  	 
    	  	 
 //      if($scope.parentBook._id.length<1|| angular.isUndefined($scope.parentBook._id)){
 //    	  errorParentObj.error=true
 //    	  errorParentObj.errorMsg.push("Book is not added. Please contact administrator");
 //      };
    	  	 
-      if($scope.parentBook.bookTitle.length<3|| angular.isUndefined($scope.parentBook.bookTitle)){
+   	  if($scope.parentBook.isbn.length<5|| angular.isUndefined($scope.parentBook.isbn)){
+    	  errorObj.error=true
+          errorObj.errorMsg.push("ISBN is not valid.");
+      }
+   	  if($scope.parentBook.bookTitle.length<3|| angular.isUndefined($scope.parentBook.bookTitle)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Book Title is not valid.");
+      }
+   	 if($scope.parentBook.authorName.length<3|| angular.isUndefined($scope.parentBook.authorName)){
+   	  errorObj.error=true
+         errorObj.errorMsg.push("Author Name is not valid.");
+     }
+     
+      if($scope.parentBook.edition.length<1|| angular.isUndefined($scope.parentBook.edition)){
+    	  errorObj.error=true
+          errorObj.errorMsg.push("Edition is not valid.");  
+      }
+      if(parseInt($scope.parentBook.bookCopies,10)==0|| angular.isUndefined($scope.parentBook.bookCopies)){
+    	  errorObj.error=true
+          errorObj.errorMsg.push("Book Copies should be greater than 0.");
+      }
+      if($scope.parentBook.publisher.length<2|| angular.isUndefined($scope.parentBook.publisher)){
+    	  errorObj.error=true
+          errorObj.errorMsg.push("Publisher is not valid.");
+      }
+      if($scope.parentBook.language.length<2|| angular.isUndefined($scope.parentBook.language)){
+    	  errorObj.error=true
+          errorObj.errorMsg.push("Language is not valid.");
       }
       if($scope.parentBook.categoryName.length<2|| angular.isUndefined($scope.parentBook.categoryName)){
     	  errorObj.error=true
@@ -129,30 +154,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	  errorObj.error=true
           errorObj.errorMsg.push("Bib Levelis not valid.");
       }
-      if($scope.parentBook.edition.length<1|| angular.isUndefined($scope.parentBook.edition)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Edition is not valid.");  
-      }
-      if(parseInt($scope.parentBook.bookCopies,10)==0|| angular.isUndefined($scope.parentBook.bookCopies)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Book Copies should be greater than 0.");
-      }
-      if($scope.parentBook.language.length<2|| angular.isUndefined($scope.parentBook.language)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Language is not valid.");
-      }
-      if($scope.parentBook.publisher.length<2|| angular.isUndefined($scope.parentBook.publisher)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Publisher is not valid.");
-      }
-      if($scope.parentBook.isbn.length<5|| angular.isUndefined($scope.parentBook.isbn)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("ISBN is not valid.");
-      }
-      if($scope.parentBook.authorName.length<3|| angular.isUndefined($scope.parentBook.authorName)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Author Name is not valid.");
-      }
+      
       if($scope.parentBook.docType.length<2|| angular.isUndefined($scope.parentBook.docType)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Doc Type is not valid.");  
@@ -229,6 +231,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     
    $scope.addChildTab=function(){
    	console.log("addChildTab ");
+   	
    	if(!validateParentBook()){
    		addCompleteBook();
 //   		setAllInactive();

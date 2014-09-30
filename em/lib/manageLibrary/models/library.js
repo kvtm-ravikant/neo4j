@@ -139,7 +139,7 @@ function addParentBook(libraryObj,parentBookObj,res){
             console.log("addParentBookReply",err,addParentBookReply);
             if(!err){
                 var parentBookNodeID=addParentBookReply._id;
-                db.insertRelationship(libraryObj._id,parentBookNodeID,"CHILDBOOK_OF",{},function(err,resultRel){
+                db.insertRelationship(libraryObj._id,parentBookNodeID,"BELONGS_TO",{},function(err,resultRel){
                     console.log("associate parent book to library",err,resultRel);
                     if(!err){
                         responseObj.responseData=parentBookNodeID;
@@ -212,9 +212,9 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
             });
         }
         else{ //child Book Addition
-            var childLen=responseObj.children.length;
+            var childLen=requestObj.children.length;
             if(childLen>0 && requestObj.parentbook.hasOwnProperty('_id') && requestObj.parentbook._id ){
-                var childBookObj=responseObj.children[childLen-1];
+                var childBookObj=requestObj.children[childLen-1];
                 if(!(childBookObj.hasOwnProperty('_id') && childBookObj._id!=null)){
                     childBookObj=fillChildBookValues(childBookObj);
                     addChildBook(res, childBookObj,parentBookNodeID);
@@ -400,8 +400,9 @@ module.exports.updateChildBook = function(book,loggedInUser,schoolID,res) {
 	        var childBook=book.children[0];
 	        var defaultErrorMsg="Failed to update Book Copy. Please contact administrator.";
 //	        match (n:ParentBook{isbn:"123456789X"}) -[r:CHILDBOOK_OF]- (j:ChildBook{bookId:"1"}) return n,j;
+	        var findParentISBN = 'MATCH (s:School) <-[r1:LIBRARY_OF]- (l:Library) <-[r2:BELONGS_TO]- (p:ParentBook)<-[r3:CHILDBOOK_OF]-(c:ChildBook) where  s.schoolId="'+schoolID+'" and l.id="1" and p.isbn="'+ book.parentbook.isbn +'" and c.bookId="'+childBook.bookId+'" return c';
 //	        var findParentISBN = 'MATCH (pb{isbn:"' + book.parentbook.isbn + '"})-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb';
-	        var findParentISBN  = 'MATCH (n:ParentBook{isbn:"' + book.parentbook.isbn + '"}) -[r:CHILDBOOK_OF]- (j:ChildBook{bookId:"'+childBook.bookId+'"}) return j';
+//	        var findParentISBN  = 'MATCH (n:ParentBook{isbn:"' + book.parentbook.isbn + '"}) -[r:CHILDBOOK_OF]- (j:ChildBook{bookId:"'+childBook.bookId+'"}) return j';
 	        
 	        db.cypherQuery(findParentISBN, function(err, result) {
 	            console.log("findParentISBN",err, result)
@@ -433,7 +434,8 @@ module.exports.deleteChildBook = function(book,loggedInUser,schoolID,res) {
 	        var childBook=book.children[0];
 	        var defaultErrorMsg="Failed to Delete Book Copy. Please contact administrator.";
 //	        var findParentISBN = 'MATCH (pb{isbn:"' + parentBook.isbn + '"})-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb';
-	        var findParentISBN  = 'MATCH (n:ParentBook{isbn:"' + book.parentbook.isbn + '"}) -[r:CHILDBOOK_OF]- (j:ChildBook{bookId:"'+childBook.bookId+'"}) return j';
+//	        var findParentISBN  = 'MATCH (n:ParentBook{isbn:"' + book.parentbook.isbn + '"}) -[r:CHILDBOOK_OF]- (j:ChildBook{bookId:"'+childBook.bookId+'"}) return j';
+	        var findParentISBN = 'MATCH (s:School) <-[r1:LIBRARY_OF]- (l:Library) <-[r2:BELONGS_TO]- (p:ParentBook)<-[r3:CHILDBOOK_OF]-(c:ChildBook) where  s.schoolId="'+schoolID+'" and l.id="1" and p.isbn="'+ book.parentbook.isbn +'" and c.bookId="'+childBook.bookId+'" return c';
 	        
 	        db.cypherQuery(findParentISBN, function(err, result) {
 	            console.log("findParentISBN",err, result)
