@@ -533,9 +533,9 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
                 appUtils.showError("Please choose a .png  or .jpg or .jpeg file.");
                 return;
             }
-            if (file.size>3000000) {
+            if (file.size>100000) {
                 $(input).val("");
-                appUtils.showError("Please choose file of size less than 30KB.");
+                appUtils.showError("Please choose file of size less than 100KB.");
                 return;
             }
             try{

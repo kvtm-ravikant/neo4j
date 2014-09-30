@@ -773,6 +773,11 @@
 																ng-if="item.key!='___name___'" value="{{item.key}}">{{item.___name___}}</option>
 														</select>
 													</div>
+
+                                                    <div class="col-sm-4" ng-if="userSelectedClass.basicDetails.birthPlace_city=='OTHER'"
+														ng-if="modalCode=='add'||modalCode=='update'">
+														<input type="text" ng-model="userSelectedClass.basicDetails.birthPlace_otherCity">
+													</div>
 													<div class="col-md-4"
 														ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.basicDetails.birthPlace_country][userSelectedClass.basicDetails.birthPlace_state].___name___}}</div>
 												</div>

@@ -25,6 +25,7 @@ module.exports=function (){
         birthPlace_country:'',
         birthPlace_state:'',
         birthPlace_city:'',
+        birthPlace_otherCity:'',
         visaDetails:"",
         isSMSEnabled:false,
         isEmailEnabled:false,

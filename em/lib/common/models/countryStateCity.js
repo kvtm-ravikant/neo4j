@@ -41,6 +41,9 @@ module.exports = {
 		        },
 		        "AND": {
 		            "___name___": "Andra Pradesh-Other"
+		        },
+		        "OTHER": {
+		            "___name___": "Other"
 		        }
 		    },
 		    "AU": {
@@ -50,7 +53,10 @@ module.exports = {
 		        },
 		        "ARU": {
 		            "___name___": "Arunachal Pradesh-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "AS": {
 		        "___name___": "Assam",
@@ -62,7 +68,10 @@ module.exports = {
 		        },
 		        "ASS": {
 		            "___name___": "Assam-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "BH": {
 		        "___name___": "Bihar",
@@ -74,7 +83,10 @@ module.exports = {
 		        },
 		        "BIH": {
 		            "___name___": "Bihar-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "CG": {
 		        "___name___": "Chhattisgarh",
@@ -89,7 +101,10 @@ module.exports = {
 		        },
 		        "CHH": {
 		            "___name___": "Chhattisgarh-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "GA": {
 		        "___name___": "Goa",
@@ -101,7 +116,10 @@ module.exports = {
 		        },
 		        "GOA": {
 		            "___name___": "Goa-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "GJ": {
 		        "___name___": "Gujarat",
@@ -152,7 +170,10 @@ module.exports = {
 		        },
 		        "GUJ": {
 		            "___name___": "Gujarat-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "HR": {
 		        "___name___": "Haryana",
@@ -185,7 +206,10 @@ module.exports = {
 		        },
 		        "HAR": {
 		            "___name___": "Haryana-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "HP": {
 		        "___name___": "Himachal Pradesh",
@@ -203,7 +227,10 @@ module.exports = {
 		        },
 		        "HIM": {
 		            "___name___": "Himachal Pradesh-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "J&K": {
 		        "___name___": "Jammu and Kashmir",
@@ -212,7 +239,10 @@ module.exports = {
 		        },
 		        "SRI": {
 		            "___name___": "Srinagar"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "JR": {
 		        "___name___": "Jharkhand",
@@ -230,7 +260,10 @@ module.exports = {
 		        },
 		        "JHA": {
 		            "___name___": "Jharkhand-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "KA": {
 		        "___name___": "Karnataka",
@@ -263,7 +296,10 @@ module.exports = {
 		        },
 		        "KAR": {
 		            "___name___": "Karnataka-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "KR": {
 		        "___name___": "Kerala",
@@ -302,7 +338,10 @@ module.exports = {
 		        },
 		        "KER": {
 		            "___name___": "Kerela-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "MP": {
 		        "___name___": "Madhya Pradesh",
@@ -323,7 +362,10 @@ module.exports = {
 		        },
 		        "MAD": {
 		            "___name___": "Madhya Pradesh-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "MH": {
 		        "___name___": "Maharashtra",
@@ -359,7 +401,10 @@ module.exports = {
 		        },
 		        "MAH": {
 		            "___name___": "Maharashtra-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "MN": {
 		        "___name___": "Manipur",
@@ -368,7 +413,10 @@ module.exports = {
 		        },
 		        "MAN": {
 		            "___name___": "Manipur-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "MG": {
 		        "___name___": "Meghalaya",
@@ -377,7 +425,10 @@ module.exports = {
 		        },
 		        "MEG": {
 		            "___name___": "Meghalaya-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "MZ": {
 		        "___name___": "Mizoram",
@@ -386,7 +437,10 @@ module.exports = {
 		        },
 		        "MIZ": {
 		            "___name___": "Mizoram-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "NG": {
 		        "___name___": "Nagaland",
@@ -395,7 +449,10 @@ module.exports = {
 		        },
 		        "NAG": {
 		            "___name___": "Nagaland-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "OD": {
 		        "___name___": "Odisha",
@@ -416,7 +473,10 @@ module.exports = {
 		        },
 		        "ORI": {
 		            "___name___": "Orissa-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "PB": {
 		        "___name___": "Punjab",
@@ -443,7 +503,10 @@ module.exports = {
 		        },
 		        "PUN": {
 		            "___name___": "Punjab-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "RJ": {
 		        "___name___": "Rajasthan",
@@ -464,7 +527,10 @@ module.exports = {
 		        },
 		        "RAJ": {
 		            "___name___": "Rajasthan-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "SK": {
 		        "___name___": "Sikkim",
@@ -473,7 +539,10 @@ module.exports = {
 		        },
 		        "SIK": {
 		            "___name___": "Sikkim-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "TN": {
 		        "___name___": "Tamil Nadu",
@@ -521,7 +590,10 @@ module.exports = {
 		        },
 		        "TAM": {
 		            "___name___": "Tamil Nadu-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "TR": {
 		        "___name___": "Tripura",
@@ -530,7 +602,10 @@ module.exports = {
 		        },
 		        "TRI": {
 		            "___name___": "Tripura-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "UT": {
 		        "___name___": "Uttaranchal",
@@ -542,7 +617,10 @@ module.exports = {
 		        },
 		        "UTT": {
 		            "___name___": "Uttaranchal-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "UP": {
 		        "___name___": "Uttar Pradesh",
@@ -590,7 +668,10 @@ module.exports = {
 		        },
 		        "UTT": {
 		            "___name___": "Uttar Pradesh-Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "WB": {
 		        "___name___": "West Bengal",
@@ -614,13 +695,22 @@ module.exports = {
 		        },
 		        "WES": {
 		            "___name___": "West Bengal - Other"
-		        }
+		        },
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "TL": {
-		        "___name___": "Telangana"
+		        "___name___": "Telangana",
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    },
 		    "UK": {
-		        "___name___": "Uttarakhand"
+		        "___name___": "Uttarakhand",
+                "OTHER": {
+                    "___name___": "Other"
+                }
 		    }
 		},
 	"O" : {
@@ -629,13 +719,19 @@ module.exports = {
 			"___name___" : "Ostate1",
 			"OC1" : {
 				"___name___" : "OCity1"
-			}
+			},
+            "OTHER": {
+                "___name___": "Other"
+            }
 		},
 		"OS2" : {
 			"___name___" : "OState2",
 			"OC2" : {
 				"___name___" : "Ocity2"
-			}
+			},
+            "OTHER": {
+                "___name___": "Other"
+            }
 		}
 	}
 };
