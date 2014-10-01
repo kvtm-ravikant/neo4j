@@ -104,6 +104,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
 //                console.log("addNewBook - dataResponse",dataResponse)
                 $scope.parentBook._id=dataResponse.responseData;
+                $('#childBookModalforSmy').modal('hide');
                 console.log("addNewBook - dataResponse",dataResponse,"_id : ",$scope.parentBook._id);
             });
         }).error(function(data,status,headers,config){
@@ -229,7 +230,6 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
   	if(erroMsg.length>0){
   		appUtils.showError(erroMsg);	
   	}
-  	
   	return errorObj.error;
   	
 //	   addCompleteBook();
@@ -251,9 +251,6 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
   			setAllInactive();
    			addNewchildBook();
   		}
-   	
-   	
-
 //   	   	if($scope.parentBook._id!=null){
 //   	   		setAllInactive();
 //   	   		addNewchildBook();
@@ -266,8 +263,6 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 //   	   			}   	
 //   	   	}
    	}  
-  
-   
    var setAllInactive = function() {
    	console.log("setAllInactive ");
        angular.forEach($scope.childBooks, function(childBook) {
@@ -283,12 +278,8 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	else if($scope.childBooks.length<3 && $scope.childBooks.length>0){
     		console.log("$scope.childBooks ",$scope.childBooks, "kgsad ",$scope.childBooks.length,"  $scope.bookClass : ", $scope.bookClass);	
     		if(!validateChildBook($scope.childBooks[($scope.childBooks.length-1)])){
-//    			for(var i=0; i<$scope.childBooks.length;i++){
-//        			console.log("$scope.childBooks[i] : ",$scope.childBooks[i], "$scope.childBooks ",$scope.childBooks);	
-//        		}
     			$scope.childBooks.push(childBookPoJO);
     		}
-    		
     	}
        
         console.log("childBookPoJO",childBookPoJO);
@@ -317,9 +308,20 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     };
  
    $scope.onSubmitBook=function(){
+	   if($scope.childBooks.length<1){
+			if(!validateParentBook()){
+				console.log("$scope.childBooks.length<1");
+				addCompleteBook();
+			}
+	   }
+	   else if($scope.childBooks.length>0){
+		   if(!validateChildBook($scope.childBooks[($scope.childBooks.length-1)]))
+			   console.log("$scope.childBooks.length :",$scope.childBooks.length);
+			   addCompleteBook();
+	   }
 //	   if(!validateChildBook($scope.childBooks[0]))
 //	   if(!validateParentBook())
-		   addCompleteBook();
+		   
    }
  
    /*
@@ -353,7 +355,6 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    $scope.alertText="";
    $scope.updateDeleteParentBook=function()
    {
-   	 
    	console.log("$scope.parentModalTitle : ParentBook", $scope.parentModalTitle, $scope.parentModalCode);
    	   	
     if($scope.parentModalCode && $scope.parentModalCode=='update'){
@@ -373,7 +374,6 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    	else if($scope.childModalCode && $scope.childModalCode=='delete'){
    		$('#retryModel').modal({"backdrop": "static","show":true});
    		$scope.alertText="You are about to delete a Book Copy. Please confirm.";
-   		
    	}
    }
    
