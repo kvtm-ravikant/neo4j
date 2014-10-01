@@ -6,8 +6,6 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     $scope.isSearchBoxOpened=false;
     //child Books array for adding dynamic tabs
     $scope.childBooks = [];
-    //ISBN existance Flag
-    $scope.isISBNExist=false;
         
     $scope.openSearchBox=function(){
         $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
@@ -39,9 +37,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
                 }
             );
     
-    	/*
-	    * Dropdown JSON data of Language
-	    */ 
+/***************************************************************
+*    Dropdown JSON data of Language							   *
+****************************************************************/ 
     libraryService.getLanguageDD().then(
             function(dataResponse){
                 appUtils.defaultParseResponse(dataResponse,function(dataResponse){
@@ -87,6 +85,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     $scope.openAddBookForm=function(){
         $('#addBookToLib').modal('show');
         $scope.childBooks = [];
+        $scope.parentModalCode='add';
     }
 
     /* 
@@ -237,20 +236,35 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     }
     
    $scope.addChildTab=function(){
-   	console.log("addChildTab ");
-  		$scope.searchISBN();
+//   	console.log("addChildTab ",$scope.parentBook, " ",($scope.parentBook._id==null)," ",($scope.parentBook._id==""));
+   	
+  		if($scope.childBooks.length<1 && !validateParentBook()){
+  			if($scope.isISBNExist==false){
+  				setAllInactive();
+   	   			addNewchildBook();
+  			}
+  			else if ($scope.isISBNExist==true){
+  				appUtils.showError("ISBN : "+$scope.parentBook.isbn+" is already exists.");
+  			}
+  		}
+  		else if ($scope.childBooks.length>0){
+  			setAllInactive();
+   			addNewchildBook();
+  		}
+   	
+   	
 
-   	   	if($scope.parentBook._id!=null){
-   	   		setAllInactive();
-   	   		addNewchildBook();
-   	   		}
-   	   	else if ($scope.parentBook._id==null || $scope.parentBook._id==""){
-   	   	console.log("validateParentBook ",validateParentBook());
-   	   		if(!validateParentBook()){
-//   	   			addCompleteBook();
-   	   		$scope.searchISBN();
-   	   			}   	
-   	   	}
+//   	   	if($scope.parentBook._id!=null){
+//   	   		setAllInactive();
+//   	   		addNewchildBook();
+//   	   		}
+//   	   	else if ($scope.parentBook._id==""){
+//   	   	console.log("validateParentBook ",validateParentBook());
+//   	   		if(validateParentBook()){
+////   	   			addCompleteBook();
+//   	   		$scope.searchISBN();
+//   	   			}   	
+//   	   	}
    	}  
   
    
@@ -574,6 +588,11 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 	   
    }
 
+   $scope.onISBNBlur=function(){
+	   if($scope.parentModalCode=='add')
+		   $scope.searchISBN()
+//		   appUtils.showSuccess("Book ISBN updated successfully");
+	   }   
    
    /*
     *  Insert Child Book Modal in Only Add Book Copy TAB 
@@ -615,23 +634,24 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         "searchText":""
     }
     
-    
-    
-    
     $scope.searchISBN=function()
     {
     	console.log("$scope.searchISBN :",$scope.parentBook.isbn);
+    	
     	libraryService.searchISBN($scope.parentBook).then(
  	           function(dataResponse){
  	               appUtils.defaultParseResponse(dataResponse,function(dataResponse){
  	            	   console.log("searchISBN - dataResponse",dataResponse.responseData.data);
- 	            	   if(dataResponse.responseData.data.length>0)
+ 	            	   if(dataResponse.responseData.data.length>0){
  	            		  $scope.isISBNExist=true;
+ 	            		  appUtils.showError("Book ISBN : "+$scope.parentBook.isbn+" already exists."); 	            		
+ 	            	   }
  	            	   else
  	            		  $scope.isISBNExist=false;
  	               })
  	           }
  	       )
+ 	       return $scope.isISBNExist;
     };
     
     /*

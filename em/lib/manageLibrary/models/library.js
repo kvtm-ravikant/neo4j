@@ -19,6 +19,7 @@ module.exports.getLibrary=getLibrary;
 function getAllBooks(res,schoolID){
 //    var queryAllBooks='MATCH (c)-[:CHILDBOOK_OF]->pb-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb,c  LIMIT 20';
 	 var queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" RETURN pb,c  LIMIT 20';
+//	var queryAllBooks='MATCH (pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" RETURN pb  LIMIT 20';
     var responseObj=new Utils.Response();
     db.cypherQuery(queryAllBooks,function(err,reply){
         console.log(err,queryAllBooks);

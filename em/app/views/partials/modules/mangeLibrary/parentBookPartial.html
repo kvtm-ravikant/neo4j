@@ -6,7 +6,7 @@
 					<label class="col-sm-2 control-label" for="isbnNum">ISBN </label>
 					<div class="col-sm-4">
 						<input type="text" id="isbnNum"
-							placeholder="Please enter ISBN Number" class="form-control"
+							placeholder="Please enter ISBN Number" class="form-control" ng-blur="onISBNBlur()"
 							ng-model="parentBook.isbn" title="ISBN is required !" required>
 					</div>
 				</div>
