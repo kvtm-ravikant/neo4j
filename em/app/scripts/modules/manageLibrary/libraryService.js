@@ -5,14 +5,17 @@ educationMediaApp.service('libraryService',function($http, $q){
         return({
             getAllBooks: getAllBooks,
             getBookPOJO:getBookPOJO,
-            getLanguageDD:getLanguageDD
+            getLanguageDD:getLanguageDD,
+            getParentBookDD:getParentBookDD,
+            updateParentBook:updateParentBook,
+            deleteParentBook:deleteParentBook,
+            searchISBN:searchISBN
         });
         function getAllBooks(){
             var request = $http({
                 method: "get",
                 url: "/manageLibrary/getAllBooks"
             });
-
             return( request.then( handleSuccess, handleError ) );
         }
         function getBookPOJO(){
@@ -20,7 +23,6 @@ educationMediaApp.service('libraryService',function($http, $q){
                 method: "get",
                 url: "/manageLibrary/getBookPOJO"
             });
-
             return( request.then( handleSuccess, handleError ) );
         }
         function getLanguageDD(){
@@ -28,12 +30,75 @@ educationMediaApp.service('libraryService',function($http, $q){
                 method: "get",
                 url: "/manageLibrary/getLanguages"
             });
-
             return( request.then( handleSuccess, handleError ) );
         }
+        function getParentBookDD(){
+            var request = $http({
+                method: "get",
+                url: "/manageLibrary/getParentBookDD"
+            });
+            return( request.then( handleSuccess, handleError ) );
+        }
+        function searchISBN(parentBook){
+            var request = $http({
+                method: "POST",
+                url: "/manageLibrary/searchISBN",
+                data : parentBook,
+                headers : {
+        			'Content-Type' : 'application/json'
+                }
+            });
+            return( request.then( handleSuccess, handleError ) );
+        }
+        function updateParentBook(parentBook){
+            var request = $http({
+                method: "POST",
+                url: "/manageLibrary/updateParentBook",
+                data : parentBook,
+                headers : {
+        			'Content-Type' : 'application/json'
+                }
+            });
+            return( request.then( handleSuccess, handleError ) );
+        }
+        function deleteParentBook(parentBook){
+            var request = $http({
+                method: "POST",
+                url: "/manageLibrary/deleteParentBook",
+                data : parentBook,
+                headers : {
+        			'Content-Type' : 'application/json'
+                }
+            });
+            return( request.then( handleSuccess, handleError ) );
+        }
+//        function updateChildBook(selectedBook){
+//            var request = $http({
+//                method: "POST",
+//                url: "/manageLibrary/updateChildBook",
+//                data : selectedBook,
+//                headers : {
+//        			'Content-Type' : 'application/json'
+//                }
+//            });
+//            return( request.then( handleSuccess, handleError ) );
+//        }
+//        function deleteParentBook(selectedBook){
+//            var request = $http({
+//                method: "POST",
+//                url: "/manageLibrary/deleteParentBook",
+//                data : selectedBook,
+//                headers : {
+//        			'Content-Type' : 'application/json'
+//                }
+//            });
+//            return( request.then( handleSuccess, handleError ) );
+//        }
+      
+		
+		
 
-
-        // I transform the error response, unwrapping the application dta from
+        // I transform the error response, unwrapping the application data from
         // the API response payload.
         function handleError( response ) {
 

@@ -6,6 +6,8 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     $scope.isSearchBoxOpened=false;
     //child Books array for adding dynamic tabs
     $scope.childBooks = [];
+    //ISBN existance Flag
+    $scope.isISBNExist=false;
         
     $scope.openSearchBox=function(){
         $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
@@ -52,18 +54,26 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     /*
      * Dropdown JSON data of bibDocTypeMaterial
      */ 
-     $http.get('/manageLibrary/getParentBookDD').success(function(dataResponse,status,headers,config){
-         //success
-//         console.log("getParentBookDD",dataResponse);
-         appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-             $scope.parentBookDD=dataResponse;
-//          console.log("$scope.parentBookDD",$scope.parentBookDD);
-         });
-
-     }).error(function(data,status,headers,config){
-         //error
-         console.log("Error",data,status,headers,config);
-     });
+    libraryService.getParentBookDD().then(
+            function(dataResponse){
+                appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                	  $scope.parentBookDD=dataResponse;
+//                   console.log("$scope.getLanguageDD : ",dataResponse);
+                })
+            }
+        );
+//     $http.get('/manageLibrary/getParentBookDD').success(function(dataResponse,status,headers,config){
+//         //success
+////         console.log("getParentBookDD",dataResponse);
+//         appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+//             $scope.parentBookDD=dataResponse;
+////          console.log("$scope.parentBookDD",$scope.parentBookDD);
+//         });
+//
+//     }).error(function(data,status,headers,config){
+//         //error
+//         console.log("Error",data,status,headers,config);
+//     });
     
     //toggle key of a map
     $scope.toggleMapKeyValue=function(map,key){
@@ -105,10 +115,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     };
     
      var validateParentBook=function(){
-
     	 var messageQue=[];
    	  	 var errorObj={error:false,errorMsg:[]};
-   	  	 
+ 	  	 
    	  	 var messageParentQue=[];
    	  	 var errorParentObj={error:false,errorMsg:[]};	  	 
    	  	 
@@ -125,11 +134,10 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	  errorObj.error=true
           errorObj.errorMsg.push("Book Title is not valid.");
       }
-   	 if($scope.parentBook.authorName.length<3|| angular.isUndefined($scope.parentBook.authorName)){
-   	  errorObj.error=true
-         errorObj.errorMsg.push("Author Name is not valid.");
-     }
-     
+   	  if($scope.parentBook.authorName.length<3|| angular.isUndefined($scope.parentBook.authorName)){
+   		  errorObj.error=true
+   		  errorObj.errorMsg.push("Author Name is not valid.");
+   	  }
       if($scope.parentBook.edition.length<1|| angular.isUndefined($scope.parentBook.edition)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Edition is not valid.");  
@@ -154,7 +162,6 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	  errorObj.error=true
           errorObj.errorMsg.push("Bib Levelis not valid.");
       }
-      
       if($scope.parentBook.docType.length<2|| angular.isUndefined($scope.parentBook.docType)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Doc Type is not valid.");  
@@ -231,16 +238,20 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     
    $scope.addChildTab=function(){
    	console.log("addChildTab ");
-   	
-   	if(!validateParentBook()){
-   		addCompleteBook();
-//   		setAllInactive();
-//        addNewchildBook();
-   	}   	  
-//         validateParentBook();
-//         console.log("validateParentBook ",validateParentBook());
-   }
-   
+  		$scope.searchISBN();
+
+   	   	if($scope.parentBook._id!=null){
+   	   		setAllInactive();
+   	   		addNewchildBook();
+   	   		}
+   	   	else if ($scope.parentBook._id==null || $scope.parentBook._id==""){
+   	   	console.log("validateParentBook ",validateParentBook());
+   	   		if(!validateParentBook()){
+//   	   			addCompleteBook();
+   	   		$scope.searchISBN();
+   	   			}   	
+   	   	}
+   	}  
   
    
    var setAllInactive = function() {
@@ -384,53 +395,75 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    {
 //   	console.log("$scope.updateParentBook :",$scope.parentBook);
 		var selectedISBN = $scope.parentBook.isbn;
-		$http({
-			method : 'POST',
-			url : '/manageLibrary/updateParentBook',
-			data : $scope.parentBook,
-			headers : {
-				'Content-Type' : 'application/json'
-			}
-		}).success(function(dataResponse, status, headers,config) {
-           // success
-           appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
-               console.log("updateParentBook - dataResponse",dataResponse)
-               
-               $scope.parentBook = dataResponse.responseData;
-              
+		libraryService.updateParentBook($scope.parentBook).then(
+	           function(dataResponse){
+	               appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+//	            	   console.log("updateParentBook - dataResponse",dataResponse)
+	               	   $scope.parentBook = dataResponse.responseData;
+//              
                appUtils.showSuccess("Book ISBN "+selectedISBN+" updated successfully");
                $('#parentBookViewEditDelforSmy').modal('hide');
-           });
-       }).error(function(data, status, headers, config) {
-           // error
-           console.log("Error", data, status,headers, config);
-       });
+	               })
+	           }
+	       );
+//		$http({
+//			method : 'POST',
+//			url : '/manageLibrary/updateParentBook',
+//			data : $scope.parentBook,
+//			headers : {
+//				'Content-Type' : 'application/json'
+//			}
+//		}).success(function(dataResponse, status, headers,config) {
+//           // success
+//           appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+//               console.log("updateParentBook - dataResponse",dataResponse)
+//               
+//               $scope.parentBook = dataResponse.responseData;
+//              
+//               appUtils.showSuccess("Book ISBN "+selectedISBN+" updated successfully");
+//               $('#parentBookViewEditDelforSmy').modal('hide');
+//           });
+//       }).error(function(data, status, headers, config) {
+//           // error
+//           console.log("Error", data, status,headers, config);
+//       });
    }
-  
+   
    /*
     * Delete Parent Book function call to Delete Parent Book
     */
     $scope.deleteParentBook=function()
     {
     	console.log("$scope.deleteParentBook :",$scope.parentBook);
-		$http({
-			method : 'POST',
-			url : '/manageLibrary/deleteParentBook',
-			data : $scope.parentBook,
-			headers : {
-				'Content-Type' : 'application/json'
-			}
-		}).success(function(dataResponse, status, headers,config) {
-           // success
-           appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
-               console.log("deleteParentBook - dataResponse",dataResponse)
-               appUtils.showSuccess("Book "+$scope.parentBook.isbn+" deleted successfully");
-               $('#parentBookViewEditDelforSmy').modal('hide');
-           });
-       }).error(function(data, status, headers, config) {
-           // error
-           console.log("Error", data, status,headers, config);
-       });
+    	libraryService.deleteParentBook($scope.parentBook).then(
+ 	           function(dataResponse){
+ 	               appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+ 	            	   console.log("updateParentBook - dataResponse",dataResponse)
+// 	               	   $scope.parentBook = dataResponse.responseData;
+//               
+ 	               	appUtils.showSuccess("Book "+$scope.parentBook.isbn+" deleted successfully");
+ 	               $('#parentBookViewEditDelforSmy').modal('hide');
+ 	               })
+ 	           }
+ 	       );
+//		$http({
+//			method : 'POST',
+//			url : '/manageLibrary/deleteParentBook',
+//			data : $scope.parentBook,
+//			headers : {
+//				'Content-Type' : 'application/json'
+//			}
+//		}).success(function(dataResponse, status, headers,config) {
+//           // success
+//           appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
+//               console.log("deleteParentBook - dataResponse",dataResponse)
+//               appUtils.showSuccess("Book "+$scope.parentBook.isbn+" deleted successfully");
+//               $('#parentBookViewEditDelforSmy').modal('hide');
+//           });
+//       }).error(function(data, status, headers, config) {
+//           // error
+//           console.log("Error", data, status,headers, config);
+//       });
     };
     
     /*
@@ -581,6 +614,25 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         },
         "searchText":""
     }
+    
+    
+    
+    
+    $scope.searchISBN=function()
+    {
+    	console.log("$scope.searchISBN :",$scope.parentBook.isbn);
+    	libraryService.searchISBN($scope.parentBook).then(
+ 	           function(dataResponse){
+ 	               appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+ 	            	   console.log("searchISBN - dataResponse",dataResponse.responseData.data);
+ 	            	   if(dataResponse.responseData.data.length>0)
+ 	            		  $scope.isISBNExist=true;
+ 	            	   else
+ 	            		  $scope.isISBNExist=false;
+ 	               })
+ 	           }
+ 	       )
+    };
     
     /*
      * Search function 

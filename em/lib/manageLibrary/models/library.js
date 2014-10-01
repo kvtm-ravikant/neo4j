@@ -17,7 +17,8 @@ function getLibrary(schoolID,req){
 }
 module.exports.getLibrary=getLibrary;
 function getAllBooks(res,schoolID){
-    var queryAllBooks='MATCH (c)-[:CHILDBOOK_OF]->pb-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb,c  LIMIT 20';
+//    var queryAllBooks='MATCH (c)-[:CHILDBOOK_OF]->pb-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb,c  LIMIT 20';
+	 var queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" RETURN pb,c  LIMIT 20';
     var responseObj=new Utils.Response();
     db.cypherQuery(queryAllBooks,function(err,reply){
         console.log(err,queryAllBooks);
@@ -457,6 +458,26 @@ module.exports.deleteChildBook = function(book,loggedInUser,schoolID,res) {
 	        console.log("deleteParentBook",e);
 	        Utils.defaultErrorResponse(res,defaultErrorMsg);
 	    }
+}
+/* Match ISBN is available or notr */
+module.exports.searchISBN = function(isbn,loggedInUser,schoolID,res) {
+//	console.log("is ISBN exist ?", requestObj);
+	var responseObj = new Utils.Response();
+//    var query='Match (s:School{schoolId:"'+schoolID+'"})<-[:USER_OF]-(n:User{regID:"' + requestObj.regIdText + '"}) RETURN n';
+	var query ='MATCH (n:ParentBook{isbn:"' + isbn + '"}) return n';
+
+	console.log("ISBN ID availability query :", query);
+	db.cypherQuery(query, function(err, reply) {
+		console.log("searchISBN :", query, err, reply);
+		if (!err) {
+			responseObj.responseData = reply;
+			res.json(responseObj);
+		} else {
+			responseObj.error = true;
+			responseObj.errorMsg = "No Data found.";
+			res.json(responseObj);
+		}
+	});
 }
 module.exports.searchUser=function(res,searchText,schoolId){
     console.log("searchUser",searchText);

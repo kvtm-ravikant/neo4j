@@ -79,9 +79,7 @@ function insertDataToDB(nodeRelationshipData){
                 }
 
             })(labelTemp,dataObjTemp);
-
         }
-
     }
 }
 
@@ -126,7 +124,6 @@ function getDataObj(jsonData,columnsAndRelationshipMap){
     }
     //console.log("nodeRelationshipData",nodeRelationshipData);
     return nodeRelationshipData;
-
 }
 
 function getColumnObjMap(columns){
@@ -278,6 +275,15 @@ module.exports=function(app,Utils){
         var schoolID=loggedInUser.schoolDetails.schoolId;
         console.log("requestobj - deleteChildBook",book);
         libraryMS.deleteChildBook(book,loggedInUser,schoolID,res);
+    })
+/*  searchISBN - Query for search ISBN whether it exist or not   */
+    app.post("/manageLibrary/searchISBN",Utils.ensureAuthenticated,function(req,res){
+    	console.log("requestobj - searchISBN",req.body);
+    	var isbn=req.body.isbn;
+        var loggedInUser=req.session.userDetails;
+        var schoolID=loggedInUser.schoolDetails.schoolId;
+        
+        libraryMS.searchISBN(isbn,loggedInUser,schoolID,res);
     })
     app.get("/manageLibrary/getUserSearchText/:primaryKey/:value",Utils.ensureAuthenticated,function(req,res){
         var primaryKey=req.params.primaryKey
