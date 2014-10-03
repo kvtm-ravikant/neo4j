@@ -71,6 +71,14 @@ educationMediaApp.config(function($stateProvider, $urlRouterProvider) {
                 displayName:'User Profile'
             }
         })
+        .state('updateUserProfile', {
+            url: "/manage-users/update-user-profile",
+            templateUrl: "partials/modules/manageUsers/updateUserProfile.html",
+            controller:'user_profile',
+            data:{
+                displayName:'Update User Profile'
+            }
+        })
         .state('manageUser', {
             url: "/updateUser",
             templateUrl: "partials/modules/manageUsers/manageUser_updateUser.html",
