@@ -1,31 +1,138 @@
-<div  class="row" ng-controller="user_profile">
-  <div class="col-md-12">
-  <div class="row">
-      <div class="col-sm-5"><h1 >{{userDetails.hiddenObject.fullName}}</h1></div>
-      <div class="col-sm-3 pull-right">
-          <img alt="Profile photo not available" ng-if="userDetails.hiddenObject.profileImagePath" class="userProfileImage pull-right" src="{{userDetails.hiddenObject.profileImagePath}}" width="125px"/>
-      </div>
-  </div>
-  <div class="row vertical-spacer"></div>
-  <div class="row">
-  <div class="col-sm-4" ng-repeat="(detailType,details) in userDetails.displayObject" ng-if="detailType!= 'fullName'"><!--left col-->
-      <ul class="list-group">
-          <span>
-              <li class="userProfileHeader list-group-item text-muted" >{{detailType.camelCaseToWord()}}</li>
-          </span>
+<div class="row" ng-controller="user_profile">
+	<div class="col-md-12">
+			<!--/col-3-->
+		<!-- main -->
+		<!-- <div class="content">
+							<div class="main-header">
+								 <h2>Profile</h2>
+								<em>user profile page</em>
+							
+							</div>
+	 -->
+		<div class="main-content">
+			<div class="tab-content profile-page">
+				<!-- PROFILE TAB CONTENT -->
+				<div class="tab-pane profile active" id="profile-tab">
+					<div class="row">
+						<div class="col-md-2">
+							<div class="user-info-left">
+								<img src="{{userSelectedClass.basicDetails.profileImagePath}}"
+									alt="Profile Picture" />
+								<h2>
+									{{userDetails.hiddenObject.fullName}} <i
+										class="fa fa-circle green-font online-icon"></i> <sup
+										class="sr-only">online</sup>
+								</h2>
+								<div class="contact">
+									<a href="#" class="btn btn-block btn-custom-primary"><i
+										class="fa fa-envelope-o"></i> Send Message</a> <a href="#"
+										class="btn btn-block btn-custom-secondary"><i
+										class="fa fa-book"></i> Add To Contact</a>
+									<ul class="list-inline social">
+										<li><a href="#" title="Facebook"><i
+												class="fa fa-facebook-square"></i></a></li>
+										<li><a href="#" title="Twitter"><i
+												class="fa fa-twitter-square"></i></a></li>
+										<li><a href="#" title="Google Plus"><i
+												class="fa fa-google-plus-square"></i></a></li>
+									</ul>
+								</div>
 
-          <span ng-repeat="detail in details">
-              <li class="userProfileListMarginBottom list-group-item text-right " ng-repeat="(key,value) in detail" ng-if="key!='_id'">
-                  <span class="pull-left">{{key.camelCaseToWord()}}</span>
-                  {{value || "N/A"}}
-              </li>
-          </span>
-      </ul>
+							</div>
+						</div>
 
-  </div>
-  <!--/col-3-->
-  </div><!--/col-9-->
-  </div><!--/row-->
+						<div class="col-md-9">
+							<div class="user-info-right">
+								<div class="basic-info">
+									<h3>
+										<i class="fa fa-square"></i> Basic Information
+										<legend>
+									</h3>
+									<p class="data-row">
+										<span class="data-name">Username</span> <span
+											class="data-value">{{userSelectedClass.basicDetails.userName}}</span>
+									</p>
+									<p class="data-row">
+										<span class="data-name">Birth Date</span> <span
+											class="data-value">{{userSelectedClass.basicDetails.DOB}}</span>
+									</p>
+									<p class="data-row">
+										<span class="data-name">Gender</span> <span class="data-value">{{userSelectedClass.basicDetails.sex}}</span>
+									</p>
+									
+									<p class="data-row">
+										<span class="data-name">Last Login</span> <span
+											class="data-value">2 hours ago</span>
+									</p>
+									<p class="data-row">
+										<span class="data-name">Date Joined</span> <span
+											class="data-value">{{userSelectedClass.basicDetails.createdAt}}</span>
+									</p>
+
+								</div>
+
+								<div class="contact_info">
+									<h3>
+										<i class="fa fa-square"></i> Contact Information
+										<legend>
+									</h3>
+
+									<p class="data-row">
+										<span class="data-name">Email</span> <span class="data-value">{{userSelectedClass.contact.emailPrimary}}</span>
+									</p>
+									<p class="data-row">
+										<span class="data-name">Phone</span> <span class="data-value">{{userSelectedClass.contact.phonePrimary}}</span>
+									</p>
+								</div>
+
+								<div class="">
+									<h3>
+										<i class="fa fa-square"></i> Primary Address
+										<legend>
+									</h3>
+									<p class="data-row">
+										<span class="data-name">Street1</span> <span class="data-value">{{userSelectedClass.primaryAddress.street1}}</span>
+									</p>
+									<p class="data-row">
+										<span class="data-name">Street2</span> <span class="data-value">{{userSelectedClass.primaryAddress.street2}}</span>
+									</p>
+									<p class="data-row">
+										<span class="data-name">City</span> <span class="data-value">{{userSelectedClass.primaryAddress.city}}</span>
+									</p>
+									<p class="data-row">
+										<span class="data-name">District</span> <span class="data-value">{{userSelectedClass.primaryAddress.district}}</span>
+									</p>
+									<p class="data-row">
+										<span class="data-name">State</span> <span class="data-value">{{userSelectedClass.primaryAddress.state}}</span>
+									</p>
+									<p class="data-row">
+										<span class="data-name">Country</span> <span class="data-value">{{userSelectedClass.primaryAddress.country}}</span>
+									</p>
+									<p class="data-row">
+										<span class="data-name">Pincode</span> <span class="data-value">{{userSelectedClass.primaryAddress.pincode}}</span>
+									</p>
+								</div>
+
+								<!-- 													<div class="about"> -->
+								<!-- 														<h3><i class="fa fa-square"></i> About Me 		<legend></h3> -->
+								<!-- 														<p>Need to Update</p> -->
+								<!-- 													</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END PROFILE TAB CONTENT -->
+
+			</div>
+
+		</div>
+		<!-- /main-content -->
+	</div>
+	<!-- /main -->
+</div>
+<!--/col-9-->
+</div>
+<!--/row-->
 
 
 </div>
