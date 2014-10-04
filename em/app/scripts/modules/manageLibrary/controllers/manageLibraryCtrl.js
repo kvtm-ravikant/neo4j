@@ -20,6 +20,18 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         $('#modalSearchBooks').modal('hide');
     }
 
+    $scope.openIssueBook=function(){
+//      $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
+      $scope.modalTitle="Issue Book";
+      console.log("openIssueBook");
+      $('#modalIssueBook').modal({"backdrop": "static","show":true});
+      $('#modalIssueBook').modal({"show":false});
+   }
+    
+    $scope.getBackFromIssue=function(){
+        $('#modalIssueBook').modal('hide');
+    }
+    
     //get default book
     libraryService.getAllBooks().then(
                 function(dataResponse){
@@ -675,7 +687,15 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	        },
     	        "searchText":""
     	    }
-    };
+    }
+    
+
+    
+    
+    
+    
+    
+    
     
     
    

@@ -1,0 +1,50 @@
+<div id="modalIssueBook" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="getBackFromIssue()"
+			aria-hidden="true">
+			<i class="fa fa-times"></i>
+		</button>
+		<h4>{{modalTitle}}</h4>
+	</div>
+	<div class="modal-body">
+		<div class="row ">
+			<div class="col-md-3">
+				<div class="col-md-9">
+					Search User:<br>
+					<div class="input-group">
+						<input ng-model="issueBookObj.userSearchText"
+							class="col-md-12 searchclass" placeholder="Search User"
+							class="nodeSearchInputBox" /> <span class="input-group-addon "
+							id="datamodal" data-toggle="popover"> <i
+							class="fa fa-search cursor-pointer" ng-click="searchUser()"></i>
+						</span>
+					</div>
+					<ul ng-if="searchedUserData" style="padding: 2px;">
+						<li ng-repeat="user in searchedUserData"><span
+							class="cursor-pointer" ng-click="selectUserToIssueBook(user)">{{user.firstName}}
+								{{user.middleName}} {{user.LastName}} ({{user.DOB}})</span></li>
+					</ul>
+					<h4>Issue Book</h4>
+				</div>
+				<div class="col-md-12" ng-if="selectedUser">User:
+					{{selectedUser.firstName}} {{selectedUser.middleName}}
+					{{selectedUser.LastName}} ({{selectedUser.DOB}})</div>
+				<div class="col-md-12">Book Id: {{issueThisBook.bookId}}</div>
+				<div class="col-md-12">Issue Date:
+					{{issueBookObj.issueDate|date:'dd/MM/yyyy'}}</div>
+				<div class="col-md-12">Return Date:
+					{{issueBookObj.dueDate|date:'dd/MM/yyyy'}}</div>
+				<div class="col-md-12">
+					Issue Comment: <br>
+					<textarea ng-model="issueBookObj.issueComment"
+						placeholder="comments"></textarea>
+				</div>
+			</div>
+			<!--  Issue Book Part - End -->
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary pull-right" ng-click="issueLibBook()">Issue
+			book</button>
+	</div>
+</div>
