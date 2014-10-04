@@ -20,10 +20,10 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         $('#modalSearchBooks').modal('hide');
     }
 
-    $scope.openIssueBook=function(){
+    $scope.openIssueBook=function(book, childbook){
 //      $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
       $scope.modalTitle="Issue Book";
-      console.log("openIssueBook");
+      console.log("openIssueBook : book : ",book," childbook: ", childbook);
       $('#modalIssueBook').modal({"backdrop": "static","show":true});
       $('#modalIssueBook').modal({"show":false});
    }
@@ -148,14 +148,14 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    		  errorObj.error=true
    		  errorObj.errorMsg.push("Author Name is not valid.");
    	  }
-      if(!($scope.parentBook.edition) ||$scope.parentBook.edition==""|| angular.isUndefined($scope.parentBook.edition)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Edition is not valid.");  
-      }
-      if(parseInt($scope.parentBook.bookCopies,10)==0|| angular.isUndefined($scope.parentBook.bookCopies)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Book Copies should be greater than 0.");
-      }
+//      if(!($scope.parentBook.edition) ||$scope.parentBook.edition==""|| angular.isUndefined($scope.parentBook.edition)){
+//    	  errorObj.error=true
+//          errorObj.errorMsg.push("Edition is not valid.");  
+//      }
+//      if(parseInt($scope.parentBook.bookCopies,10)==0|| angular.isUndefined($scope.parentBook.bookCopies)){
+//    	  errorObj.error=true
+//          errorObj.errorMsg.push("Book Copies should be greater than 0.");
+//      }
       if(!($scope.parentBook.publisher) ||$scope.parentBook.publisher==""|| angular.isUndefined($scope.parentBook.publisher)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Publisher is not valid.");
@@ -164,18 +164,18 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	  errorObj.error=true
           errorObj.errorMsg.push("Language is not valid.");
       }
-      if(!($scope.parentBook.categoryName) ||$scope.parentBook.categoryName==""|| angular.isUndefined($scope.parentBook.categoryName)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Category Name is not valid.");
-      }
-      if(!($scope.parentBook.bibLevel)|| $scope.parentBook.bibLevel==""||angular.isUndefined($scope.parentBook.bibLevel)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Bib Levelis not valid.");
-      }
-      if(!($scope.parentBook.docType) ||$scope.parentBook.docType==""|| angular.isUndefined($scope.parentBook.docType)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Doc Type is not valid.");  
-      }
+//      if(!($scope.parentBook.categoryName) ||$scope.parentBook.categoryName==""|| angular.isUndefined($scope.parentBook.categoryName)){
+//    	  errorObj.error=true
+//          errorObj.errorMsg.push("Category Name is not valid.");
+//      }
+//      if(!($scope.parentBook.bibLevel)|| $scope.parentBook.bibLevel==""||angular.isUndefined($scope.parentBook.bibLevel)){
+//    	  errorObj.error=true
+//          errorObj.errorMsg.push("Bib Levelis not valid.");
+//      }
+//      if(!($scope.parentBook.docType) ||$scope.parentBook.docType==""|| angular.isUndefined($scope.parentBook.docType)){
+//    	  errorObj.error=true
+//          errorObj.errorMsg.push("Doc Type is not valid.");  
+//      }
       if(errorObj.error==true){
     	  errorObj.errorMsg.push("Please complete the Book Details Form.");
       }
@@ -636,7 +636,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
      */
     $scope.searchBooks=function(){
         console.log("$scope.searchBookModel",$scope.searchBookModel);
-        $('#getBackFromModal').modal('hide');
+        $('#modalSearchBooks').modal('hide');
         $http({
             method : 'POST',
             url    : '/manageLibrary/searchBooks',
@@ -690,7 +690,75 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     }
     
 
+//    $scope.showIssueBookHtml=function(book){
+        $scope.returnThisBook=null;
+//        $scope.issueThisBook=book;
+//        var dueDate=(new Date()).getTime()+($scope.libConstants.issueDuration*24*60*60*1000);
+        $scope.issueBookObj={
+            issueDate:(new Date()).getTime(),
+//            dueDate:dueDate,
+            submittedDate:"",
+            fineAmount:"",
+            fineStatus:"",
+            transactionId:"",
+            issueComment:"",
+            submitComment:"",
+            userSearchText:""
+        };
+//        console.log("book---issue",book,$scope.issueBookObj);
+//    }
     
+    $scope.searchUser=function(){
+        if($scope.issueBookObj.userSearchText){
+
+            $http.get('/manageLibrary/searchUser/'+$scope.issueBookObj.userSearchText).success(function(dataResponse,status,headers,config){
+                //success
+                console.log("dataResponse /manageLibrary/searchUser",dataResponse);
+                appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                    $scope.searchedUserData=dataResponse.responseData.data;
+                });
+            }).error(function(data,status,headers,config){
+                //error
+                console.log("Error",data,status,headers,config);
+            });
+        }else{
+            appUtils.showError("Please enter search text for searching user.");
+        }
+
+    }
+    $scope.selectUserToIssueBook=function(user){
+        $scope.selectedUser=user;
+        $scope.searchedUserData=null;
+    }
+    //issue book form submission
+    $scope.issueLibBook=function(){
+        console.log("issueLibBook", $scope.selectedUser,$scope.issueThisBook);
+        if($scope.selectedUser && $scope.issueThisBook){
+            $http({
+                method : 'POST',
+                url    : '/manageLibrary/issueLibBook',
+                data   : {book:$scope.issueThisBook,user:$scope.selectedUser,issueBookObj:$scope.issueBookObj},
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(dataResponse,status,headers,config){
+                //success
+                appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                    console.log("issueLibBook dataResponse",dataResponse)
+                    $scope.issueThisBook.bookStatus="Unavailable";
+                    $scope.issueThisBook=null;
+                });
+            }).error(function(data,status,headers,config){
+                //error
+                console.log("Error",data,status,headers,config);
+
+            });
+        }else{
+            var msg="";
+            !$scope.selectedUser?msg+="Please select user to whom this book needs to be issued by searching and selecting. <br>":"";
+            !$scope.issueThisBook?msg+="Please select the book to be issued.":"";
+            appUtils.showError(msg);
+        }
+
+    }
     
     
     
