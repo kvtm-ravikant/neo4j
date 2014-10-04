@@ -334,6 +334,12 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
        code && code=='delete'?$scope.parentFormDisabled=true:false;
        code && code=='view'?$scope.parentFormDisabled=true:false;
        
+       $scope.parentModalTrxBtnDisabled=false;
+       code && code=='update'?$scope.parentModalTrxBtnDisabled=true:false;
+       code && code=='delete'?$scope.parentModalTrxBtnDisabled=true:false;
+       code && code=='view'?$scope.parentModalTrxBtnDisabled=false:true;
+       
+       
        $('#parentBookViewEditDelforSmy').modal({"backdrop": "static","show":true});
        $('#parentBookViewEditDelforSmy').modal({"show":false});
 	   
@@ -510,6 +516,11 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
        code && code=='update'?$scope.childFormDisabled=false:true;
        code && code=='delete'?$scope.childFormDisabled=true:false;
        code && code=='view'?$scope.childFormDisabled=true:false;
+       
+       $scope.childModalTrxBtnDisabled=false;
+       code && code=='update'?$scope.childModalTrxBtnDisabled=true:false;
+       code && code=='delete'?$scope.childModalTrxBtnDisabled=true:false;
+       code && code=='view'?$scope.childModalTrxBtnDisabled=false:true;
 
 
        $('#childBookforEditViewDelete').modal({"backdrop": "static","show":true});
