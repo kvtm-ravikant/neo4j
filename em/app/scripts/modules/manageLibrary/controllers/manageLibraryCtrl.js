@@ -124,19 +124,19 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 //    	  errorParentObj.errorMsg.push("Book is not added. Please contact administrator");
 //      };
    	  	 
-   	  if($scope.parentBook.isbn.length<5|| angular.isUndefined($scope.parentBook.isbn)){
+   	  if(!($scope.parentBook.isbn) ||$scope.parentBook.isbn==""|| angular.isUndefined($scope.parentBook.isbn)){
     	  errorObj.error=true
           errorObj.errorMsg.push("ISBN is not valid.");
       }
-   	  if($scope.parentBook.bookTitle.length<3|| angular.isUndefined($scope.parentBook.bookTitle)){
+   	  if(!($scope.parentBook.bookTitle) || $scope.parentBook.bookTitle==""||angular.isUndefined($scope.parentBook.bookTitle)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Book Title is not valid.");
       }
-   	  if($scope.parentBook.authorName.length<3|| angular.isUndefined($scope.parentBook.authorName)){
+   	  if(!($scope.parentBook.authorName) ||$scope.parentBook.authorName==""|| angular.isUndefined($scope.parentBook.authorName)){
    		  errorObj.error=true
    		  errorObj.errorMsg.push("Author Name is not valid.");
    	  }
-      if($scope.parentBook.edition.length<1|| angular.isUndefined($scope.parentBook.edition)){
+      if(!($scope.parentBook.edition) ||$scope.parentBook.edition==""|| angular.isUndefined($scope.parentBook.edition)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Edition is not valid.");  
       }
@@ -144,23 +144,23 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	  errorObj.error=true
           errorObj.errorMsg.push("Book Copies should be greater than 0.");
       }
-      if($scope.parentBook.publisher.length<2|| angular.isUndefined($scope.parentBook.publisher)){
+      if(!($scope.parentBook.publisher) ||$scope.parentBook.publisher==""|| angular.isUndefined($scope.parentBook.publisher)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Publisher is not valid.");
       }
-      if($scope.parentBook.language.length<2|| angular.isUndefined($scope.parentBook.language)){
+      if(!($scope.parentBook.language)||$scope.parentBook.language==""|| angular.isUndefined($scope.parentBook.language)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Language is not valid.");
       }
-      if($scope.parentBook.categoryName.length<2|| angular.isUndefined($scope.parentBook.categoryName)){
+      if(!($scope.parentBook.categoryName) ||$scope.parentBook.categoryName==""|| angular.isUndefined($scope.parentBook.categoryName)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Category Name is not valid.");
       }
-      if($scope.parentBook.bibLevel.length<1|| angular.isUndefined($scope.parentBook.bibLevel)){
+      if(!($scope.parentBook.bibLevel)|| $scope.parentBook.bibLevel==""||angular.isUndefined($scope.parentBook.bibLevel)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Bib Levelis not valid.");
       }
-      if($scope.parentBook.docType.length<2|| angular.isUndefined($scope.parentBook.docType)){
+      if(!($scope.parentBook.docType) ||$scope.parentBook.docType==""|| angular.isUndefined($scope.parentBook.docType)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Doc Type is not valid.");  
       }
@@ -190,31 +190,31 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 	    var messageQue=[];
    		var errorObj={error:false,errorMsg:[]};
   	 
-   		if(childBook.bookId.length<1|| angular.isUndefined(childBook.bookId)){
+   		if(!(childBook.bookId) ||childBook.bookId=="" || angular.isUndefined(childBook.bookId)){
 	    	 errorObj.error=true
 	    	 errorObj.errorMsg.push("Book Id is not valid.");
 	    }
-   		if(childBook.bookStatus.length<1|| angular.isUndefined(childBook.bookStatus)){
+   		if(!(childBook.bookStatus) ||childBook.bookStatus=="" || angular.isUndefined(childBook.bookStatus)){
 	    	 errorObj.error=true
 	    	 errorObj.errorMsg.push("Book Status is not valid.");
 	    }
-   		if(childBook.outletName.length<1 || angular.isUndefined(childBook.outletName)){
+   		if(!(childBook.outletName) || childBook.outletName==""|| angular.isUndefined(childBook.outletName)){
    			errorObj.error=true
    			errorObj.errorMsg.push("OutLet is not valid.");
    		}
-   		if(childBook.location.length<1 || angular.isUndefined(childBook.location)){
+   		if(!(childBook.location) ||childBook.location=="" || angular.isUndefined(childBook.location)){
    			errorObj.error=true
    			errorObj.errorMsg.push("Location is not valid.");
    		}
-   		if(childBook.pricePaid.length<1 || angular.isUndefined(childBook.pricePaid)){
+   		if(!(childBook.pricePaid) || childBook.pricePaid == ""|| angular.isUndefined(childBook.pricePaid)){
    			errorObj.error=true
    			errorObj.errorMsg.push("Price is not valid.");
    		}
-   		if(childBook.barCode.length<1 || angular.isUndefined(childBook.barCode)){
+   		if(!(childBook.barCode) ||childBook.barCode=="" || angular.isUndefined(childBook.barCode)){
    			errorObj.error=true
    			errorObj.errorMsg.push("Bar Code is not valid.");
    		}
-   		if(childBook.description.length<1 || angular.isUndefined(childBook.description)){
+   		if(!(childBook.description) ||childBook.description=="" || angular.isUndefined(childBook.description)){
    			errorObj.error=true
    			errorObj.errorMsg.push("Description is not valid.");
    		}
@@ -354,8 +354,10 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    	console.log("$scope.parentModalTitle : ParentBook", $scope.parentModalTitle, $scope.parentModalCode);
    	   	
     if($scope.parentModalCode && $scope.parentModalCode=='update'){
+    	if(!validateParentBook()){
    		$('#retryModel').modal({"backdrop": "static","show":true});
    		 $scope.alertText="Book details has been changed. Do you want to proceed ?";
+    	}
 //    	console.log("Update Parent Book ",$scope.parentBook);
    	}
    	else if($scope.parentModalCode && $scope.parentModalCode=='delete'){
@@ -405,6 +407,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    {
 //   	console.log("$scope.updateParentBook :",$scope.parentBook);
 		var selectedISBN = $scope.parentBook.isbn;
+		
 		libraryService.updateParentBook($scope.parentBook).then(
 	           function(dataResponse){
 	               appUtils.defaultParseResponse(dataResponse,function(dataResponse){
