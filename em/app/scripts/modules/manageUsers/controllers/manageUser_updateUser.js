@@ -50,17 +50,20 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 	/*
 	 * Get All User Summary
 	 */
-    $http.get('/manage-users/getAllUser').success(function(dataResponse,status,headers,config){
-        //success
-        console.log("dataResponse /manage-users/getAllUser",dataResponse);
-        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-        	$scope.allUserClass=dataResponse.responseData;
-        });
+    if(!$scope.isUserPropfileMode){
+        $http.get('/manage-users/getAllUser').success(function(dataResponse,status,headers,config){
+            //success
+            console.log("dataResponse /manage-users/getAllUser",dataResponse);
+            appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                $scope.allUserClass=dataResponse.responseData;
+            });
 
-    }).error(function(data,status,headers,config){
-            //error
-            console.log("Error",data,status,headers,config);
-    });
+        }).error(function(data,status,headers,config){
+                //error
+                console.log("Error",data,status,headers,config);
+        });
+    }
+
   
     $scope.currentUserDetails=null;
     
@@ -320,11 +323,16 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
                 console.log("updateUserClass - dataResponse",dataResponse)
                 
-                $scope.userSelectedClass = dataResponse.responseData;
+                //$scope.userSelectedClass = dataResponse.responseData;
                
                 appUtils.showSuccess("User "+selectedUser+" updated successfully");
                 $('#modalUpdate').modal('hide');
-                $scope.searchUser();
+                if(!$scope.isUserPropfileMode){
+                    $scope.searchUser();
+                }else if($scope.updateCurrentUserSession && typeof $scope.updateCurrentUserSession=='function'){
+                    $scope.updateCurrentUserSession();
+                }
+
             });
         }).error(function(data, status, headers, config) {
             // error

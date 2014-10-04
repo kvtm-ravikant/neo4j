@@ -1155,3 +1155,11 @@ input.ng-valid {
     width: 63%;
     margin-left: 15px;
 }
+.edit-user-profile{
+    font-size:20px;
+    border:1px solid #ccc;
+    border-radius:50%;
+    padding:5px;
+    cursor: pointer;
+
+}

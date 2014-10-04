@@ -1,7 +1,14 @@
 <div  class="row" ng-controller="user_profile">
   <div class="col-md-12">
   <div class="row">
-      <div class="col-sm-5"><h1 >{{userDetails.hiddenObject.fullName}}</h1></div>
+
+      <div class="col-sm-9 ">
+          <h1 >{{userDetails.hiddenObject.fullName}}
+              <span class=" edit-user-profile fa fa-pencil" ng-click="openModal('update')"></span>
+          </h1>
+
+      </div>
+
       <div class="col-sm-3 pull-right">
           <img alt="Profile photo not available" ng-if="userDetails.hiddenObject.profileImagePath" class="userProfileImage pull-right" src="{{userDetails.hiddenObject.profileImagePath}}" width="125px"/>
       </div>
@@ -26,6 +33,20 @@
   <!--/col-3-->
   </div><!--/col-9-->
   </div><!--/row-->
+  <div ng-controller="manageUser_updateUser">
+      <div ng-include="'partials/modules/manageUsers/crudUserModal.html'"></div>
+      <div class="modal well" tabindex="-1" role="dialog" id="retryModel">
+          <div class="modal-header">
+              <h3>Are you sure ?</h3>
+          </div>
+          <div class="modal-body">{{alertText}}</div>
+          <div class="modal-footer">
+              <button class="btn btn-primary" ng-click="ok()">OK</button>
+              <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+          </div>
+      </div>
+  </div>
+
 
 
 </div>
