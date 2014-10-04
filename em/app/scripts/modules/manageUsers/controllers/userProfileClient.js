@@ -8,9 +8,10 @@ educationMediaApp.controller('user_profile', function ($scope, $http,iconClassMa
             $scope.userDetails=dataResponse.responseData;
         });
         $scope.loggedInUser=$scope.userDetails.displayObject.basicDetails[1];
+        $scope.user=$scope.userDetails.displayObject;
         $scope.getUserDetails($scope.loggedInUser);
         
-        console.log("success /manage-users/getUserprofileForUserName",dataResponse, "username : ", $scope.userDetails.displayObject.basicDetails[1].userName);
+        console.log("success /manage-users/getUserprofileForUserName",dataResponse, "username : ", $scope.user);
         
     }).error(function(data,status,headers,config){
         //error
@@ -25,6 +26,7 @@ educationMediaApp.controller('user_profile', function ($scope, $http,iconClassMa
             user.firstName.length>0?fullNameArr.push(user.firstName):null;
             user.middleName.length>0?fullNameArr.push(user.middleName):null;
             user.lastName.length>0?fullNameArr.push(user.lastName):null;
+            
             return fullNameArr.join(" ");
         }else{
             return "";
