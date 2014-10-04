@@ -14,7 +14,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         $('#modalSearchUsers').modal({"show":false});
     }
     
-    $scope.getBackFromModal=function(){
+    $scope.getBackFromSearchModal=function(){
         $('#modalSearchUsers').modal('hide');
     }
     
