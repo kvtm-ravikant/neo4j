@@ -8,8 +8,18 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     $scope.childBooks = [];
         
     $scope.openSearchBox=function(){
-        $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
+//        $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
+        
+        $scope.modalTitle="Advanced Search";
+        
+        $('#modalSearchBooks').modal({"backdrop": "static","show":true});
+        $('#modalSearchBooks').modal({"show":false});
     }
+    
+    $scope.getBackFromModal=function(){
+        $('#modalSearchBooks').modal('hide');
+    }
+
     //get default book
     libraryService.getAllBooks().then(
                 function(dataResponse){
@@ -600,6 +610,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
      */
     $scope.searchBooks=function(){
         console.log("$scope.searchBookModel",$scope.searchBookModel);
+        $('#getBackFromModal').modal('hide');
         $http({
             method : 'POST',
             url    : '/manageLibrary/searchBooks',
@@ -651,7 +662,8 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	        "searchText":""
     	    }
     };
-      
+    
+    
    
 });
 
