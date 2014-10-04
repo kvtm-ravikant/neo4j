@@ -13,10 +13,7 @@
                 </div>
                 &lt;!&ndash; /input-group &ndash;&gt;
             </li>-->
-			<li><a id="smallSidenav"><i
-					class="pull-left fa fa-chevron-right"></i>Collapse</a></li>
-			<li><a id="largeSidenav"><i
-					class="pull-left fa fa-chevron-left"></i></a></li>
+           
 			<li ng-repeat="menuItem in menu"><a
 				ng-if="menuItem.abstract==true"
 				ng-class="{active: $state.includes(menuItem.state)}"
@@ -41,6 +38,14 @@
 				</ul></li>
 
 		</ul>
+		<br>
+		 <div class="sidebar-minified">
+			<li><a id="smallSidenav"><i
+					class="pull-right fa fa-chevron-left"></i></a></li>
+			<li><a id="largeSidenav"><i
+					class="pull-left fa fa-chevron-right"></i></a></li>
+					</div>
+								
 		<!-- /#side-menu -->
 	</div>
 	<script>
