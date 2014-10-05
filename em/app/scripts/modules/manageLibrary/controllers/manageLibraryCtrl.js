@@ -6,6 +6,8 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     $scope.isSearchBoxOpened=false;
     //child Books array for adding dynamic tabs
     $scope.childBooks = [];
+//    initiate an array to hold all active tabs
+    $scope.activeTabs = [];
     
     $scope.openPublicationDate=function(){
 //    	console.log("openPublicationDate");
@@ -566,6 +568,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 	   $scope.childModalTitle="";
        $scope.childModalCode=code;
        $scope.buttonStyle='btn-primary';
+       $scope.activeTabs.push("one");
 
        code && code=='update'?$scope.childModalTitle="Update Book Copy":"";
        code && code=='delete'?$scope.childModalTitle="Delete Book Copy":"";
@@ -810,7 +813,8 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
  * Accordion Tab Functions - Start										   *
  ***************************************************************************/
      //initiate an array to hold all active tabs
-    $scope.activeTabs = [];
+//    $scope.activeTabs = [];
+//    $scope.activeTabs.splice($scope.activeTabs.indexOf("one"), 1);
     //check if the tab is active
     $scope.isOpenTab = function (tab) {
         //check if this tab is already in the activeTabs array
