@@ -405,7 +405,7 @@ module.exports.deleteParentBook = function(parentBook,loggedInUser,schoolID,res)
 	            if(err || !result || (result && result.data && result.data.length==1)){
                     var currentTimestamp=(new Date()).getTime();
                     parentBook.updatedAt=currentTimestamp;
-                    parentBook.softDelete="true";
+                    parentBook.softDelete=true;
                     db.updateNode(parentBook._id, parentBook, function(err, node){
                         if(err) throw err;
                         node === true?console.log("Book deleted"):console.log("Failed to delete Book details");
@@ -473,7 +473,7 @@ module.exports.deleteChildBook = function(book,loggedInUser,schoolID,res) {
 	            if(err || !result || (result && result.data && result.data.length==1)){
                     var currentTimestamp=(new Date()).getTime();
                     childBook.updatedAt=currentTimestamp;
-                    childBook.softDelete="true";
+                    childBook.softDelete=true;
                     db.updateNode(childBook._id, childBook, function(err, node){
                         if(err) throw err;
                         node === true?console.log("Book Copy deleted"):console.log("Failed to delete Book Copy");
