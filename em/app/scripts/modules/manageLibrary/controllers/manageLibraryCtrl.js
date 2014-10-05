@@ -6,6 +6,23 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     $scope.isSearchBoxOpened=false;
     //child Books array for adding dynamic tabs
     $scope.childBooks = [];
+    
+    $scope.openPublicationDate=function(){
+//    	console.log("openPublicationDate");
+        $('#publicationDate').focus();
+    };
+    $scope.openPurchaseDate=function(){
+//    	console.log("openPurchaseDate");
+    	$('#purchaseDate').focus();
+    };
+    
+    $('.datepicker').datepicker(
+            {format: 'dd/mm/yyyy',
+                language: 'en',
+                autoclose: true,
+                weekStart: 0,
+                todayHighlight:true
+     });
         
     $scope.openSearchBox=function(){
 //        $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
