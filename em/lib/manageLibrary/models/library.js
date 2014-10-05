@@ -69,8 +69,10 @@ module.exports.getChildBooks=function(primaryKey,value,res){
 }
 module.exports.searchBooks=function(requestObj,res){
     var parentBookObj=requestObj.parentBook;
+    var childBookObj=requestObj.childBook;
     var query;
-    if(requestObj.searchText!=""){
+    console.log("requestObj.searchText : ",requestObj);
+    if(requestObj.searchText!="" || parentBookObj.bookTitle || parentBookObj.authorName || childBookObj.bookId){
 //        query='Match (n:ParentBook) where ';
     	query='Match (c:ChildBook)-[:CHILDBOOK_OF]->(n:ParentBook) where ';
         if(parentBookObj.bookTitle){
@@ -88,6 +90,12 @@ module.exports.searchBooks=function(requestObj,res){
         }else{
             query+='n.isbn =~ ".*'+requestObj.searchText+'.*" OR ';
         }
+//        if(childBookObj.bookId){
+//            query+='c.bookId =~ ".*'+childBookObj.bookId+'.*" AND ';
+//        }else{
+//            query+='c.bookId =~ ".*'+requestObj.searchText+'.*" OR ';
+//        }
+        
         query+='n.publisher =~ ".*'+requestObj.searchText+'.*" OR ';
         query+='n.categoryName =~ ".*'+requestObj.searchText+'.*" ';
         query+='RETURN n,c';
@@ -106,7 +114,6 @@ module.exports.searchBooks=function(requestObj,res){
         requestObj.userDetails.firstName?tempQuery.push('u.firstName="'+requestObj.userDetails.firstName+'"'):null;
         requestObj.userDetails.lastName?tempQuery.push('u.lastName="'+requestObj.userDetails.lastName+'"'):null;
         requestObj.userDetails.middleName?tempQuery.push('u.middleName="'+requestObj.userDetails.middleName+'"'):null;
-
 
         requestObj.userDetails.section?classCondition.push('c.section="'+requestObj.userDetails.section+'"'):null;
         if(classCondition.length>0){

@@ -11,9 +11,19 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 //    	console.log("openPublicationDate");
         $('#publicationDate').focus();
     };
+  
     $scope.openPurchaseDate=function(){
 //    	console.log("openPurchaseDate");
     	$('#purchaseDate').focus();
+    };
+    
+    $scope.openCreDate=function(){
+//    	console.log("openPurchaseDate");
+    	$('#creDate').focus();
+    };
+    $scope.openUpdDate=function(){
+//    	console.log("openPublicationDate");
+        $('#updDate').focus();
     };
     
     $('.datepicker').datepicker(
@@ -343,6 +353,25 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 
    }
  
+   $scope.onSubmitOnlyChildBook=function(){
+	   console.log("$scope.childBooks :",$scope.childBooks,"$scope.bookClass ",$scope.bookClass.children[($scope.bookClass.children.length-1)]);
+	   if($scope.childBooks.length<1){
+			if(!validateParentBook()){
+				console.log("$scope.childBooks.length<1");
+//				addCompleteBook();
+			}
+	   }
+	   else if($scope.childBooks.length>0){
+		   if(!validateChildBook($scope.childBooks[($scope.childBooks.length-1)]))
+			   console.log("$scope.childBooks :",$scope.childBooks,"$scope.bookClass ",$scope.bookClass.children[($scope.bookClass.children.length-1)]);
+		   angular.copy($scope.childBooks,$scope.bookClass.children);
+//		   angular.copy($scope.childBooks[($scope.childBooks.length-1)],$scope.bookClass.children[($scope.bookClass.children.length-1)]);
+		   console.log("$scope.bookClass : ",$scope.bookClass);
+//			   addCompleteBook();
+	   }
+
+   }
+   
    /*
     * Open View/Edit/Delete Parent Book Modal from Summary
     */
@@ -777,9 +806,40 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 
     }
     
+/***************************************************************************
+ * Accordion Tab Functions - Start										   *
+ ***************************************************************************/
+     //initiate an array to hold all active tabs
+    $scope.activeTabs = [];
+    //check if the tab is active
+    $scope.isOpenTab = function (tab) {
+        //check if this tab is already in the activeTabs array
+        if ($scope.activeTabs.indexOf(tab) > -1) {
+            //if so, return true
+            return true;
+        } else {
+            //if not, return false
+            return false;
+        }
+    }
+    //function to 'open' a tab
+    $scope.openTab = function (tab) {
+        //check if tab is already open
+        if ($scope.isOpenTab(tab)) {
+            //if it is, remove it from the activeTabs array
+            $scope.activeTabs.splice($scope.activeTabs.indexOf(tab), 1);
+        } else {
+            //if it's not, add it!
+        	 $scope.activeTabs = [];
+            $scope.activeTabs.push(tab);
+        }
+    }
+/***************************************************************************
+ * Accordion Tab Functions - End										   *
+ ***************************************************************************/
     
     
-    
+     
     
     
     

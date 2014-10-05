@@ -1163,3 +1163,35 @@ input.ng-valid {
     cursor: pointer;
 
 }
+.icon-remove-sign {
+    padding: 0;
+    border-radius: 50%;
+    color: white;
+    background-color: red;
+    font-size:20px;
+    display:block;
+    height:40px;
+    width:40px;
+    text-align:center;
+    float: right;
+}
+.accordion__container {
+     background: #eee; 
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-color: #d6e9c6;
+}
+.accordion__tab {
+    background: #aaa; 
+    color: #fff;
+    border-bottom: 1px solid white;
+}
+.accordion__tab-title {
+    background: #888;
+    padding: 5px;
+    cursor: pointer;
+}
+.accordion__tab-content {
+  	 background: #999;
+    padding: 20px;
+}
