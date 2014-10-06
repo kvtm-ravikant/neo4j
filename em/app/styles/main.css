@@ -1179,7 +1179,6 @@ input.ng-valid {
      background: #eee; 
     border: 1px solid #ccc;
     padding: 20px;
-    border-color: #d6e9c6;
 }
 .accordion__tab {
     background: #aaa; 
@@ -1192,6 +1191,6 @@ input.ng-valid {
     cursor: pointer;
 }
 .accordion__tab-content {
-  	 background: #999;
+   background: #999; 
     padding: 20px;
 }

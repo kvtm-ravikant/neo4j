@@ -6,45 +6,130 @@
 		</button>
 		<h4>{{modalTitle}}</h4>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body col-md-12">
 		<div class="row ">
-			<div class="col-md-3">
-				<div class="col-md-9">
-					Search User:<br>
-					<div class="input-group">
-						<input ng-model="issueBookObj.userSearchText"
-							class="col-md-12 searchclass" placeholder="Search User"
-							class="nodeSearchInputBox" /> <span class="input-group-addon "
-							id="datamodal" data-toggle="popover"> <i
-							class="fa fa-search cursor-pointer" ng-click="searchUser()"></i>
-						</span>
-					</div>
-					<ul ng-if="searchedUserData" style="padding: 2px;">
-						<li ng-repeat="user in searchedUserData"><span
-							class="cursor-pointer" ng-click="selectUserToIssueBook(user)">{{user.firstName}}
-								{{user.middleName}} {{user.LastName}} ({{user.DOB}})</span></li>
-					</ul>
-					<h4>Issue Book</h4>
-				</div>
-				<div class="col-md-12" ng-if="selectedUser">User:
-					{{selectedUser.firstName}} {{selectedUser.middleName}}
-					{{selectedUser.LastName}} ({{selectedUser.DOB}})</div>
-				<div class="col-md-12">Book Id: {{issueThisBook.bookId}}</div>
-				<div class="col-md-12">Issue Date:
-					{{issueBookObj.issueDate|date:'dd/MM/yyyy'}}</div>
-				<div class="col-md-12">Return Date:
-					{{issueBookObj.dueDate|date:'dd/MM/yyyy'}}</div>
-				<div class="col-md-12">
-					Issue Comment: <br>
-					<textarea ng-model="issueBookObj.issueComment"
-						placeholder="comments"></textarea>
+			<div>
+				<label class="col-sm-1 control-label" for="loc">Search User</label>
+				<div class="input-group col-sm-8">
+					<input ng-model="issueBookObj.userSearchText"
+						class="col-md-12 searchclass" placeholder="Search User"
+						class="nodeSearchInputBox" /> <span class="input-group-addon "
+						id="datamodal" data-toggle="popover"> <i
+						class="fa fa-search cursor-pointer" ng-click="searchUser()"></i>
+					</span>
 				</div>
 			</div>
-			<!--  Issue Book Part - End -->
 		</div>
+		<br>
+		<div class="col-md-12">
+			<div class="col-md-12" ng-if="searchedUserData">
+				<div class="col-md-12">
+					<div class="col-md-2 div-table-header-th">First Name</div>
+					<div class="col-md-2 div-table-header-th">Middle Name</div>
+					<div class="col-md-2 div-table-header-th">Last Name</div>
+					<div class="col-md-1 div-table-header-th">Date of Birth</div>
+					<div class="col-md-2 div-table-header-th">Reg ID</div>
+					<div class="col-md-2 div-table-header-th">userName</div>
+				</div>
+				<div class="col-md-12" ng-repeat="user in searchedUserData">
+					<div class="col-md-2 div-table-td-first div-table-td">
+						<span class="cursor-pointer"
+							ng-click="selectUserToIssueBook(user)">{{user.firstName}}</span>
+					</div>
+					<div class="col-md-2 div-table-td">{{user.middleName}}</div>
+					<div class="col-md-2 div-table-td">{{user.LastName}}</div>
+					<div class="col-md-1 div-table-td">{{user.DOB}}</div>
+					<div class="col-md-2 div-table-td">{{user.regID}}</div>
+					<div class="col-md-2 div-table-td">{{user.useerName}}</div>
+				</div>
+				<br>
+			</div>
+		</div>
+
+		<!-- 		<h4>Issue Book</h4> -->
+		<div class="col-md-12">
+
+			<div class="col-md-12">
+				<div class="row">
+				<div class="col-md-6">
+						<legend style="color: red; font-weight: bold;">Selected
+							Book</legend>
+						<table>
+						<div class="col-md-12">Book Id: {{issueThisBook.bookId}}</div>
+							<div class="col-md-12">Book Id: {{issueThisBook.bookId}}</div>
+							<div class="col-md-12">Issue Date:
+								{{issueBookObj.issueDate|date:'dd/MM/yyyy'}}</div>
+							<div class="col-md-12">Return Date:
+								{{issueBookObj.dueDate|date:'dd/MM/yyyy'}}</div>
+							<div class="col-md-12">
+								Issue Comment:
+								<textarea ng-model="issueBookObj.issueComment"
+									placeholder="comments" style="width: 100%"></textarea>
+							</div>
+						</table>
+					</div>
+					<div class="col-md-6" ng-if="selectedUser">
+						<legend style="color: red; font-weight: bold;">Selected
+							User</legend>
+							
+						<div class="col-md-12">Name: {{selectedUser.firstName}}
+							{{selectedUser.middleName}} {{selectedUser.LastName}}</div>
+						<div class="col-md-12">User Name :	{{selectedUser.userName}}</div>
+						<div class="col-md-12">Registration ID:	{{selectedUser.regID}}</div>
+						<div class="col-md-12">Date of Birth:	{{selectedUser.DOB}}</div>
+					</div>
+					
+				</div>
+				<br>
+			</div>
+		</div>
+		<!--  
+		<div class="col-md-12">
+			<div class="col-md-12">
+				<div class="col-md-12">
+					<div class="col-md-3 div-table-header-th">Issue To</div>
+					<div class="col-md-1 div-table-header-th">Book ID</div>
+					<div class="col-md-2 div-table-header-th">Issue Date</div>
+					<div class="col-md-2 div-table-header-th">Return Date</div>
+					<div class="col-md-4 div-table-header-th">Cooments</div>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-3 div-table-td-first div-table-td">User:
+						{{selectedUser.firstName}}
+						{{selectedUser.middleName}}{{selectedUser.LastName}}
+						({{selectedUser.DOB}})</div>
+					<div class="col-md-1 div-table-td">{{issueThisBook.bookId}}</div>
+					<div class="col-md-2 div-table-td">{{issueBookObj.issueDate|date:'dd/MM/yyyy'}}</div>
+					<div class="col-md-2 div-table-td">{{issueBookObj.dueDate|date:'dd/MM/yyyy'}}</div>
+					<div class="col-md-4 div-table-td">
+						<textarea style="width: 100%" ng-model="issueBookObj.issueComment"
+							placeholder="comments"></textarea>
+					</div>
+				</div>
+				<br>
+			</div>
+		</div>
+		 -->
+		<!-- 
+		<div class="col-md-12" ng-if="selectedUser">User:
+			{{selectedUser.firstName}} {{selectedUser.middleName}}
+			{{selectedUser.LastName}} ({{selectedUser.DOB}})</div>
+		<div class="col-md-12">Book Id: {{issueThisBook.bookId}}</div>
+		<div class="col-md-12">Issue Date:
+			{{issueBookObj.issueDate|date:'dd/MM/yyyy'}}</div>
+		<div class="col-md-12">Return Date:
+			{{issueBookObj.dueDate|date:'dd/MM/yyyy'}}</div>
+		<div class="col-md-12">
+			Issue Comment: <br>
+			<textarea ng-model="issueBookObj.issueComment" placeholder="comments"></textarea>
+		</div>
+		  -->
 	</div>
+	<!--  Issue Book Part - End -->
+	<br>
 	<div class="modal-footer">
 		<button class="btn btn-primary pull-right" ng-click="issueLibBook()">Issue
 			book</button>
+
 	</div>
 </div>

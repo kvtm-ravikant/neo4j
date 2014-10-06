@@ -235,7 +235,7 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
     try{
         var responseObj = new Utils.Response();
         var defaultErrorMsg="Failed to add Book. Please contact administrator.";
-
+        var parentBookNodeID="";
         var findParentISBN = 'MATCH (pb{isbn:"'+requestObj.parentbook.isbn+'"})-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb,lib';
         console.log("insertCompleteBook");
         //parent book addition
@@ -245,11 +245,50 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
                 console.log("findParentISBN",err, result);
                 if(!err || !result || (result && result.data && result.data.length==0)){
                     var parentBookDetails=fillParentBookValues(requestObj.parentbook);
-                    addParentBook(libraryObj,parentBookDetails,res);
+//                    addParentBook(libraryObj,parentBookDetails,res);
+                
+//                    Start new change 
+                    db.insertNode(parentBookDetails,["ParentBook"],function(err,addParentBookReply){
+                        console.log("addParentBookReply",err,addParentBookReply);
+                        if(!err){
+                           parentBookNodeID=addParentBookReply._id;
+//                            db.insertRelationship(libraryObj._id,parentBookNodeID,"BELONGS_TO",{},function(err,resultRel){
+                            db.insertRelationship("1",parentBookNodeID,"BELONGS_TO",{},function(err,resultRel){
+                                console.log("associate parent book to library",err,resultRel);
+//                                if(!err){
+//                                    responseObj.responseData=parentBookNodeID;
+//                                    res.json(responseObj);
+//                                }else{
+//                                    Utils.defaultErrorResponse(res,defaultErrorMsg);
+//                                }
+                            });
+                        }else{
+                            responseObj.error=true;
+                            responseObj.errorMsg="Failed to add main book.";
+                            res.json(responseObj);
+                        }
+                    });
+                    
+                    if(parentBookNodeID!="")
+                    {
+                    	 if(childLen>0){
+                    			console.log("requestObj.children : ",requestObj.children);
+                             var childBookObj=requestObj.children[childLen-1];
+                             if(!(childBookObj.hasOwnProperty('_id') && childBookObj._id!=null)){
+                            		console.log("requestObj.children inside : ",requestObj.children);
+                                 childBookObj=fillChildBookValues(childBookObj);
+                                 addChildBook(res, childBookObj,parentBookNodeID);
+                             }else{
+                                 Utils.defaultErrorResponse(res,childBookObj.bookId+" is already added.");
+                             }
+                         }
+                    }
+//                    End New Change
                 }
             });
         }
         else{ //child Book Addition
+        	console.log("requestObj.children : ",requestObj.children);
             var childLen=requestObj.children.length;
             if(childLen>0 && requestObj.parentbook.hasOwnProperty('_id') && requestObj.parentbook._id ){
                 var childBookObj=requestObj.children[childLen-1];
@@ -261,6 +300,7 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
                 }
             }
         }
+//        res.json(responseObj);
     }catch(e){
         console.log("insertCompleteBook",e);
         Utils.defaultErrorResponse(res,defaultErrorMsg);
@@ -520,7 +560,8 @@ module.exports.searchUser=function(res,searchText,schoolId){
     console.log("searchUser",searchText);
     var responseObj=new Utils.Response();
     var searchTextArr=searchText.split(",");
-    var query='Match (s:School{schoolId:"'+schoolId+'"})(n:User) where ';
+//    var query='Match (s:School{schoolId:"'+schoolId+'"})(n:User) where ';
+    var query='MATCH (s:School{schoolId:"'+schoolId+'"}) <-[r1:USER_OF]-(n:User) where ';
     for(var i= 0,len=searchTextArr.length;i<len;i++){
         var text=searchTextArr[i];
         var tempText=text.toLowerCase();

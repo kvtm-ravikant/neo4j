@@ -49,19 +49,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         $('#modalSearchBooks').modal('hide');
     }
 
-    $scope.openIssueBook=function(book, childbook){
-//      $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
-      $scope.modalTitle="Issue Book";
-      console.log("openIssueBook : book : ",book," childbook: ", childbook);
-      $('#modalIssueBook').modal({"backdrop": "static","show":true});
-      $('#modalIssueBook').modal({"show":false});
-   }
-    
-    $scope.getBackFromIssue=function(){
-        $('#modalIssueBook').modal('hide');
-    }
-    
-    //get default book
+        //get default book
     libraryService.getAllBooks().then(
                 function(dataResponse){
                     console.log(" getAllBooks dataResponse",dataResponse);
@@ -568,6 +556,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 	   $scope.childModalTitle="";
        $scope.childModalCode=code;
        $scope.buttonStyle='btn-primary';
+       $scope.activeTabs = [];
        $scope.activeTabs.push("one");
 
        code && code=='update'?$scope.childModalTitle="Update Book Copy":"";
@@ -680,9 +669,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
  	       return $scope.isISBNExist;
     };
     
-    /*
-     * Search function 
-     */
+/***************************************************************************************************
+* Search Book function     - Start                                                                 *
+****************************************************************************************************/
     $scope.searchBooks=function(){
         console.log("$scope.searchBookModel",$scope.searchBookModel);
         $('#modalSearchBooks').modal('hide');
@@ -715,7 +704,6 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
      * Clear function for search clear text
      */
     $scope.clearSearch = function () {
-
     	$scope.searchBookModel={
     	        "parentBook":{
     	            "bookTitle":"",
@@ -737,23 +725,57 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	        "searchText":""
     	    }
     }
+/***************************************************************************************************
+* Search Book function     - End                                                                   *
+****************************************************************************************************/
+    
+
+/****************************************************************************************************
+ * ISSUE/RETURN BOOK TO LIBRARY - START															    *                              
+ ****************************************************************************************************/
+    $scope.openIssueBook=function(book, childbook){
+
+    	console.log("book : ", book," childBook : ", childbook);
+    	$scope.issueBookObj={
+        issueDate:(new Date()).getTime(),
+//      dueDate:dueDate,
+        submittedDate:"",
+        fineAmount:"",
+        fineStatus:"",
+        transactionId:"",
+        issueComment:"",
+        submitComment:"",
+        userSearchText:""};
+    
+    $scope.selectedUser="";
+    $scope.searchedUserData=null;
+    
+      $scope.modalTitle="Issue Book";
+      console.log("openIssueBook : book : ",book," childbook: ", childbook);
+      $('#modalIssueBook').modal({"backdrop": "static","show":true});
+      $('#modalIssueBook').modal({"show":false});
+   }
+    
+    $scope.getBackFromIssue=function(){
+        $('#modalIssueBook').modal('hide');
+    }
     
 
 //    $scope.showIssueBookHtml=function(book){
-        $scope.returnThisBook=null;
+//      $scope.returnThisBook=null;
 //        $scope.issueThisBook=book;
 //        var dueDate=(new Date()).getTime()+($scope.libConstants.issueDuration*24*60*60*1000);
-        $scope.issueBookObj={
-            issueDate:(new Date()).getTime(),
+//      $scope.issueBookObj={
+//            issueDate:(new Date()).getTime(),
 //            dueDate:dueDate,
-            submittedDate:"",
-            fineAmount:"",
-            fineStatus:"",
-            transactionId:"",
-            issueComment:"",
-            submitComment:"",
-            userSearchText:""
-        };
+//            submittedDate:"",
+//            fineAmount:"",
+//            fineStatus:"",
+//            transactionId:"",
+//            issueComment:"",
+//            submitComment:"",
+//            userSearchText:""
+//        };
 //        console.log("book---issue",book,$scope.issueBookObj);
 //    }
     
@@ -808,10 +830,14 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         }
 
     }
+/****************************************************************************************************
+* ISSUE/RETURN BOOK TO LIBRARY - START                                                              *                               
+*****************************************************************************************************/
     
-/***************************************************************************
- * Accordion Tab Functions - Start										   *
- ***************************************************************************/
+    
+/****************************************************************************************************
+ * Accordion Tab Functions - Start										                            *
+ ***************************************************************************************************/
      //initiate an array to hold all active tabs
 //    $scope.activeTabs = [];
 //    $scope.activeTabs.splice($scope.activeTabs.indexOf("one"), 1);
@@ -838,9 +864,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
             $scope.activeTabs.push(tab);
         }
     }
-/***************************************************************************
- * Accordion Tab Functions - End										   *
- ***************************************************************************/
+/****************************************************************************************************
+ * Accordion Tab Functions - End										                            *
+ ****************************************************************************************************/
     
     
      
