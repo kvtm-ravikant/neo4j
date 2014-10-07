@@ -76,6 +76,7 @@ educationMediaApp.controller('user_profile', function ($scope, $http,iconClassMa
         code && code=='update'?$scope.modalTitle="Update User":"";
         code && code=='delete'?$scope.modalTitle="Delete User":"";
         code && code=='view'?$scope.modalTitle="User Details":"";
+        code && code=='updProfile'?$scope.modalTitle="Update User":"";
 
         code && code=='delete'?$scope.buttonStyle="btn-danger":"btn-primary";
 

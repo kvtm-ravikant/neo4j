@@ -163,10 +163,14 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 //    	  errorParentObj.error=true
 //    	  errorParentObj.errorMsg.push("Book is not added. Please contact administrator");
 //      };
+   	  
    	  	 
    	  if(!($scope.parentBook.isbn) ||$scope.parentBook.isbn==""|| angular.isUndefined($scope.parentBook.isbn)){
-    	  errorObj.error=true
+//   		console.log("dummy : ",$scope.parentBook.isbn.indexOf('DUM'));
+   		if($scope.parentBook.isbn.indexOf('DUM')==-1){
+   		  errorObj.error=true
           errorObj.errorMsg.push("ISBN is not valid.");
+   		}
       }
    	  if(!($scope.parentBook.bookTitle) || $scope.parentBook.bookTitle==""||angular.isUndefined($scope.parentBook.bookTitle)){
     	  errorObj.error=true
