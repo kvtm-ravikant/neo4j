@@ -17,6 +17,34 @@ function getLibrary(schoolID,req){
     });
 }
 module.exports.getLibrary=getLibrary;
+function prepareBooksListResponse(err,reply,res){
+    var responseObj=new Utils.Response();
+    if(!err && reply && reply.data && reply.data.length>0){
+        var booksList=[];
+        var bookIndexMap={};
+        for(var i= 0,len=reply.data.length;i<len;i++){
+            var row=reply.data[i];// parent=row[0],child=row[1]
+            if(bookIndexMap.hasOwnProperty(row[0].isbn)){
+
+                var index=bookIndexMap[row[0].isbn];
+                var tempBook=booksList[index];
+                tempBook.addChildBook(row[1]);
+            }else{
+                bookIndexMap[row[0].isbn]=booksList.length;
+                var book=new BookClass.CompleteBook(row[0],row[1]);
+                booksList.push(book);
+            }
+        }
+        //console.log(JSON.stringify(booksList));
+        console.log("bookIndexMap",bookIndexMap);
+        responseObj.responseData=booksList;
+        res.json(responseObj);
+    }else{
+        responseObj.error=true;
+        responseObj.errorMsg="No Data found.";
+        res.json(responseObj);
+    }
+}
 function getAllBooks(res,schoolID){
 //    var queryAllBooks='MATCH (c)-[:CHILDBOOK_OF]->pb-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb,c  LIMIT 20';
 //	 var queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" RETURN pb,c  LIMIT 20';
@@ -24,31 +52,7 @@ function getAllBooks(res,schoolID){
     var responseObj=new Utils.Response();
     db.cypherQuery(queryAllBooks,function(err,reply){
         console.log(err,queryAllBooks);
-        if(!err && reply && reply.data && reply.data.length>0){
-            var booksList=[];
-            var bookIndexMap={};
-            for(var i= 0,len=reply.data.length;i<len;i++){
-                var row=reply.data[i];// parent=row[0],child=row[1]
-                if(bookIndexMap.hasOwnProperty(row[0].isbn)){
-
-                    var index=bookIndexMap[row[0].isbn];
-                    var tempBook=booksList[index];
-                    tempBook.addChildBook(row[1]);
-                }else{
-                    bookIndexMap[row[0].isbn]=booksList.length;
-                    var book=new BookClass.CompleteBook(row[0],row[1]);
-                    booksList.push(book);
-                }
-            }
-            //console.log(JSON.stringify(booksList));
-            console.log("bookIndexMap",bookIndexMap);
-            responseObj.responseData=booksList;
-            res.json(responseObj);
-        }else{
-            responseObj.error=true;
-            responseObj.errorMsg="No Data found.";
-            res.json(responseObj);
-        }
+        prepareBooksListResponse(err,reply,res);
     });
 }
 module.exports.getAllBooks=getAllBooks;
@@ -67,48 +71,61 @@ module.exports.getChildBooks=function(primaryKey,value,res){
         }
     });
 }
-module.exports.searchBooks=function(requestObj,res){
+module.exports.searchBooks=function(requestObj,schoolID,res){
     var parentBookObj=requestObj.parentBook;
     var childBookObj=requestObj.childBook;
     var query;
     console.log("requestObj.searchText : ",requestObj);
-    if(requestObj.searchText!="" || parentBookObj.bookTitle || parentBookObj.authorName || childBookObj.bookId){
-//        query='Match (n:ParentBook) where ';
-    	query='Match (c:ChildBook)-[:CHILDBOOK_OF]->(n:ParentBook) where ';
-        if(parentBookObj.bookTitle){
-            query+='n.bookTitle =~ ".*'+parentBookObj.bookTitle+'.*" AND ';
-        }else{
-            query+='n.bookTitle =~ ".*'+requestObj.searchText+'.*" OR ';
-        }
-        if(parentBookObj.authorName){
-            query+='n.authorName =~ ".*'+parentBookObj.authorName+'.*" AND ';
-        }else{
-            query+='n.authorName =~ ".*'+requestObj.searchText+'.*" OR ';
-        }
-        if(parentBookObj.isbn){
-            query+='n.isbn =~ ".*'+parentBookObj.isbn+'.*" AND ';
-        }else{
-            query+='n.isbn =~ ".*'+requestObj.searchText+'.*" OR ';
-        }
-//        if(childBookObj.bookId){
-//            query+='c.bookId =~ ".*'+childBookObj.bookId+'.*" AND ';
-//        }else{
-//            query+='c.bookId =~ ".*'+requestObj.searchText+'.*" OR ';
-//        }
-        
-        query+='n.publisher =~ ".*'+requestObj.searchText+'.*" OR ';
-        query+='n.categoryName =~ ".*'+requestObj.searchText+'.*" ';
-        query+='RETURN n,c';
-    }else if(requestObj.userDetails.regID || requestObj.userDetails.firstName || requestObj.userDetails.lastName || requestObj.userDetails.middleName || requestObj.userDetails.class || requestObj.userDetails.section){
-        var tempQuery=[];
-        query='MATCH ';
+    if(requestObj.searchText!=""){
+    	query=getGlobalBookSearchQuery(requestObj,schoolID);
+    }else{
+        query=getAdvBookSearchQuery(requestObj,schoolID);
+    }
+    console.log("searchBooks query",query);
+
+    var responseObj=new Utils.Response();
+    db.cypherQuery(query,function(err,reply){
+        console.log("searchBooks",err, reply);
+        prepareBooksListResponse(err,reply,res);
+    });
+}
+function getGlobalBookSearchQuery(requestObj,schoolID){
+    var searchText=requestObj.searchText;
+    var query='MATCH (cb:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and cb.softDelete=false ';
+    var tempQuery=[];
+    tempQuery.push('pb.bookTitle =~ ".*'+searchText+'.*" ');
+    tempQuery.push('pb.authorName =~ ".*'+searchText+'.*" ');
+    tempQuery.push('pb.isbn =~ ".*'+searchText+'.*" ');
+    tempQuery.push('pb.categoryName =~ ".*'+searchText+'.*" ');
+    !isNaN(parseInt(searchText,10))?tempQuery.push(' cb.bookId ='+parseInt(searchText,10)+' '):null;
+
+    query+=" AND "+tempQuery.join(" OR ");
+    query+=' RETURN pb,cb  order by pb.category LIMIT 50';
+    return query;
+}
+
+function getAdvBookSearchQuery(requestObj,schoolID){
+    var tempQuery=[];
+    var query='MATCH (cb:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and cb.softDelete=false ';
+    //parent book condition
+    requestObj.parentBook.bookTitle!=""?tempQuery.push(' pb.bookTitle =~ ".*'+requestObj.parentBook.bookTitle+'.*" '):null;
+    requestObj.parentBook.authorName!=""?tempQuery.push(' pb.authorName =~ ".*'+requestObj.parentBook.authorName+'.*" '):null;
+    requestObj.parentBook.isbn!=""?tempQuery.push(' pb.isbn =~ ".*'+requestObj.parentBook.isbn+'.*" '):null;
+    //child book condition
+    !isNaN(parseInt(requestObj.childBook.bookId,10))?tempQuery.push(' cb.bookId ='+parseInt(requestObj.childBook.bookId,10)+' '):null;
+    tempQuery.length>0?query+=" AND "+tempQuery.join(" OR "):null;
+    //query+=tempQuery.join(' AND ');
+    tempQuery=[];
+    if(requestObj.userDetails.regID || requestObj.userDetails.firstName || requestObj.userDetails.lastName || requestObj.userDetails.middleName || requestObj.userDetails.class || requestObj.userDetails.section){
+        query+='WITH cb,pb MATCH ';
         var classCondition=[];
-        if(requestObj.userDetails.class && requestObj.userDetails.section){
-            classCondition.push('c.class="'+requestObj.userDetails.class+'"');
-            classCondition.push('c.section="'+requestObj.userDetails.section+'"')
+        if(requestObj.userDetails.class!=''){
+            var classObj=JSON.parse(requestObj.userDetails.class);
+            classCondition.push('c.class="'+classObj.name+'"');
+            classCondition.push('c.section="'+classObj.section+'"')
             query+=' (c:Class) <-[r2:STUDENT_OF]-';
         }
-        query+='(u:User)-[r:ISSUED_TO]-(cb:ChildBook) WHERE ';
+        query+='(u:User)-[r:ISSUED_TO]-(cb)  ';
         requestObj.userDetails.regID?tempQuery.push('u.regID="'+requestObj.userDetails.regID+'"'):null;
         requestObj.userDetails.userName?tempQuery.push('u.userName="'+requestObj.userDetails.userName+'"'):null;
         requestObj.userDetails.firstName?tempQuery.push('u.firstName="'+requestObj.userDetails.firstName+'"'):null;
@@ -120,53 +137,18 @@ module.exports.searchBooks=function(requestObj,res){
             tempQuery.push(' ('+classCondition.join(' AND ')+') ');
         }
         if(tempQuery.length>0){
-            query+=' ('+tempQuery.join(" OR ")+' )';
-        }
-        query+=' AND cb.bookStatus="Unavailable" RETURN u,r,cb';
-
-    }else{
-//        query='Match (n:ParentBook) where n.bookTitle =~ ".*'+parentBookObj.bookTitle+'.*" AND n.authorName =~ ".*'+parentBookObj.authorName+'.*" RETURN n';
-    	query='Match (c:ChildBook)-[:CHILDBOOK_OF]->(n:ParentBook) where n.bookTitle =~ ".*'+parentBookObj.bookTitle+'.*" AND n.authorName =~ ".*'+parentBookObj.authorName+'.*" RETURN n,c';
-    }
-    console.log("parentBookObj",parentBookObj);
-
-    var responseObj=new Utils.Response();
-    db.cypherQuery(query,function(err,reply){
-        console.log("searchBooks",query,err, reply);
-        if(!err && reply && reply.data && reply.data.length>0){
-            var booksList=[];
-            var bookIndexMap={};
-            for(var i= 0,len=reply.data.length;i<len;i++){
-                var row=reply.data[i];// parent=row[0],child=row[1]
-                if(bookIndexMap.hasOwnProperty(row[0].isbn)){
-
-                    var index=bookIndexMap[row[0].isbn];
-                    var tempBook=booksList[index];
-                    tempBook.addChildBook(row[1]);
-                }else{
-                    bookIndexMap[row[0].isbn]=booksList.length;
-                    var book=new BookClass.CompleteBook(row[0],row[1]);
-                    booksList.push(book);
-                }
-            }
-            //console.log(JSON.stringify(booksList));
-            console.log("bookIndexMap",bookIndexMap);
-            responseObj.responseData=booksList;
-            res.json(responseObj);
+            query+='WHERE ('+tempQuery.join(" OR ")+' )';
+            query+=' AND cb.bookStatus="Unavailable" ';
         }else{
-            responseObj.error=true;
-            responseObj.errorMsg="No Data found.";
-            res.json(responseObj);
+            query+='  cb.bookStatus="Unavailable" ';
         }
-//        if(!err){
-//            responseObj.responseData=reply;
-//            res.json(responseObj);
-//        }else{
-//            responseObj.error=true;
-//            responseObj.errorMsg="No Data found.";
-//            res.json(responseObj);
-//        }
-    });
+
+        query+=' RETURN pb,cb,r  order by pb.category LIMIT 50';
+    }else{
+        query+='RETURN pb,cb  order by pb.category LIMIT 50';
+    }
+    return query;
+
 }
 /* addParentBook - DB Insert */
 function addParentBook(libraryObj,parentBookObj,res){

@@ -1,7 +1,18 @@
 'use strict';
 
 educationMediaApp.controller('libraryManagement', function ($scope, $http,iconClassMapping,appUtils,libraryService) {
+    //get Class List
+    $http.get('/manage-attendence/create-attendence/getClassList').success(function(dataResponse,status,headers,config){
+        //success
+        console.log("dataResponse getClassList",dataResponse);
+        appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+            $scope.classList=dataResponse.responseData;
+        });
 
+    }).error(function(data,status,headers,config){
+        //error
+        console.log("Error",data,status,headers,config);
+    });
     //open Search box
     $scope.isSearchBoxOpened=false;
     //child Books array for adding dynamic tabs
@@ -716,8 +727,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	            "firstName":"",
     	            "middleName":"",
     	            "lastName":"",
-    	            "class":"",
-    	            "section":""
+    	            "class":{}
     	        },
     	        "childBook":{
     	            "bookId":""
