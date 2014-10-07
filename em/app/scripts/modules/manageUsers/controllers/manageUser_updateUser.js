@@ -6,8 +6,19 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 
     $scope.isSearchBoxOpened=false;
     $scope.openSearchBox=function(){
-        $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
+//        $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
+        
+        $scope.modalTitle="Advanced Search";
+        
+        $('#modalSearchUsers').modal({"backdrop": "static","show":true});
+        $('#modalSearchUsers').modal({"show":false});
     }
+    
+    $scope.getBackFromSearchModal=function(){
+    	
+        $('#modalSearchUsers').modal('hide');
+    }
+    
     $('.datepicker').datepicker(
         {format: 'dd/mm/yyyy',
             language: 'en',
@@ -91,6 +102,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
      */
     $scope.searchUser=function(){
     	console.log("$scope.searchUser",$scope.searchUserModel );
+    	$('#modalSearchUsers').modal('hide');
         $http({
             method : 'POST',
             url    : '/manage-users/searchUser/',

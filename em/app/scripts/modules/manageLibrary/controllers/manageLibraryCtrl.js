@@ -6,14 +6,53 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     $scope.isSearchBoxOpened=false;
     //child Books array for adding dynamic tabs
     $scope.childBooks = [];
+//    initiate an array to hold all active tabs
+    $scope.activeTabs = [];
+    
+    $scope.openPublicationDate=function(){
+//    	console.log("openPublicationDate");
+        $('#publicationDate').focus();
+    };
+  
+    $scope.openPurchaseDate=function(){
+//    	console.log("openPurchaseDate");
+    	$('#purchaseDate').focus();
+    };
+    
+    $scope.openCreDate=function(){
+//    	console.log("openPurchaseDate");
+    	$('#creDate').focus();
+    };
+    $scope.openUpdDate=function(){
+//    	console.log("openPublicationDate");
+        $('#updDate').focus();
+    };
+    
+    $('.datepicker').datepicker(
+            {format: 'dd/mm/yyyy',
+                language: 'en',
+                autoclose: true,
+                weekStart: 0,
+                todayHighlight:true
+     });
         
     $scope.openSearchBox=function(){
-        $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
+//        $scope.isSearchBoxOpened=!$scope.isSearchBoxOpened;
+        
+        $scope.modalTitle="Advanced Search";
+        
+        $('#modalSearchBooks').modal({"backdrop": "static","show":true});
+        $('#modalSearchBooks').modal({"show":false});
     }
-    //get default book
+    
+    $scope.getBackFromModal=function(){
+        $('#modalSearchBooks').modal('hide');
+    }
+
+        //get default book
     libraryService.getAllBooks().then(
                 function(dataResponse){
-                    console.log("dataResponse",dataResponse);
+                    console.log(" getAllBooks dataResponse",dataResponse);
                     appUtils.defaultParseResponse(dataResponse,function(dataResponse){
                         $scope.booksList=dataResponse.responseData;
                     })
@@ -60,19 +99,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
                 })
             }
         );
-//     $http.get('/manageLibrary/getParentBookDD').success(function(dataResponse,status,headers,config){
-//         //success
-////         console.log("getParentBookDD",dataResponse);
-//         appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-//             $scope.parentBookDD=dataResponse;
-////          console.log("$scope.parentBookDD",$scope.parentBookDD);
-//         });
-//
-//     }).error(function(data,status,headers,config){
-//         //error
-//         console.log("Error",data,status,headers,config);
-//     });
-    
+
     //toggle key of a map
     $scope.toggleMapKeyValue=function(map,key){
         map[key]=!map[key];
@@ -126,46 +153,46 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 //    	  errorParentObj.errorMsg.push("Book is not added. Please contact administrator");
 //      };
    	  	 
-   	  if($scope.parentBook.isbn.length<5|| angular.isUndefined($scope.parentBook.isbn)){
+   	  if(!($scope.parentBook.isbn) ||$scope.parentBook.isbn==""|| angular.isUndefined($scope.parentBook.isbn)){
     	  errorObj.error=true
           errorObj.errorMsg.push("ISBN is not valid.");
       }
-   	  if($scope.parentBook.bookTitle.length<3|| angular.isUndefined($scope.parentBook.bookTitle)){
+   	  if(!($scope.parentBook.bookTitle) || $scope.parentBook.bookTitle==""||angular.isUndefined($scope.parentBook.bookTitle)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Book Title is not valid.");
       }
-   	  if($scope.parentBook.authorName.length<3|| angular.isUndefined($scope.parentBook.authorName)){
+   	  if(!($scope.parentBook.authorName) ||$scope.parentBook.authorName==""|| angular.isUndefined($scope.parentBook.authorName)){
    		  errorObj.error=true
    		  errorObj.errorMsg.push("Author Name is not valid.");
    	  }
-      if($scope.parentBook.edition.length<1|| angular.isUndefined($scope.parentBook.edition)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Edition is not valid.");  
-      }
-      if(parseInt($scope.parentBook.bookCopies,10)==0|| angular.isUndefined($scope.parentBook.bookCopies)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Book Copies should be greater than 0.");
-      }
-      if($scope.parentBook.publisher.length<2|| angular.isUndefined($scope.parentBook.publisher)){
+//      if(!($scope.parentBook.edition) ||$scope.parentBook.edition==""|| angular.isUndefined($scope.parentBook.edition)){
+//    	  errorObj.error=true
+//          errorObj.errorMsg.push("Edition is not valid.");  
+//      }
+//      if(parseInt($scope.parentBook.bookCopies,10)==0|| angular.isUndefined($scope.parentBook.bookCopies)){
+//    	  errorObj.error=true
+//          errorObj.errorMsg.push("Book Copies should be greater than 0.");
+//      }
+      if(!($scope.parentBook.publisher) ||$scope.parentBook.publisher==""|| angular.isUndefined($scope.parentBook.publisher)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Publisher is not valid.");
       }
-      if($scope.parentBook.language.length<2|| angular.isUndefined($scope.parentBook.language)){
+      if(!($scope.parentBook.language)||$scope.parentBook.language==""|| angular.isUndefined($scope.parentBook.language)){
     	  errorObj.error=true
           errorObj.errorMsg.push("Language is not valid.");
       }
-      if($scope.parentBook.categoryName.length<2|| angular.isUndefined($scope.parentBook.categoryName)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Category Name is not valid.");
-      }
-      if($scope.parentBook.bibLevel.length<1|| angular.isUndefined($scope.parentBook.bibLevel)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Bib Levelis not valid.");
-      }
-      if($scope.parentBook.docType.length<2|| angular.isUndefined($scope.parentBook.docType)){
-    	  errorObj.error=true
-          errorObj.errorMsg.push("Doc Type is not valid.");  
-      }
+//      if(!($scope.parentBook.categoryName) ||$scope.parentBook.categoryName==""|| angular.isUndefined($scope.parentBook.categoryName)){
+//    	  errorObj.error=true
+//          errorObj.errorMsg.push("Category Name is not valid.");
+//      }
+//      if(!($scope.parentBook.bibLevel)|| $scope.parentBook.bibLevel==""||angular.isUndefined($scope.parentBook.bibLevel)){
+//    	  errorObj.error=true
+//          errorObj.errorMsg.push("Bib Levelis not valid.");
+//      }
+//      if(!($scope.parentBook.docType) ||$scope.parentBook.docType==""|| angular.isUndefined($scope.parentBook.docType)){
+//    	  errorObj.error=true
+//          errorObj.errorMsg.push("Doc Type is not valid.");  
+//      }
       if(errorObj.error==true){
     	  errorObj.errorMsg.push("Please complete the Book Details Form.");
       }
@@ -192,31 +219,31 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 	    var messageQue=[];
    		var errorObj={error:false,errorMsg:[]};
   	 
-   		if(childBook.bookId.length<1|| angular.isUndefined(childBook.bookId)){
+   		if(!(childBook.bookId) ||childBook.bookId=="" || angular.isUndefined(childBook.bookId)){
 	    	 errorObj.error=true
 	    	 errorObj.errorMsg.push("Book Id is not valid.");
 	    }
-   		if(childBook.bookStatus.length<1|| angular.isUndefined(childBook.bookStatus)){
+   		if(!(childBook.bookStatus) ||childBook.bookStatus=="" || angular.isUndefined(childBook.bookStatus)){
 	    	 errorObj.error=true
 	    	 errorObj.errorMsg.push("Book Status is not valid.");
 	    }
-   		if(childBook.outletName.length<1 || angular.isUndefined(childBook.outletName)){
+   		if(!(childBook.outletName) || childBook.outletName==""|| angular.isUndefined(childBook.outletName)){
    			errorObj.error=true
    			errorObj.errorMsg.push("OutLet is not valid.");
    		}
-   		if(childBook.location.length<1 || angular.isUndefined(childBook.location)){
+   		if(!(childBook.location) ||childBook.location=="" || angular.isUndefined(childBook.location)){
    			errorObj.error=true
    			errorObj.errorMsg.push("Location is not valid.");
    		}
-   		if(childBook.pricePaid.length<1 || angular.isUndefined(childBook.pricePaid)){
+   		if(!(childBook.pricePaid) || childBook.pricePaid == ""|| angular.isUndefined(childBook.pricePaid)){
    			errorObj.error=true
    			errorObj.errorMsg.push("Price is not valid.");
    		}
-   		if(childBook.barCode.length<1 || angular.isUndefined(childBook.barCode)){
+   		if(!(childBook.barCode) ||childBook.barCode=="" || angular.isUndefined(childBook.barCode)){
    			errorObj.error=true
    			errorObj.errorMsg.push("Bar Code is not valid.");
    		}
-   		if(childBook.description.length<1 || angular.isUndefined(childBook.description)){
+   		if(!(childBook.description) ||childBook.description=="" || angular.isUndefined(childBook.description)){
    			errorObj.error=true
    			errorObj.errorMsg.push("Description is not valid.");
    		}
@@ -232,8 +259,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
   	}
   	return errorObj.error;
   	
-//	   addCompleteBook();
-    }
+   }
     
    $scope.addChildTab=function(){
 //   	console.log("addChildTab ",$scope.parentBook, " ",($scope.parentBook._id==null)," ",($scope.parentBook._id==""));
@@ -251,17 +277,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
   			setAllInactive();
    			addNewchildBook();
   		}
-//   	   	if($scope.parentBook._id!=null){
-//   	   		setAllInactive();
-//   	   		addNewchildBook();
-//   	   		}
-//   	   	else if ($scope.parentBook._id==""){
-//   	   	console.log("validateParentBook ",validateParentBook());
-//   	   		if(validateParentBook()){
-////   	   			addCompleteBook();
-//   	   		$scope.searchISBN();
-//   	   			}   	
-//   	   	}
+
    	}  
    var setAllInactive = function() {
    	console.log("setAllInactive ");
@@ -276,13 +292,15 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     		 $scope.childBooks.push(childBookPoJO);
     	}
     	else if($scope.childBooks.length<3 && $scope.childBooks.length>0){
-    		console.log("$scope.childBooks ",$scope.childBooks, "kgsad ",$scope.childBooks.length,"  $scope.bookClass : ", $scope.bookClass);	
+    		
     		if(!validateChildBook($scope.childBooks[($scope.childBooks.length-1)])){
     			$scope.childBooks.push(childBookPoJO);
     		}
+
+    		console.log("$scope.childBooks ",$scope.childBooks, "kgsad ",$scope.childBooks.length,"  $scope.bookClass : ", $scope.bookClass);	
     	}
        
-        console.log("childBookPoJO",childBookPoJO);
+//        console.log("childBookPoJO",childBookPoJO);
     	
         // var id = $scope.childBooks.length;
     	/*if($scope.childBooks.length<1){
@@ -316,14 +334,34 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 	   }
 	   else if($scope.childBooks.length>0){
 		   if(!validateChildBook($scope.childBooks[($scope.childBooks.length-1)]))
-			   console.log("$scope.childBooks.length :",$scope.childBooks.length);
+			   console.log("$scope.childBooks :",$scope.childBooks,"$scope.bookClass ",$scope.bookClass.children[($scope.bookClass.children.length-1)]);
+		   angular.copy($scope.childBooks,$scope.bookClass.children);
+//		   angular.copy($scope.childBooks[($scope.childBooks.length-1)],$scope.bookClass.children[($scope.bookClass.children.length-1)]);
+		   console.log("$scope.bookClass : ",$scope.bookClass);
 			   addCompleteBook();
 	   }
-//	   if(!validateChildBook($scope.childBooks[0]))
-//	   if(!validateParentBook())
-		   
+
    }
  
+   $scope.onSubmitOnlyChildBook=function(){
+	   console.log("$scope.childBooks :",$scope.childBooks,"$scope.bookClass ",$scope.bookClass.children[($scope.bookClass.children.length-1)]);
+	   if($scope.childBooks.length<1){
+			if(!validateParentBook()){
+				console.log("$scope.childBooks.length<1");
+//				addCompleteBook();
+			}
+	   }
+	   else if($scope.childBooks.length>0){
+		   if(!validateChildBook($scope.childBooks[($scope.childBooks.length-1)]))
+			   console.log("$scope.childBooks :",$scope.childBooks,"$scope.bookClass ",$scope.bookClass.children[($scope.bookClass.children.length-1)]);
+		   angular.copy($scope.childBooks,$scope.bookClass.children);
+//		   angular.copy($scope.childBooks[($scope.childBooks.length-1)],$scope.bookClass.children[($scope.bookClass.children.length-1)]);
+		   console.log("$scope.bookClass : ",$scope.bookClass);
+//			   addCompleteBook();
+	   }
+
+   }
+   
    /*
     * Open View/Edit/Delete Parent Book Modal from Summary
     */
@@ -344,6 +382,12 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
        code && code=='delete'?$scope.parentFormDisabled=true:false;
        code && code=='view'?$scope.parentFormDisabled=true:false;
        
+       $scope.parentModalTrxBtnDisabled=false;
+       code && code=='update'?$scope.parentModalTrxBtnDisabled=true:false;
+       code && code=='delete'?$scope.parentModalTrxBtnDisabled=true:false;
+       code && code=='view'?$scope.parentModalTrxBtnDisabled=false:true;
+       
+       
        $('#parentBookViewEditDelforSmy').modal({"backdrop": "static","show":true});
        $('#parentBookViewEditDelforSmy').modal({"show":false});
 	   
@@ -358,8 +402,10 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    	console.log("$scope.parentModalTitle : ParentBook", $scope.parentModalTitle, $scope.parentModalCode);
    	   	
     if($scope.parentModalCode && $scope.parentModalCode=='update'){
+    	if(!validateParentBook()){
    		$('#retryModel').modal({"backdrop": "static","show":true});
    		 $scope.alertText="Book details has been changed. Do you want to proceed ?";
+    	}
 //    	console.log("Update Parent Book ",$scope.parentBook);
    	}
    	else if($scope.parentModalCode && $scope.parentModalCode=='delete'){
@@ -409,6 +455,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    {
 //   	console.log("$scope.updateParentBook :",$scope.parentBook);
 		var selectedISBN = $scope.parentBook.isbn;
+		
 		libraryService.updateParentBook($scope.parentBook).then(
 	           function(dataResponse){
 	               appUtils.defaultParseResponse(dataResponse,function(dataResponse){
@@ -420,27 +467,6 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 	               })
 	           }
 	       );
-//		$http({
-//			method : 'POST',
-//			url : '/manageLibrary/updateParentBook',
-//			data : $scope.parentBook,
-//			headers : {
-//				'Content-Type' : 'application/json'
-//			}
-//		}).success(function(dataResponse, status, headers,config) {
-//           // success
-//           appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
-//               console.log("updateParentBook - dataResponse",dataResponse)
-//               
-//               $scope.parentBook = dataResponse.responseData;
-//              
-//               appUtils.showSuccess("Book ISBN "+selectedISBN+" updated successfully");
-//               $('#parentBookViewEditDelforSmy').modal('hide');
-//           });
-//       }).error(function(data, status, headers, config) {
-//           // error
-//           console.log("Error", data, status,headers, config);
-//       });
    }
    
    /*
@@ -460,24 +486,6 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
  	               })
  	           }
  	       );
-//		$http({
-//			method : 'POST',
-//			url : '/manageLibrary/deleteParentBook',
-//			data : $scope.parentBook,
-//			headers : {
-//				'Content-Type' : 'application/json'
-//			}
-//		}).success(function(dataResponse, status, headers,config) {
-//           // success
-//           appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
-//               console.log("deleteParentBook - dataResponse",dataResponse)
-//               appUtils.showSuccess("Book "+$scope.parentBook.isbn+" deleted successfully");
-//               $('#parentBookViewEditDelforSmy').modal('hide');
-//           });
-//       }).error(function(data, status, headers, config) {
-//           // error
-//           console.log("Error", data, status,headers, config);
-//       });
     };
     
     /*
@@ -548,6 +556,8 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 	   $scope.childModalTitle="";
        $scope.childModalCode=code;
        $scope.buttonStyle='btn-primary';
+       $scope.activeTabs = [];
+       $scope.activeTabs.push("one");
 
        code && code=='update'?$scope.childModalTitle="Update Book Copy":"";
        code && code=='delete'?$scope.childModalTitle="Delete Book Copy":"";
@@ -559,6 +569,11 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
        code && code=='update'?$scope.childFormDisabled=false:true;
        code && code=='delete'?$scope.childFormDisabled=true:false;
        code && code=='view'?$scope.childFormDisabled=true:false;
+       
+       $scope.childModalTrxBtnDisabled=false;
+       code && code=='update'?$scope.childModalTrxBtnDisabled=true:false;
+       code && code=='delete'?$scope.childModalTrxBtnDisabled=true:false;
+       code && code=='view'?$scope.childModalTrxBtnDisabled=false:true;
 
 
        $('#childBookforEditViewDelete').modal({"backdrop": "static","show":true});
@@ -654,11 +669,12 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
  	       return $scope.isISBNExist;
     };
     
-    /*
-     * Search function 
-     */
+/***************************************************************************************************
+* Search Book function     - Start                                                                 *
+****************************************************************************************************/
     $scope.searchBooks=function(){
         console.log("$scope.searchBookModel",$scope.searchBookModel);
+        $('#modalSearchBooks').modal('hide');
         $http({
             method : 'POST',
             url    : '/manageLibrary/searchBooks',
@@ -668,11 +684,12 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
                 //success
                 appUtils.defaultParseResponse(dataResponse,function(dataResponse){
                     console.log("searchBooks dataResponse",dataResponse)
-                    if(dataResponse.responseData.columns.length<2){
-                        $scope.books=dataResponse.responseData;
-                    }else{
+//                    if(dataResponse.responseData.columns.length<2){
+//                        $scope.books=dataResponse.responseData;
+                        $scope.booksList=dataResponse.responseData;
+//                    }else{
 
-                    }
+//                    }
                     $scope.isSearchBoxOpened=false;
                 });
             }).error(function(data,status,headers,config){
@@ -683,8 +700,181 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 
     }
    
-      
-      
+    /*
+     * Clear function for search clear text
+     */
+    $scope.clearSearch = function () {
+    	$scope.searchBookModel={
+    	        "parentBook":{
+    	            "bookTitle":"",
+    	            "authorName":"",
+    	            "isbn":""
+
+    	        },
+    	        "userDetails":{
+    	            "regID":"",
+    	            "firstName":"",
+    	            "middleName":"",
+    	            "lastName":"",
+    	            "class":"",
+    	            "section":""
+    	        },
+    	        "childBook":{
+    	            "bookId":""
+    	        },
+    	        "searchText":""
+    	    }
+    }
+/***************************************************************************************************
+* Search Book function     - End                                                                   *
+****************************************************************************************************/
+    
+
+/****************************************************************************************************
+ * ISSUE/RETURN BOOK TO LIBRARY - START															    *                              
+ ****************************************************************************************************/
+    $scope.openIssueBook=function(book, childbook){
+//    	  var dueDate=(new Date()).getTime()+($scope.libConstants.issueDuration*24*60*60*1000);
+    	console.log("book : ", book," childBook : ", childbook);
+    	$scope.issueBookObj={
+        issueDate:(new Date()).getTime(),
+//        dueDate:dueDate,
+        submittedDate:"",
+        fineAmount:"",
+        fineStatus:"",
+        transactionId:"",
+        issueComment:"",
+        submitComment:"",
+        userSearchText:"",
+        parentBook:book.parentbook,
+        childBook: childbook};
+    
+    $scope.selectedUser="";
+    $scope.searchedUserData=null;
+    
+      $scope.modalTitle="Issue Book";
+      console.log("openIssueBook : book : ",book," childbook: ", childbook);
+      $('#modalIssueBook').modal({"backdrop": "static","show":true});
+      $('#modalIssueBook').modal({"show":false});
+   }
+    
+    $scope.getBackFromIssue=function(){
+        $('#modalIssueBook').modal('hide');
+    }
+    
+
+//    $scope.showIssueBookHtml=function(book){
+//      $scope.returnThisBook=null;
+//        $scope.issueThisBook=book;
+//        var dueDate=(new Date()).getTime()+($scope.libConstants.issueDuration*24*60*60*1000);
+//      $scope.issueBookObj={
+//            issueDate:(new Date()).getTime(),
+//            dueDate:dueDate,
+//            submittedDate:"",
+//            fineAmount:"",
+//            fineStatus:"",
+//            transactionId:"",
+//            issueComment:"",
+//            submitComment:"",
+//            userSearchText:""
+//        };
+//        console.log("book---issue",book,$scope.issueBookObj);
+//    }
+    
+    $scope.searchUser=function(){
+        if($scope.issueBookObj.userSearchText){
+
+            $http.get('/manageLibrary/searchUser/'+$scope.issueBookObj.userSearchText).success(function(dataResponse,status,headers,config){
+                //success
+                console.log("dataResponse /manageLibrary/searchUser",dataResponse);
+                appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                    $scope.searchedUserData=dataResponse.responseData.data;
+                });
+            }).error(function(data,status,headers,config){
+                //error
+                console.log("Error",data,status,headers,config);
+            });
+        }else{
+            appUtils.showError("Please enter search text for searching user.");
+        }
+
+    }
+    $scope.selectUserToIssueBook=function(user){
+        $scope.selectedUser=user;
+        $scope.searchedUserData=null;
+    }
+    //issue book form submission
+    $scope.issueLibBook=function(){
+        console.log("issueLibBook", $scope.selectedUser,$scope.issueThisBook);
+        if($scope.selectedUser && $scope.issueThisBook){
+            $http({
+                method : 'POST',
+                url    : '/manageLibrary/issueLibBook',
+                data   : {book:$scope.issueThisBook,user:$scope.selectedUser,issueBookObj:$scope.issueBookObj},
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(dataResponse,status,headers,config){
+                //success
+                appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                    console.log("issueLibBook dataResponse",dataResponse)
+                    $scope.issueThisBook.bookStatus="Unavailable";
+                    $scope.issueThisBook=null;
+                });
+            }).error(function(data,status,headers,config){
+                //error
+                console.log("Error",data,status,headers,config);
+
+            });
+        }else{
+            var msg="";
+            !$scope.selectedUser?msg+="Please select user to whom this book needs to be issued by searching and selecting. <br>":"";
+            !$scope.issueThisBook?msg+="Please select the book to be issued.":"";
+            appUtils.showError(msg);
+        }
+
+    }
+/****************************************************************************************************
+* ISSUE/RETURN BOOK TO LIBRARY - START                                                              *                               
+*****************************************************************************************************/
+    
+    
+/****************************************************************************************************
+ * Accordion Tab Functions - Start										                            *
+ ***************************************************************************************************/
+     //initiate an array to hold all active tabs
+//    $scope.activeTabs = [];
+//    $scope.activeTabs.splice($scope.activeTabs.indexOf("one"), 1);
+    //check if the tab is active
+    $scope.isOpenTab = function (tab) {
+        //check if this tab is already in the activeTabs array
+        if ($scope.activeTabs.indexOf(tab) > -1) {
+            //if so, return true
+            return true;
+        } else {
+            //if not, return false
+            return false;
+        }
+    }
+    //function to 'open' a tab
+    $scope.openTab = function (tab) {
+        //check if tab is already open
+        if ($scope.isOpenTab(tab)) {
+            //if it is, remove it from the activeTabs array
+            $scope.activeTabs.splice($scope.activeTabs.indexOf(tab), 1);
+        } else {
+            //if it's not, add it!
+        	 $scope.activeTabs = [];
+            $scope.activeTabs.push(tab);
+        }
+    }
+/****************************************************************************************************
+ * Accordion Tab Functions - End										                            *
+ ****************************************************************************************************/
+    
+    
+     
+    
+    
+    
    
 });
 

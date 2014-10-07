@@ -5,7 +5,7 @@
                 <div class="input-group">
                     <input ng-model="searchBookModel.searchText"
                            class="col-md-12 searchclass" placeholder="Search"
-                           class="nodeSearchInputBox" /> <span class="input-group-addon "
+                           class="nodeSearchInputBox"/><span class="input-group-addon "
                                                                id="datamodal" data-toggle="popover"> <i class="fa fa-times"
                                                                                                         ng-click="clearSearch();searchBooks()"></i>&nbsp;|&nbsp; <i
                         class="fa fa-search cursor-pointer" ng-click="searchBooks()"></i>&nbsp;|&nbsp;
@@ -13,7 +13,9 @@
                        class="fa fa-chevron-down cursor-pointer"
                        ng-click="openSearchBox()"></i> <i ng-show="isSearchBoxOpened"
                                                           class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i>
+                                                          
 				</span>
+				
                 </div>
             </div>
             <div class="col-md-2">
@@ -64,6 +66,7 @@
     <div ng-include="'partials/modules/mangeLibrary/childBookAddforSmy.html'"></div>
     <div ng-include="'partials/modules/mangeLibrary/childBookforViewEditDelSmy.html'"></div>
     <div ng-include="'partials/modules/mangeLibrary/parentBookViewEditDelforSmy.html'"></div>
+    <div ng-include="'partials/modules/mangeLibrary/issueBook.html'"></div>
     <div class="modal well" tabindex="-1" role="dialog" id="retryModel">
 			<div class="modal-header">
 				<h3>Are you sure ?</h3>

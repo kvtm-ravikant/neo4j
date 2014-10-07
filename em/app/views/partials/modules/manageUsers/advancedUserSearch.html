@@ -1,91 +1,89 @@
-<div class="row " ng-show="isSearchBoxOpened">
-    <div class="col-md-12 ">
-        <div class="col-md-9 advSearchBoxUser">
-            <form role="form">
-                <div class="form-group">
-                    <div class="col-sm-4">
-                        <label for="name">Class/Section</label>
-                        <select ng-model="searchUserModel.class">
-                            <option  ng-repeat="class in classList" value="{{class}}">{{class.name}}/{{class.section}}</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">User Type </label>
-                        <select ng-model="searchUserModel.userType">
-                            <option ng-value="key" ng-repeat="(key, value) in userType">
-                                {{value.___name___}}
-                            </option>
-                        </select>
+<div id="modalSearchUsers" class="modal fade" tabindex="-1"
+	role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="getBackFromSearchModal()"
+			aria-hidden="true">
+			<i class="fa fa-times"></i>
+		</button>
+		<h4>{{modalTitle}} </h4>
+	</div>
+	<div class="modal-body">
+		<div class="row ">
+			<div>
+				<div>
+					<form role="form">
+						<div class="form-group">
+							<div class="col-sm-4">
+								<label for="name">Class/Section</label> <select
+									ng-model="searchUserModel.class">
+									<option ng-repeat="class in classList" value="{{class}}">{{class.name}}/{{class.section}}</option>
+								</select>
+							</div>
+							<div class="col-sm-4">
+								<label for="name">User Type </label> <select
+									ng-model="searchUserModel.userType">
+									<option ng-value="key" ng-repeat="(key, value) in userType">
+										{{value.___name___}}</option>
+								</select>
 
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">Username </label>
-                        <input type="text"
-                               class="form-control data-form-search " placeholder="Username"
-                               ng-model="searchUserModel.userName">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-4">
-                        <label for="name">First Name </label>
-                        <input type="text"
-                              class="form-control data-form-search " placeholder="First Name"
-                              ng-model="searchUserModel.firstName">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">Middle Name </label> <input
-                            type="text" class="form-control data-form-search "
-                            placeholder="Middle Name"
-                            ng-model="searchUserModel.middleName">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">Last Name</label>
-                        <input type="text"
-                              class="form-control data-form-search " placeholder="Last Name"
-                              ng-model="searchUserModel.lastName">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-4">
-                        <label for="name">Registration ID </label>
-                        <input type="text"
-                                 class="form-control data-form-search "
-                                 placeholder="Registration ID"
-                                 ng-model="searchUserModel.regID">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">Email Primary </label>
-                        <input type="text"
-                              class="form-control data-form-search "
-                              placeholder="Email Primary"
-                              ng-model="searchUserModel.emailPrimary">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">Phone Primary </label>
-                        <input type="text"
-                                class="form-control data-form-search "
-                                placeholder="Phone Primary"
-                                ng-model="searchUserModel.phonePrimary">
-                    </div>
+							</div>
+							<div class="col-sm-4">
+								<label for="name">Username </label> <input type="text"
+									class="form-control data-form-search " placeholder="Username"
+									ng-model="searchUserModel.userName">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-4">
+								<label for="name">First Name </label> <input type="text"
+									class="form-control data-form-search " placeholder="First Name"
+									ng-model="searchUserModel.firstName">
+							</div>
+							<div class="col-sm-4">
+								<label for="name">Middle Name </label> <input type="text"
+									class="form-control data-form-search "
+									placeholder="Middle Name" ng-model="searchUserModel.middleName">
+							</div>
+							<div class="col-sm-4">
+								<label for="name">Last Name</label> <input type="text"
+									class="form-control data-form-search " placeholder="Last Name"
+									ng-model="searchUserModel.lastName">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-4">
+								<label for="name">Registration ID </label> <input type="text"
+									class="form-control data-form-search "
+									placeholder="Registration ID" ng-model="searchUserModel.regID">
+							</div>
+							<div class="col-sm-4">
+								<label for="name">Email Primary </label> <input type="text"
+									class="form-control data-form-search "
+									placeholder="Email Primary"
+									ng-model="searchUserModel.emailPrimary">
+							</div>
+							<div class="col-sm-4">
+								<label for="name">Phone Primary </label> <input type="text"
+									class="form-control data-form-search "
+									placeholder="Phone Primary"
+									ng-model="searchUserModel.phonePrimary">
+							</div>
 
-                </div>
+						</div>
 
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <br>
-                        <button ng-click="resetSearchUser()"
-                                class="btn btn-warning ">
-                            Reset&nbsp;<i id="datamodal"
-                                           data-toggle="popover"></i>
-                        </button>
-                        <button ng-click="searchUser()"
-                                class="btn btn-primary pull-right">
-                            Search&nbsp;<i id="datamodal" class="fa fa-search"
-                                           data-toggle="popover"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button ng-click="resetSearchUser()" class="btn btn-warning ">
+			Reset&nbsp;<i id="datamodal" data-toggle="popover"></i>
+		</button>
+		<button ng-click="searchUser()" class="btn btn-primary pull-right">
+			Search&nbsp;<i id="datamodal" class="fa fa-search"
+				data-toggle="popover"></i>
+		</button>
+	</div>
 </div>

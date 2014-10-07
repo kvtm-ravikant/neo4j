@@ -1,0 +1,137 @@
+<div id="modalIssueBook" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="getBackFromIssue()"
+			aria-hidden="true">
+			<i class="fa fa-times"></i>
+		</button>
+		<h4>{{modalTitle}}</h4>
+	</div>
+	<div class="modal-body col-md-12">
+		<div class="row ">
+			<div>
+				<label class="col-sm-1 control-label" for="loc">Search User</label>
+				<div class="input-group col-sm-8">
+					<input ng-model="issueBookObj.userSearchText"
+						class="col-md-12 searchclass" placeholder="Search User"
+						class="nodeSearchInputBox" /> <span class="input-group-addon "
+						id="datamodal" data-toggle="popover"> <i
+						class="fa fa-times" ng-click="clearSearch()"></i>&nbsp;|&nbsp;<i
+						class="fa fa-search cursor-pointer" ng-click="searchUser()"></i>
+					</span>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="col-md-12">
+			<div class="col-md-12" ng-if="searchedUserData">
+				<div class="col-md-12">
+					<div class="col-md-2 div-table-header-th">First Name</div>
+					<div class="col-md-2 div-table-header-th">Middle Name</div>
+					<div class="col-md-2 div-table-header-th">Last Name</div>
+					<div class="col-md-1 div-table-header-th">Date of Birth</div>
+					<div class="col-md-2 div-table-header-th">Reg ID</div>
+					<div class="col-md-2 div-table-header-th">userName</div>
+				</div>
+				<div class="col-md-12" ng-repeat="user in searchedUserData">
+					<div class="col-md-2 div-table-td-first div-table-td">
+						<span class="cursor-pointer"
+							ng-click="selectUserToIssueBook(user)">{{user.firstName}}</span>
+					</div>
+					<div class="col-md-2 div-table-td">{{user.middleName}}</div>
+					<div class="col-md-2 div-table-td">{{user.LastName}}</div>
+					<div class="col-md-1 div-table-td">{{user.DOB}}</div>
+					<div class="col-md-2 div-table-td">{{user.regID}}</div>
+					<div class="col-md-2 div-table-td">{{user.useerName}}</div>
+				</div>
+				<br>
+			</div>
+		</div>
+
+		<!-- 		<h4>Issue Book</h4> -->
+		<div class="row">
+
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-6">
+						<legend style="color: red; font-weight: bold;">Selected
+							Book</legend>
+						<table
+							class="table table-bordered table-condensed table-striped table-hover">
+							<thead class="theadclass">
+								<tr>
+									<th style="width: 50%">Book ISBN :</th>
+									<td>{{issueThisBook.bookId}}</td>
+								</tr>
+							</thead>
+							<thead class="theadclass">
+								<tr>
+									<th>Book Title :</th>
+									<td>{{issueThisBook.bookId}}</td>
+								</tr>
+							</thead>
+							<thead class="theadclass">
+								<tr>
+									<th>Issue Date:</th>
+									<td>{{issueBookObj.issueDate|date:'dd/MM/yyyy'}}</td>
+								</tr>
+							</thead>
+							<thead class="theadclass">
+								<tr>
+									<th>Return Date:</th>
+									<td>{{issueBookObj.dueDate|date:'dd/MM/yyyy'}}</td>
+								</tr>
+							</thead>
+							<thead class="theadclass">
+								<tr>
+									<th>Issue Comment:</th>
+									<td><textarea ng-model="issueBookObj.issueComment"
+											placeholder="comments" style="width: 100%"></textarea></td>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div class="col-md-6" ng-if="selectedUser">
+						<legend style="color: red; font-weight: bold;">Selected
+							User</legend>
+		
+						<table
+							class="table table-bordered table-condensed table-striped table-hover">
+							<thead class="theadclass">
+								<tr>
+									<th style="width: 50%">Name :</th>
+									<td>{{selectedUser.firstName}}
+							{{selectedUser.middleName}} {{selectedUser.LastName}}</td>
+								</tr>
+							</thead>
+							<thead class="theadclass">
+								<tr>
+									<th>User Name :</th>
+									<td>{{selectedUser.userName}}</td>
+								</tr>
+							</thead>
+							<thead class="theadclass">
+								<tr>
+									<th>Registration ID: :</th>
+									<td>{{selectedUser.regID}}</td>
+								</tr>
+							</thead>
+							<thead class="theadclass">
+								<tr>
+									<th>Date of Birth :</th>
+									<td> {{selectedUser.DOB}}</td>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<br>
+				</div>
+			</div>
+		</div>
+		<!--  Issue Book Part - End -->
+		<br>
+		<div class="modal-footer">
+			<button class="btn btn-primary pull-right" ng-click="issueLibBook()">Issue
+				book</button>
+
+		</div>
+	</div>

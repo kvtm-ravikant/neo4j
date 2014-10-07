@@ -1,88 +1,97 @@
-<div class="row " ng-show="isSearchBoxOpened">
-    <div class="col-md-12 ">
-        <div class="col-md-9 advSearchBoxLib">
-            <form role="form">
-                <div class="form-group">
-                    <div class="col-sm-4">
-                        <label for="name">Book Title</label> <input type="text"
-                                                                    class="form-control data-form-search "
-                                                                    placeholder="Title Of Book"
-                                                                    ng-model="searchBookModel.parentBook.bookTitle">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">Authors Name </label> <input type="text"
-                                                                       class="form-control data-form-search "
-                                                                       placeholder="Author Of Book"
-                                                                       ng-model="searchBookModel.parentBook.authorName">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">ISBN </label> <input type="text"
-                                                               class="form-control data-form-search " placeholder="ISBN"
-                                                               ng-model="searchBookModel.parentBook.isbn">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-4">
-                        <label for="name">Book ID </label> <input type="text"
-                                                                  class="form-control data-form-search " placeholder="Book Id"
-                                                                  ng-model="searchBookModel.childBook.bookId">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">User Registration ID </label> <input
-                            type="text" class="form-control data-form-search "
-                            placeholder="User Registration ID"
-                            ng-model="searchBookModel.userDetails.regID">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">Username</label> <input type="text"
-                                                                  class="form-control data-form-search " placeholder="Username"
-                                                                  ng-model="searchBookModel.userDetails.userName">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-4">
-                        <label for="name">First Name </label> <input type="text"
-                                                                     class="form-control data-form-search "
-                                                                     placeholder="Issuer first name"
-                                                                     ng-model="searchBookModel.userDetails.firstName">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">Middle name </label> <input type="text"
-                                                                      class="form-control data-form-search "
-                                                                      placeholder="Issuer middle name"
-                                                                      ng-model="searchBookModel.userDetails.middleName">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">Last name </label> <input type="text"
-                                                                    class="form-control data-form-search "
-                                                                    placeholder="Issuer last name"
-                                                                    ng-model="searchBookModel.userDetails.lastName">
-                    </div>
+<div id="modalSearchBooks" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="getBackFromModal()"
+			aria-hidden="true">
+			<i class="fa fa-times"></i>
+		</button>
+		<h4>{{modalTitle}}</h4>
+	</div>
+	<div class="modal-body">
+		<div class="row ">
+			<div>
+				<div>
+					<form role="form">
+						<div class="form-group">
+							<div class="col-sm-4">
+								<label for="name">Book Title</label> <input type="text"
+									class="form-control data-form-search "
+									placeholder="Title Of Book"
+									ng-model="searchBookModel.parentBook.bookTitle">
+							</div>
+							<div class="col-sm-4">
+								<label for="name">Authors Name </label> <input type="text"
+									class="form-control data-form-search "
+									placeholder="Author Of Book"
+									ng-model="searchBookModel.parentBook.authorName">
+							</div>
+							<div class="col-sm-4">
+								<label for="name">ISBN </label> <input type="text"
+									class="form-control data-form-search " placeholder="ISBN"
+									ng-model="searchBookModel.parentBook.isbn">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-4">
+								<label for="name">Book ID </label> <input type="text"
+									class="form-control data-form-search " placeholder="Book Id"
+									ng-model="searchBookModel.childBook.bookId">
+							</div>
+							<div class="col-sm-4">
+								<label for="name">User Registration ID </label> <input
+									type="text" class="form-control data-form-search "
+									placeholder="User Registration ID"
+									ng-model="searchBookModel.userDetails.regID">
+							</div>
+							<div class="col-sm-4">
+								<label for="name">Username</label> <input type="text"
+									class="form-control data-form-search " placeholder="Username"
+									ng-model="searchBookModel.userDetails.userName">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-4">
+								<label for="name">First Name </label> <input type="text"
+									class="form-control data-form-search "
+									placeholder="Issuer first name"
+									ng-model="searchBookModel.userDetails.firstName">
+							</div>
+							<div class="col-sm-4">
+								<label for="name">Middle name </label> <input type="text"
+									class="form-control data-form-search "
+									placeholder="Issuer middle name"
+									ng-model="searchBookModel.userDetails.middleName">
+							</div>
+							<div class="col-sm-4">
+								<label for="name">Last name </label> <input type="text"
+									class="form-control data-form-search "
+									placeholder="Issuer last name"
+									ng-model="searchBookModel.userDetails.lastName">
+							</div>
 
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-4">
-                        <label for="name">Class </label> <input type="text"
-                                                                class="form-control data-form-search " placeholder="Class"
-                                                                ng-model="searchBookModel.userDetails.class">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="name">Section</label> <input type="text"
-                                                                 class="form-control data-form-search " placeholder="Section"
-                                                                 ng-model="searchBookModel.userDetails.section">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <br>
-                        <button ng-click="searchBooks()"
-                                class="btn btn-primary pull-right">
-                            Search&nbsp;<i id="datamodal" class="fa fa-search"
-                                           data-toggle="popover"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-4">
+								<label for="name">Class </label> <input type="text"
+									class="form-control data-form-search " placeholder="Class"
+									ng-model="searchBookModel.userDetails.class">
+							</div>
+							<div class="col-sm-4">
+								<label for="name">Section</label> <input type="text"
+									class="form-control data-form-search " placeholder="Section"
+									ng-model="searchBookModel.userDetails.section">
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button ng-click="searchBooks()" class="btn btn-primary pull-right">
+			Search&nbsp;<i id="datamodal" class="fa fa-search"
+				data-toggle="popover"></i>
+		</button>
+	</div>
 </div>

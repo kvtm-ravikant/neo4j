@@ -6,7 +6,8 @@ var BookClass = require("./bookClass.js");
 var db=Utils.getDBInstance();
 //getAllBooks(null,'SPHSS:school:2014:452001');
 function getLibrary(schoolID,req){
-    var query='MATCH (lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN lib';
+//    var query='MATCH (lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN lib';
+	var query='MATCH (lib)-[:LIBRARY_OF]->(school{schoolId:"SPHSS:school:2014:452001"}) RETURN lib';
     db.cypherQuery(query,function(err,reply){
         console.log("getLibrary",err,reply,query);
         if(reply && reply.data && reply.data.length==1){
@@ -18,8 +19,8 @@ function getLibrary(schoolID,req){
 module.exports.getLibrary=getLibrary;
 function getAllBooks(res,schoolID){
 //    var queryAllBooks='MATCH (c)-[:CHILDBOOK_OF]->pb-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb,c  LIMIT 20';
-	 var queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" RETURN pb,c  LIMIT 20';
-//	var queryAllBooks='MATCH (pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" RETURN pb  LIMIT 20';
+//	 var queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" RETURN pb,c  LIMIT 20';
+	var queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and c.softDelete=false  RETURN pb,c  order by pb.category LIMIT 50';
     var responseObj=new Utils.Response();
     db.cypherQuery(queryAllBooks,function(err,reply){
         console.log(err,queryAllBooks);
@@ -68,9 +69,12 @@ module.exports.getChildBooks=function(primaryKey,value,res){
 }
 module.exports.searchBooks=function(requestObj,res){
     var parentBookObj=requestObj.parentBook;
+    var childBookObj=requestObj.childBook;
     var query;
-    if(requestObj.searchText!=""){
-        query='Match (n:ParentBook) where ';
+    console.log("requestObj.searchText : ",requestObj);
+    if(requestObj.searchText!="" || parentBookObj.bookTitle || parentBookObj.authorName || childBookObj.bookId){
+//        query='Match (n:ParentBook) where ';
+    	query='Match (c:ChildBook)-[:CHILDBOOK_OF]->(n:ParentBook) where ';
         if(parentBookObj.bookTitle){
             query+='n.bookTitle =~ ".*'+parentBookObj.bookTitle+'.*" AND ';
         }else{
@@ -86,9 +90,15 @@ module.exports.searchBooks=function(requestObj,res){
         }else{
             query+='n.isbn =~ ".*'+requestObj.searchText+'.*" OR ';
         }
+//        if(childBookObj.bookId){
+//            query+='c.bookId =~ ".*'+childBookObj.bookId+'.*" AND ';
+//        }else{
+//            query+='c.bookId =~ ".*'+requestObj.searchText+'.*" OR ';
+//        }
+        
         query+='n.publisher =~ ".*'+requestObj.searchText+'.*" OR ';
         query+='n.categoryName =~ ".*'+requestObj.searchText+'.*" ';
-        query+='RETURN n';
+        query+='RETURN n,c';
     }else if(requestObj.userDetails.regID || requestObj.userDetails.firstName || requestObj.userDetails.lastName || requestObj.userDetails.middleName || requestObj.userDetails.class || requestObj.userDetails.section){
         var tempQuery=[];
         query='MATCH ';
@@ -105,7 +115,6 @@ module.exports.searchBooks=function(requestObj,res){
         requestObj.userDetails.lastName?tempQuery.push('u.lastName="'+requestObj.userDetails.lastName+'"'):null;
         requestObj.userDetails.middleName?tempQuery.push('u.middleName="'+requestObj.userDetails.middleName+'"'):null;
 
-
         requestObj.userDetails.section?classCondition.push('c.section="'+requestObj.userDetails.section+'"'):null;
         if(classCondition.length>0){
             tempQuery.push(' ('+classCondition.join(' AND ')+') ');
@@ -116,21 +125,47 @@ module.exports.searchBooks=function(requestObj,res){
         query+=' AND cb.bookStatus="Unavailable" RETURN u,r,cb';
 
     }else{
-        query='Match (n:ParentBook) where n.bookTitle =~ ".*'+parentBookObj.bookTitle+'.*" AND n.authorName =~ ".*'+parentBookObj.authorName+'.*" RETURN n';
+//        query='Match (n:ParentBook) where n.bookTitle =~ ".*'+parentBookObj.bookTitle+'.*" AND n.authorName =~ ".*'+parentBookObj.authorName+'.*" RETURN n';
+    	query='Match (c:ChildBook)-[:CHILDBOOK_OF]->(n:ParentBook) where n.bookTitle =~ ".*'+parentBookObj.bookTitle+'.*" AND n.authorName =~ ".*'+parentBookObj.authorName+'.*" RETURN n,c';
     }
     console.log("parentBookObj",parentBookObj);
 
     var responseObj=new Utils.Response();
     db.cypherQuery(query,function(err,reply){
-        console.log("searchBooks",query,err);
-        if(!err){
-            responseObj.responseData=reply;
+        console.log("searchBooks",query,err, reply);
+        if(!err && reply && reply.data && reply.data.length>0){
+            var booksList=[];
+            var bookIndexMap={};
+            for(var i= 0,len=reply.data.length;i<len;i++){
+                var row=reply.data[i];// parent=row[0],child=row[1]
+                if(bookIndexMap.hasOwnProperty(row[0].isbn)){
+
+                    var index=bookIndexMap[row[0].isbn];
+                    var tempBook=booksList[index];
+                    tempBook.addChildBook(row[1]);
+                }else{
+                    bookIndexMap[row[0].isbn]=booksList.length;
+                    var book=new BookClass.CompleteBook(row[0],row[1]);
+                    booksList.push(book);
+                }
+            }
+            //console.log(JSON.stringify(booksList));
+            console.log("bookIndexMap",bookIndexMap);
+            responseObj.responseData=booksList;
             res.json(responseObj);
         }else{
             responseObj.error=true;
             responseObj.errorMsg="No Data found.";
             res.json(responseObj);
         }
+//        if(!err){
+//            responseObj.responseData=reply;
+//            res.json(responseObj);
+//        }else{
+//            responseObj.error=true;
+//            responseObj.errorMsg="No Data found.";
+//            res.json(responseObj);
+//        }
     });
 }
 /* addParentBook - DB Insert */
@@ -141,7 +176,8 @@ function addParentBook(libraryObj,parentBookObj,res){
             console.log("addParentBookReply",err,addParentBookReply);
             if(!err){
                 var parentBookNodeID=addParentBookReply._id;
-                db.insertRelationship(libraryObj._id,parentBookNodeID,"BELONGS_TO",{},function(err,resultRel){
+//                db.insertRelationship(libraryObj._id,parentBookNodeID,"BELONGS_TO",{},function(err,resultRel){
+                db.insertRelationship("1",parentBookNodeID,"BELONGS_TO",{},function(err,resultRel){
                     console.log("associate parent book to library",err,resultRel);
                     if(!err){
                         responseObj.responseData=parentBookNodeID;
@@ -199,9 +235,9 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
     try{
         var responseObj = new Utils.Response();
         var defaultErrorMsg="Failed to add Book. Please contact administrator.";
-
+        var parentBookNodeID="";
         var findParentISBN = 'MATCH (pb{isbn:"'+requestObj.parentbook.isbn+'"})-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb,lib';
-        
+        console.log("insertCompleteBook");
         //parent book addition
         if(libraryObj && requestObj.parentbook.hasOwnProperty('_id') && requestObj.parentbook._id!=null){
         	console.log("requestObj.parentbook.hasOwnProperty : ",requestObj.parentbook._id);
@@ -209,11 +245,50 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
                 console.log("findParentISBN",err, result);
                 if(!err || !result || (result && result.data && result.data.length==0)){
                     var parentBookDetails=fillParentBookValues(requestObj.parentbook);
-                    addParentBook(libraryObj,parentBookDetails,res);
+//                    addParentBook(libraryObj,parentBookDetails,res);
+                
+//                    Start new change 
+                    db.insertNode(parentBookDetails,["ParentBook"],function(err,addParentBookReply){
+                        console.log("addParentBookReply",err,addParentBookReply);
+                        if(!err){
+                           parentBookNodeID=addParentBookReply._id;
+//                            db.insertRelationship(libraryObj._id,parentBookNodeID,"BELONGS_TO",{},function(err,resultRel){
+                            db.insertRelationship("1",parentBookNodeID,"BELONGS_TO",{},function(err,resultRel){
+                                console.log("associate parent book to library",err,resultRel);
+//                                if(!err){
+//                                    responseObj.responseData=parentBookNodeID;
+//                                    res.json(responseObj);
+//                                }else{
+//                                    Utils.defaultErrorResponse(res,defaultErrorMsg);
+//                                }
+                            });
+                        }else{
+                            responseObj.error=true;
+                            responseObj.errorMsg="Failed to add main book.";
+                            res.json(responseObj);
+                        }
+                    });
+                    
+                    if(parentBookNodeID!="")
+                    {
+                    	 if(childLen>0){
+                    			console.log("requestObj.children : ",requestObj.children);
+                             var childBookObj=requestObj.children[childLen-1];
+                             if(!(childBookObj.hasOwnProperty('_id') && childBookObj._id!=null)){
+                            		console.log("requestObj.children inside : ",requestObj.children);
+                                 childBookObj=fillChildBookValues(childBookObj);
+                                 addChildBook(res, childBookObj,parentBookNodeID);
+                             }else{
+                                 Utils.defaultErrorResponse(res,childBookObj.bookId+" is already added.");
+                             }
+                         }
+                    }
+//                    End New Change
                 }
             });
         }
         else{ //child Book Addition
+        	console.log("requestObj.children : ",requestObj.children);
             var childLen=requestObj.children.length;
             if(childLen>0 && requestObj.parentbook.hasOwnProperty('_id') && requestObj.parentbook._id ){
                 var childBookObj=requestObj.children[childLen-1];
@@ -225,6 +300,7 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
                 }
             }
         }
+//        res.json(responseObj);
     }catch(e){
         console.log("insertCompleteBook",e);
         Utils.defaultErrorResponse(res,defaultErrorMsg);
@@ -376,7 +452,7 @@ module.exports.deleteParentBook = function(parentBook,loggedInUser,schoolID,res)
 	            if(err || !result || (result && result.data && result.data.length==1)){
                     var currentTimestamp=(new Date()).getTime();
                     parentBook.updatedAt=currentTimestamp;
-                    parentBook.softDelete="true";
+                    parentBook.softDelete=true;
                     db.updateNode(parentBook._id, parentBook, function(err, node){
                         if(err) throw err;
                         node === true?console.log("Book deleted"):console.log("Failed to delete Book details");
@@ -444,7 +520,7 @@ module.exports.deleteChildBook = function(book,loggedInUser,schoolID,res) {
 	            if(err || !result || (result && result.data && result.data.length==1)){
                     var currentTimestamp=(new Date()).getTime();
                     childBook.updatedAt=currentTimestamp;
-                    childBook.softDelete="true";
+                    childBook.softDelete=true;
                     db.updateNode(childBook._id, childBook, function(err, node){
                         if(err) throw err;
                         node === true?console.log("Book Copy deleted"):console.log("Failed to delete Book Copy");
@@ -484,7 +560,8 @@ module.exports.searchUser=function(res,searchText,schoolId){
     console.log("searchUser",searchText);
     var responseObj=new Utils.Response();
     var searchTextArr=searchText.split(",");
-    var query='Match (s:School{schoolId:"'+schoolId+'"})(n:User) where ';
+//    var query='Match (s:School{schoolId:"'+schoolId+'"})(n:User) where ';
+    var query='MATCH (s:School{schoolId:"'+schoolId+'"}) <-[r1:USER_OF]-(n:User) where ';
     for(var i= 0,len=searchTextArr.length;i<len;i++){
         var text=searchTextArr[i];
         var tempText=text.toLowerCase();
