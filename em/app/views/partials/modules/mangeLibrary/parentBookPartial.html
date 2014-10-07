@@ -3,11 +3,26 @@
 		<div class="col-md-12">
 			<div class="row">
 				<div>
-					<label class="col-sm-2 control-label" for="isbnNum">ISBN <span style="color: red">&nbsp;*</span></label>
-					<div class="col-sm-4">
-						<input type="text" id="isbnNum"
-							placeholder="Please enter ISBN Number" class="form-control" ng-blur="onISBNBlur()"
-							ng-model="parentBook.isbn" title="ISBN is required !" required>
+					<label class="col-sm-2 control-label" for="isbnNum">ISBN <span
+						style="color: red">&nbsp;*</span></label>
+					<div class="row">
+<!-- 						<div class="col-sm-4"> -->
+<!-- 							<input type="text" id="isbnNum" -->
+<!-- 								placeholder="Please enter ISBN Number" class="form-control" -->
+<!-- 								ng-blur="onISBNBlur()" ng-model="parentBook.isbn" -->
+<!-- 								title="ISBN is required !" required> -->
+<!-- 						</div> -->
+						<div class="col-sm-2"> 
+							<label class="checkbox">Do you have ISBN  ?
+                                        <input type="checkbox" id="isISBN" name="isISBN" ng-model="isbnTextSrc">
+                                    </label>
+
+						</div>
+						<div class="col-sm-4">
+                                    <input id="isbnTextSrc" name="isbnTextSrc" class="form-control"
+                                           ng-disabled="!isbnTextSrc" ng-checked="parentBook.isbn && !isbnTextSrc" ng-model="parentBook.isbn"
+                                           type="text" placeholder="Please enter ISBN Number">
+                                </div>
 					</div>
 				</div>
 			</div>

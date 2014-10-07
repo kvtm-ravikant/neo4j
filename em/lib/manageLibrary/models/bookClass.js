@@ -12,7 +12,7 @@ function ParentBook(){
     this.bookCopies=0;
     this.language="";
     this.publisher="";
-    this.isbn="";
+    this.isbn="DUM"+(new Date()).getTime();
     this.coverImagePath="";
     this.authorName="";
     this.docType="";
