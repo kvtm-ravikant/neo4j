@@ -46,13 +46,16 @@ function initAppList(){
                 }
             ]
         },
+       
+        /*
         {
             'state': 'manageUser',
             'name':'Manage Users',
             'collapse':true,
-            'icon':"users",
+            'icon':"users",    */
            /* 'abstract':true,*/
-            'accessList':["*"]/*,
+            /* 'accessList':["*"] */
+        /*,
             "childLinks":[
                *//* {
                     'state': 'manageUser.registerUser',
@@ -83,7 +86,7 @@ function initAppList(){
                     'accessList':["*"]
                 }*//*
             ]*/
-        },
+     /*   },  */
 
         /* User Management -  End */
         /* Library Management -  Start */

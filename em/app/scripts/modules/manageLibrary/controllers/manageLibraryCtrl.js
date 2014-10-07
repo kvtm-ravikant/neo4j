@@ -734,18 +734,20 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
  * ISSUE/RETURN BOOK TO LIBRARY - START															    *                              
  ****************************************************************************************************/
     $scope.openIssueBook=function(book, childbook){
-
+//    	  var dueDate=(new Date()).getTime()+($scope.libConstants.issueDuration*24*60*60*1000);
     	console.log("book : ", book," childBook : ", childbook);
     	$scope.issueBookObj={
         issueDate:(new Date()).getTime(),
-//      dueDate:dueDate,
+//        dueDate:dueDate,
         submittedDate:"",
         fineAmount:"",
         fineStatus:"",
         transactionId:"",
         issueComment:"",
         submitComment:"",
-        userSearchText:""};
+        userSearchText:"",
+        parentBook:book.parentbook,
+        childBook: childbook};
     
     $scope.selectedUser="";
     $scope.searchedUserData=null;
