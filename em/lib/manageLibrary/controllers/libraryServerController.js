@@ -4,9 +4,7 @@
 var fs=require("fs");
 var libraryMS=require('../models/library.js');
 var Utils=require("../../common/Utils/Utils.js");
-var neo4j=require("node-neo4j");
-var db=new neo4j("http://localhost:7474");
-//var parentBookDD=require("../../common/models/docType.js");
+var db=Utils.getDBInstance();
 var parentBookDD=require("../../common/models/bibDocTypeMaterial.js");
 
 var acceptableDataTypes=["string","number","boolean","date"];

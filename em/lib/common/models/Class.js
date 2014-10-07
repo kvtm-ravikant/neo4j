@@ -1,9 +1,8 @@
 /**
  * Created by Pinki Boora on 6/1/14.
  */
-var neo4j=require("node-neo4j");
-var db=new neo4j("http://localhost:7474");
 var Utils=require("../../common/Utils/Utils.js");
+var db=Utils.getDBInstance();
 
 module.exports.getClassList=function(req,res){
     var schoolId=req.session.userDetails.schoolDetails.schoolId;

@@ -4,8 +4,8 @@
 var organization=require('../models/organization.js');
 var address=require('../../models/address.js');
 var socialMedia=require('../../models/socialMedia.js');
-var neo4j=require("node-neo4j");
-var db=new neo4j("http://localhost:7474");
+var Utils=require("../../common/Utils/Utils.js");
+var db=Utils.getDBInstance();
 console.log("db",db);
 module.exports=function(app){
     app.get("/manage-org/create-org",function(req,res){

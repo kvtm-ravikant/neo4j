@@ -28,7 +28,6 @@ app.get('/index',Utils.ensureAuthenticated, function(req,res){
     res.render('index');
 });
 require('./lib/login/controllers/loginCtrl.js')(app,Utils);
-require('./lib/manageUsers/controllers/createUser.js')(app,Utils);
 require('./lib/manageUsers/controllers/userProfileServer.js')(app,Utils);
 require('./lib/manageUsers/controllers/manageUserServer.js')(app,Utils);
 require('./lib/manageOrg/controllers/createOrg.js')(app);

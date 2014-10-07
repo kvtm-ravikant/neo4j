@@ -3,8 +3,7 @@
  */
 var fs=require('fs');
 var Utils=require("../../common/Utils/Utils.js");
-var neo4j=require("node-neo4j");
-var db=new neo4j("http://localhost:7474");
+var db=Utils.getDBInstance();
 var dataPath="../../data-files/QuestTimeTableCSC.csv";
 
 var schoolIdVal="quest:coaching:2013:452001";

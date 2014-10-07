@@ -8,8 +8,7 @@ var weeks=[{"dayID":1,"day":"Monday"},{"dayID":2,"day":"Tuesday"},{"dayID":3,"da
 
 var subjectMap=require("../../common/models/Subject.js");
 var Utils=require("../../common/Utils/Utils.js");
-var neo4j=require("node-neo4j");
-var db=new neo4j("http://localhost:7474");
+var db=Utils.getDBInstance();
 var timeTableData=[];
 module.exports.getTimeTable=function(req,res,classId){
     var schoolId=req.session.userDetails.schoolDetails.schoolId;

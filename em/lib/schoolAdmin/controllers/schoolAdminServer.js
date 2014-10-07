@@ -1,8 +1,8 @@
 var Utils=require("../../common/Utils/Utils.js");
 var schoolMS=require('../models/School.js');
 var schoolClass = require('../models/schoolClass.js');
-var neo4j = require("node-neo4j");
-var db = new neo4j("http://localhost:7474");
+var Utils=require("../../common/Utils/Utils.js");
+var db=Utils.getDBInstance();
 console.log("db", db);
 
 module.exports = function(app) {
