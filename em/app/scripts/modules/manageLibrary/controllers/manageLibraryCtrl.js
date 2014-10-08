@@ -747,12 +747,21 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 /****************************************************************************************************
  * ISSUE/RETURN BOOK TO LIBRARY - START															    *                              
  ****************************************************************************************************/
-    $scope.openIssueBook=function(book, childbook){
-//    	  var dueDate=(new Date()).getTime()+($scope.libConstants.issueDuration*24*60*60*1000);
-    	console.log("book : ", book," childBook : ", childbook);
+    $scope.libConstants={
+            "fineAmtMultiplier":5,
+            "smsGateway":"",
+            "issueDuration":10,
+            "maxBookIssuedStudent":2,
+            "maxBookIssuedTeacher":5
+        };
+    
+    $scope.openIssueBook=function(book, childbook, code){
+    	var dueDate=(new Date()).getTime()+($scope.libConstants.issueDuration*24*60*60*1000);
+//    	console.log("book : ", book," childBook : ", childbook);
+    	
     	$scope.issueBookObj={
         issueDate:(new Date()).getTime(),
-//        dueDate:dueDate,
+        dueDate:dueDate,
         submittedDate:"",
         fineAmount:"",
         fineStatus:"",
@@ -760,40 +769,50 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         issueComment:"",
         submitComment:"",
         userSearchText:"",
-        parentBook:book.parentbook,
-        childBook: childbook};
+        issueThisBook:{
+        	parentBook:book.parentbook,
+            childBook: childbook	
+        	}
+        };
     
-    $scope.selectedUser="";
-    $scope.searchedUserData=null;
+    	$scope.selectedUser="";
+    	$scope.searchedUserData=null;
     
-      $scope.modalTitle="Issue Book";
-      console.log("openIssueBook : book : ",book," childbook: ", childbook);
-      $('#modalIssueBook').modal({"backdrop": "static","show":true});
-      $('#modalIssueBook').modal({"show":false});
+    	$scope.modalTitle="";
+        $scope.modalCode=code || $scope.modalCode;
+        code && code=='issue'?$scope.modalTitle="Issue Book":"";
+        code && code=='return'?$scope.modalTitle="Return Book":"";
+        
+        code && code=='issue'?$scope.modalCode=code:"";
+        code && code=='return'?$scope.modalCode=code:"";
+        
+        console.log("code : ",code);
+        if(code && code=='return'){
+        	console.log("code : ",code);
+        	showReturnBook(childbook);
+        }
+    	
+//    	console.log("openIssueBook : book : ",book," childbook: ", childbook,"selectedUser : ",$scope.selectedUser);
+    	$('#modalIssueBook').modal({"backdrop": "static","show":true});
+    	$('#modalIssueBook').modal({"show":false});
    }
     
     $scope.getBackFromIssue=function(){
         $('#modalIssueBook').modal('hide');
     }
     
-
-//    $scope.showIssueBookHtml=function(book){
-//      $scope.returnThisBook=null;
-//        $scope.issueThisBook=book;
-//        var dueDate=(new Date()).getTime()+($scope.libConstants.issueDuration*24*60*60*1000);
-//      $scope.issueBookObj={
-//            issueDate:(new Date()).getTime(),
-//            dueDate:dueDate,
-//            submittedDate:"",
-//            fineAmount:"",
-//            fineStatus:"",
-//            transactionId:"",
-//            issueComment:"",
-//            submitComment:"",
-//            userSearchText:""
-//        };
-//        console.log("book---issue",book,$scope.issueBookObj);
-//    }
+    $scope.submitBook=function(){
+    	console.log("submitBook : ",$scope.modalCode);
+    	if($scope.modalCode=='issue'){
+    		console.log("issue : ",$scope.modalCode);
+    		issueLibBook();
+    	}
+    	else if ($scope.modalCode=='return'){
+    		console.log("return : ",$scope.modalCode);
+    		returnLibBook();
+    	}
+    	
+    }
     
     $scope.searchUser=function(){
         if($scope.issueBookObj.userSearchText){
@@ -818,20 +837,20 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         $scope.searchedUserData=null;
     }
     //issue book form submission
-    $scope.issueLibBook=function(){
-        console.log("issueLibBook", $scope.selectedUser,$scope.issueThisBook);
-        if($scope.selectedUser && $scope.issueThisBook){
+    var issueLibBook=function(){
+        console.log("issueLibBook", $scope.selectedUser,$scope.issueBookObj.issueThisBook.parentBook);
+        if($scope.selectedUser && $scope.issueBookObj.issueThisBook.childBook){
             $http({
                 method : 'POST',
                 url    : '/manageLibrary/issueLibBook',
-                data   : {book:$scope.issueThisBook,user:$scope.selectedUser,issueBookObj:$scope.issueBookObj},
+                data   : {book:$scope.issueBookObj.issueThisBook.childBook,user:$scope.selectedUser,issueBookObj:$scope.issueBookObj},
                 headers: {'Content-Type': 'application/json'}
             }).success(function(dataResponse,status,headers,config){
                 //success
                 appUtils.defaultParseResponse(dataResponse,function(dataResponse){
                     console.log("issueLibBook dataResponse",dataResponse)
-                    $scope.issueThisBook.bookStatus="Unavailable";
-                    $scope.issueThisBook=null;
+                    $scope.issueBookObj.issueThisBook.childBook.bookStatus="Unavailable";
+                    $scope.issueBookObj.issueThisBook=null;
                 });
             }).error(function(data,status,headers,config){
                 //error
@@ -841,11 +860,65 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         }else{
             var msg="";
             !$scope.selectedUser?msg+="Please select user to whom this book needs to be issued by searching and selecting. <br>":"";
-            !$scope.issueThisBook?msg+="Please select the book to be issued.":"";
+            !$scope.issueBookObj.issueThisBook.childBook?msg+="Please select the book to be issued.":"";
             appUtils.showError(msg);
         }
 
     }
+    
+    //method to show form for return book
+    var showReturnBook=function(book){
+        $scope.issueThisBook=null;
+        $http.get('/manageLibrary/getBookIssuedDetails/'+book._id).success(function(dataResponse,status,headers,config){
+            //success
+            console.log("dataResponse /manageLibrary/getBookIssuedDetails/",dataResponse);
+            appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+            	console.log("dataResponse.responseData.data[0][1] :", dataResponse.responseData.data[0][1].issueThisBook);
+            	var dictionary = dataResponse.responseData.data[0][1].issueThisBook;
+            	
+            	$scope.issueBookObj.issueThisBook.childBook = dataResponse.responseData.data[0][1].issueThisBook.childBook;
+            	$scope.issueBookObj.issueThisBook.parentBook = dataResponse.responseData.data[0][1].issueThisBook.parentBook;
+//            	console.log("childBook ", $scope.issueBookObj.issueThisBook.childBook,"parentBook ",$scope.issueBookObj.issueThisBook.parentBook)
+            	$scope.selectedUser=dataResponse.responseData.data[0][0];
+                $scope.userToReturn=dataResponse.responseData.data[0][0];
+                $scope.returnIsuedDetails=dataResponse.responseData.data[0][1];
+                $scope.returnIsuedDetails.submittedDate=(new Date()).getTime();
+            });
+        }).error(function(data,status,headers,config){
+            //error
+            console.log("Error",data,status,headers,config);
+        });
+
+    }
+
+    var returnLibBook=function(){
+        console.log("returnLibBook", $scope.returnIsuedDetails, "$scope.issueBookObj.issueThisBook.childBook ",$scope.issueBookObj.issueThisBook.childBook);
+        if($scope.issueBookObj.issueThisBook.childBook && $scope.returnIsuedDetails.submittedDate){
+            $http({
+                method : 'POST',
+                url    : '/manageLibrary/returnLibBook',
+                data   : {book:$scope.issueBookObj.issueThisBook.childbook,user:$scope.userToReturn,issueBookObj:$scope.returnIsuedDetails},
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(dataResponse,status,headers,config){
+                //success
+                appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                    console.log("returnLibBook dataResponse",dataResponse)
+                    $scope.returnThisBook.bookStatus="Available";
+                    $scope.returnThisBook=null;
+                });
+            }).error(function(data,status,headers,config){
+                //error
+                console.log("Error",data,status,headers,config);
+
+            });
+        }else{
+            var msg="";
+            !$scope.selectedUser?msg+="Please select user to whom this book needs to be issued by searching and selecting. <br>":"";
+            !$scope.issueBookObj.issueThisBook.childBook?msg+="Please select the book to be returned.":"";
+            appUtils.showError(msg);
+        }
+    }
+    
 /****************************************************************************************************
 * ISSUE/RETURN BOOK TO LIBRARY - START                                                              *                               
 *****************************************************************************************************/

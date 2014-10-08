@@ -14,7 +14,7 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			<button class="btn btn-sm btn-warning pull-right"
+			<button class="btn btn-sm btn-warning pull-right" disabled="disabled"
 				ng-click="openModal('add')">
 				<i class="fa fa-institution"> Add School</i>
 			</button>
@@ -38,7 +38,7 @@
 					</thead>
 				</div>
 				<tbody>
-					<tr ng-repeat="school in allSchool.data">
+					<tr ng-repeat="school in allSchool.data" ng-if="school.schoolId=='SPHSS:school:2014:452001'">
 						<td ng-repeat="(key,value) in parentConfig">{{school[key]}}</td>
 						<td><a href="#" data-toggle="tooltip"
 							title="Click to view Book details"><i class="fa fa-eye"
