@@ -214,7 +214,10 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
             errorObj.error=true;
             errorObj.errorMsg.push("Please enter Primary Phone Number or Primary Email Address or Primary Complete residential address.");
         }
-
+        if((contact.emailSecondary!="" && !appUtils.validateEmail(contact.emailSecondary)) ){
+            errorObj.error=true;
+            errorObj.errorMsg.push("Please enter valid secondary email");
+        }
     	if(!basicDetails.userType || (basicDetails.userType && !$scope.userType.hasOwnProperty(basicDetails.userType))){
     		errorObj.error=true;
             errorObj.errorMsg.push("User Type is not valid.");
@@ -225,15 +228,14 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
 		}
     	var erroMsg=errorObj.errorMsg.join('<br>');
     	
-    	if(erroMsg.length>0){
+    	if(errorObj.errorMsg.length>0){
     		appUtils.showError(erroMsg);	
     	}
-        
-    	if(erroMsg.length==0 && ($scope.modalCode=='add'||$scope.modalCode=='update')){
+        console.log("$scope.modalCode",$scope.modalCode);
+    	if(errorObj.errorMsg.length==0 && ($scope.modalCode=='add'||$scope.modalCode=='update' ||$scope.modalCode=='updProfile')){
     		$scope.addUpdateUser();
     	}
     	
-        console.log(erroMsg.length);
 //    	if ($scope.basicDetailsForm.$dirty) {
 //    		    	console.log("basicDetailsForm",$scope.basicDetailsForm);
 //	    } else {
@@ -250,7 +252,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     	if($scope.modalCode && $scope.modalCode =='add'){
     		$scope.registerNewUser();
     	}
-    	else if($scope.modalCode && $scope.modalCode=='update'){
+    	else if($scope.modalCode && $scope.modalCode=='update' || $scope.modalCode=='updProfile'){
     		$('#retryModel').modal({"backdrop": "static","show":true});
     		 $scope.alertText="User details has been changed. Do you want to proceed ?";
     	}
@@ -266,7 +268,7 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
            $scope.modelBack=false;
            $('#retryModel').modal('hide');
            $('#modalUpdate').modal('hide');
-       }else if($scope.modalCode && $scope.modalCode=='update'){
+       }else if($scope.modalCode && ($scope.modalCode=='update' || $scope.modalCode=='updProfile')){
 		   $scope.updateUserClass();
            $('#retryModel').modal('hide');
 	   }else if($scope.modalCode && $scope.modalCode=='delete'){
