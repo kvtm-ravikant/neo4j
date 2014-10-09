@@ -1,8 +1,9 @@
 /**
  * Created by ravikant on 20/6/14.
  */
-var location=require("../../common/models/location.js");
+var location=require("../../common/models/countryStateCity.js");
 var religion=require("../../common/models/religion.js")
+var languages=require("../../common/models/language.js")
 module.exports=function(app,Utils){
     app.get("/manage-users/user-profile",function(req,res){
         console.log("Inside /manage-users/create-user");
@@ -19,22 +20,14 @@ module.exports=function(app,Utils){
 
         var userDetails=req.session.userDetails;
         var clonedUserDetails=Utils.clone(userDetails);
-        //resolve birth country
-        //console.log(clonedUserDetails.basicDetails.birthPlace_country,location);
-        if(clonedUserDetails.basicDetails.hasOwnProperty("birthPlace_country") && clonedUserDetails.basicDetails.birthPlace_country){
-            clonedUserDetails.basicDetails.birthPlace_country=location.countries[clonedUserDetails.basicDetails.birthPlace_country.toString()].countryName;
-        }
 
-        //resolve birth state
-        //console.log("state",clonedUserDetails.basicDetails.birthPlace_state);
-      //  clonedUserDetails.basicDetails.birthPlace_state=location.states[clonedUserDetails.basicDetails.birthPlace_state.toString].stateName;
-        //delete city as we don't have its resolver
-        delete clonedUserDetails.basicDetails.birthPlace_city;
         delete clonedUserDetails.basicDetails.accessList;
         //console.log("clonedUserDetails.basicDetails",clonedUserDetails.basicDetails);
         //religion
-        clonedUserDetails.basicDetails.religionName=religion[clonedUserDetails.basicDetails.religionId];
-
+        var religionId=clonedUserDetails.basicDetails.religionId;
+        var religionName="";
+        console.log("religionId",religionId);
+        religionId && religion[religionId]?religionName=religion[religionId].___name___:null;
         var fullName = " ";
 
         if(clonedUserDetails.basicDetails){
@@ -54,8 +47,7 @@ module.exports=function(app,Utils){
                     {userName: clonedUserDetails.basicDetails.userName},
                     {DOB: clonedUserDetails.basicDetails.DOB},
                     {gender : Utils.resolveSex(clonedUserDetails.basicDetails.sex)},
-                    {languages_motherTongue : clonedUserDetails.basicDetails.languages_motherTongue},
-                    {religion : religion[clonedUserDetails.basicDetails.religionId]},
+                    {religion : religionName},
                     {SMSEnabled:Utils.resolveBoolean(clonedUserDetails.basicDetails.isSMSEnabled)},
                     {EmailEnabled: Utils.resolveBoolean(clonedUserDetails.basicDetails.isEmailEnabled)}
 
@@ -83,6 +75,38 @@ module.exports=function(app,Utils){
           }
 
         };
+        var languageId=clonedUserDetails.basicDetails.languages_motherTongue;
+        if(languageId && languages[languageId]){
+            var languageName=languages[languageId].___name___;
+            languageName?latestobj.displayObject.basicDetails.push({language :languageName}):latestobj.displayObject.basicDetails.push({language :""});
+        }
+
+        if(clonedUserDetails.primaryAddress.hasOwnProperty('country') && clonedUserDetails.primaryAddress.country.toString()){
+            var countryId=clonedUserDetails.primaryAddress.country.toString();
+            if(countryId && location[countryId]){
+                var countryName=location[countryId].___name___;
+                latestobj.displayObject.primaryAddress.push({country:countryName});
+                if(countryName && clonedUserDetails.primaryAddress.hasOwnProperty('state') && clonedUserDetails.primaryAddress.state.toString()){
+
+                    var stateId=clonedUserDetails.primaryAddress.state.toString();
+                    if(stateId && location[countryId][stateId]){
+                        var stateName=location[countryId][stateId].___name___;
+                        latestobj.displayObject.primaryAddress.push({state:stateName});
+                        if(stateName && clonedUserDetails.primaryAddress.hasOwnProperty('city') && clonedUserDetails.primaryAddress.city.toString()){
+                            var cityId=clonedUserDetails.primaryAddress.city.toString();
+                            if(cityId && location[countryId][stateId][cityId]){
+                                var cityName=location[countryId][stateId][cityId].___name___;
+                                latestobj.displayObject.primaryAddress.push({city:cityName});
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
+        }
+
 
         //sending response
         //console.log("clonedUserDetails",clonedUserDetails);

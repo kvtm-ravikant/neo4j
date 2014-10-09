@@ -32,34 +32,46 @@
     <div class="row vertical-spacer"></div>
     <div class="row" ng-if="booksList" >
         <div class="col-md-12">
-            <div class="col-md-12 ">
-                <div class="col-md-1 div-table-header-th">S.No</div>
-                <div class="col-md-2 div-table-header-th">Author</div>
-                <div class="col-md-2 div-table-header-th">Book Title</div>
-                <div class="col-md-2 div-table-header-th">Publisher</div>
-                <div class="col-md-1 div-table-header-th">ISBN</div>
-                <div class="col-md-1 div-table-header-th">Category</div>
-                <div class="col-md-3 div-table-header-th">
-                    Actions
-                </div>
-            </div>
-            <div class="col-md-12" ng-repeat="book in booksList">
-                <div class="col-md-1 div-table-td-first div-table-td">{{$index+1}}</div>
-                <div class="col-md-2 div-table-td">{{book.parentbook.authorName}}</div>
-                <div class="col-md-2 div-table-td">{{book.parentbook.bookTitle}}</div>
-                <div class="col-md-2 div-table-td">{{book.parentbook.publisher}}</div>
-                <div class="col-md-1 div-table-td">{{book.parentbook.isbn}}</div>
-                <div class="col-md-1 div-table-td">{{book.parentbook.categoryName}}</div>
-                <div class="col-md-3 div-table-td">
-                    <a href="#" data-toggle="tooltip" title="Click to view book details"><i class="fa fa-eye" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'view')"></i></a> &nbsp;|&nbsp;
-                    <a href="#" data-toggle="tooltip" title="Click to update book details"><i class="fa fa-pencil" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'update')"></i></a> &nbsp;|&nbsp;
-                    <a href="#" data-toggle="tooltip" title="Click to delete book"><i class="fa fa-times-circle" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'delete')"></i></a>&nbsp;|&nbsp;
+            <table class="table table-bordered table-condensed table-striped table-hover">
+                   <tr ng-repeat="book in booksList">
+                       <td>
+                           <table class="col-md-12">
+                               <thead ng-if="$index == 0">
+                               <tr>
+                                   <th class="col-md-1 ">S.No</th>
+                                   <th class="col-md-2 ">Author</th>
+                                   <th class="col-md-2 ">Book Title</th>
+                                   <th class="col-md-2 ">Publisher</th>
+                                   <th class="col-md-1 ">ISBN</th>
+                                   <th class="col-md-1 ">Category</th>
+                                   <th  class="col-md-3 ">
+                                       Actions
+                                   </th>
+                               </tr>
+                               </thead>
+                               <tbody>
+                               <tr>
+                                   <td class="col-md-1 ">{{$index+1}}</td>
+                                   <td class="col-md-2 ">{{book.parentbook.authorName}}</td>
+                                   <td class="col-md-2 ">{{book.parentbook.bookTitle}}</td>
+                                   <td class="col-md-2 ">{{book.parentbook.publisher}}</td>
+                                   <td class="col-md-1 ">{{book.parentbook.isbn}}</td>
+                                   <td class="col-md-1 ">{{book.parentbook.categoryName}}</td>
+                                   <td class="col-md-3 ">
+                                       <a href="#" data-toggle="tooltip" title="Click to view book details"><i class="fa fa-eye" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'view')"></i></a> &nbsp;|&nbsp;
+                                       <a href="#" data-toggle="tooltip" title="Click to update book details"><i class="fa fa-pencil" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'update')"></i></a> &nbsp;|&nbsp;
+                                       <a href="#" data-toggle="tooltip" title="Click to delete book"><i class="fa fa-times-circle" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'delete')"></i></a>&nbsp;|&nbsp;
 
-                    <i class="cursor-pointer fa " ng-class="!book.isChildOpen?'fa-chevron-down':'fa-chevron-up'" role="button" ng-click="toggleMapKeyValue(book,'isChildOpen')" ></i>
-                </div>
-                <div ng-include="'partials/modules/mangeLibrary/childBooksList.html'"></div>
-
-            </div>
+                                       <i class="cursor-pointer fa " ng-class="!book.isChildOpen?'fa-chevron-down':'fa-chevron-up'" role="button" ng-click="toggleMapKeyValue(book,'isChildOpen')" ></i>
+                                   </td>
+                               </tr>
+                               </tbody>
+                           </table>
+                           <div ng-include="'partials/modules/mangeLibrary/childBooksList.html'"></div>
+                       </td>
+                   </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div ng-include="'partials/modules/mangeLibrary/addBook.html'"></div>

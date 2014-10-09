@@ -1,34 +1,36 @@
-<div class="col-md-12 child-books-container" ng-if="book.isChildOpen">
-
-
-    <div class="col-md-12">
-        <div class="col-md-1 div-table-header-th">ID</div>
-        <div class="col-md-1 div-table-header-th">Status</div>
-        <div class="col-md-4 div-table-header-th">Description</div>
-        <div class="col-md-1 div-table-header-th">Location</div>
-        <div class="col-md-1 div-table-header-th">Rating</div>
-        <div class="col-md-4 div-table-header-th">
+<table class="col-md-11 child-books-container" style="float: right;" ng-if="book.isChildOpen">
+    <thead>
+    <tr>
+        <th class="col-md-1 div-table-header-th">ID</th>
+        <th class="col-md-1 div-table-header-th">Status</th>
+        <th class="col-md-4 div-table-header-th">Description</th>
+        <th class="col-md-1 div-table-header-th">Location</th>
+        <th class="col-md-1 div-table-header-th">Rating</th>
+        <th class="col-md-4 div-table-header-th">
             Actions &nbsp;&nbsp;(
             <a href="#" data-toggle="tooltip" title="Click to add book"><i class="fa fa-plus" role="button" data-toggle="modal" ng-click="openAddChildFromSmy()"></i></a>
             )&nbsp;
-        </div>
-    </div>
-    <div class="col-md-12" ng-repeat="childbook in book.children">
-        <div class="col-md-1 div-table-td-first div-table-td">{{childbook.bookId}}</div>
-        <div class="col-md-1 div-table-td">{{childbook.bookStatus}}</div>
-        <div class="col-md-4 div-table-td">
+        </th>
+    </tr>
+    </thead>
+    <tbody ng-repeat="childbook in book.children">
+    <tr>
+        <td class="col-md-1 div-table-td-first div-table-td">{{childbook.bookId}}</td>
+        <td class="col-md-1 div-table-td">{{childbook.bookStatus}}</td>
+        <td class="col-md-4 div-table-td">
             {{moreText(childbook.description)}}
             <span class="custom-link" ng-if="childbook.description.length>20" custom-popover popover-html="{{childbook.description}}" popover-placement="bottom" popover-label="more.."></span>
-        </div>
-        <div class="col-md-1 div-table-td">{{childbook.location}}</div>
-        <div class="col-md-1 div-table-td">{{childbook.starRating}}</div>
-        <div class="col-md-4 div-table-td">
+        </td>
+        <td class="col-md-1 div-table-td">{{childbook.location}}</td>
+        <td class="col-md-1 div-table-td">{{childbook.starRating}}</td>
+        <td class="col-md-4 div-table-td">
             <a data-toggle="tooltip" title="Click to return book" ng-if="childbook.bookStatus=='Unavailable'" ng-click="openIssueBook(book, childbook, 'return')">Return Book &nbsp;|&nbsp;</a>
             <a data-toggle="tooltip" title="Click to issue book" ng-if="childbook.bookStatus=='Available'" ng-click="openIssueBook(book, childbook, 'issue')">Issue Book &nbsp;|&nbsp;</a>
             <a href="#" data-toggle="tooltip" title="Click to view book details"><i class="fa fa-eye" role="button" data-toggle="modal" ng-click="openChildBookFromSmy(book, childbook,'view')"></i></a> &nbsp;|&nbsp;
             <a href="#" data-toggle="tooltip" title="Click to update book details"><i class="fa fa-pencil" role="button" data-toggle="modal" ng-click="openChildBookFromSmy(book,childbook,'update')"></i></a> &nbsp;|&nbsp;
             <a href="#" data-toggle="tooltip" title="Click to delete book"><i class="fa fa-times-circle" role="button" data-toggle="modal" ng-click="openChildBookFromSmy(book,childbook,'delete')"></i></a>
 
-        </div>
-    </div>
-</div>
+        </td>
+    </tr>
+    </tbody>
+</table>

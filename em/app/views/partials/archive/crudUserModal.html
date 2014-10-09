@@ -1,0 +1,874 @@
+<div id="modalUpdate" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="getBackFromModal()"
+			aria-hidden="true">
+			<i class="fa fa-times"></i>
+		</button>
+		<h4>{{modalTitle}}</h4>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<!-- ng-if="allUserClass.data" ng-show="currentUserDetails" -->
+			<div class="col-md-12">
+				<div class="col-md-10">
+					<ul class="nav nav-pills nav-justified thumbnail setup-panel"
+						id="myTab">
+						<li class="active"><a href="#basicInfo" data-toggle="tab">Basic
+								Details Info</a></li>
+						<li><a href="#primaryCntInfo" data-toggle="tab">Primary
+								Contact Info</a></li>
+						<li><a href="#secondaryCntInfo" data-toggle="tab">Secondary
+								Contact Info</a></li>
+						<li><a href="#othrInfo" data-toggle="tab">Other Info</a></li>
+						<!--<li><a href="#accInfo" data-toggle="tab">Account Info</a></li>-->
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="basicInfo">
+
+							<form class="form-horizontal" role="form" id="basicDetailsForm"
+								name="basicDetailsForm">
+								<div class="form-group">
+									<label for="validation-select" class="col-sm-3 control-label">User
+										Type <span style="color: red">&nbsp;*</span>
+									</label>
+									<div class="col-sm-6" ng-if="modalCode=='add'">
+										<select name="validation-select"
+											class="btn btn-media dropdown-toggle form-control"
+											data-ng-model="userSelectedClass.basicDetails.userType">
+											<option>Select User Type</option>
+											<option
+												ng-repeat="item in lovMapToArr(userType) | orderBy:'___name___':false "
+												ng-selected="item.key==userSelectedClass.basicDetails.userType"
+												value="{{item.key}}">{{item.___name___}}</option>
+										</select>
+									</div>
+									<div class="col-md-4"
+										ng-if="modalCode=='view'||modalCode=='update'||modalCode=='delete'||modalCode=='updProfile'">{{userType[userSelectedClass.basicDetails.userType].___name___}}</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="inputUsername">Username<span
+										style="color: red">&nbsp;*</span></label>
+									<div class="col-sm-6"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<input type="text" id="inputUsername"
+											placeholder="What's your user name" class="form-control"
+											required ng-model="userSelectedClass.basicDetails.userName"
+											ng-if="modalCode=='update'" disabled /> <input type="text"
+											id="inputUsername" name="inputUsername"
+											placeholder="What's your user name" class="form-control"
+											title="User Name is required !" required ng-minlength=3
+											ng-maxlength=20
+											ng-model="userSelectedClass.basicDetails.userName"
+											ng-if="modalCode=='add'" /> <span ng-if="modalCode=='view'">{{userSelectedClass.basicDetails.userName}}</span>
+										<div class="error-container"
+											ng-show="basicDetailsForm.inputUsername.$dirty && basicDetailsForm.inputUsername.$invalid">
+											<small class="error"
+												ng-show="basicDetailsForm.$error.minlength">Username
+												is required to be at least 3 characters.</small> <small
+												class="error" ng-show="basicDetailsForm.$error.maxlength">Username
+												Id cannot be longer than 20 characters.</small>
+										</div>
+									</div>
+									<div ng-if="modalTitle=='Add User'"
+										ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+										<span ng-if="userAvailable == 0" style="color: green">{{userAvailable['userName']}}
+											is Available</span> <span ng-if="userAvailable != 0"
+											style="color: red"> is not Available !</span>
+										<button class="btn" ng-click="getUserNameAvailabity()">Available
+											?</button>
+									</div>
+									<div class="col-md-4" ng-if="modalCode=='view'||modalCode=='updProfile'">{{userSelectedClass.basicDetails.userName}}</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Registration ID <span
+										style="color: red">&nbsp;*</span>
+									</label>
+									<div class="col-sm-6">
+										<input type="text" class="form-control" id="regId"
+											name="regId" ng-model="userSelectedClass.basicDetails.regID"
+											ng-if="modalCode=='add'" required="required" ng-minlength=3
+											ng-maxlength=20 placeholder="Please enter registration Id.">
+										<input type="text" id="regIdD" class="form-control"
+											ng-model="userSelectedClass.basicDetails.regID"
+											ng-if="modalCode=='update'" disabled> <span
+											ng-if="modalCode=='view'||modalCode=='delete'||modalCode=='updProfile'">{{userSelectedClass.basicDetails.regID}}</span>
+										<div class="error-container"
+											ng-show="basicDetailsForm.regId.$dirty && basicDetailsForm.regId.$invalid">
+											<small class="error"
+												ng-show="basicDetailsForm.$error.minlength">Registration
+												Id is required to be at least 3 characters.</small> <small
+												class="error" ng-show="sbasicDetailsForm.$error.maxlength">Registration
+												Id cannot be longer than 20 characters.</small>
+										</div>
+									</div>
+
+									<div ng-if="modalTitle=='Add User'">
+										<span ng-if="regIdAvailable == 0" style="color: green">{{regIdAvailable['regIdText']}}
+											is Available</span> <span ng-if="regIdAvailable != 0"
+											style="color: red"> is not Available !</span>
+										<button class="btn" ng-click="getregistrationIDAvailabity()">Available
+											?</button>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="fName" class="col-sm-3 control-label">First
+										Name <span style="color: red">&nbsp;*</span>
+									</label>
+									<div class="col-sm-6"
+										ng-if="modalCode!='view'||modalCode!='delete'">
+										<input type="text" class="form-control" id="fName"
+											name="fname" ng-if="modalCode=='add'||modalCode=='update'"
+											placeholder="Please enter First Name."
+											ng-model="userSelectedClass.basicDetails.firstName"
+											required="required" ng-minlength=3 ng-maxlength=20>
+										<div class="error-container"
+											ng-show="basicDetailsForm.fname.$dirty && basicDetailsForm.fname.$invalid">
+											<small class="error"
+												ng-show="basicDetailsForm.$error.minlength">First
+												Name is required to be at least 3 characters.</small> <small
+												class="error" ng-show="sbasicDetailsForm.$error.maxlength">First
+												Name cannot be longer than 20 characters.</small>
+										</div>
+									</div>
+									<div class="col-sm-6"
+										ng-if="modalCode=='view'||modalCode=='delete'||modalCode=='updProfile'">{{userSelectedClass.basicDetails.firstName}}</div>
+
+								</div>
+								<div class="form-group">
+									<label for="mName" class="col-sm-3 control-label">Middle
+										Name </label>
+									<div class="col-sm-6"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<input type="text" class="form-control" id="mName"
+											ng-model="userSelectedClass.basicDetails.middleName">
+									</div>
+									<div class="col-sm-6"
+										ng-if="modalCode=='view'||modalCode=='delete'||modalCode=='updProfile'">{{userSelectedClass.basicDetails.middleName}}</div>
+								</div>
+								<div class="form-group">
+									<label for="lName" class="col-sm-3 control-label">Last
+										Name </label>
+									<div class="col-sm-6">
+										<input type="text" class="form-control" id="lName"
+											name="lName" ng-if="modalCode=='add'||modalCode=='update'"
+											ng-model="userSelectedClass.basicDetails.lastName"
+											placeholder="Please enter last name." ng-minlength=3
+											ng-maxlength=20>
+										<div class="error-container"
+											ng-show="basicDetailsForm.lName.$dirty && basicDetailsForm.lName.$invalid">
+											<small class="error"
+												ng-show="basicDetailsForm.$error.minlength">Last
+												Name is required to be at least 3 characters.</small> <small
+												class="error" ng-show="sbasicDetailsForm.$error.maxlength">Last
+												Name cannot be longer than 20 characters.</small>
+										</div>
+									</div>
+									<div class="col-sm-6"
+										ng-if="modalCode=='view'||modalCode=='delete'||modalCode=='updProfile'">{{userSelectedClass.basicDetails.lastName}}</div>
+
+								</div>
+								<div class="form-group">
+									<label for="sex-type" class="col-sm-3 control-label">Gender
+									</label>
+									<div class="simple-radio col-sm-6" id="sex-type"
+										ng-if="modalCode=='add'||modalCode=='update'">
+										<input id="ml" type="radio" name="sex-type" value="M"
+											ng-model="userSelectedClass.basicDetails.sex"> <label
+											for="ml">Male</label> <input id="fml" type="radio"
+											name="sex-type" value="F"
+											ng-model="userSelectedClass.basicDetails.sex"> <label
+											for="fml">Female</label>
+									</div>
+									<div class="col-md-6"
+										ng-if="modalCode=='view'||modalCode=='delete'||modalCode=='updProfile'">{{userSelectedClass.basicDetails.sex}}</div>
+								</div>
+								<div class="form-group">
+									<label for="dob" class="col-sm-3 control-label">Date of
+										Birth </label>
+									<div class="col-sm-6">
+										<div class="input-group">
+											<input type="text" id="userDOB" name="userDOB"
+												ng-disabled="modalCode=='view'||modalCode=='delete'"
+												ng-model="userSelectedClass.basicDetails.DOB"
+												class="em-datepicker datepicker form-control"
+												placeholder="Date of Birth"> <span
+												class="input-group-addon cursor-pointer"
+												ng-click="openUserDOB()"><i class="fa fa-calendar"></i></span>
+										</div>
+									</div>
+									<!--
+    <div class="col-md-6"
+        ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.DOB}}</div>
+     -->
+									<!--<div class="col-sm-6">
+<input type="text" id="dob" class="em-datepicker datepicker form-control"
+ng-model="userSelectedClass.basicDetails.DOB">
+&lt;!&ndash; input type="text" class="form-control" id="dob" placeholder="Enter Password " &ndash;&gt;
+                </div>-->
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="motherTng">Mother
+										Tongue </label>
+									<div>
+										<div class="col-sm-6"
+											ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+											<select id="motherTng" name="motherTng"
+												class="btn btn-media dropdown-toggle form-control"
+												data-ng-model="userSelectedClass.basicDetails.languages_motherTongue">
+												<option value="">Select Mother Tounge</option>
+												<option
+													ng-repeat="item in lovMapToArr(languages) | orderBy:'___name___':false"
+													ng-selected="item.key==userSelectedClass.basicDetails.languages_motherTongue"
+													value="{{item.key}}">{{item.___name___}}</option>
+											</select>
+										</div>
+										<div class="col-md-6"
+											ng-if="modalCode=='view'||modalCode=='delete'">{{languages[userSelectedClass.basicDetails.languages_motherTongue].___name___}}</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="othrLang">Other
+										Language </label>
+									<div class="col-sm-6"
+										ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+										<select id="othrLang" name="othrLang"
+											class="btn btn-media dropdown-toggle form-control"
+											data-ng-model="userSelectedClass.basicDetails.languages_others">
+											<option value="">Select Other Language</option>
+											<option
+												ng-repeat="item in lovMapToArr(languages) | orderBy:'___name___':false"
+												ng-selected="item.key==userSelectedClass.basicDetails.languages_others"
+												value="{{item.key}}">{{item.___name___}}</option>
+										</select>
+									</div>
+									<div class="col-md-6"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{languages[userSelectedClass.basicDetails.languages_others].___name___}}</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="religion">Religion</label>
+									<div class="col-sm-6"
+										ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+										<select id="religion" name="religion"
+											class="btn btn-media dropdown-toggle form-control"
+											data-ng-model="userSelectedClass.basicDetails.religionId">
+											<option value="">Select Religion</option>
+											<option
+												ng-repeat="item in lovMapToArr(religionCaste) | orderBy:'___name___':false"
+												ng-selected="item.key==userSelectedClass.basicDetails.religionId"
+												value="{{item.key}}">{{item.___name___}}</option>
+										</select>
+									</div>
+									<div class="col-md-6"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{religionCaste[userSelectedClass.basicDetails.religionId].___name___}}</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="caste">Caste</label>
+									<div class="col-sm-6"
+										ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+										<input type="text" id="caste"
+											placeholder="Please mention Your Catse" class="form-control"
+											ng-model="userSelectedClass.basicDetails.casteId">
+									</div>
+									<div class="col-md-6"
+										ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.casteId}}</div>
+								</div>
+							</form>
+						</div>
+						<div class="tab-pane" id="primaryCntInfo">
+							<form class="form-horizontal" role="form" id="primaryCntInfoForm"
+								name="primaryCntInfoForm">
+								<fieldset>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="primaryPhone">Phone
+												Number<span style="color: green">&nbsp;*</span>
+											</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'">
+												<input type="text" id="primaryPhone"
+													placeholder="Phone Number : xxxxxxxxxx"
+													class="form-control"
+													ng-model="userSelectedClass.contact.phonePrimary" required
+													min="4">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'||modalCode=='updProfile'">{{userSelectedClass.contact.phonePrimary}}</div>
+										</div>
+										<div>
+											<label class="col-sm-2 control-label" for="inputEmail">Email
+												Address<span style="color: green">&nbsp;*</span>
+											</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="email" id="inputEmail"
+													placeholder="Enter Your Email Address."
+													class="form-control" title="Email id is required !"
+													required ng-model="userSelectedClass.contact.emailPrimary" />
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.contact.emailPrimary}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="cntStreetAdrOne">Street
+												Address 1<span style="color: green">&nbsp;*</span>
+											</label>
+											<div class="col-sm-10"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="text" id="cntStreetAdrOne"
+													name="cntStreetAdrOne" placeholder="Enter Street Address"
+													class="form-control"
+													ng-model="userSelectedClass.primaryAddress.street1"
+													required="required" ng-minlength=5>
+												<div class="error-container"
+													ng-show="primaryCntInfoForm.cntStreetAdrOne.$dirty && primaryCntInfoForm.cntStreetAdrOne.$invalid">
+													<small class="error"
+														ng-show="primaryCntInfoForm.$error.minlength">Street
+														Name is required to be at least 5 characters.</small>
+												</div>
+											</div>
+											<div class="col-md-6"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.primaryAddress.street1}}</div>
+
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Street
+												Address 2 </label>
+											<div class="col-sm-10"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="text" id="cntStreetAdrTwo"
+													placeholder="Enter Street Address" class="form-control"
+													ng-model="userSelectedClass.primaryAddress.street2">
+											</div>
+											<div class="col-md-6"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.primaryAddress.street2}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
+											<div class="col-sm-10"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="text" id="cntStreetAdrTwo"
+													placeholder="Provide Landmark" class="form-control">
+											</div>
+											<div class="col-md-6"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.contact.landmark}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="cntCntry">Country<span
+												style="color: green">&nbsp;*</span></label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<select id="cntCountry" name="cntCountry"
+													class="btn btn-media dropdown-toggle form-control"
+													data-ng-model="userSelectedClass.primaryAddress.country">
+													<option value="">Select Country</option>
+													<option
+														ng-repeat="item in lovMapToArr(countryStateCity) | orderBy:'___name___':false"
+														value="{{item.key}}"
+														ng-selected="item.key==userSelectedClass.primaryAddress.country">{{item.___name___}}</option>
+												</select>
+
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.primaryAddress.country].___name___}}</div>
+										</div>
+										<div>
+											<label class="col-sm-2 control-label" for="cntState">State<span
+												style="color: green">&nbsp;*</span></label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+
+												<select id="cntState" name="cntState"
+													class="btn btn-media dropdown-toggle form-control"
+													data-ng-model="userSelectedClass.primaryAddress.state"
+													ng-if="userSelectedClass.primaryAddress.country">
+													<option value="">Select State</option>
+													<option
+														ng-repeat="item in lovMapToArr(countryStateCity[userSelectedClass.primaryAddress.country]) | orderBy:'___name___':false "
+														ng-if="item.key!='___name___'" value="{{item.key}}"
+														ng-selected="item.key==userSelectedClass.primaryAddress.state">{{item.___name___}}</option>
+												</select>
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.primaryAddress.country][userSelectedClass.primaryAddress.state].___name___}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="cntCity">City<span
+												style="color: green">&nbsp;*</span></label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<select id="cntCity" name="cntCity"
+													class="btn btn-media dropdown-toggle form-control"
+													data-ng-model="userSelectedClass.primaryAddress.city"
+													ng-if="userSelectedClass.primaryAddress.state">
+													<option value="">Select City</option>
+													<option
+														ng-repeat="item in lovMapToArr(countryStateCity[userSelectedClass.primaryAddress.country][userSelectedClass.primaryAddress.state]) | orderBy:'___name___':false "
+														ng-if="item.key!='___name___'" value="{{item.key}}"
+														ng-selected="item.key==userSelectedClass.primaryAddress.city">{{item.___name___}}</option>
+												</select>
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.primaryAddress.country][userSelectedClass.primaryAddress.state][userSelectedClass.primaryAddress.city].___name___}}</div>
+										</div>
+										<div>
+											<label class="col-sm-2 control-label" for="cntDistct">District</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="text" id="cntDistct" placeholder="District"
+													class="form-control"
+													ng-model="userSelectedClass.primaryAddress.district">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.primaryAddress.district}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="cntPin">Pincode<span
+												style="color: green">&nbsp;*</span></label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="text" id="cntPin" placeholder="Pincode"
+													class="form-control" name="cntPin" ng-minlength=6
+													ng-minlength=6 required="required"
+													ng-model="userSelectedClass.primaryAddress.pincode">
+												<div class="error-container"
+													ng-show="primaryCntInfoForm.cntPin.$dirty && primaryCntInfoForm.cntPin.$invalid">
+													<small class="error"
+														ng-show="primaryCntInfoForm.$error.minlength">Pincode
+														is required to be at 6 numbers</small>
+												</div>
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.primaryAddress.pincode}}</div>
+										</div>
+									</div>
+									<br>
+								</fieldset>
+							</form>
+						</div>
+						<div class="tab-pane" id="secondaryCntInfo">
+							<form class="form-horizontal" role="form" id="primaryCntForm"
+								name="primaryCntForm">
+								<fieldset>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="primaryPhone">Phone
+												Number</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="text" id="primaryPhone"
+													placeholder="Phone Number" class="form-control"
+													ng-model="userSelectedClass.contact.phoneSecondary">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.contact.phoneSecondary}}</div>
+										</div>
+										<div>
+											<label class="col-sm-2 control-label" for="inputEmail">Email
+												Address</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="email" id="inputEmail"
+													placeholder="Enter Your Email Address."
+													class="form-control" title="Email id is required !"
+													ng-model="userSelectedClass.contact.emailSecondary" />
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.contact.emailSecondary}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="secStreetAdrOne">Street
+												Address 1</label>
+											<div class="col-sm-10"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="text" id="secStreetAdrOne"
+													placeholder="Enter Street Address" class="form-control"
+													ng-model="userSelectedClass.SecondaryAddress.street1">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.SecondaryAddress.street1}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="secStreetAdrtwo">Street
+												Address 2</label>
+											<div class="col-sm-10"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="text" id="secStreetAdrTwo"
+													placeholder="Enter Street Address" class="form-control"
+													ng-model="userSelectedClass.SecondaryAddress.street2">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.SecondaryAddress.street2}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="cntStreetAdrTwo">Landmark</label>
+											<div class="col-sm-10"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="text" id="cntStreetAdrTwo"
+													placeholder="Provide Landmark" class="form-control">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.contact.landmark}}</div>
+										</div>
+									</div>
+									<br>
+
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="cntSecCntry">Country</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<select id="secSecCountry" name="secSecCountry"
+													class="btn btn-media dropdown-toggle form-control"
+													data-ng-model="userSelectedClass.SecondaryAddress.country">
+													<option value="">Select Country</option>
+													<option
+														ng-repeat="item in lovMapToArr(countryStateCity) | orderBy:'___name___':false"
+														ng-selected="item.key==userSelectedClass.SecondaryAddress.country"
+														value="{{item.key}}">{{item.___name___}}</option>
+												</select>
+												<div class="col-md-4"
+													ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.SecondaryAddress.country].___name___}}</div>
+											</div>
+										</div>
+
+										<div>
+											<label class="col-sm-2 control-label" for="cntSecState">State</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<select id="secSecState" name="secSecState"
+													class="btn btn-media dropdown-toggle form-control"
+													data-ng-model="userSelectedClass.SecondaryAddress.state"
+													ng-if="userSelectedClass.SecondaryAddress.country">
+													<option value="">Select State</option>
+													<option
+														ng-repeat="item in lovMapToArr(countryStateCity[userSelectedClass.SecondaryAddress.country]) "
+														ng-selected="item.key==userSelectedClass.SecondaryAddress.state"
+														value="{{item.key}}">{{item.___name___}}</option>
+												</select>
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.SecondaryAddress.country][userSelectedClass.SecondaryAddress.state].___name___}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="cntSecCity">City</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<select id="secSecCity" name="secSecCity"
+													class="btn btn-media dropdown-toggle form-control"
+													data-ng-model="userSelectedClass.SecondaryAddress.city"
+													ng-if="userSelectedClass.SecondaryAddress.state">
+													<option value="">Select City</option>
+													<option
+														ng-repeat="item in lovMapToArr(countryStateCity[userSelectedClass.SecondaryAddress.country][userSelectedClass.SecondaryAddress.state]) | orderBy:'___name___':false "
+														ng-selected="item.key==userSelectedClass.SecondaryAddress.city"
+														value="{{item.key}}">{{item.___name___}}</option>
+												</select>
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.SecondaryAddress.country][userSelectedClass.SecondaryAddress.state][userSelectedClass.SecondaryAddress.city].___name___}}</div>
+										</div>
+										<div>
+											<label class="col-sm-2 control-label" for="cntDistct">District</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="text" id="cntDistct" placeholder="District"
+													class="form-control"
+													ng-model="userSelectedClass.SecondaryAddress.district">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.SecondaryAddress.district}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="cntPin">Pincode</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="text" id="cntPin" placeholder="Pincode"
+													class="form-control"
+													ng-model="userSelectedClass.SecondaryAddress.pincode">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.SecondaryAddress.pincode}}</div>
+										</div>
+									</div>
+									<br>
+								</fieldset>
+							</form>
+						</div>
+						<div class="tab-pane" id="othrInfo">
+							<form class="form-horizontal" role="form">
+								<fieldset>
+									<!-- 											<div class="col-md-12"> -->
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="birthPlaceCntry">Birth
+												Place Country</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<select id="birthPlaceCntry" name="birthPlaceCntry"
+													class="btn btn-media dropdown-toggle form-control"
+													data-ng-model="userSelectedClass.basicDetails.birthPlace_country">
+													<option value="">Select Country</option>
+													<option
+														ng-repeat="item in lovMapToArr(countryStateCity) | orderBy:'___name___':false"
+														ng-selected="item.key==userSelectedClass.basicDetails.birthPlace_country"
+														value="{{item.key}}">{{item.___name___}}</option>
+												</select>
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.basicDetails.birthPlace_country].___name___}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="birthPlaceState">Birth
+												Place State</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<select id="birthPlaceState" name="birthPlaceState"
+													class="btn btn-media dropdown-toggle form-control"
+													data-ng-model="userSelectedClass.basicDetails.birthPlace_state"
+													ng-if="userSelectedClass.basicDetails.birthPlace_country">
+													<option value="">Select State</option>
+													<option
+														ng-repeat="item in lovMapToArr(countryStateCity[userSelectedClass.basicDetails.birthPlace_country]) | orderBy:'___name___':false "
+														ng-selected="item.key==userSelectedClass.basicDetails.birthPlace_state"
+														ng-if="item.key!='___name___'" value="{{item.key}}">{{item.___name___}}</option>
+												</select>
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.basicDetails.birthPlace_country].___name___}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="birthPlaceCity">Birth
+												Place City</label>
+											<div class="col-sm-4"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<select id="birthPlaceCity" name="birthPlaceCity"
+													class="btn btn-media dropdown-toggle  form-control"
+													data-ng-model="userSelectedClass.basicDetails.birthPlace_city"
+													ng-if="userSelectedClass.basicDetails.birthPlace_state">
+													<option value="">Select City</option>
+													<option
+														ng-repeat="item in lovMapToArr(countryStateCity[userSelectedClass.basicDetails.birthPlace_country][userSelectedClass.basicDetails.birthPlace_state]) | orderBy:'___name___':false "
+														ng-selected="item.key==userSelectedClass.basicDetails.birthPlace_city"
+														ng-if="item.key!='___name___'" value="{{item.key}}">{{item.___name___}}</option>
+												</select>
+											</div>
+
+											<div class="col-sm-4"
+												ng-if="userSelectedClass.basicDetails.birthPlace_city=='OTHER'"
+												ng-if="modalCode=='add'||modalCode=='update'">
+												<input type="text"
+													ng-model="userSelectedClass.basicDetails.birthPlace_otherCity">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{countryStateCity[userSelectedClass.basicDetails.birthPlace_country][userSelectedClass.basicDetails.birthPlace_state].___name___}}</div>
+										</div>
+									</div>
+
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="isVisa">VISA
+												Number</label>
+											<div class="col-sm-3"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input id="visaTextSrc" name="visaTextSrc"
+													class="form-control " type="text"
+													ng-model="userSelectedClass.basicDetails.visaDetails"
+													placeholder="Enter your VISA Number">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.visaDetails}}</div>
+										</div>
+										<div>
+
+											<label class="col-sm-2 control-label" for="isPassPort">Passport
+												Number</label>
+											<div class="col-sm-3"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input id="passportTextSrc" name="passportTextSrc"
+													class="form-control" type="text"
+													ng-model="userSelectedClass.basicDetails.passportNumber"
+													placeholder="Enter your Passport Number">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.passportNumber}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2" for="smsEnb">PAN Number</label>
+											<div class="col-sm-3"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input id="panTextSrc" name="panTextSrc"
+													class="form-control" type="text"
+													ng-model="userSelectedClass.basicDetails.panNumber"
+													placeholder="Enter your PAN Number">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.panNumber}}</div>
+										</div>
+										<div>
+											<label class="col-sm-2 control-label" for="isResvrdCat">Reserved
+												Category</label>
+											<div class="col-sm-3"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input id="resrvrdCatTextSrc" name="resrvrdCatTextSrc"
+													class="form-control"
+													ng-model="userSelectedClass.basicDetails.isFromReservedCategory"
+													type="text" placeholder="Please mention Category">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.isFromReservedCategory}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label"
+												for="isPhysicallyHandicapped">Physically Challenged</label>
+											<div class="col-sm-3"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="checkbox" id="isPhysicallyHandicapped"
+													style="margin-top: 20px;"
+													ng-model="userSelectedClass.basicDetails.isPhysicallyHandicapped">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.isPhysicallyHandicapped}}</div>
+										</div>
+										<div>
+											<label class="col-sm-2 control-label"
+												for="isEconomicallyBackward">Economically Challenged</label>
+											<div class="col-sm-3"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="checkbox" id="isEconomicallyBackward"
+													style="margin-top: 20px;"
+													ng-model="userSelectedClass.basicDetails.isEconomicallyBackward">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.isEconomicallyBackward}}</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div>
+											<label class="col-sm-2 control-label" for="smsEnb">Enable
+												SMS Alerts </label>
+											<div class="col-sm-3"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="checkbox" id="smsEnb" style="margin-top: 20px;"
+													ng-model="userSelectedClass.basicDetails.isSMSEnabled">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.isSMSEnabled}}</div>
+										</div>
+										<div>
+											<label class="col-sm-2 control-label" for="mailEnb">Enable
+												Email Alerts </label>
+											<div class="col-sm-3"
+												ng-if="modalCode=='add'||modalCode=='update'||modalCode=='updProfile'">
+												<input type="checkbox" id="mailEnb"
+													style="margin-top: 20px;"
+													ng-model="userSelectedClass.basicDetails.isEmailEnabled">
+											</div>
+											<div class="col-md-4"
+												ng-if="modalCode=='view'||modalCode=='delete'">{{userSelectedClass.basicDetails.isEmailEnabled}}</div>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+
+					</div>
+				</div>
+				<div class="col-md-2"
+					ng-if="modalCode=='update' || modalCode=='add'||modalCode=='updProfile'">
+					<img ng-if="userSelectedClass.basicDetails.profileImagePath"
+						class="profile-image"
+						src="{{userSelectedClass.basicDetails.profileImagePath}}"
+						width="100%" ng-click="openFileBrowser()"> <img
+						ng-if="!userSelectedClass.basicDetails.profileImagePath"
+						class="cursor-ponter" src="images/userProfile/male.png"
+						width="100%" ng-click="openFileBrowser()"> <input
+						class="control-label hide" height="0" width="0" type='file'
+						id="imageUploader" accept="image/*" image="image2"
+						onchange="angular.element(this).scope().readURL(this)"
+						resize-max-width="150" resize-quality="0.7" />
+					<h4 align="right">
+						<i>{{userSelectedClass.basicDetails.userName}}</i>
+					</h4>
+				</div>
+				<div class="col-md-2"
+					ng-if="modalCode=='view' || modalCode=='delete'">
+					<img ng-if="userSelectedClass.basicDetails.profileImagePath"
+						class="profile-image"
+						src="{{userSelectedClass.basicDetails.profileImagePath}}"
+						width="100%"> <img
+						ng-if="!userSelectedClass.basicDetails.profileImagePath"
+						class="cursor-ponter" src="images/userProfile/male.png"
+						width="100%"> <input class="control-label hide" height="0"
+						width="0" type='file' id="imageUploader" accept="image/*"
+						image="image2"
+						onchange="angular.element(this).scope().readURL(this)"
+						resize-max-width="150" resize-quality="0.7" />
+					<h4 align="right">
+						<i>{{userSelectedClass.basicDetails.userName}}</i>
+					</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary pull-left" aria-hidden="true"
+			ng-click="getBackFromModal()">
+			<i class="fa fa-arrow-circle-left"> Back</i>
+		</button>
+		<button class="btn btn-primary pull-right" ng-click="resetUserClass()"
+			ng-if="modalCode!='view'&& modalCode!='delete'">
+			<i class="fa fa-rotate-left"> Reset</i>
+		</button>
+		<button class="btn {{buttonStyle}} pull-right" ng-click="signupForm()"
+			ng-if="modalCode!='view'">
+			<i class="fa fa-edit"> {{modalTitle}}</i>
+		</button>
+	</div>
+</div>

@@ -7,14 +7,14 @@ module.exports.getAppList=function(){
 
 function initAppList(){
     var appList=[
-       {
+       /*{
             'state': 'dashboard',
             'name':'Dashboard',
             'collapse':true,
             'icon':"dashboard",
             'abstract':false,
             'accessList':["*"]
-        },
+        },*/
         {
             'state': 'manageAttendance',
             'name':'Manage Attendence',
