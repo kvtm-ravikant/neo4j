@@ -1155,13 +1155,15 @@ input.ng-valid {
     width: 63%;
     margin-left: 15px;
 }
-.edit-user-profile{
-    font-size:20px;
-    border:1px solid #ccc;
-    border-radius:50%;
-    padding:5px;
+.edit-user-profile {
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 5px;
     cursor: pointer;
-
+}
+.edit-user-profile:hover{
+    background-color: #cfcfcf;
 }
 .icon-remove-sign {
     padding: 0;
