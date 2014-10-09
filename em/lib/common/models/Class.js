@@ -11,7 +11,6 @@ module.exports.getClassList=function(req,res){
     console.log("schoolId",schoolId,">",selectClass);
     db.cypherQuery(selectClass,function(err,classList){
         var responseObj=new Utils.Response();
-        console.log("classList",classList);
         if(classList && classList.data.length>0){
             responseObj.responseData=classList.data;
         }else{

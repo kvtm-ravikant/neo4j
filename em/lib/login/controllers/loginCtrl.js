@@ -89,9 +89,12 @@ function filterMenuItems(menuList,userType){
                     }
 
                 }
-                delete menu.accessList;
-                menu.childLinks=childlinksArr;
-                newMenuList.push(menu);
+                if(childlinksArr.length>0){
+                    delete menu.accessList;
+                    menu.childLinks=childlinksArr;
+                    newMenuList.push(menu);
+                }
+
             }else if(menu.accessList.length>0 && menu.accessList[0]=="*"){
                 delete menu.accessList;
                 newMenuList.push(menu);
