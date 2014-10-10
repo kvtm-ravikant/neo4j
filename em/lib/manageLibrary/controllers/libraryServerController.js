@@ -200,7 +200,7 @@ module.exports=function(app,Utils){
     app.get("/manageLibrary/getAllBooks",Utils.ensureAuthenticated,function(req,res){
         var loggedInUser=req.session.userDetails;
         var schoolID=loggedInUser.schoolDetails.schoolId;
-        libraryMS.getAllBooks(res,schoolID);
+        libraryMS.getAllBooks(res,schoolID,loggedInUser.basicDetails);
         libraryMS.getLibrary(schoolID,req);
     });
     app.get("/manageLibrary/getBookPOJO",Utils.ensureAuthenticated,function(req,res){

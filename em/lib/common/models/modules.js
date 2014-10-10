@@ -62,7 +62,7 @@ function initAppList(){
             'name':'Library  Management',
             'collapse':true,
             'icon':"book",
-            'accessList':["2"]
+            'accessList':["1","2"]
         },
         {
             'state': 'schoolManagement',
