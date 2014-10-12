@@ -359,8 +359,8 @@ module.exports.returnBook=function(res,requestObj){
         }
     })
 }
-module.exports.getIssuedBookDetails=function(res,bookId){
-    var query='Start n=node('+bookId+') WITH n MATCH (n)-[r:ISSUED_TO]->(b) RETURN b,r';
+module.exports.getIssuedBookDetails=function(res,bookNodeId){
+    var query='Start n=node('+bookNodeId+') WITH n MATCH (n)-[r:ISSUED_TO]->(b) RETURN b,r';
     db.cypherQuery(query,function(err,reply){
         var responseObj=new Utils.Response();
         console.log("getIssuedBookDetails",query,err);
