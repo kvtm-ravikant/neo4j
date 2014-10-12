@@ -812,7 +812,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	}
     	else if ($scope.modalCode=='return'){
     		console.log("return : ",$scope.modalCode);
-    		returnLibBook();
+//    		returnLibBook();
     	}
     	
     }
