@@ -477,8 +477,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 //	            	   console.log("updateParentBook - dataResponse",dataResponse)
 	               	   $scope.parentBook = dataResponse.responseData;
 //              
-               appUtils.showSuccess("Book ISBN "+selectedISBN+" updated successfully");
-               $('#parentBookViewEditDelforSmy').modal('hide');
+	               	   appUtils.showSuccess("Book ISBN "+selectedISBN+" updated successfully");
+	               	   $('#parentBookViewEditDelforSmy').modal('hide');
+	               	   $scope.searchBooks();
 	               })
 	           }
 	       );
@@ -496,8 +497,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
  	            	   console.log("updateParentBook - dataResponse",dataResponse)
 // 	               	   $scope.parentBook = dataResponse.responseData;
 //               
- 	               	appUtils.showSuccess("Book "+$scope.parentBook.isbn+" deleted successfully");
- 	               $('#parentBookViewEditDelforSmy').modal('hide');
+ 	            	   appUtils.showSuccess("Book "+$scope.parentBook.isbn+" deleted successfully");
+ 	            	   $('#parentBookViewEditDelforSmy').modal('hide');
+ 	            	   $scope.searchBooks();
  	               })
  	           }
  	       );
