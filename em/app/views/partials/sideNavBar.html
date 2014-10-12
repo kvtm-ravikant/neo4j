@@ -1,6 +1,7 @@
-<nav class="navbar-default navbar-static-side" role="navigation" ng-controller="SideNavBarCtrl" >
-	<div id="nav-main" class="sidebar-collapse" ng-if="menu.length>0">
-		<ul class="nav" id="side-menu">
+<nav class="navbar-default navbar-static-side" role="navigation"
+	ng-controller="SideNavBarCtrl">
+	<div id="nav-main" class="sidebar-collapse">
+		<ul class="nav " id="side-menu">
 			<!-- <li class="sidebar-search">
                 <div class="input-group custom-search-form">
                     <input type="text" class="form-control" placeholder="Search...">
@@ -12,11 +13,12 @@
                 </div>
                 &lt;!&ndash; /input-group &ndash;&gt;
             </li>-->
-                <li><a id="smallSidenav" style="padding: 3px 18px 15px 18px;"><i
-                        class="pull-right fa fa-chevron-left"></i></a></li>
-                <li><a id="largeSidenav" style="padding: 3px 18px 15px 18px;"><i
-                        class="pull-left fa fa-chevron-right"></i></a></li>
-
+            
+			<li><a id="smallSidenav" style="padding: 3px 18px 15px 18px;"><i
+					class="pull-right fa fa-chevron-left"></i></a></li>
+			<li><a id="largeSidenav" style="padding: 3px 18px 15px 18px;"><i
+					class="pull-left fa fa-chevron-right"></i></a></li>
+			
 			<li ng-repeat="menuItem in menu"><a
 				ng-if="menuItem.abstract==true"
 				ng-class="{active: $state.includes(menuItem.state)}"
@@ -41,8 +43,6 @@
 				</ul></li>
 
 		</ul>
-
-								
 		<!-- /#side-menu -->
 	</div>
 	<script>

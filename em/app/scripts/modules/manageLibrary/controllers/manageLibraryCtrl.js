@@ -877,12 +877,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
             console.log("dataResponse /manageLibrary/getBookIssuedDetails/",dataResponse);
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
             	console.log("dataResponse.responseData.data[0][1] :", dataResponse.responseData.data[0][1].issueThisBook);
-            	var data = JSON.parse(dataResponse.responseData.data[0][1].issueThisBook);
+            	var data = JSON.parse(dataResponse.responseData.data[0][1].issueThisBook);        	
             	
-//            	var a= JSON.parse(data);
-            	
-            	console.log("parentBook : ", data.parentBook);
-            	 
+            	console.log("parentBook : ", data.parentBook);            	 
             	
             	$scope.issueBookObj.issueThisBook.childBook = data.childBook;
             	$scope.issueBookObj.issueThisBook.parentBook = data.parentBook;
