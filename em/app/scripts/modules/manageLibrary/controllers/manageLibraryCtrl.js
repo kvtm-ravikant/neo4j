@@ -380,7 +380,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    /*
     * Open View/Edit/Delete Parent Book Modal from Summary
     */
+   $scope.isParentModal=false;
    $scope.openParentBookFromSmy=function(book,code){
+	   $scope.isParentModal=true;
 	   $scope.parentModalTitle="";
        $scope.parentModalCode=code;
        
@@ -406,8 +408,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
        $('#parentBookViewEditDelforSmy').modal({"backdrop": "static","show":true});
        $('#parentBookViewEditDelforSmy').modal({"show":false});
 	   
-	   console.log("parentBookViewEditDelforSmy.html: book : ",book, "childbook length : ",book.children.length);	 
-//	   $scope.parentBook.
+//	   console.log("parentBookViewEditDelforSmy.html: book : ",book, "childbook length : ",book.children.length);	 
 	   angular.copy(book.parentbook,$scope.parentBook);
    }
    
@@ -440,15 +441,14 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    
    $scope.ok=function(){
   	console.log("retry model");
-  		if($scope.parentModalCode && $scope.parentModalCode=='update'){
+  		if($scope.parentModalCode && $scope.parentModalCode=='update' && ($scope.isParentModal)){
 		  $scope.updateParentBook();
           $('#retryModel').modal('hide');
-	   }else if($scope.parentModalCode && $scope.parentModalCode=='delete'){
+	   }else if($scope.parentModalCode && $scope.parentModalCode=='delete' && ($scope.isParentModal)){
 		   $scope.deleteParentBook();
 		   $('#retryModel').modal('hide');
 	   }
-	   else 
-		   if($scope.childModalCode && $scope.childModalCode=='update'){
+	   else if($scope.childModalCode && $scope.childModalCode=='update'){
 		  $scope.updateChildBook();
 		  $('#retryModel').modal('hide');
 	   }else if($scope.childModalCode && $scope.childModalCode=='delete'){
@@ -568,6 +568,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     * Open View/Edit/Delete Child Book Modal from Summary
     */
    $scope.openChildBookFromSmy=function(book, childbook, code){
+	   $scope.isParentModal=false;
 	   $scope.childModalTitle="";
        $scope.childModalCode=code;
        $scope.buttonStyle='btn-primary';
