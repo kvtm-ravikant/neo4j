@@ -96,7 +96,7 @@ module.exports.searchBooks=function(requestObj,schoolID,res){
 }
 function getGlobalBookSearchQuery(requestObj,schoolID){
     var searchText=requestObj.searchText;
-    var query='MATCH (cb:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and cb.softDelete=false ';
+        var query='MATCH (cb:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and cb.softDelete=false ';
     var tempQuery=[];
     tempQuery.push('pb.bookTitle =~ ".*'+searchText+'.*" ');
     tempQuery.push('pb.authorName =~ ".*'+searchText+'.*" ');

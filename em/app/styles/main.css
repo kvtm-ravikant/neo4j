@@ -1196,3 +1196,42 @@ input.ng-valid {
    background: #999; 
     padding: 20px;
 }
+.book-cover-style{
+    height:200px;
+    background-color:#efefef;
+    border-radius:10px;
+    border:1px solid #555;
+    padding:5px;
+
+}
+.book-cover-style-book-title{
+    text-align: center;
+    font-size: 13px;
+    border:1px solid #ccc;
+    background-color:#fff;
+    border-radius:15px;
+    padding:3px;
+}
+.book-cover-style-book-author{
+    text-align: right;
+    font-size: 12px;
+}
+.book-cover-style-book-description{
+    margin:5px;
+    padding:5px;
+
+}
+.available-status{
+    background-color: #219161;
+    color:#fff;
+    border-radius:15px;
+    padding:3px 10px 3px 10px;
+    font-size:12px;
+}
+.unavailable-status{
+    background-color: #c12e2a;
+    color:#fff;
+    border-radius:15px;
+    font-size:11px;
+    padding:3px 10px 3px 10px;
+}

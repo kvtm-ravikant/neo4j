@@ -1,8 +1,6 @@
 /**
  * Created by ravikant on 16/9/14.
  */
-
-
 function ParentBook(){
     this.bindingType="";
     this.bookTitle="";
@@ -16,10 +14,17 @@ function ParentBook(){
     this.coverImagePath="";
     this.authorName="";
     this.docType="";
-    this.softDelete="";
+    this.softDelete=false;
     this._id="";
+    this.createdBy="";
+    this.createdAt="";
+    this.updatedBy="";
+    this.updatedAt="";
+
 
 }
+
+
 function ChildBook(){
     this.bookId="";
     this.bookStatus="";
@@ -32,15 +37,22 @@ function ChildBook(){
     this.publicationDate="";
     this.starRating=0;
     this.pricePaid="";
-    this.frequency="";
     this.barCode="";
+    this.bookCode="";
     this.description="";
     this.tag="";
     this.materialAccompanied="";
-    this.updatedDate="";
-    this.createdDate="";
+    this.createdBy="";
+    this.createdAt="";
+    this.updatedBy="";
+    this.UpdatedAt="";
     this._id="";
 }
+
+
+
+
+
 
 function CompleteBook(parentBook,childBooks){
     this.parentbook=parentBook?parentBook:null;
@@ -58,3 +70,6 @@ function CompleteBook(parentBook,childBooks){
 module.exports.ParentBook=ParentBook;
 module.exports.ChildBook=ChildBook;
 module.exports.CompleteBook=CompleteBook;
+
+
+
