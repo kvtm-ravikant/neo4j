@@ -53,8 +53,6 @@ module.exports=function(app){
             }else{
                 res.redirect("/login");
             }
-
-
         });
 
     });
@@ -84,10 +82,8 @@ function filterMenuItems(menuList,userType){
                         if((childMenu.accessList.length>0 && childMenu.accessList[0]=="*")||(childMenu.accessList.indexOf(userType)>-1)){
                             delete childMenu.accessList;
                             childlinksArr.push(childMenu);
-
                         }
                     }
-
                 }
                 if(childlinksArr.length>0){
                     delete menu.accessList;
