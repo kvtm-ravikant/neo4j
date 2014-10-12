@@ -417,14 +417,14 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
    {
    	console.log("$scope.parentModalTitle : ParentBook", $scope.parentModalTitle, $scope.parentModalCode);
    	   	
-    if($scope.parentModalCode && $scope.parentModalCode=='update'){
+    if($scope.parentModalCode && $scope.parentModalCode=='update' && ($scope.isParentModal)){
     	if(!validateParentBook()){
    		$('#retryModel').modal({"backdrop": "static","show":true});
    		 $scope.alertText="Book details has been changed. Do you want to proceed ?";
     	}
 //    	console.log("Update Parent Book ",$scope.parentBook);
    	}
-   	else if($scope.parentModalCode && $scope.parentModalCode=='delete'){
+   	else if($scope.parentModalCode && $scope.parentModalCode=='delete' && ($scope.isParentModal)){
    		$('#retryModel').modal({"backdrop": "static","show":true});
    		$scope.alertText="You are about to delete a Book. Please confirm.";
 //   		console.log("Update Parent Book ",$scope.parentBook);
