@@ -854,6 +854,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
                     console.log("issueLibBook dataResponse",dataResponse)
                     $scope.issueBookObj.issueThisBook.childBook.bookStatus="Unavailable";
                     $scope.issueBookObj.issueThisBook=null;
+                    $('#modalIssueBook').modal("hide");
                 });
             }).error(function(data,status,headers,config){
                 //error
