@@ -1188,11 +1188,19 @@ input.ng-valid {
     border-bottom: 1px solid white;
 }
 .accordion__tab-title {
-    background: #888;
+    background: #438EA9;
     padding: 5px;
     cursor: pointer;
 }
 .accordion__tab-content {
-   background: #999; 
+	color: black;
+   background: #e0e0e0; 
     padding: 20px;
+}
+.accordion_open_close {
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
 }
