@@ -60,13 +60,19 @@
 							<thead class="theadclass">
 								<tr>
 									<th style="width: 50%">Book ISBN :</th>
-									<td>{{issueThisBook.bookId}}</td>
+									<td>{{issueBookObj.issueThisBook.parentBook.isbn}}</td>
 								</tr>
 							</thead>
 							<thead class="theadclass">
 								<tr>
 									<th>Book Title :</th>
-									<td>{{issueThisBook.bookId}}</td>
+									<td>{{issueBookObj.issueThisBook.parentBook.bookTitle}}</td>
+								</tr>
+							</thead>
+							<thead class="theadclass">
+								<tr>
+									<th>Book Author :</th>
+									<td>{{issueBookObj.issueThisBook.parentBook.authorNmae}}</td>
 								</tr>
 							</thead>
 							<thead class="theadclass">
