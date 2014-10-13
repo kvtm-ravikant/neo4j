@@ -251,14 +251,16 @@
 					<div>
 						<label class="col-sm-2 control-label" for="updDate">Update
 							Date</label>
-						<div class="col-md-1 classselector">
-							<div class="input-group">
-								<input type="text" id="updDate" name="updDate"
-									class="em-datepicker datepicker" placeholder="Update Date"
-									ng-model="childBook.updatedDate"> <span
-									class="input-group-addon cursor-pointer"
-									ng-click="openUpdDate()"><i class="fa fa-calendar"></i></span>
-							</div>
+							
+						<div class="col-md-2 classselector">
+						 <quick-datepicker name='updDate' ng-model='childBook.updatedDate' placeholder="Update Date" disable-timepicker='true'></quick-datepicker>
+<!-- 							<div class="input-group"> -->
+<!-- 								<input type="text" id="updDate" name="updDate" -->
+<!-- 									class="em-datepicker datepicker" placeholder="Update Date" -->
+<!-- 									ng-model="childBook.updatedDate"> <span -->
+<!-- 									class="input-group-addon cursor-pointer" -->
+<!-- 									ng-click="openUpdDate()"><i class="fa fa-calendar"></i></span> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 				</div>
