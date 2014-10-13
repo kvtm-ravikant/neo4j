@@ -41,8 +41,10 @@ function ChildBook(){
     this.description="";
     this.tag="";
     this.materialAccompanied="";
-    this.updatedDate="";
-    this.createdDate="";
+    this.createdBy="";
+    this.createdAt="";
+    this.updatedBy="";
+    this.UpdatedAt="";
     this._id="";
 }
 
