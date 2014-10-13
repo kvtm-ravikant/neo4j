@@ -18,6 +18,10 @@ function ParentBook(){
     this.docType="";
     this.softDelete="";
     this._id="";
+    this.createdBy="";
+    this.createdAt="";
+    this.updatedBy="";
+    this.updatedAt="";
 
 }
 function ChildBook(){
