@@ -341,11 +341,12 @@ module.exports.issueBook=function(res,childBook,userID,issueDetails){
     });
 }
 module.exports.returnBook=function(res,requestObj){
+	console.log("requestObj : ",requestObj);
     var responseObj=new Utils.Response();
     db.updateRelationship(requestObj.issueBookObj._id,requestObj.issueBookObj,function(err,reply){
         if(!err){
-            requestObj.book.bookStatus="Available";
-            db.updateNode(requestObj.book._id, requestObj.book, function(err, node){
+            requestObj.book.childBook.bookStatus="Available";
+            db.updateNode(requestObj.book.childBook._id, requestObj.book.childBook, function(err, node){
                 if(node === true){
                     // node updated
                     res.json(responseObj);

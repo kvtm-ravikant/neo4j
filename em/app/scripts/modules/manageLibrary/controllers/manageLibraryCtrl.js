@@ -812,7 +812,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	}
     	else if ($scope.modalCode=='return'){
     		console.log("return : ",$scope.modalCode);
-//    		returnLibBook();
+    		returnLibBook();
     	}
     	
     }
@@ -877,7 +877,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
             //success
             console.log("dataResponse /manageLibrary/getBookIssuedDetails/",dataResponse);
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-            	console.log("dataResponse.responseData.data[0][1] :", dataResponse.responseData.data[0][1].issueThisBook);
+//            	console.log("dataResponse.responseData.data[0][1] :", dataResponse.responseData.data[0][1].issueThisBook);
             	var data = JSON.parse(dataResponse.responseData.data[0][1].issueThisBook);        	
             	
             	console.log("parentBook : ", data.parentBook);            	 
@@ -903,14 +903,16 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
             $http({
                 method : 'POST',
                 url    : '/manageLibrary/returnLibBook',
-                data   : {book:$scope.issueBookObj.issueThisBook.childbook,user:$scope.userToReturn,issueBookObj:$scope.returnIsuedDetails},
+                data   : {book:$scope.issueBookObj.issueThisBook,user:$scope.userToReturn,issueBookObj:$scope.returnIsuedDetails},
                 headers: {'Content-Type': 'application/json'}
             }).success(function(dataResponse,status,headers,config){
                 //success
                 appUtils.defaultParseResponse(dataResponse,function(dataResponse){
                     console.log("returnLibBook dataResponse",dataResponse)
-                    $scope.returnThisBook.bookStatus="Available";
-                    $scope.returnThisBook=null;
+                    $scope.issueBookObj.issueThisBook.childBook.bookStatus="Available";
+                    $scope.issueBookObj.issueThisBook=null;
+                    $('#modalIssueBook').modal("hide");
+
                 });
             }).error(function(data,status,headers,config){
                 //error
