@@ -966,7 +966,14 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
  ****************************************************************************************************/
     
     
-     
+    $scope.getShowImage=function(book){
+    	console.log("getShowImage ",book);
+        $scope.imageModalDetails={"path":"images/bookImages/"+book.isbn+".jpeg",desc:book.bookTitle};
+        $('#bookCoverModal').find('.modal-body img').attr("src","images/bookImages/"+book.isbn+".jpeg");
+        $('#bookCoverModal').find('.modal-header h4').html(book.bookTitle);
+        $('#bookCoverModal').modal("show");
+    }
+        
     
     
     

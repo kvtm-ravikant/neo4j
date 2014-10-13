@@ -1,92 +1,93 @@
 <div class="row" ng-controller="libraryManagement">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-10 topbar">
-                <div class="input-group">
-                    <input ng-model="searchBookModel.searchText"
-                           class="col-md-12 searchclass" placeholder="Search"
-                           class="nodeSearchInputBox"/><span class="input-group-addon "
-                                                               id="datamodal" data-toggle="popover"> <i class="fa fa-times"
-                                                                                                        ng-click="clearSearch();searchBooks()"></i>&nbsp;|&nbsp; <i
-                        class="fa fa-search cursor-pointer" ng-click="searchBooks()"></i>&nbsp;|&nbsp;
-					<i ng-show="!isSearchBoxOpened"
-                       class="fa fa-chevron-down cursor-pointer"
-                       ng-click="openSearchBox()"></i> <i ng-show="isSearchBoxOpened"
-                                                          class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i>
-                                                          
-				</span>
-				
-                </div>
-            </div>
-            <div class="col-md-2">
-                <!--<button class="btn btn-sm btn-primary pull-right" ng-click="openAddBookForm()">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="col-md-10 topbar">
+				<div class="input-group">
+					<input ng-model="searchBookModel.searchText"
+						class="col-md-12 searchclass" placeholder="Search"
+						class="nodeSearchInputBox" /><span class="input-group-addon "
+						id="datamodal" data-toggle="popover"> <i
+						class="fa fa-times" ng-click="clearSearch();searchBooks()"></i>&nbsp;|&nbsp;
+						<i class="fa fa-search cursor-pointer" ng-click="searchBooks()"></i>&nbsp;|&nbsp;
+						<i ng-show="!isSearchBoxOpened"
+						class="fa fa-chevron-down cursor-pointer"
+						ng-click="openSearchBox()"></i> <i ng-show="isSearchBoxOpened"
+						class="fa fa-chevron-up cursor-pointer" ng-click="openSearchBox()"></i>
+
+					</span>
+
+				</div>
+			</div>
+			<div class="col-md-2">
+				<!--<button class="btn btn-sm btn-primary pull-right" ng-click="openAddBookForm()">
                     <i class="fa fa-book"> Add Book</i>
                 </button>-->
 
-            </div>
-        </div>
-
-
-    </div>
-    <div ng-include="'partials/modules/mangeLibrary/advSearch.html'"></div>
-    <div class="row vertical-spacer"></div>
-    <div class="row" ng-if="booksList" >
-        <div class="col-md-12">
-            <table class="table table-bordered table-condensed table-striped table-hover">
-                   <tr ng-repeat="book in booksList">
-                       <td>
-                           <table class="col-md-12">
-                               <thead ng-if="$index == 0">
-                               <tr>
-                                   <th class="col-md-1 ">S.No</th>
-                                   <th class="col-md-2 ">Author</th>
-                                   <th class="col-md-2 ">Book Title</th>
-                                   <th class="col-md-2 ">Publisher</th>
-                                   <th class="col-md-1 ">ISBN</th>
-                                   <th class="col-md-1 ">Category</th>
-                                   <th  class="col-md-3 ">
-                                       Actions
-                                   </th>
-                               </tr>
-                               </thead>
-                               <tbody>
-                               <tr>
-                                   <td class="col-md-1 ">{{$index+1}}</td>
-                                   <td class="col-md-2 ">{{book.parentbook.authorName}}</td>
-                                   <td class="col-md-2 ">{{book.parentbook.bookTitle}}</td>
-                                   <td class="col-md-2 ">{{book.parentbook.publisher}}</td>
-                                   <td class="col-md-1 ">{{book.parentbook.isbn}}</td>
-                                   <td class="col-md-1 ">{{book.parentbook.categoryName}}</td>
-                                   <td class="col-md-3 ">
-                                       <a href="#" data-toggle="tooltip" title="Click to view book details"><i class="fa fa-eye" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'view')"></i></a> &nbsp;|&nbsp;
-                                       <a href="#" data-toggle="tooltip" title="Click to update book details"><i class="fa fa-pencil" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'update')"></i></a> &nbsp;|&nbsp;
-<!--                                        <a href="#" data-toggle="tooltip" title="Click to delete book"><i class="fa fa-times-circle" role="button" data-toggle="modal" ng-click="openParentBookFromSmy(book,'delete')"></i></a>&nbsp;|&nbsp; -->
-
-                                       <i class="cursor-pointer fa " ng-class="!book.isChildOpen?'fa-chevron-down':'fa-chevron-up'" role="button" ng-click="toggleMapKeyValue(book,'isChildOpen')" ></i>
-                                   </td>
-                               </tr>
-                               </tbody>
-                           </table>
-                           <div ng-include="'partials/modules/mangeLibrary/childBooksList.html'"></div>
-                       </td>
-                   </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div ng-include="'partials/modules/mangeLibrary/addBook.html'"></div>
-    <div ng-include="'partials/modules/mangeLibrary/childBookAddforSmy.html'"></div>
-    <div ng-include="'partials/modules/mangeLibrary/childBookforViewEditDelSmy.html'"></div>
-    <div ng-include="'partials/modules/mangeLibrary/parentBookViewEditDelforSmy.html'"></div>
-    <div ng-include="'partials/modules/mangeLibrary/issueBook.html'"></div>
-    <div class="modal well" tabindex="-1" role="dialog" id="retryModel">
-			<div class="modal-header">
-				<h3>Are you sure ?</h3>
-			</div>
-			<div class="modal-body">{{alertText}}</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" ng-click="ok()">OK</button>
-				<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 			</div>
 		</div>
+
+
+	</div>
+	<div ng-include="'partials/modules/mangeLibrary/advSearch.html'"></div>
+	<div class="row vertical-spacer"></div>
+	<div class="row" ng-if="booksList">
+		<div class="col-md-12">
+			<table
+				class="table table-bordered table-condensed table-striped table-hover">
+				<tr ng-repeat="book in booksList">
+					<td>
+						<table class="col-md-12">
+							<thead ng-if="$index == 0">
+								<tr>
+									<th class="col-md-1 ">S.No</th>
+									<th class="col-md-2 ">Author</th>
+									<th class="col-md-2 ">Book Title</th>
+									<th class="col-md-2 ">Publisher</th>
+									<th class="col-md-1 ">ISBN</th>
+									<th class="col-md-1 ">Category</th>
+									<th class="col-md-3 ">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="col-md-1 ">{{$index+1}}</td>
+									<td class="col-md-2 ">{{book.parentbook.authorName}}</td>
+									<td class="col-md-2 ">{{book.parentbook.bookTitle}}</td>
+									<td class="col-md-2 ">{{book.parentbook.publisher}}</td>
+									<td class="col-md-1 ">{{book.parentbook.isbn}}</td>
+									<td class="col-md-1 ">{{book.parentbook.categoryName}}</td>
+									<td class="col-md-3 "><a href="#" data-toggle="tooltip"
+										title="Click to view book details"><i class="fa fa-eye"
+											role="button" data-toggle="modal"
+											ng-click="openParentBookFromSmy(book,'view')"></i></a>
+										&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
+										title="Click to update book details"><i
+											class="fa fa-pencil" role="button" data-toggle="modal"
+											ng-click="openParentBookFromSmy(book,'update')"></i></a>
+										&nbsp;|&nbsp; <a href="#" data-toggle="tooltip"
+										title="Click to delete book"><i class="fa fa-times-circle"
+											role="button" data-toggle="modal"
+											ng-click="openParentBookFromSmy(book,'delete')"></i></a>&nbsp;|&nbsp;
+
+										<i class="cursor-pointer fa "
+										ng-class="!book.isChildOpen?'fa-chevron-down':'fa-chevron-up'"
+										role="button" ng-click="toggleMapKeyValue(book,'isChildOpen')"></i>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div ng-include="'partials/modules/mangeLibrary/childBooksList.html'"></div>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div ng-include="'partials/modules/mangeLibrary/addBook.html'"></div>
+	<div ng-include="'partials/modules/mangeLibrary/childBookAddforSmy.html'"></div>
+	<div ng-include="'partials/modules/mangeLibrary/childBookforViewEditDelSmy.html'"></div>
+	<div ng-include="'partials/modules/mangeLibrary/parentBookViewEditDelforSmy.html'"></div>
+	<div ng-include="'partials/modules/mangeLibrary/issueBook.html'"></div>
+	<div ng-include="'partials/modules/mangeLibrary/bookImage.html'"></div>
+	<div ng-include="'partials/modules/mangeLibrary/submitConfirmModal.html'"></div>
 </div>
