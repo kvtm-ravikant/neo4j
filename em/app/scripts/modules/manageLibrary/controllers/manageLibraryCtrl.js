@@ -525,7 +525,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
              appUtils.defaultParseResponse(dataResponse,function(dataResponse) {
                  console.log("updateChildBook - dataResponse",dataResponse)
                  
-                 selectedBookPOJO = dataResponse.responseData;
+//                 selectedBookPOJO = dataResponse.responseData;
                 
                  appUtils.showSuccess("Book Copy "+selectedBookId+" of Book ISBN "+selectedISBN+" updated successfully");
                  $('#childBookforEditViewDelete').modal('hide');
@@ -600,7 +600,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
        console.log("openChildBookFromSmy.html : childbook ", childbook," Book: ",book);	
        
        for(var j=0; j<book.children.length;j++){
-//    	   console.log("book.children[j] : ",book.children[j].bookId," childbook.bookId ",childbook.bookId);
+    	   console.log("book.children[j] : ",book.children[j].bookId," childbook.bookId ",childbook.bookId);
     	   if(childbook.bookId==book.children[j].bookId)
     		   $scope.childBook=book.children[j];
     	   
