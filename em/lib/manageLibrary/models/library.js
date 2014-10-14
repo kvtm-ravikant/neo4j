@@ -410,7 +410,7 @@ module.exports.updateParentBook = function(parentBook,loggedInUser,schoolID,res)
 	            if(err || !result || (result && result.data && result.data.length==1)){
                     var currentTimestamp=(new Date()).getTime();
                     parentBook.updatedAt=currentTimestamp;
-                    parentBook.updatedBy=loggedInUser;
+                    parentBook.updatedBy=loggedInUser.basicDetails.userName;
                     db.updateNode(parentBook._id, parentBook, function(err, node){
                         if(err) throw err;
                         node === true?console.log("Book updated"):console.log("Failed to update Book details");
@@ -441,7 +441,7 @@ module.exports.deleteParentBook = function(parentBook,loggedInUser,schoolID,res)
 	            if(err || !result || (result && result.data && result.data.length==1)){
                     var currentTimestamp=(new Date()).getTime();
                     parentBook.updatedAt=currentTimestamp;
-                    parentBook.updatedBy=loggedInUser;
+                    parentBook.updatedBy=loggedInUser.basicDetails.userName;
                     parentBook.softDelete=true;
                     db.updateNode(parentBook._id, parentBook, function(err, node){
                         if(err) throw err;
