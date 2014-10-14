@@ -175,6 +175,14 @@
 			</div>
 			<br>
 			<div class="row">
+			<div>
+					<label class="col-sm-2 control-label" for="bookImg">Book
+						Image</label>
+					<div class="col-sm-4" id="bookImg">
+						<i class="fa fa-picture-o cursor-pointer"
+							ng-click="getShowImage(parentBook)"></i>
+					</div>
+				</div>
 				<div>
 					<label class="col-sm-2 control-label" for="bookCount">Number
 						Of Copies</label>
@@ -184,14 +192,7 @@
 							class="form-control" ng-model="parentBook.bookCopies">
 					</div>
 				</div>
-				<div>
-					<label class="col-sm-2 control-label" for="bookImg">Book
-						Image</label>
-					<div class="col-sm-2" id="bookImg">
-						<i class="fa fa-picture-o cursor-pointer"
-							ng-click="getShowImage(parentBook)"></i>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 		
