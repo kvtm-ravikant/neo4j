@@ -381,7 +381,7 @@ module.exports.getIssuedBookDetails=function(res,bookNodeId){
 module.exports.childBookDetailsbyIsbnBookId=function(res,bookId){
 //    var query='Start n=node('+bookId+') WITH n MATCH (n)-[r:ISSUED_TO]->(b) RETURN b,r';
 //	var query='match (p:ParentBook) -[r:PARENTBOOK_OF]->(c:ChildBook) where p.isbn ="234567890X" and c.bookId="6" return p,c';
-	var query='match (p:ParentBook) -[r:PARENTBOOK_OF]->(c:ChildBook) where p.isbn ="234567890X" and c.bookId="6" return c';
+	var query='match (p:ParentBook) -[r:CHILDBOOK_OF]->(c:ChildBook) where p.isbn ="234567890X" and c.bookId="6" return c';
     db.cypherQuery(query,function(err,reply){
         var responseObj=new Utils.Response();
         console.log("childBookDetailsbyIsbnBookId",query,err);
@@ -476,7 +476,8 @@ module.exports.updateChildBook = function(book,loggedInUser,schoolID,res) {
 	            console.log("findParentISBN",err, result)
 	            if(err || !result || (result && result.data && result.data.length==1)){
                     var currentTimestamp=(new Date()).getTime();
-                    childBook.updatedAt=currentTimestamp;
+                    childBook=parseChildBook(childBook);
+                    
                     db.updateNode(childBook._id, childBook, function(err, node){
                         if(err) throw err;
                         node === true?console.log("Book Copy updated"):console.log("Failed to update Book Copy");
@@ -492,7 +493,18 @@ module.exports.updateChildBook = function(book,loggedInUser,schoolID,res) {
 	        Utils.defaultErrorResponse(res,defaultErrorMsg);
 	    }
 }
+function parseChildBook(childBookDetails){
+    var currentTimestamp=(new Date()).getTime();
+    childBookDetails.updatedDate=currentTimestamp;
+    var publishDt=Date.parse(childBookDetails.publicationDate);
+    (publishDt && !isNaN(publishDt))?childBookDetails.publicationDate=publishDt:"";
 
+    var purDt=Date.parse(childBookDetails.purchaseDate);
+    (purDt && !isNaN(purDt))?childBookDetails.purchaseDate=purDt:"";
+
+//    console.log("Publish Dt : ", publishDt, childBookDetails.publicationDate);
+    return childBookDetails;
+}
 /*
  * Delete ChildBook details  
  */
