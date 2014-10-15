@@ -802,6 +802,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         code && code=='issue'?$scope.modalCode=code:"";
         code && code=='return'?$scope.modalCode=code:"";
         
+        code && code=='issue'?$scope.modalIcon="fa fa-share":"";
+        code && code=='return'?$scope.modalIcon="fa fa-reply":"";
+        
         console.log("code : ",code);
         if(code && code=='return'){
         	console.log("code : ",code);

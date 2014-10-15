@@ -7,8 +7,8 @@
 		<h4>{{modalTitle}}</h4>
 	</div>
 	<div class="modal-body col-md-12">
-		<div class="row ">
-			<div>
+		<div class="row">
+			<div ng-if="modalCode==issue">
 				<label class="col-sm-1 control-label" for="loc">Search User</label>
 				<div class="input-group col-sm-8">
 					<input ng-model="issueBookObj.userSearchText"
@@ -136,7 +136,11 @@
 		<!--  Issue Book Part - End -->
 		<br>
 		<div class="modal-footer">
-			<button class="btn btn-primary pull-right" ng-click="submitBook()">{{modalTitle}}</button>
+		<button class="btn btn-primary pull-left" aria-hidden="true"
+			ng-click="getBackFromIssue()">
+			<i class="fa fa-arrow-circle-left"> Back</i>
+		</button>
+			<button class="btn btn-primary pull-right" ng-click="submitBook()"><i class="{{modalIcon}}"></i> {{modalTitle}}</button>
 
 		</div>
 	</div>

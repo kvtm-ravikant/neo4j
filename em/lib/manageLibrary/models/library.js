@@ -382,6 +382,7 @@ module.exports.childBookDetailsbyIsbnBookId=function(res,bookId){
 //    var query='Start n=node('+bookId+') WITH n MATCH (n)-[r:ISSUED_TO]->(b) RETURN b,r';
 //	var query='match (p:ParentBook) -[r:PARENTBOOK_OF]->(c:ChildBook) where p.isbn ="234567890X" and c.bookId="6" return p,c';
 	var query='match (p:ParentBook) -[r:CHILDBOOK_OF]->(c:ChildBook) where p.isbn ="234567890X" and c.bookId="6" return c';
+	
     db.cypherQuery(query,function(err,reply){
         var responseObj=new Utils.Response();
         console.log("childBookDetailsbyIsbnBookId",query,err);
