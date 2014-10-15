@@ -17,7 +17,7 @@ function initAppList(){
         },*/
         {
             'state': 'manageAttendance',
-            'name':'Manage Attendence',
+            'name':'Manage Attendance',
             'collapse':true,
             'icon':"edit",
             'abstract':true,
@@ -25,23 +25,23 @@ function initAppList(){
             "childLinks":[
                 {
                     'state': 'manageAttendance.takeAttendance',
-                    'name':'Take Attendence',
+                    'name':'Take Attendance',
                     'collapse':true,
-                    'icon':"sitemap",
+                    'icon':"list",
                     'accessList':["2"]
                 },
                 {
                     'state': 'manageAttendance.studentReport',
-                    'name':'Attendence Report',
+                    'name':'Attendance Report',
                     'collapse':true,
-                    'icon':"sitemap",
+                    'icon':"thlist",
                     'accessList':["2","3"]
                 },
                 {
                     'state': 'manageAttendance.teacherReport',
-                    'name':'Attendence Report',
+                    'name':'Attendance Report',
                     'collapse':true,
-                    'icon':"sitemap",
+                    'icon':"thlist",
                     'accessList':["3","2"]
                 }
             ]

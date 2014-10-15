@@ -23,7 +23,11 @@ angular.module('educationMediaApp').factory("iconClassMapping",function(){
         "erase":"fa fa-eraser",
         "book":"fa fa-book",
         "exitin":"fa fa-fire-extinguisher",
-        "edit":"fa fa-edit"
+        "edit":"fa fa-edit",
+        "fax":"fa fa-fax",
+        "list":"fa fa-list-ol",
+        "thlist":"fa fa-th-list",
+        "th":"fa fa-th"
     }
     return iconClassMapping;
 });
