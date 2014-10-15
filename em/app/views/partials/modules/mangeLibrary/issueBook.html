@@ -7,7 +7,7 @@
 		<h4>{{modalTitle}}</h4>
 	</div>
 	<div class="modal-body col-md-12">
-		<div class="row">
+		<div class="row"  ng-if="isIssueMode">
 			<div>
 				<label class="col-sm-1 control-label" for="loc">Search User</label>
 				<div class="input-group col-sm-8">
@@ -22,51 +22,27 @@
 			</div>
 		</div>
 		<br>
-		<!-- 		<div class="col-md-12"> -->
-		<!-- 			<div class="col-md-12" ng-if="searchedUserData"> -->
-		<!-- 				<div class="col-md-12"> -->
-		<!-- 					<div class="col-md-2 div-table-header-th">First Name</div> -->
-		<!-- 					<div class="col-md-2 div-table-header-th">Middle Name</div> -->
-		<!-- 					<div class="col-md-2 div-table-header-th">Last Name</div> -->
-		<!-- 					<div class="col-md-1 div-table-header-th">Date of Birth</div> -->
-		<!-- 					<div class="col-md-2 div-table-header-th">Reg ID</div> -->
-		<!-- 					<div class="col-md-2 div-table-header-th">userName</div> -->
-		<!-- 				</div> -->
-		<!-- 				<div class="col-md-12" ng-repeat="user in searchedUserData"> -->
-		<!-- 					<div class="col-md-2 div-table-td-first div-table-td"> -->
-		<!-- 						<span class="cursor-pointer" -->
-		<!-- 							ng-click="selectUserToIssueBook(user)">{{user.firstName}}</span> -->
-		<!-- 					</div> -->
-		<!-- 					<div class="col-md-2 div-table-td">{{user.middleName}}</div> -->
-		<!-- 					<div class="col-md-2 div-table-td">{{user.LastName}}</div> -->
-		<!-- 					<div class="col-md-1 div-table-td">{{user.DOB}}</div> -->
-		<!-- 					<div class="col-md-2 div-table-td">{{user.regID}}</div> -->
-		<!-- 					<div class="col-md-2 div-table-td">{{user.useerName}}</div> -->
-		<!-- 				</div> -->
-		<!-- 				<br> -->
-		<!-- 			</div> -->
-		<!-- 		</div> -->
-		<table class="col-md-11 child-books-container" style="float: right;"
-		ng-if="searchedUserData">
+		<table class="col-md-12 child-books-container" style="float: right;"
+			ng-if="searchedUserData">
 			<thead>
 				<tr>
-					<th class="col-md-1 div-table-header-th">First Name</th>
-					<th class="col-md-1 div-table-header-th">Middle Name</th>
-					<th class="col-md-4 div-table-header-th">Last Name</th>
-					<th class="col-md-1 div-table-header-th">Date of Birth</th>
-					<th class="col-md-1 div-table-header-th">Rating</th>
-					<th class="col-md-4 div-table-header-th">userName</th>
+					<th class="col-md-2 div-table-header-th">First Name</th>
+					<th class="col-md-2 div-table-header-th">Middle Name</th>
+					<th class="col-md-2 div-table-header-th">Last Name</th>
+					<th class="col-md-2 div-table-header-th">Date of Birth</th>
+					<th class="col-md-2 div-table-header-th">Registration Id</th>
+					<th class="col-md-2 div-table-header-th">userName</th>
 				</tr>
 			</thead>
 			<tbody ng-repeat="user in searchedUserData">
 				<tr>
-					<td class="col-md-4 div-table-td cursor-pointer"
+					<td class="col-md-2 div-table-td cursor-pointer"
 						ng-click="selectUserToIssueBook(user)">{{user.firstName}}</td>
-					<td class="col-md-1 div-table-td-first div-table-td">{{user.middleName}}</td>
-					<td class="col-md-1 div-table-td">{{user.LastName}}</td>
-					<td class="col-md-4 div-table-td">{{user.DOB}}</td>
-					<td class="col-md-1 div-table-td">{{user.regID}}</td>
-					<td class="col-md-1 div-table-td">{{user.useerName}}</td>
+					<td class="col-md-2 div-table-td-first div-table-td">{{user.middleName}}</td>
+					<td class="col-md-2 div-table-td">{{user.LastName}}</td>
+					<td class="col-md-2 div-table-td">{{user.DOB}}</td>
+					<td class="col-md-2 div-table-td">{{user.regID}}</td>
+					<td class="col-md-2 div-table-td">{{user.useerName}}</td>
 				</tr>
 			</tbody>
 		</table>

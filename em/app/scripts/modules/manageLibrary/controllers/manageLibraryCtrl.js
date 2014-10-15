@@ -793,6 +793,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     
     	$scope.selectedUser="";
     	$scope.searchedUserData=null;
+    	$scope.isIssueMode=true;
     
     	$scope.modalTitle="";
         $scope.modalCode=code || $scope.modalCode;
@@ -809,6 +810,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         if(code && code=='return'){
         	console.log("code : ",code);
         	showReturnBook(childbook);
+        	$scope.isIssueMode=false;
         }
     	
 //    	console.log("openIssueBook : book : ",book," childbook: ", childbook,"selectedUser : ",$scope.selectedUser);
