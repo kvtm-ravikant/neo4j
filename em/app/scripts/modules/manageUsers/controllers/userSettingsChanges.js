@@ -84,7 +84,7 @@ educationMediaApp.controller('userProfileChanges', function ($scope, $http,iconC
      */
     $scope.saveSettings=function(){
     	console.log("saveSettings ", $scope.settingsData);
-    	if(($scope.settingsData.passwordData.newPassword==$scope.settingsData.passwordData.rePassword) && ($scope.settingsData.passwordData.newPassword.length==5)){
+    	if(($scope.settingsData.passwordData.newPassword==$scope.settingsData.passwordData.rePassword) && ($scope.settingsData.passwordData.newPassword.length>=5)){
     		$http({
                 method : 'POST',
                 url    : '/manage-users/saveUserSettings/',
