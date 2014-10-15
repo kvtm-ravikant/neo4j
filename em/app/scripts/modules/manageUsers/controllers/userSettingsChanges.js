@@ -59,6 +59,10 @@ educationMediaApp.controller('userProfileChanges', function ($scope, $http,iconC
     	console.log("verifyNewPassword");
     	if($scope.settingsData.passwordData.newPassword.length==0)
     		$scope.isNewPasswordEntered=0;
+    	else if($scope.settingsData.passwordData.newPassword.length<5)
+    		$scope.isNewPasswordEntered=5;
+    	else if($scope.settingsData.passwordData.newPassword==$scope.settingsData.passwordData.oldPassword)
+    		$scope.isNewPasswordEntered=4;
     	else if($scope.isPasswordMatched==0){
     		$scope.rePasswordEntered=-1;
     	}
@@ -80,7 +84,7 @@ educationMediaApp.controller('userProfileChanges', function ($scope, $http,iconC
      */
     $scope.saveSettings=function(){
     	console.log("saveSettings ", $scope.settingsData);
-    	if($scope.settingsData.passwordData.newPassword==$scope.settingsData.passwordData.rePassword){
+    	if(($scope.settingsData.passwordData.newPassword==$scope.settingsData.passwordData.rePassword) && ($scope.settingsData.passwordData.newPassword.length==5)){
     		$http({
                 method : 'POST',
                 url    : '/manage-users/saveUserSettings/',
@@ -107,6 +111,8 @@ educationMediaApp.controller('userProfileChanges', function ($scope, $http,iconC
                 console.log("Error",data,status,headers,config);
             });
     	}
+    	else
+    		appUtils.showSuccess("Entered password is incorrect. Please re-try again.")
     }
    
     

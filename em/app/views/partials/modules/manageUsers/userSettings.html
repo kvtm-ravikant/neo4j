@@ -11,7 +11,7 @@
 							</h3>
 							<hr />
 							<div class="form-group">
-								<label for="old-password" class="col-sm-3 control-label">Old
+								<label for="old-password" class="col-sm-3 control-label">Current
 									Password</label>
 								<div class="col-sm-4">
 									<input type="password" id="old-password" name="old-password" ng-model="settingsData.passwordData.oldPassword"
@@ -35,7 +35,9 @@
 								</div>
 								<div>
 										<span ng-if="isNewPasswordEntered==1" style="color: green; font-weight: bolder;">Please enter new password.</span>
-										 <span ng-if="isNewPasswordEntered==0" style="color:red;font-weight: bolder;">Password cannot be blank !</span>
+										 <span ng-if="isNewPasswordEntered==0" style="color:red;font-weight: bolder;">It's Empty.Password cannot be blank !</span>
+										 <span ng-if="isNewPasswordEntered==5" style="color:blue;font-weight: bolder;">Too short. It must be more than 5 digit.</span>
+										 <span ng-if="isNewPasswordEntered==4" style="color:red;font-weight: bolder;">New password cannot be same as of current password.</span>
 									 </div>
 							</div>
 							<div class="form-group">
@@ -43,11 +45,11 @@
 									Password</label>
 								<div class="col-sm-4">
 									<input type="password" id="password2" name="password2" ng-model="settingsData.passwordData.rePassword"
-									 ng-blur="reVerifyNewPassword()" ng-if="isPasswordMatched==1" class="form-control">
+									 ng-blur="reVerifyNewPassword()" ng-if="rePasswordEntered==1" class="form-control">
 								</div>
 								<div>
-										<span ng-if="rePasswordEntered==1" style="color: green; font-weight: bolder;">Please re-enter your password.</span>
-										 <span ng-if="rePasswordEntered==0" style="color:red;font-weight: bolder;">Password cannot be blank !</span>
+										<span ng-if="rePasswordEntered==1" style="color: green; font-weight: bolder;">Re-enter your password again.</span>
+										 <span ng-if="rePasswordEntered==0" style="color:red;font-weight: bolder;">It's Empty.Password cannot be blank !</span>
 									 </div>
 							</div>
 						</fieldset>
@@ -57,6 +59,9 @@
 						<button class="btn btn-primary text-center" ng-click="saveSettings()" >
 							<i class="fa fa-floppy-o"> Save Changes</i>
 						</button>
+<!-- 						<button class="btn btn-warning text-center"> -->
+<!-- 							<i> Cancel</i> -->
+<!-- 						</button> -->
 					</p>
 				</div>
 				<!-- END SETTINGS TAB CONTENT -->
