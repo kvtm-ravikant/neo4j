@@ -497,7 +497,7 @@ module.exports.updateChildBook = function(book,loggedInUser,schoolID,res) {
 }
 function parseChildBook(childBookDetails){
     var currentTimestamp=(new Date()).getTime();
-    childBookDetails.updatedDate=currentTimestamp;
+    childBookDetails.updatedAt=currentTimestamp;
     var pubhDt=new Date(childBookDetails.publicationDate);
 //    console.log("childBookDetails.publicationDate : ",new Date(childBookDetails.publicationDate), Date.UTC(pubhDt.getYear(),pubhDt.getMonth(),pubhDt.getDate()));
 //    console.log("Publish Dt : ", childBookDetails.publicationDate, Date.UTC(publishDt.getYear(),publishDt.getMonth(),publishDt.getDate(),publishDt.getHours(),publishDt.getMinutes(), publishDt.getSeconds()));

@@ -44,7 +44,7 @@ function ChildBook(){
     this.createdBy="";
     this.createdAt="";
     this.updatedBy="";
-    this.UpdatedAt="";
+    this.updatedAt="";
     this._id="";
 }
 
