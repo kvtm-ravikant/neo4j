@@ -806,6 +806,14 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         $('#modalIssueBook').modal('hide');
     }
     
+    /* 
+     * Clear search text from user search of ISSUE/RETURN Book.
+     */
+    $scope.clearIssueSearch=function(){
+    	$scope.issueBookObj.userSearchText="";
+    	$scope.searchedUserData=null;
+    }
+    
     $scope.submitBook=function(){
     	console.log("submitBook : ",$scope.modalCode);
     	if($scope.modalCode=='issue'){
@@ -818,7 +826,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	}
     	
     }
-    
+    /*
+     * Search user for ISSUE/RETURN Book
+     */
     $scope.searchUser=function(){
         if($scope.issueBookObj.userSearchText){
 
@@ -838,12 +848,15 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 
     }
     $scope.selectUserToIssueBook=function(user){
-        $scope.selectedUser=user;
+//    	console.log("selectUserToIssueBook", $scope.issueBookObj.issueThisBook);
+    	$scope.selectedUser=user;
         $scope.searchedUserData=null;
     }
     //issue book form submission
     var issueLibBook=function(){
-        console.log("issueLibBook", $scope.selectedUser,$scope.issueBookObj.issueThisBook.parentBook);
+//        console.log("issueLibBook", $scope.selectedUser,$scope.issueBookObj.issueThisBook.parentBook);
+        var bookISBN=$scope.issueBookObj.issueThisBook.parentBook.isbn;
+        var bookID=$scope.issueBookObj.issueThisBook.childBook.bookId;
         if($scope.selectedUser && $scope.issueBookObj.issueThisBook.childBook){
             $http({
                 method : 'POST',
@@ -853,10 +866,11 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
             }).success(function(dataResponse,status,headers,config){
                 //success
                 appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-                    console.log("issueLibBook dataResponse",dataResponse)
+//                    console.log("issueLibBook dataResponse",dataResponse);
                     $scope.issueBookObj.issueThisBook.childBook.bookStatus="Unavailable";
                     $scope.issueBookObj.issueThisBook=null;
                     $('#modalIssueBook').modal("hide");
+                    appUtils.showSuccess("Book Copy "+bookID+" of ISBN "+bookISBN+" issued successfully.");
                 });
             }).error(function(data,status,headers,config){
                 //error
@@ -877,7 +891,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         $scope.issueThisBook=null;
         $http.get('/manageLibrary/getBookIssuedDetails/'+book._id).success(function(dataResponse,status,headers,config){
             //success
-            console.log("dataResponse /manageLibrary/getBookIssuedDetails/",dataResponse);
+//            console.log("dataResponse /manageLibrary/getBookIssuedDetails/",dataResponse);
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
 //            	console.log("dataResponse.responseData.data[0][1] :", dataResponse.responseData.data[0][1].issueThisBook);
             	var data = JSON.parse(dataResponse.responseData.data[0][1].issueThisBook);        	
@@ -900,7 +914,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     }
 
     var returnLibBook=function(){
-        console.log("returnLibBook", $scope.returnIsuedDetails, "$scope.issueBookObj.issueThisBook.childBook ",$scope.issueBookObj.issueThisBook.childBook);
+//        console.log("returnLibBook", $scope.returnIsuedDetails, "$scope.issueBookObj.issueThisBook.childBook ",$scope.issueBookObj.issueThisBook.childBook);
+        var bookISBN=$scope.issueBookObj.issueThisBook.parentBook.isbn;
+        var bookID=$scope.issueBookObj.issueThisBook.childBook.bookId;
         if($scope.issueBookObj.issueThisBook.childBook && $scope.returnIsuedDetails.submittedDate){
             $http({
                 method : 'POST',
@@ -910,11 +926,11 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
             }).success(function(dataResponse,status,headers,config){
                 //success
                 appUtils.defaultParseResponse(dataResponse,function(dataResponse){
-                    console.log("returnLibBook dataResponse",dataResponse)
+//                    console.log("returnLibBook dataResponse",dataResponse);
                     $scope.issueBookObj.issueThisBook.childBook.bookStatus="Available";
                     $scope.issueBookObj.issueThisBook=null;
                     $('#modalIssueBook').modal("hide");
-
+                    appUtils.showSuccess("Book Copy "+bookID+" of ISBN "+bookISBN+" returned successfully.");
                 });
             }).error(function(data,status,headers,config){
                 //error
