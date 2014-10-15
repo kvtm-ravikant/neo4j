@@ -120,4 +120,28 @@ module.exports=function(app,Utils){
         }
 
     });
+    /* Search the User from textBox*/
+    app.post("/manage-users/matchExistingPassword/",Utils.ensureAuthenticated,function(req,res){
+        var requestObj=req.body;
+        var loggedInUser=req.session.userDetails;
+        var user=req.body.user;
+        var checkData=req.body.data.passwordData;
+        
+//        console.log("requestobj - ",requestObj," user: ",user," checkData : ",checkData);
+
+        userMS.matchPasswordData(user,checkData,req,res);
+        
+    });
+    /* Search the User from textBox*/
+    app.post("/manage-users/saveUserSettings/",Utils.ensureAuthenticated,function(req,res){
+        var requestObj=req.body;
+        var loggedInUser=req.session.userDetails;
+        var settingsData=req.body.data.passwordData;
+        var user=req.body.user;
+//        console.log("requestobj - ",requestObj," user: ",user," checkData : ",checkData);
+
+        userMS.saveUserSettings(user,settingsData,loggedInUser,req,res);
+        
+    });
+    
 }

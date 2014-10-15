@@ -1,0 +1,69 @@
+<div class="row" ng-controller="userProfileChanges">
+	<div class="col-md-12">
+		<div class="main-content">
+			<div class="tab-content profile-page">
+				<!-- SETTINGS TAB CONTENT -->
+				<div class="tab-pane settings active" id="settings-tab">
+					<form class="form-horizontal" role="form">
+						<fieldset>
+							<h3>
+								<i class="fa fa-cogs"></i> Change Password
+							</h3>
+							<hr />
+							<div class="form-group">
+								<label for="old-password" class="col-sm-3 control-label">Old
+									Password</label>
+								<div class="col-sm-4">
+									<input type="password" id="old-password" name="old-password" ng-model="settingsData.passwordData.oldPassword"
+									ng-blur="checkExistingPassowrd()" required="required"
+										class="form-control">
+								</div>
+								<div>
+										<span ng-if="isPasswordMatched == 0" style="color: red; font-weight: bolder;">Password
+										is incorrect !</span>
+<!-- 										 <span ng-if="isPasswordMatched==1" style="color:green;font-weight: bolder;">Please choose new password !</span> -->
+									 </div>
+							</div>
+							<hr />
+							<div class="form-group">
+								<label for="password" class="col-sm-3 control-label">New
+									Password</label>
+								<div class="col-sm-4">
+									<input type="password" id="password" name="password"  ng-model="settingsData.passwordData.newPassword"
+										ng-blur="verifyNewPassword()" ng-if="isPasswordMatched==1"
+										class="form-control">
+								</div>
+								<div>
+										<span ng-if="isNewPasswordEntered==1" style="color: green; font-weight: bolder;">Please enter new password.</span>
+										 <span ng-if="isNewPasswordEntered==0" style="color:red;font-weight: bolder;">Password cannot be blank !</span>
+									 </div>
+							</div>
+							<div class="form-group">
+								<label for="password2" class="col-sm-3 control-label">Repeat
+									Password</label>
+								<div class="col-sm-4">
+									<input type="password" id="password2" name="password2" ng-model="settingsData.passwordData.rePassword"
+									 ng-blur="reVerifyNewPassword()" ng-if="isPasswordMatched==1" class="form-control">
+								</div>
+								<div>
+										<span ng-if="rePasswordEntered==1" style="color: green; font-weight: bolder;">Please re-enter your password.</span>
+										 <span ng-if="rePasswordEntered==0" style="color:red;font-weight: bolder;">Password cannot be blank !</span>
+									 </div>
+							</div>
+						</fieldset>
+					</form>
+					<br>
+					<p class="text-center">
+						<button class="btn btn-primary text-center" ng-click="saveSettings()" >
+							<i class="fa fa-floppy-o"> Save Changes</i>
+						</button>
+					</p>
+				</div>
+				<!-- END SETTINGS TAB CONTENT -->
+			</div>
+		</div>
+		<!-- /main-content -->
+	</div>
+	<!-- /main -->
+</div>
+<!--/col-9-->

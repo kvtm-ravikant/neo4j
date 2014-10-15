@@ -608,7 +608,8 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
            selectedBookPOJO.children[0]=$scope.childBook;
        }
      
-//       console.log("selectedBookPOJO : ", selectedBookPOJO, appUtils.dateUtility.convertDate('timestampToddmmyyyy','/',new Date()), new Date(), $scope.childBook.publicationDate);
+//      console.log("timstamp change ",appUtils.dateUtility.convertDate("ddmmyyyy","/",$scope.childBook.publicationDate));
+//       console.log("selectedBookPOJO : ", selectedBookPOJO, $scope.childBook.publicationDate , new Date($scope.childBook.publicationDate), $scope.childBook.publicationDate);
        
    }
    

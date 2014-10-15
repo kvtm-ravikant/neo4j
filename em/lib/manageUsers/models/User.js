@@ -475,4 +475,60 @@ function batchInsertUser(jsonData,schoolId){
     }
 
 }
-module.exports.batchInsertUser=batchInsertUser;;
+module.exports.batchInsertUser=batchInsertUser;
+
+/* Match given user for the requested user*/
+module.exports.matchPasswordData = function(user,checkData,req,res) {
+	
+	var responseObj = new Utils.Response();
+	var query = 'MATCH (n:User{userName:"' + user.userName + '",hashPassword:"' +checkData.oldPassword + '"})  RETURN n';
+
+	console.log("matchPasswordDatar query :", query);
+	db.cypherQuery(query, function(err, reply) {
+		console.log("matchPasswordDatar :", query, err, reply);
+		if (!err) {
+			responseObj.responseData = reply.data.length;
+			res.json(responseObj);
+		} else {
+			responseObj.error = true;
+			responseObj.errorMsg = "Password is wrong.";
+			res.json(responseObj);
+		}
+	});
+}
+
+/* Save User Settings */
+module.exports.saveUserSettings = function(user,settingsData,loggedInUser,req,res) {
+  try{
+	        var responseObj = new Utils.Response();
+	        var currentTimestamp=(new Date()).getTime();
+            var updateBy=loggedInUser.basicDetails.userName;
+	        var defaultErrorMsg="Failed to update Password. Please contact administrator.";
+
+	        var findUserQuery = 'MATCH (n:User{userName:"' + user.userName + '"})  RETURN n';
+	        var updatePasswordQuery='MATCH (n:User{userName:"' + user.userName + '"}) set n.hashPassword="' + settingsData.newPassword + '" set n.updatedBy="' + updateBy + '" set n.updatedAt="' + currentTimestamp + '"return n';
+	        
+	        db.cypherQuery(findUserQuery, function(err, result) {
+	            console.log("findUserQuery",err, result)
+	            if(err || !result || (result && result.data && result.data.length==1)){
+                 
+	            	db.cypherQuery(updatePasswordQuery, function(err, reply) {
+                        console.log("updatePasswordQuery err, reply",err, reply)
+                    	if (!err) {
+                			responseObj.responseData = reply;
+                			res.json(responseObj);
+                		} else {
+                			responseObj.error = true;
+                			responseObj.errorMsg = "No Data found.";
+                			res.json(responseObj);
+                		}	
+                    });
+	            }else{
+	                Utils.defaultErrorResponse(res,defaultErrorMsg);
+	            }
+	        });//findUserQuery end
+	    }catch(e){
+	        console.log("Update password",e);
+	        Utils.defaultErrorResponse(res,defaultErrorMsg);
+	    }
+}

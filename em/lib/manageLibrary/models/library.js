@@ -50,9 +50,9 @@ function getAllBooks(res,schoolID,user){
 //	 var queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" RETURN pb,c  LIMIT 20';
 	var queryAllBooks;
     if(user.userType=='1'){
-        queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and c.softDelete=false and pb.createdBy="'+user.userName+'" RETURN pb,c  order by pb.category LIMIT 50';
+        queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and c.softDelete=false and pb.createdBy="'+user.userName+'" RETURN pb,c  order by pb.category, , pb.bookTitle LIMIT 50';
     }else{
-        queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and c.softDelete=false  RETURN pb,c  order by pb.category LIMIT 50';
+        queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and c.softDelete=false  RETURN pb,c  order by pb.category, pb.bookTitle LIMIT 50';
     }
     var responseObj=new Utils.Response();
     db.cypherQuery(queryAllBooks,function(err,reply){
@@ -477,6 +477,7 @@ module.exports.updateChildBook = function(book,loggedInUser,schoolID,res) {
 	            if(err || !result || (result && result.data && result.data.length==1)){
                     var currentTimestamp=(new Date()).getTime();
                     childBook=parseChildBook(childBook);
+                    childBook.updatedBy=loggedInUser.basicDetails.userName;
                     
                     db.updateNode(childBook._id, childBook, function(err, node){
                         if(err) throw err;
@@ -496,7 +497,8 @@ module.exports.updateChildBook = function(book,loggedInUser,schoolID,res) {
 function parseChildBook(childBookDetails){
     var currentTimestamp=(new Date()).getTime();
     childBookDetails.updatedDate=currentTimestamp;
-//    var publishDt=Date.parse(childBookDetails.publicationDate);
+    var pubhDt=new Date(childBookDetails.publicationDate);
+//    console.log("childBookDetails.publicationDate : ",new Date(childBookDetails.publicationDate), Date.UTC(pubhDt.getYear(),pubhDt.getMonth(),pubhDt.getDate()));
 //    console.log("Publish Dt : ", childBookDetails.publicationDate, Date.UTC(publishDt.getYear(),publishDt.getMonth(),publishDt.getDate(),publishDt.getHours(),publishDt.getMinutes(), publishDt.getSeconds()));
     
     var publishDt=Date.parse(childBookDetails.publicationDate);
