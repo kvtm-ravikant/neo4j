@@ -264,6 +264,7 @@ module.exports.updateUser = function(userObj,loggedInUser,res) {
 	            if(err || !result || (result && result.data && result.data.length==1)){
                     var currentTimestamp=(new Date()).getTime();
                     userObj.basicDetails.updatedAt=currentTimestamp;
+                    userObj.basicDetails.updatedBy=loggedInUser.basicDetails.userName;
                     db.updateNode(userObj.basicDetails._id, userObj.basicDetails, function(err, node){
                         if(err) throw err;
                         node === true?console.log("basic details updated"):console.log("Failed to update basic details");
@@ -315,6 +316,7 @@ module.exports.deleteUser = function(userObj,loggedInUser,res) {
 	            if(!err && result && result.data && result.data.length==1){
                     var currentTimestamp=(new Date()).getTime();
                     userObj.basicDetails.updatedAt=currentTimestamp;
+                    userObj.basicDetails.updatedBy=loggedInUser.basicDetails.userName;
 
                     db.cypherQuery(deleteQuery, function(err, reply) {
                         console.log("deleteQuery err, reply",err, reply)

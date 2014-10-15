@@ -94,6 +94,7 @@ educationMediaApp.controller('userProfileChanges', function ($scope, $http,iconC
                 //success
                 appUtils.defaultParseResponse(dataResponse,function(dataResponse){
                 	  console.log("checkExistingPassowrd: dataResponse : ",dataResponse);
+                	  
                 	  appUtils.showSuccess("Password for "+$scope.loggedInUser.userName+" updated successfully. Please re-login to continue.");
                 	  $scope.isPasswordMatched=-1;
                 	  $scope.isNewPasswordEntered=-1;
@@ -105,6 +106,7 @@ educationMediaApp.controller('userProfileChanges', function ($scope, $http,iconC
                 	                "newPassword":"",
                 	                "rePassword":""
                 	              }}
+                	  
                 });
             }).error(function(data,status,headers,config){
                 //error
