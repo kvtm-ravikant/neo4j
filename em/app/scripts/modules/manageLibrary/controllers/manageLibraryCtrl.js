@@ -99,9 +99,9 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
             }
         );
 
-    /*
-     * Dropdown JSON data of bibDocTypeMaterial
-     */ 
+/*****************************************************************
+* Dropdown JSON data of bibDocTypeMaterial                       *
+/****************************************************************/ 
     libraryService.getParentBookDD().then(
             function(dataResponse){
                 appUtils.defaultParseResponse(dataResponse,function(dataResponse){
@@ -110,7 +110,18 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
                 })
             }
         );
-
+/*****************************************************************
+* Dropdown JSON data of CurrencyType                             *
+/****************************************************************/ 
+    libraryService.getCurrencyType().then(
+            function(dataResponse){
+                appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+                	  $scope.currencyType=dataResponse;
+                       console.log("$scope.getCurrencyType : ",dataResponse);
+                })
+            }
+        );
+    
     //toggle key of a map
     $scope.toggleMapKeyValue=function(map,key){
         map[key]=!map[key];

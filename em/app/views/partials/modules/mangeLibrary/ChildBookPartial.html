@@ -1,7 +1,8 @@
 <div id="addChildToLib">
 	<div class="accordion__tab">
 		<div class="accordion__tab-title" ng-click="openTab('one')">
-			Main Details <i class="cursor-pointer fa pull-right accordion_open_close"
+			Main Details <i
+				class="cursor-pointer fa pull-right accordion_open_close"
 				ng-class="!isOpenTab('one')?'fa-chevron-down':'fa-chevron-up'"
 				role="button" ng-click="isOpenTab('one')"></i>
 		</div>
@@ -158,35 +159,41 @@
 		<!-- .accordion__tab -->
 		<div class="accordion__tab">
 			<div class="accordion__tab-title" ng-click="openTab('two')">
-				Other Details <i class="cursor-pointer fa pull-right accordion_open_close"
+				Other Details <i
+					class="cursor-pointer fa pull-right accordion_open_close"
 					ng-class="!isOpenTab('two')?'fa-chevron-down':'fa-chevron-up'"
 					role="button" ng-click="isOpenTab('two')"></i>
 			</div>
 			<div class="accordion__tab-content" ng-show="isOpenTab('two')">
 				<div class="row ">
 					<div>
-						<label class="col-sm-2 control-label" for="currency">Currency
-							Type</label>
+						<label class="col-sm-2 control-label" for="currencyType">Currency
+							Type </label>
 						<div class="col-sm-4">
-							<input type="text" id="currency"
-								ng-model="childBook.currencyType"
-								placeholder="Please enter Currency Type" class="form-control">
+							<select id="currencyType" name="validation-select"
+								class="btn btn-media dropdown-toggle form-control"
+								data-ng-model="childBook.currencyType">
+								<option value="">Select Currency Type</option>
+								<option ng-repeat="(key, value) in currencyType" value="{{key}}">{{value.___name___}}</option>
+							</select>
 						</div>
 					</div>
 					<div>
 						<label class="col-sm-2 control-label" for="publicationDate">Publication
 							Date</label>
 						<div class="col-md-2 classselector">
-							<quick-datepicker name="publicationDate" ng-model='childBook.publicationDate'
-							 placeholder="Publication Date" disable-timepicker='true' date-format='dd/MM/yyyy' class="fa fa-calendar"></quick-datepicker>
-<!-- 							<div class="input-group"> -->
-<!-- 								<input type="text" id="publicationDate" name="publicationDate" -->
-<!-- 									ng-model="childBook.publicationDate" -->
-<!-- 									class="em-datepicker datepicker" placeholder="Publication Date"> -->
-<!-- 								<span class="input-group-addon cursor-pointer" -->
-<!-- 									ng-click="openPublicationDate()"><i -->
-<!-- 									class="fa fa-calendar"></i></span> -->
-<!-- 							</div> -->
+							<quick-datepicker name="publicationDate"
+								ng-model='childBook.publicationDate'
+								placeholder="Publication Date" disable-timepicker='true'
+								date-format='dd/MM/yyyy' class="fa fa-calendar"></quick-datepicker>
+							<!-- 							<div class="input-group"> -->
+							<!-- 								<input type="text" id="publicationDate" name="publicationDate" -->
+							<!-- 									ng-model="childBook.publicationDate" -->
+							<!-- 									class="em-datepicker datepicker" placeholder="Publication Date"> -->
+							<!-- 								<span class="input-group-addon cursor-pointer" -->
+							<!-- 									ng-click="openPublicationDate()"><i -->
+							<!-- 									class="fa fa-calendar"></i></span> -->
+							<!-- 							</div> -->
 						</div>
 					</div>
 				</div>
@@ -205,15 +212,17 @@
 						<label class="col-sm-2 control-label" for="purchaseDate">Purchase
 							Date</label>
 						<div class="col-md-2 classselector">
-							<quick-datepicker name="purchaseDate" ng-model='childBook.purchaseDate'
-							 placeholder="Purchase Date" disable-timepicker='true' date-format='dd/MM/yyyy' class="fa fa-calendar"></quick-datepicker>
-<!-- 							<div class="input-group"> -->
-<!-- 								<input type="text" id="purchaseDate" name="purchaseDate" -->
-<!-- 									ng-model="childBook.purchaseDate" -->
-<!-- 									class="em-datepicker datepicker" placeholder="Purchase Date"> -->
-<!-- 								<span class="input-group-addon cursor-pointer" -->
-<!-- 									ng-click="openPurchaseDate()"><i class="fa fa-calendar"></i></span> -->
-<!-- 							</div> -->
+							<quick-datepicker name="purchaseDate"
+								ng-model='childBook.purchaseDate' placeholder="Purchase Date"
+								disable-timepicker='true' date-format='dd/MM/yyyy'
+								class="fa fa-calendar"></quick-datepicker>
+							<!-- 							<div class="input-group"> -->
+							<!-- 								<input type="text" id="purchaseDate" name="purchaseDate" -->
+							<!-- 									ng-model="childBook.purchaseDate" -->
+							<!-- 									class="em-datepicker datepicker" placeholder="Purchase Date"> -->
+							<!-- 								<span class="input-group-addon cursor-pointer" -->
+							<!-- 									ng-click="openPurchaseDate()"><i class="fa fa-calendar"></i></span> -->
+							<!-- 							</div> -->
 						</div>
 					</div>
 				</div>
@@ -232,14 +241,16 @@
 						<label class="col-sm-2 control-label" for="creDate">Creation
 							Date</label>
 						<div class="col-md-2 classselector">
-							<quick-datepicker name="creDate" ng-model='childBook.createdDate' date-format='dd/MM/yyyy' placeholder="Creation Date" disable-timepicker='true' class="fa fa-calendar"></quick-datepicker>
-<!-- 							<div class="input-group"> -->
-<!-- 								<input type="text" id="creDate" name="creDate" -->
-<!-- 									ng-model="childBook.createdDate" -->
-<!-- 									class="em-datepicker datepicker" placeholder="Creation Date"> -->
-<!-- 								<span class="input-group-addon cursor-pointer" -->
-<!-- 									ng-click="openCreDate()"><i class="fa fa-calendar"></i></span> -->
-<!-- 							</div> -->
+							<quick-datepicker name="creDate" ng-model='childBook.createdDate'
+								date-format='dd/MM/yyyy' placeholder="Creation Date"
+								disable-timepicker='true' class="fa fa-calendar"></quick-datepicker>
+							<!-- 							<div class="input-group"> -->
+							<!-- 								<input type="text" id="creDate" name="creDate" -->
+							<!-- 									ng-model="childBook.createdDate" -->
+							<!-- 									class="em-datepicker datepicker" placeholder="Creation Date"> -->
+							<!-- 								<span class="input-group-addon cursor-pointer" -->
+							<!-- 									ng-click="openCreDate()"><i class="fa fa-calendar"></i></span> -->
+							<!-- 							</div> -->
 						</div>
 					</div>
 				</div>
@@ -256,16 +267,18 @@
 					<div>
 						<label class="col-sm-2 control-label" for="updDate">Update
 							Date</label>
-							
+
 						<div class="col-md-2 classselector">
-						 <quick-datepicker name='updDate' ng-model='childBook.updatedDate' date-format='dd/MM/yyyy' placeholder="Update Date" disable-timepicker='true' class="fa fa-calendar"></quick-datepicker>
-<!-- 							<div class="input-group"> -->
-<!-- 								<input type="text" id="updDate" name="updDate" -->
-<!-- 									class="em-datepicker datepicker" placeholder="Update Date" -->
-<!-- 									ng-model="childBook.updatedDate"> <span -->
-<!-- 									class="input-group-addon cursor-pointer" -->
-<!-- 									ng-click="openUpdDate()"><i class="fa fa-calendar"></i></span> -->
-<!-- 							</div> -->
+							<quick-datepicker name='updDate' ng-model='childBook.updatedDate'
+								date-format='dd/MM/yyyy' placeholder="Update Date"
+								disable-timepicker='true' class="fa fa-calendar"></quick-datepicker>
+							<!-- 							<div class="input-group"> -->
+							<!-- 								<input type="text" id="updDate" name="updDate" -->
+							<!-- 									class="em-datepicker datepicker" placeholder="Update Date" -->
+							<!-- 									ng-model="childBook.updatedDate"> <span -->
+							<!-- 									class="input-group-addon cursor-pointer" -->
+							<!-- 									ng-click="openUpdDate()"><i class="fa fa-calendar"></i></span> -->
+							<!-- 							</div> -->
 						</div>
 					</div>
 				</div>
