@@ -186,13 +186,22 @@
 								<div class="form-group">
 									<label for="dob" class="col-sm-3 control-label">Date of
 										Birth </label>
-									<div class="col-sm-6">
-										<quick-datepicker name="userDOB"
-											ng-model="userSelectedClass.basicDetails.DOB" 
-											placeholder="Date of Birth" disable-timepicker='true'
-											date-format='dd/MM/yyyy' class="fa fa-calendar" ng-disabled="modalCode=='view'||modalCode=='delete'"></quick-datepicker>
+									<div class="col-sm-1">
+<!-- 										<quick-datepicker name="userDOB" -->
+<!-- 											ng-model="userSelectedClass.basicDetails.DOB"  -->
+<!-- 											placeholder="Date of Birth" disable-timepicker='true' -->
+<!-- 											date-format='dd/MM/yyyy' class="fa fa-calendar" ng-disabled="modalCode=='view'||modalCode=='delete'"></quick-datepicker> -->
 											
 
+																				<div class="input-group">
+																					<input type="text" id="userDOB" name="userDOB"
+																						ng-disabled="modalCode=='view'||modalCode=='delete'"
+																						ng-model="userSelectedClass.basicDetails.DOB"
+																						ui-date ui-date-format="DD, d MM, yy"
+																						placeholder="Date of Birth"> <span
+																						class="input-group-addon cursor-pointer"
+																						ng-click="openUserDOB()"><i class="fa fa-calendar"></i></span>
+																				</div>
 										<!-- 										<div class="input-group"> -->
 										<!-- 											<input type="text" id="userDOB" name="userDOB" -->
 										<!-- 												ng-disabled="modalCode=='view'||modalCode=='delete'" -->

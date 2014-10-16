@@ -908,7 +908,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
         $scope.issueThisBook=null;
         $http.get('/manageLibrary/getBookIssuedDetails/'+book._id).success(function(dataResponse,status,headers,config){
             //success
-//            console.log("dataResponse /manageLibrary/getBookIssuedDetails/",dataResponse);
+            console.log("dataResponse /manageLibrary/getBookIssuedDetails/",dataResponse);
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
 //            	console.log("dataResponse.responseData.data[0][1] :", dataResponse.responseData.data[0][1].issueThisBook);
             	var data = JSON.parse(dataResponse.responseData.data[0][1].issueThisBook);        	
