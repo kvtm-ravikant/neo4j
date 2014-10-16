@@ -247,6 +247,8 @@ function fillUserDefaultValues(userBasicDetails){
     userBasicDetails.createdAt=currentTimestamp;
     userBasicDetails.hashPassword="password";
     userBasicDetails.softDelete=false;
+    var dob=Date.parse(userBasicDetails.DOB);
+    (dob && !isNaN(dob))?userBasicDetails.DOB=dob:"";
     return userBasicDetails;
 }
 
@@ -265,6 +267,10 @@ module.exports.updateUser = function(userObj,loggedInUser,res) {
                     var currentTimestamp=(new Date()).getTime();
                     userObj.basicDetails.updatedAt=currentTimestamp;
                     userObj.basicDetails.updatedBy=loggedInUser.basicDetails.userName;
+                    
+                    var dob=Date.parse( userObj.basicDetails.DOB);
+                    (dob && !isNaN(dob))? userObj.basicDetails.DOB=dob:"";
+                    
                     db.updateNode(userObj.basicDetails._id, userObj.basicDetails, function(err, node){
                         if(err) throw err;
                         node === true?console.log("basic details updated"):console.log("Failed to update basic details");
