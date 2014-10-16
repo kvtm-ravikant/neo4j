@@ -777,6 +777,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	
     	$scope.issueBookObj={
         issueDate:(new Date()).getTime(),
+//    			issueDate:(new Date()).getTime()-($scope.libConstants.issueDuration*24*60*60*1000*5),
         dueDate:dueDate,
         submittedDate:"",
         fineAmount:"",
