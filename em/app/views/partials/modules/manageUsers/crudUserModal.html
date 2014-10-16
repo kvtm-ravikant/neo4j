@@ -823,7 +823,7 @@ ng-model="userSelectedClass.basicDetails.DOB">
 				<div class="col-md-2"
 					ng-if="modalCode=='update' || modalCode=='add'||modalCode=='updProfile'">
 					<img ng-if="userSelectedClass.basicDetails.profileImagePath"
-						class="profile-image"
+						class="profile-image cursor-pointer"
 						src="{{userSelectedClass.basicDetails.profileImagePath}}"
 						width="100%" ng-click="openFileBrowser()"> <img
 						ng-if="!userSelectedClass.basicDetails.profileImagePath"
@@ -833,6 +833,9 @@ ng-model="userSelectedClass.basicDetails.DOB">
 						id="imageUploader" accept="image/*" image="image2"
 						onchange="angular.element(this).scope().readURL(this)"
 						resize-max-width="150" resize-quality="0.7" />
+						<h2 ng-if="modalCode=='update' || modalCode=='add'||modalCode=='updProfile'">
+					<i>Choose profile pic</i>
+					</h2>
 					<h4 align="right">
 						<i>{{userSelectedClass.basicDetails.userName}}</i>
 					</h4>
