@@ -120,7 +120,7 @@ module.exports=function(app,Utils){
         }
 
     });
-    /* Search the User from textBox*/
+    /* Match user's existing password for setting changes*/
     app.post("/manage-users/matchExistingPassword/",Utils.ensureAuthenticated,function(req,res){
         var requestObj=req.body;
         var loggedInUser=req.session.userDetails;
@@ -132,13 +132,28 @@ module.exports=function(app,Utils){
         userMS.matchPasswordData(user,checkData,req,res);
         
     });
-    /* Search the User from textBox*/
+    /* Save settings */
     app.post("/manage-users/saveUserSettings/",Utils.ensureAuthenticated,function(req,res){
         var requestObj=req.body;
         var loggedInUser=req.session.userDetails;
         var settingsData=req.body.data.passwordData;
         var user=req.body.user;
 //        console.log("requestobj - ",requestObj," user: ",user," checkData : ",checkData);
+
+        userMS.saveUserSettings(user,settingsData,loggedInUser,req,res);
+        
+    });
+    
+    /* Save settings */
+    app.post("/manage-users/resetPassword/",Utils.ensureAuthenticated,function(req,res){
+        var requestObj=req.body;
+        var loggedInUser=req.session.userDetails;
+         var settingsData={
+                    "newPassword":""
+                }
+        settingsData.newPassword=req.body.regID;
+        var user=req.body;
+        console.log("requestobj - ",requestObj," user:");
 
         userMS.saveUserSettings(user,settingsData,loggedInUser,req,res);
         

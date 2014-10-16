@@ -75,7 +75,10 @@
 										ng-click="getUserDetails(user,'update')"></i></a> &nbsp;|&nbsp;<!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
 									<a href="#" data-toggle="tooltip" title="Click to delete User"><i
 										class="fa fa-times-circle" role="button" data-toggle="modal"
-										ng-click="getUserDetails(user,'delete')"></i></a> <!-- <i class="fa fa-picture-o cursor-pointer"></i>  --></td>
+										ng-click="getUserDetails(user,'delete')"></i></a>  &nbsp;|&nbsp;<!-- <i class="fa fa-picture-o cursor-pointer"></i>  -->
+										<a href="#" data-toggle="tooltip" title="Click to reset password"><i
+										class="fa  fa-cogs" role="button" data-toggle="modal" ng-click="openResetPasswdModal(user)"
+										></i></a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -83,6 +86,7 @@
 			</div>
 		</div>
 		<div ng-include="'partials/modules/manageUsers/crudUserModal.html'"></div>
+		<div ng-include="'partials/modules/manageUsers/resetPasswordModal.html'"></div>
 
 		<div class="modal well" tabindex="-1" role="dialog" id="retryModel">
 			<div class="modal-header">
