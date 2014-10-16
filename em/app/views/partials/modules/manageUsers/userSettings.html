@@ -30,7 +30,7 @@
 									Password</label>
 								<div class="col-sm-4">
 									<input type="password" id="password" name="password"  ng-model="settingsData.passwordData.newPassword"
-										ng-blur="verifyNewPassword()" ng-if="isPasswordMatched==1"
+										ng-blur="verifyNewPassword()"
 										class="form-control">
 								</div>
 								<div>
@@ -45,7 +45,7 @@
 									Password</label>
 								<div class="col-sm-4">
 									<input type="password" id="password2" name="password2" ng-model="settingsData.passwordData.rePassword"
-									 ng-blur="reVerifyNewPassword()" ng-if="rePasswordEntered==1" class="form-control">
+									 ng-blur="reVerifyNewPassword()" class="form-control">
 								</div>
 								<div>
 										<span ng-if="rePasswordEntered==1" style="color: green; font-weight: bolder;">Re-enter your password again.</span>
