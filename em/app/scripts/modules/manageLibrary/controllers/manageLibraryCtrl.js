@@ -287,6 +287,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
   	
    }
     
+   $scope.isISBNExist=false;
    $scope.addChildTab=function(){
 //   	console.log("addChildTab ",$scope.parentBook, " ",($scope.parentBook._id==null)," ",($scope.parentBook._id==""));
    	
