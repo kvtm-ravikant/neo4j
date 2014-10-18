@@ -14,7 +14,7 @@
 						style="color: red">&nbsp;*</span>
 					</label>
 					<div class="col-sm-4">
-						<input type="text" id="bookId" name="bookId" disabled="disabled"
+						<input type="text" id="bookId" name="bookId"
 							placeholder="Please Enter Book Id" class="form-control"
 							ng-model="childBook.bookId">
 					</div>
@@ -40,7 +40,7 @@
 						Code<span style="color: red">&nbsp;*</span>
 					</label>
 					<div class="col-sm-4">
-						<input type="text" id="barCode" name="barCode" disabled="disabled"
+						<input type="text" id="barCode" name="barCode" 
 							placeholder="Please Enter Bar Code " class="form-control"
 							ng-model="childBook.barCode">
 					</div>
@@ -181,7 +181,7 @@
 					<div>
 						<label class="col-sm-2 control-label" for="publicationDate">Publication
 							Date</label>
-						<div class="col-md-1 classselector">
+						<div class="col-md-2 classselector">
 <!-- 							<quick-datepicker name="publicationDate" -->
 <!-- 								ng-model='childBook.publicationDate' -->
 <!-- 								placeholder="Publication Date" disable-timepicker='true' -->
@@ -189,7 +189,7 @@
 								
 														<div class="input-group">
 															<input type="text" id="publicationDate" name="publicationDate" ui-date ui-date-format="DD, d MM, yy"
-																ng-model="childBook.publicationDate"
+																ng-model="childBook.publicationDate" class="form-control em-datepicker"
 																 placeholder="Publication Date">
 															<span class="input-group-addon cursor-pointer"
 																ng-click="openPublicationDate()"><i
@@ -220,7 +220,7 @@
 					<div>
 						<label class="col-sm-2 control-label" for="purchaseDate">Purchase
 							Date</label>
-						<div class="col-md-1 classselector">
+						<div class="col-md-2 classselector">
 <!-- 							<quick-datepicker name="purchaseDate" -->
 <!-- 								ng-model='childBook.purchaseDate' placeholder="Purchase Date" -->
 <!-- 								disable-timepicker='true' date-format='dd/MM/yyyy' -->
@@ -228,7 +228,7 @@
 
 							<div class="input-group">
 															<input type="text" id="purchaseDate" name="purchaseDate"
-																ng-model="childBook.purchaseDate"
+																ng-model="childBook.purchaseDate" class="form-control em-datepicker"
 																ui-date ui-date-format="DD, d MM, yy" placeholder="Purchase Date">
 															<span class="input-group-addon cursor-pointer"
 																ng-click="openPurchaseDate()"><i class="fa fa-calendar"></i></span>
@@ -257,14 +257,14 @@
 					<div>
 						<label class="col-sm-2 control-label" for="creDate">Creation
 							Date</label>
-						<div class="col-md-1 classselector">
+						<div class="col-md-2 classselector">
 <!-- 							<quick-datepicker name="creDate" ng-model='childBook.createdDate' -->
 <!-- 								date-format='dd/MM/yyyy' placeholder="Creation Date" -->
 <!-- 								disable-timepicker='true' class="fa fa-calendar"></quick-datepicker> -->
 								
 														<div class="input-group">
 															<input type="text" id="creDate" name="creDate"
-																ng-model="childBook.createdDate"
+																ng-model="childBook.createdDate" class="form-control em-datepicker"
 																ui-date ui-date-format="DD, d MM, yy" placeholder="Creation Date">
 															<span class="input-group-addon cursor-pointer"
 																ng-click="openCreDate()"><i class="fa fa-calendar"></i></span>
@@ -293,18 +293,19 @@
 						<label class="col-sm-2 control-label" for="updDate">Update
 							Date</label>
 
-						<div class="col-md-1 classselector">
+						<div class="col-md-2 classselector">
 <!-- 							<quick-datepicker name='updDate' ng-model='childBook.updatedDate' -->
 <!-- 								date-format='dd/MM/yyyy' placeholder="Update Date" -->
 <!-- 								disable-timepicker='true' class="fa fa-calendar"></quick-datepicker> -->
 								
 														<div class="input-group">
-															<input type="text" id="updDate" name="updDate"
+															<input type="text" id="updDate" name="updDate" class="form-control em-datepicker"
 																ui-date ui-date-format="DD, d MM, yy" placeholder="Update Date"
 																ng-model="childBook.updatedDate"> <span
 																class="input-group-addon cursor-pointer"
 																ng-click="openUpdDate()"><i class="fa fa-calendar"></i></span>
 														</div>
+														
 <!-- 														<div class="input-group"> -->
 <!-- 															<input type="text" id="updDate" name="updDate" -->
 <!-- 																class="em-datepicker datepicker" placeholder="Update Date" -->

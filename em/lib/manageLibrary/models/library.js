@@ -24,6 +24,7 @@ function prepareBooksListResponse(err,reply,res){
         var bookIndexMap={};
         for(var i= 0,len=reply.data.length;i<len;i++){
             var row=reply.data[i];// parent=row[0],child=row[1]
+//            console.log("Prepare book rows : "+row);
             if(bookIndexMap.hasOwnProperty(row[0].isbn)){
 
                 var index=bookIndexMap[row[0].isbn];
@@ -50,9 +51,9 @@ function getAllBooks(res,schoolID,user){
 //	 var queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" RETURN pb,c  LIMIT 20';
 	var queryAllBooks;
     if(user.userType=='1'){
-        queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and c.softDelete=false and pb.createdBy="'+user.userName+'" RETURN pb,c  order by pb.category, , pb.bookTitle LIMIT 50';
+        queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and c.softDelete=false and pb.createdBy="'+user.userName+'" RETURN pb,c, lib  order by pb.category, , pb.bookTitle LIMIT 50';
     }else{
-        queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and c.softDelete=false  RETURN pb,c  order by pb.category, pb.bookTitle LIMIT 50';
+        queryAllBooks='MATCH (c:ChildBook)-[:CHILDBOOK_OF]->(pb:ParentBook)-[:BELONGS_TO]->(lib:Library)-[:LIBRARY_OF]->(school:School) where school.schoolId="'+schoolID+'" and pb.softDelete=false and c.softDelete=false  RETURN pb,c, lib  order by pb.category, pb.bookTitle LIMIT 50';
     }
     var responseObj=new Utils.Response();
     db.cypherQuery(queryAllBooks,function(err,reply){
@@ -221,72 +222,133 @@ module.exports.addChildBook=addChildBook;
 function insertCompleteBook(requestObj,res,schoolID,libraryObj){
     try{
         var responseObj = new Utils.Response();
+        var responceArray=[];
         var defaultErrorMsg="Failed to add Book. Please contact administrator.";
         var parentBookNodeID="";
+        var childLen=requestObj.children.length;
         var findParentISBN = 'MATCH (pb{isbn:"'+requestObj.parentbook.isbn+'"})-[:BELONGS_TO]->(lib)-[:LIBRARY_OF]->(school{schoolId:"'+schoolID+'"}) RETURN pb,lib';
         console.log("insertCompleteBook");
-        //parent book addition
+        
+//        Check whether parent book is having _id property or not 
         if(libraryObj && requestObj.parentbook.hasOwnProperty('_id') && requestObj.parentbook._id!=null){
         	console.log("requestObj.parentbook.hasOwnProperty : ",requestObj.parentbook._id);
+        	
+//        check if parentBook's ISBN exists or not
             db.cypherQuery(findParentISBN, function(err, result) {
                 console.log("findParentISBN",err, result);
+//                if parentBook's ISBN doesn't exists, proceed to insert the parent book
                 if(!err || !result || (result && result.data && result.data.length==0)){
                     var parentBookDetails=fillParentBookValues(requestObj.parentbook);
-//                    addParentBook(libraryObj,parentBookDetails,res);
-                
-//                    Start new change 
+//                insert the parentBook
                     db.insertNode(parentBookDetails,["ParentBook"],function(err,addParentBookReply){
-                        console.log("addParentBookReply",err,addParentBookReply);
+                        console.log("addParentBookReply",err,addParentBookReply, addParentBookReply._id);
+//                        if no error while adding parent Book
                         if(!err){
                            parentBookNodeID=addParentBookReply._id;
-//                            db.insertRelationship(libraryObj._id,parentBookNodeID,"BELONGS_TO",{},function(err,resultRel){
-                            db.insertRelationship("1",parentBookNodeID,"BELONGS_TO",{},function(err,resultRel){
-                                console.log("associate parent book to library",err,resultRel);
-//                                if(!err){
-//                                    responseObj.responseData=parentBookNodeID;
-//                                    res.json(responseObj);
-//                                }else{
-//                                    Utils.defaultErrorResponse(res,defaultErrorMsg);
-//                                }
+                           console.log("parentBookNodeID : ",parentBookNodeID);
+//                            db.insertRelationship(parentBookNodeID,libraryObj._id,"BELONGS_TO",{},function(err,resultRel){
+                            db.insertRelationship(parentBookNodeID,21285, "BELONGS_TO",{},function(errParentLib,resultParentLibRel){
+                            	responceArray.push(addParentBookReply);
+                            	if(!errParentLib){
+                            		console.log("associate parent book to library",errParentLib,resultParentLibRel, "childLen : ",childLen, " requestObj ",requestObj);	
+//                            		responceArray.push(addParentBookReply);
+                            		
+                            		
+//                            		if(parentBookNodeID!="" && childLen>0 && childLen<2){   
+//                                    	console.log("if parentBookNodeID : ",parentBookNodeID,"childLen : ",childLen);
+//                                             var childBookObj=requestObj.children[requestObj.children.length-1];
+////                                             console.log("requestObj.children : ",requestObj.children, "childBookObj : ",childBookObj);
+//                                           
+//                                             if((childBookObj.hasOwnProperty('_id') && childBookObj._id!=null)){
+//                                            		console.log("requestObj for single childBook add : ",requestObj.children);
+//                                                 childBookObj=fillChildBookValues(childBookObj);
+//                                                 db.insertNode(childBookObj, ["ChildBook"], function(errChildAdd, addChildReply) {
+//                                                     console.log("create ChildBook node", err,addChildReply);
+//                                                     if (!errChildAdd && addChildReply && addChildReply.hasOwnProperty('_id')) {
+//                                                             var childBookNodID=addChildReply._id;
+//                                                             db.insertRelationship(childBookNodID,parentBookNodeID,"CHILDBOOK_OF",{},function(errParentChild,resultRel){
+//                                                                 console.log("associate childBook to ParentBook",err,resultRel);
+//                                                                 if(!errParentChild){
+//                                                                	 responceArray.push(addChildReply);
+////                                                                     responseObj.responseData=responceArray;
+////                                                                     res.json(responseObj);
+//                                                                 }else{
+//                                                                     Utils.defaultErrorResponse(res,"Failed to Add Book Copy for given ISBN");
+//                                                                 }
+//                                                             });
+//                                                     }else{
+//                                                         Utils.defaultErrorResponse(res,"Failed to add Book Copy");
+//                                                     }
+//                                                 });
+//                                             }else{
+//                                                 Utils.defaultErrorResponse(res,childBookObj.bookId+" is already added.");
+//                                             }
+//                                    }
+//                            		else 
+                            			if(parentBookNodeID!="" && childLen>0){ 
+                            			console.log("inside adding multiple book copy");
+                            			//for loop start
+                            			for(var i=0;i<childLen;i++){
+                                             var childBookObj=requestObj.children[i];
+                                           console.log("childBook multiple ADD : childBookObj :",childBookObj);
+                                             if((childBookObj.hasOwnProperty('_id') && childBookObj._id!=null)){
+                                                 childBookObj=fillChildBookValues(childBookObj);
+                                                 db.insertNode(childBookObj, ["ChildBook"], function(errChildAdd, addChildReply) {
+                                                	 responceArray.push(addChildReply);
+                                                     console.log("create ChildBook node", err,addChildReply);
+                                                     if (!errChildAdd && addChildReply && addChildReply.hasOwnProperty('_id')) {
+                                                             var childBookNodID=addChildReply._id;
+                                                             db.insertRelationship(childBookNodID,parentBookNodeID,"CHILDBOOK_OF",{},function(errParentChild,resultRel){
+                                                                 console.log("associate childBook to ParentBook",err,resultRel);
+                                                                 if(!errParentChild){
+//                                                                	 responceArray.push(addChildReply);
+                                                                	 console.log("addChildReply :",addChildReply);
+//                                                                     responseObj.responseData=responceArray;
+//                                                                     res.json(responseObj);
+                                                                 }else{
+                                                                	 
+                                                                     Utils.defaultErrorResponse(res,"Failed to Add Book Copy for given ISBN");
+//                                                                     break;
+                                                                 }
+                                                             });
+                                                     }else{
+                                                         Utils.defaultErrorResponse(res,"Failed to add Book Copy");
+                                                     }
+                                                 });
+                                             }else{
+                                                 Utils.defaultErrorResponse(res,childBookObj.bookId+" is already added.");
+                                             }
+                            			}
+                                             //for loop end
+                                    }
+                            		
+                            	}else{
+                                    Utils.defaultErrorResponse(res,"Failed to add given book ISBN into the library.");
+                                }
                             });
-                        }else{
-                            responseObj.error=true;
-                            responseObj.errorMsg="Failed to add main book.";
+                            responseObj.responseData=responceArray;
                             res.json(responseObj);
-                        }
+                        }else{
+                            Utils.defaultErrorResponse(res,"Failed to add Book ISBN.");
+                        } 
                     });
-                    
-                    if(parentBookNodeID!="")
-                    {
-                    	 if(childLen>0){
-                    			console.log("requestObj.children : ",requestObj.children);
-                             var childBookObj=requestObj.children[childLen-1];
-                             if(!(childBookObj.hasOwnProperty('_id') && childBookObj._id!=null)){
-                            		console.log("requestObj.children inside : ",requestObj.children);
-                                 childBookObj=fillChildBookValues(childBookObj);
-                                 addChildBook(res, childBookObj,parentBookNodeID);
-                             }else{
-                                 Utils.defaultErrorResponse(res,childBookObj.bookId+" is already added.");
-                             }
-                         }
-                    }
-//                    End New Change
+                
                 }
             });
         }
-        else{ //child Book Addition
-        	console.log("requestObj.children : ",requestObj.children);
-            var childLen=requestObj.children.length;
-            if(childLen>0 && requestObj.parentbook.hasOwnProperty('_id') && requestObj.parentbook._id ){
-                var childBookObj=requestObj.children[childLen-1];
-                if(!(childBookObj.hasOwnProperty('_id') && childBookObj._id!=null)){
-                    childBookObj=fillChildBookValues(childBookObj);
-                    addChildBook(res, childBookObj,parentBookNodeID);
-                }else{
-                    Utils.defaultErrorResponse(res,childBookObj.bookId+" is already added.");
-                }
-            }
-        }
+//        else{ //child Book Addition
+//        	console.log("requestObj.children : ",requestObj.children);
+//            var childLen=requestObj.children.length;
+//            if(childLen>0 && requestObj.parentbook.hasOwnProperty('_id') && requestObj.parentbook._id ){
+//                var childBookObj=requestObj.children[childLen-1];
+//                if(!(childBookObj.hasOwnProperty('_id') && childBookObj._id!=null)){
+//                    childBookObj=fillChildBookValues(childBookObj);
+//                    addChildBook(res, childBookObj,parentBookNodeID);
+//                }else{
+//                    Utils.defaultErrorResponse(res,childBookObj.bookId+" is already added.");
+//                }
+//            }
+//        }
 //        res.json(responseObj);
     }catch(e){
         console.log("insertCompleteBook",e);
