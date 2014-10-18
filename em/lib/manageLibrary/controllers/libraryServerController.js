@@ -234,7 +234,7 @@ module.exports=function(app,Utils){
         var schoolID=loggedInUser.schoolDetails.schoolId;
 //        console.log("requestobj - addCompleteBook",requestobj, "req.session.currentLibrary : ",req.session.currentLibrary);
 //        libraryMS.insertCompleteBook(requestobj,res,schoolID,req.session.currentLibrary);
-        libraryMS.insertCompleteBook(requestobj,res,schoolID,"1");
+        libraryMS.insertCompleteBook(requestobj,res,schoolID,21285,loggedInUser);
     })
 /*  addNewBook - Query for Parent Book Information   */
     app.post("/manageLibrary/addNewBook",Utils.ensureAuthenticated,function(req,res){

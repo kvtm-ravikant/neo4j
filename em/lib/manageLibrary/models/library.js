@@ -219,7 +219,7 @@ function addChildBook(res, childBookObj,parentBookNodeID){
 module.exports.addChildBook=addChildBook;
 /* addChildBook - DB Insert - End*/
     
-function insertCompleteBook(requestObj,res,schoolID,libraryObj){
+function insertCompleteBook(requestObj,res,schoolID,libraryObj,loggedInUser){
     try{
         var responseObj = new Utils.Response();
         var responceArray=[];
@@ -239,6 +239,7 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
 //                if parentBook's ISBN doesn't exists, proceed to insert the parent book
                 if(!err || !result || (result && result.data && result.data.length==0)){
                     var parentBookDetails=fillParentBookValues(requestObj.parentbook);
+                    parentBookDetails.createdBy=loggedInUser.basicDetails.userName;
 //                insert the parentBook
                     db.insertNode(parentBookDetails,["ParentBook"],function(err,addParentBookReply){
                         console.log("addParentBookReply",err,addParentBookReply, addParentBookReply._id);
@@ -246,8 +247,8 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
                         if(!err){
                            parentBookNodeID=addParentBookReply._id;
                            console.log("parentBookNodeID : ",parentBookNodeID);
-//                            db.insertRelationship(parentBookNodeID,libraryObj._id,"BELONGS_TO",{},function(err,resultRel){
-                            db.insertRelationship(parentBookNodeID,21285, "BELONGS_TO",{},function(errParentLib,resultParentLibRel){
+                            db.insertRelationship(parentBookNodeID,libraryObj._id,"BELONGS_TO",{},function(errParentLib,resultParentLibRel){
+//                            db.insertRelationship(parentBookNodeID,21285, "BELONGS_TO",{},function(errParentLib,resultParentLibRel){
                             	responceArray.push(addParentBookReply);
                             	if(!errParentLib){
                             		console.log("associate parent book to library",errParentLib,resultParentLibRel, "childLen : ",childLen, " requestObj ",requestObj);	
@@ -293,6 +294,7 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj){
                                            console.log("childBook multiple ADD : childBookObj :",childBookObj);
                                              if((childBookObj.hasOwnProperty('_id') && childBookObj._id!=null)){
                                                  childBookObj=fillChildBookValues(childBookObj);
+                                                 childBookObj.createdBy=loggedInUser.basicDetails.userName;
                                                  db.insertNode(childBookObj, ["ChildBook"], function(errChildAdd, addChildReply) {
                                                 	 responceArray.push(addChildReply);
                                                      console.log("create ChildBook node", err,addChildReply);
@@ -366,12 +368,12 @@ function fillParentBookValues(parentBookDetails){
     if(isNaN(parentBookDetails.edition))
         parentBookDetails.edition=0;
     parentBookDetails.softDelete=false;
+    parentBookDetails.createdAt=currentTimestamp;
     return parentBookDetails;
 };
 function fillChildBookValues(childBookDetails){
     var currentTimestamp=(new Date()).getTime();
-    childBookDetails.updatedDate=currentTimestamp;
-    childBookDetails.createdDate=currentTimestamp;
+    childBookDetails.createdAt=currentTimestamp;
     childBookDetails.softDelete=false;
     return childBookDetails;
 }
