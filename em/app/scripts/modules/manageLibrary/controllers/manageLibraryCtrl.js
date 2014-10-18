@@ -318,7 +318,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
     	if($scope.childBooks.length<1){
     		 $scope.childBooks.push(childBookPoJO);
     	}
-    	else if($scope.childBooks.length<3 && $scope.childBooks.length>0){
+    	else if($scope.childBooks.length<5 && $scope.childBooks.length>0){
     		
     		if(!validateChildBook($scope.childBooks[($scope.childBooks.length-1)])){
     			$scope.childBooks.push(childBookPoJO);
@@ -326,6 +326,8 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
 
     		console.log("$scope.childBooks ",$scope.childBooks, "kgsad ",$scope.childBooks.length,"  $scope.bookClass : ", $scope.bookClass);	
     	}
+    	else
+    		appUtils.showError("You cannot add more than 5 Books !");
        
 //        console.log("childBookPoJO",childBookPoJO);
     	
