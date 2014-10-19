@@ -222,7 +222,8 @@ module.exports.addChildBook=addChildBook;
 function insertCompleteBook(requestObj,res,schoolID,libraryObj,loggedInUser){
     try{
         var responseObj = new Utils.Response();
-        var responceArray=[];
+        var AddedParentBook="";
+        var childBookArray=[];
         var defaultErrorMsg="Failed to add Book. Please contact administrator.";
         var parentBookNodeID="";
         var childLen=requestObj.children.length;
@@ -248,14 +249,13 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj,loggedInUser){
                         if(!err){
                            parentBookNodeID=addParentBookReply._id;
                            console.log("parentBookNodeID : ",parentBookNodeID);
-//                            db.insertRelationship(parentBookNodeID,libraryObj._id,"BELONGS_TO",{},function(err,resultRel){
-                            db.insertRelationship(parentBookNodeID,21285, "BELONGS_TO",{},function(errParentLib,resultParentLibRel){
-                            	responceArray.push(addParentBookReply);
+                            db.insertRelationship(parentBookNodeID,libraryObj,"BELONGS_TO",{},function(errParentLib,resultParentLibRel){
+//                            db.insertRelationship(parentBookNodeID,21285, "BELONGS_TO",{},function(errParentLib,resultParentLibRel){
                             	if(!errParentLib){
                             		console.log("associate parent book to library",errParentLib,resultParentLibRel, "childLen : ",childLen, " requestObj ",requestObj);	
-//                            		responceArray.push(addParentBookReply);
+                            		AddedParentBook=addParentBookReply;
                             			if(parentBookNodeID!="" && childLen>0){ 
-                            			console.log("inside adding multiple book copy");
+                            			
                             			//for loop start
                             			for(var i=0;i<childLen;i++){
                                              var childBookObj=requestObj.children[i];
@@ -264,21 +264,18 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj,loggedInUser){
                                                  childBookObj=fillChildBookValues(childBookObj);
                                                  childBookObj.createdBy=loggedInUser.basicDetails.userName;
                                                  db.insertNode(childBookObj, ["ChildBook"], function(errChildAdd, addChildReply) {
-                                                	 responceArray.push(addChildReply);
                                                      console.log("create ChildBook node", err,addChildReply);
                                                      if (!errChildAdd && addChildReply && addChildReply.hasOwnProperty('_id')) {
                                                              var childBookNodID=addChildReply._id;
+                                                             
                                                              db.insertRelationship(childBookNodID,parentBookNodeID,"CHILDBOOK_OF",{},function(errParentChild,resultRel){
                                                                  console.log("associate childBook to ParentBook",err,resultRel);
                                                                  if(!errParentChild){
-//                                                                	 responceArray.push(addChildReply);
-                                                                	 console.log("addChildReply :",addChildReply);
-//                                                                     responseObj.responseData=responceArray;
-//                                                                     res.json(responseObj);
+                                                                	 childBookArray.push(addChildReply);
+                                                                	 console.log("addChildReply :#########",addChildReply," responceArray $$$$",childBookArray);
                                                                  }else{
                                                                 	 
                                                                      Utils.defaultErrorResponse(res,"Failed to Add Book Copy for given ISBN");
-//                                                                     break;
                                                                  }
                                                              });
                                                      }else{
@@ -291,13 +288,13 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj,loggedInUser){
                             			}
                                              //for loop end
                                     }
-                            		
+                            		var addedBook = new BookClass.CompleteBook(AddedParentBook,childBookArray);
+                            		responseObj.responseData=addedBook;
+                                    res.json(responseObj);
                             	}else{
                                     Utils.defaultErrorResponse(res,"Failed to add given book ISBN into the library.");
                                 }
                             });
-                            responseObj.responseData=responceArray;
-                            res.json(responseObj);
                         }else{
                             Utils.defaultErrorResponse(res,"Failed to add Book ISBN.");
                         } 
@@ -309,20 +306,6 @@ function insertCompleteBook(requestObj,res,schoolID,libraryObj,loggedInUser){
                 }
             });
         }
-//        else{ //child Book Addition
-//        	console.log("requestObj.children : ",requestObj.children);
-//            var childLen=requestObj.children.length;
-//            if(childLen>0 && requestObj.parentbook.hasOwnProperty('_id') && requestObj.parentbook._id ){
-//                var childBookObj=requestObj.children[childLen-1];
-//                if(!(childBookObj.hasOwnProperty('_id') && childBookObj._id!=null)){
-//                    childBookObj=fillChildBookValues(childBookObj);
-//                    addChildBook(res, childBookObj,parentBookNodeID);
-//                }else{
-//                    Utils.defaultErrorResponse(res,childBookObj.bookId+" is already added.");
-//                }
-//            }
-//        }
-//        res.json(responseObj);
     }catch(e){
         console.log("insertCompleteBook",e);
         Utils.defaultErrorResponse(res,defaultErrorMsg);

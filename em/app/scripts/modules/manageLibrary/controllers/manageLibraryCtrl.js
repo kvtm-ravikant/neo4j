@@ -152,9 +152,10 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
             //success
             appUtils.defaultParseResponse(dataResponse,function(dataResponse){
 //                console.log("addNewBook - dataResponse",dataResponse)
-                $scope.parentBook._id=dataResponse.responseData;
-                $('#childBookModalforSmy').modal('hide');
+//                $scope.parentBook._id=dataResponse.responseData;
+                $('#addBookToLib').modal('hide');
                 console.log("addNewBook - dataResponse",dataResponse,"_id : ",$scope.parentBook._id);
+                appUtils.showSuccess("Book ISBN "+dataResponse.responseData.parentbook.isbn+" Added successfully");
             });
         }).error(function(data,status,headers,config){
             //error
