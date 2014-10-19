@@ -675,6 +675,6 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
     	$('#resetPasswordModel').modal('hide'); 	
     }
     /************************************************************
-     *   Reset password for user from admin - Start             *
+     *   Reset password for user from admin - End               *
      ***********************************************************/
 });

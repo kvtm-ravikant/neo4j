@@ -422,7 +422,7 @@ educationMediaApp.controller('libraryManagement', function ($scope, $http,iconCl
        $('#parentBookViewEditDelforSmy').modal({"backdrop": "static","show":true});
        $('#parentBookViewEditDelforSmy').modal({"show":false});
 	   
-//	   console.log("parentBookViewEditDelforSmy.html: book : ",book, "childbook length : ",book.children.length);	 
+	   console.log("parentBookViewEditDelforSmy.html: book : ",book, "childbook length : ",book.children.length);	 
 	   angular.copy(book.parentbook,$scope.parentBook);
    }
    
