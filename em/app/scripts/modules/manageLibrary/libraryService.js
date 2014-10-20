@@ -9,7 +9,8 @@ educationMediaApp.service('libraryService',function($http, $q){
             getParentBookDD:getParentBookDD,
             updateParentBook:updateParentBook,
             deleteParentBook:deleteParentBook,
-            searchISBN:searchISBN
+            searchISBN:searchISBN,
+            getCurrencyType:getCurrencyType
         });
         function getAllBooks(){
             var request = $http({
@@ -36,6 +37,13 @@ educationMediaApp.service('libraryService',function($http, $q){
             var request = $http({
                 method: "get",
                 url: "/manageLibrary/getParentBookDD"
+            });
+            return( request.then( handleSuccess, handleError ) );
+        }
+        function getCurrencyType(){
+            var request = $http({
+                method: "get",
+                url: "/manageLibrary/getCurrencyType"
             });
             return( request.then( handleSuccess, handleError ) );
         }

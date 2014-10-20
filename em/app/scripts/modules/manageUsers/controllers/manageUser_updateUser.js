@@ -635,5 +635,46 @@ educationMediaApp.controller('manageUser_updateUser', function ($scope, $http,ic
         });
     };
     $scope.lovMapToArr=appUtils.lovMapToArr;
+    
+    /************************************************************
+     *   Reset password for user from admin - Start             *
+     ***********************************************************/
+    $scope.resetMessage="";
+    $scope.resetPasswordUser=""
+    $scope.openResetPasswdModal=function(user){
+    	console.log("openResetPasswdModal ",user);
+    	$scope.resetPasswordUser=user;
+    	$scope.resetMessage="Are you going to reset the password for user - "+user.userName+". Do you want to proceed. ";
+    	 $('#resetPasswordModel').modal({"backdrop": "static","show":true});
+         $('#resetPasswordModel').modal({"show":false});
+    }
+    
+    $scope.doChange=function(){
+//    	$('#resetPasswordModel').modal('hide'); /manage-users/saveUserSettings/
+    	$http({
+            method : 'POST',
+            url    : '/manage-users/resetPassword/',
+            data   : $scope.resetPasswordUser,
+            headers: {'Content-Type': 'application/json'}
+        }).success(function(dataResponse,status,headers,config){
+            //success
+            appUtils.defaultParseResponse(dataResponse,function(dataResponse){
+            	  console.log("checkExistingPassowrd: dataResponse : ",dataResponse);
+            	  
+            	  appUtils.showSuccess("Password for "+$scope.resetPasswordUser.userName+" updated successfully.");
+            	  $('#resetPasswordModel').modal('hide'); 	
+            	  
+            });
+        }).error(function(data,status,headers,config){
+            //error
+            console.log("Error",data,status,headers,config);
+        });
+    }
 
+    $scope.gatBack=function(){
+    	$('#resetPasswordModel').modal('hide'); 	
+    }
+    /************************************************************
+     *   Reset password for user from admin - End               *
+     ***********************************************************/
 });
